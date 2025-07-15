@@ -1,0 +1,119 @@
+# Decap CMS Configuration for Lake County Outdoors
+backend:
+  name: github
+  repo: bgross0/lco-astro
+  branch: main
+  # Using local OAuth handler - no base_url needed when auth_endpoint starts with /
+
+# Media files storage
+media_folder: "public/images/uploads" # Media files will be stored here
+public_folder: "/images/uploads" # Public URL path
+
+# Site URL for preview
+site_url: https://lco-web.pages.dev # Update with your actual domain
+display_url: https://lco-web.pages.dev
+
+# CMS configuration
+publish_mode: editorial_workflow
+logo_url: /lco-2025.svg
+
+# Collections
+collections:
+  # Services Collection
+  - name: "services"
+    label: "Services"
+    label_singular: "Service"
+    folder: "src/content/services"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Description", name: "description", widget: "text", required: true }
+      - { label: "Featured Image", name: "image", widget: "image", required: true }
+      - { label: "Display Order", name: "order", widget: "number", required: false, default: 0, hint: "Lower numbers appear first" }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  # Testimonials Collection
+  - name: "testimonials"
+    label: "Testimonials"
+    label_singular: "Testimonial"
+    folder: "src/content/testimonials"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Author", name: "author", widget: "string", required: true }
+      - { label: "Company", name: "company", widget: "string", required: false }
+      - { label: "Service", name: "service", widget: "string", required: true, hint: "Which service is this testimonial for?" }
+      - { label: "Rating", name: "rating", widget: "number", min: 1, max: 5, default: 5, required: true }
+      - { label: "Testimonial", name: "body", widget: "markdown", required: true }
+
+  # Blog/News Posts (optional)
+  - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "blog/{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Description", name: "description", widget: "text", required: true }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", required: true }
+      - { label: "Author", name: "author", widget: "string", default: "Lake County Outdoors", required: true }
+      - { label: "Featured Image", name: "image", widget: "image", required: false }
+      - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # Pages (for editing existing pages)
+  - name: "pages"
+    label: "Pages"
+    label_singular: "Page"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "src/pages/index.astro"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+      
+      - label: "Contact Page"
+        name: "contact"
+        file: "src/pages/contact.astro"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+# Site Settings (optional)
+- name: "settings"
+  label: "Settings"
+  delete: false
+  editor:
+    preview: false
+  files:
+    - label: "General Settings"
+      name: "general"
+      file: "src/data/settings.json"
+      fields:
+        - { label: "Site Title", name: "site_title", widget: "string" }
+        - { label: "Site Description", name: "site_description", widget: "text" }
+        - { label: "Phone Number", name: "phone", widget: "string" }
+        - { label: "Email", name: "email", widget: "string" }
+        - { label: "Address", name: "address", widget: "text" }
+        - label: "Social Media"
+          name: "social"
+          widget: "object"
+          fields:
+            - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+            - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+            - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }

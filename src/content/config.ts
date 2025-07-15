@@ -20,7 +20,22 @@ const testimonials = defineCollection({
   }),
 });
 
+const blog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    author: z.string().default('Lake County Outdoors'),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   services,
   testimonials,
+  blog,
 };
