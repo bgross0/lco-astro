@@ -1,0 +1,391 @@
+'use client'
+
+import * as React from "react"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronRight, Phone, Snowflake, Mountain, Shovel } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+// Utility function for className merging
+function cn(...classes: (string | undefined | null | false)[]): string {
+  return classes.filter(Boolean).join(' ')
+}
+
+// Animated Text Cycle Component
+interface AnimatedTextCycleProps {
+  words: string[];
+  interval?: number;
+  className?: string;
+}
+
+function AnimatedTextCycle({
+  words,
+  interval = 3000,
+  className = "",
+}: AnimatedTextCycleProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [width, setWidth] = useState("auto");
+  const measureRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (measureRef.current) {
+      const elements = measureRef.current.children;
+      if (elements.length > currentIndex) {
+        const newWidth = elements[currentIndex].getBoundingClientRect().width;
+        setWidth(`${newWidth}px`);
+      }
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [interval, words.length]);
+
+  const containerVariants = {
+    hidden: { 
+      y: -20,
+      opacity: 0,
+      filter: "blur(8px)"
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      y: 20,
+      opacity: 0,
+      filter: "blur(8px)",
+      transition: { 
+        duration: 0.3, 
+        ease: "easeIn"
+      }
+    },
+  };
+
+  return (
+    <>
+      <div 
+        ref={measureRef} 
+        aria-hidden="true"
+        className="absolute opacity-0 pointer-events-none"
+        style={{ visibility: "hidden" }}
+      >
+        {words.map((word, i) => (
+          <span key={i} className={`font-bold ${className}`}>
+            {word}
+          </span>
+        ))}
+      </div>
+
+      <motion.span 
+        className="relative inline-block"
+        animate={{ 
+          width,
+          transition: { 
+            type: "spring",
+            stiffness: 150,
+            damping: 15,
+            mass: 1.2,
+          }
+        }}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={currentIndex}
+            className={`inline-block font-bold ${className}`}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            {words[currentIndex]}
+          </motion.span>
+        </AnimatePresence>
+      </motion.span>
+    </>
+  );
+}
+
+// Animated Group Component
+interface AnimatedGroupProps {
+  children: React.ReactNode;
+  className?: string;
+  variants?: {
+    container?: any;
+    item?: any;
+  };
+}
+
+function AnimatedGroup({
+  children,
+  className,
+  variants,
+}: AnimatedGroupProps) {
+  const defaultContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const defaultItemVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  const containerVariants = variants?.container || defaultContainerVariants;
+  const itemVariants = variants?.item || defaultItemVariants;
+
+  return (
+    <motion.div
+      initial='hidden'
+      animate='visible'
+      variants={containerVariants}
+      className={cn(className)}
+    >
+      {React.Children.map(children, (child, index) => (
+        <motion.div key={index} variants={itemVariants}>
+          {child}
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
+// Get Started Button Component
+function GetStartedButton() {
+  return (
+    <Button className="group relative overflow-hidden" size="lg">
+      <span className="mr-8 transition-opacity duration-500 group-hover:opacity-0">
+        Get Free Quote
+      </span>
+      <i className="absolute right-1 top-1 bottom-1 rounded-sm z-10 grid w-1/4 place-items-center transition-all duration-500 bg-primary-foreground/15 group-hover:w-[calc(100%-0.5rem)] group-active:scale-95">
+        <ChevronRight size={16} strokeWidth={2} aria-hidden="true" />
+      </i>
+    </Button>
+  );
+}
+
+// Main Hero Section Component
+function LakeCountyOutdoorsHero() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const transitionVariants = {
+    item: {
+      hidden: {
+        opacity: 0,
+        filter: 'blur(12px)',
+        y: 12,
+      },
+      visible: {
+        opacity: 1,
+        filter: 'blur(0px)',
+        y: 0,
+        transition: {
+          type: 'spring',
+          bounce: 0.3,
+          duration: 1.5,
+        },
+      },
+    },
+  };
+
+  const services = ["Snow Removal", "Landscaping", "Excavation"];
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className={cn(
+        'fixed top-0 w-full z-50 transition-all duration-300',
+        scrolled ? 'bg-background/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
+      )}>
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Mountain className="h-8 w-8 text-primary" />
+              <span className="text-xl font-bold text-foreground">Lake County Outdoors</span>
+            </div>
+            <nav className="hidden md:flex items-center space-x-8">
+              <a href="#services" className="text-muted-foreground hover:text-foreground transition-colors">Services</a>
+              <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
+              <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+            </nav>
+            <Button variant="outline" size="sm" className="hidden md:flex">
+              <Phone className="h-4 w-4 mr-2" />
+              Call Now
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <main className="pt-20">
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--background)_75%)]"></div>
+          
+          {/* Background Pattern */}
+          <div className="absolute inset-0 -z-20 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }} />
+          </div>
+
+          <div className="container mx-auto px-6 py-24 lg:py-32">
+            <div className="max-w-4xl mx-auto text-center">
+              <AnimatedGroup
+                variants={{
+                  container: {
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.05,
+                        delayChildren: 0.2,
+                      },
+                    },
+                  },
+                  ...transitionVariants,
+                }}
+              >
+                {/* Badge */}
+                <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
+                  <Snowflake className="h-4 w-4 text-primary mr-2" />
+                  <span className="text-sm font-medium text-primary">Professional Outdoor Services</span>
+                </div>
+
+                {/* Main Heading */}
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
+                  Lake County Outdoors
+                </h1>
+
+                {/* Animated Subheading */}
+                <div className="text-2xl md:text-3xl lg:text-4xl text-muted-foreground mb-8 font-light">
+                  <AnimatedTextCycle 
+                    words={services}
+                    interval={2500}
+                    className="text-primary font-semibold"
+                  /> Specialists
+                </div>
+
+                {/* Service Icons */}
+                <div className="flex justify-center items-center space-x-8 mb-8">
+                  <div className="flex flex-col items-center">
+                    <div className="p-3 rounded-full bg-primary/10 mb-2">
+                      <Snowflake className="h-6 w-6 text-primary" />
+                    </div>
+                    <span className="text-sm text-muted-foreground">Snow Removal</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="p-3 rounded-full bg-primary/10 mb-2">
+                      <Shovel className="h-6 w-6 text-primary" />
+                    </div>
+                    <span className="text-sm text-muted-foreground">Earthworks</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="p-3 rounded-full bg-primary/10 mb-2">
+                      <Mountain className="h-6 w-6 text-primary" />
+                    </div>
+                    <span className="text-sm text-muted-foreground">Landscaping</span>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+                  At Lake County Outdoors, LLC, we specialize in landscaping, excavation, and snow removal. 
+                  With over 60 years of combined experience, we are a trusted leader in all things outdoor 
+                  transformation and maintenance.
+                </p>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                  <div className="bg-foreground/10 rounded-[14px] border p-0.5">
+                    <GetStartedButton />
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    className="h-[42px] rounded-xl px-6 text-base group"
+                  >
+                    <Phone className="h-4 w-4 mr-2 group-hover:animate-pulse" />
+                    Call 612-655-0648
+                  </Button>
+                </div>
+
+                {/* Trust Indicators */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
+                  <div className="flex items-center">
+                    <span className="font-semibold text-primary mr-1">60+</span>
+                    Years Combined Experience
+                  </div>
+                  <div className="hidden sm:block w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <div className="flex items-center">
+                    <span className="font-semibold text-primary mr-1">100%</span>
+                    Licensed & Insured
+                  </div>
+                  <div className="hidden sm:block w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <div className="flex items-center">
+                    <span className="font-semibold text-primary mr-1">24/7</span>
+                    Emergency Snow Removal
+                  </div>
+                </div>
+              </AnimatedGroup>
+            </div>
+          </div>
+
+          {/* Hero Image Section */}
+          <AnimatedGroup
+            variants={{
+              container: {
+                visible: {
+                  transition: {
+                    staggerChildren: 0.05,
+                    delayChildren: 0.8,
+                  },
+                },
+              },
+              ...transitionVariants,
+            }}
+          >
+            <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
+              <div
+                aria-hidden
+                className="bg-gradient-to-b to-background absolute inset-0 z-10 from-transparent from-35%"
+              />
+              <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-border p-4 shadow-lg bg-background/50 backdrop-blur-sm">
+                <div className="aspect-video relative rounded-2xl overflow-hidden bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <Mountain className="h-16 w-16 text-primary mx-auto mb-4 opacity-50" />
+                      <p className="text-muted-foreground">Professional Outdoor Services Showcase</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </AnimatedGroup>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+export default LakeCountyOutdoorsHero;

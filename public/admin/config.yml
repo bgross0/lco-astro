@@ -1,0 +1,148 @@
+backend:
+  name: github
+  repo: bgross0/lco-astro # Replace with your GitHub username/repo
+  branch: main
+  base_url: https://decap-oauth.pages.dev # Your OAuth app URL - will be created later
+  auth_endpoint: api/auth
+
+# Publish mode
+publish_mode: editorial_workflow
+
+# Media files storage
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Collections
+collections:
+  # Hero Section
+  - name: "hero"
+    label: "Hero Section"
+    folder: "src/content/hero"
+    create: false
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Subtitle", name: "subtitle", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Background Image", name: "backgroundImage", widget: "image"}
+      - label: "Services"
+        name: "services"
+        widget: "list"
+        fields:
+          - {label: "Service Name", name: "name", widget: "string"}
+      - label: "CTA Button"
+        name: "ctaButton"
+        widget: "object"
+        fields:
+          - {label: "Text", name: "text", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+      - label: "Trust Indicators"
+        name: "trustIndicators"
+        widget: "list"
+        fields:
+          - {label: "Number", name: "number", widget: "string"}
+          - {label: "Text", name: "text", widget: "string"}
+
+  # Services
+  - name: "services"
+    label: "Services"
+    folder: "src/content/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Short Description", name: "shortDescription", widget: "string"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Icon", name: "icon", widget: "string", hint: "Icon name from your icon set"}
+      - {label: "Order", name: "order", widget: "number", default: 0}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - label: "Features"
+        name: "features"
+        widget: "list"
+        fields:
+          - {label: "Feature", name: "feature", widget: "string"}
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        field: {label: "Image", name: "image", widget: "image"}
+
+  # Testimonials
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Company", name: "company", widget: "string", required: false}
+      - {label: "Service", name: "service", widget: "string"}
+      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5, default: 5}
+      - {label: "Body", name: "body", widget: "text"}
+      - {label: "Date", name: "date", widget: "datetime"}
+
+  # About Section
+  - name: "about"
+    label: "About Section"
+    folder: "src/content/about"
+    create: false
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Subtitle", name: "subtitle", widget: "string"}
+      - {label: "Description", name: "description", widget: "markdown"}
+      - {label: "Years of Experience", name: "yearsExperience", widget: "number"}
+      - {label: "Image", name: "image", widget: "image"}
+      - label: "Highlights"
+        name: "highlights"
+        widget: "list"
+        fields:
+          - {label: "Highlight", name: "highlight", widget: "string"}
+
+  # Company Info
+  - name: "settings"
+    label: "Company Settings"
+    files:
+      - label: "General Settings"
+        name: "general"
+        file: "src/content/settings/general.yml"
+        fields:
+          - {label: "Company Name", name: "companyName", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Address", name: "address", widget: "text"}
+          - label: "Hours"
+            name: "hours"
+            widget: "object"
+            fields:
+              - {label: "Weekdays", name: "weekdays", widget: "string"}
+              - {label: "Saturday", name: "saturday", widget: "string"}
+              - {label: "Sunday", name: "sunday", widget: "string"}
+          - label: "Social Media"
+            name: "social"
+            widget: "object"
+            fields:
+              - {label: "Facebook", name: "facebook", widget: "string", required: false}
+              - {label: "Twitter", name: "twitter", widget: "string", required: false}
+              - {label: "Instagram", name: "instagram", widget: "string", required: false}
+              - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
+
+  # Pages
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "src/content/pages/home.yml"
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Meta Description", name: "metaDescription", widget: "text"}
+          - label: "Sections"
+            name: "sections"
+            widget: "object"
+            fields:
+              - {label: "Show Hero", name: "showHero", widget: "boolean", default: true}
+              - {label: "Show Services", name: "showServices", widget: "boolean", default: true}
+              - {label: "Show About", name: "showAbout", widget: "boolean", default: true}
+              - {label: "Show Testimonials", name: "showTestimonials", widget: "boolean", default: true}
+              - {label: "Show CTA", name: "showCTA", widget: "boolean", default: true}

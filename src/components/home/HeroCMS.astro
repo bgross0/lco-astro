@@ -1,10 +1,18 @@
 ---
+import { getEntry } from 'astro:content';
 import Button from '../common/Button.astro';
+
+// Get hero content from CMS
+const heroData = await getEntry('hero', 'hero');
+const { title, subtitle, description, backgroundImage, services, ctaButton, trustIndicators } = heroData.data;
+
+// Convert services array to JSON string for the data attribute
+const servicesJson = JSON.stringify(services.map(s => s.name));
 ---
 
 <section class="hero">
   <div class="hero__background">
-    <img src="/images/equipment/equipment-2-600x616.jpg" alt="Lake County Outdoors Professional Equipment" class="hero__background-image" />
+    <img src={backgroundImage} alt={`${title} Professional Equipment`} class="hero__background-image" />
     <div class="hero__overlay"></div>
   </div>
   
@@ -16,65 +24,61 @@ import Button from '../common/Button.astro';
           <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/>
           <path d="M8 12l4-4m0 0l4 4m-4-4v8"/>
         </svg>
-        <span>Professional Outdoor Services</span>
+        <span>{subtitle}</span>
       </div>
 
       <!-- Main Title -->
       <h1 class="hero__title animate-fade-in" style="animation-delay: 0.2s">
-        Lake County Outdoors
+        {title}
       </h1>
       
       <!-- Animated Services -->
       <div class="hero__animated-services animate-fade-in" style="animation-delay: 0.3s">
         <span class="hero__service-cycler">
-          <span class="hero__service-text" data-services='["Snow Removal", "Landscaping", "Excavation"]'>Snow Removal</span>
+          <span class="hero__service-text" data-services={servicesJson}>{services[0]?.name || 'Services'}</span>
         </span>
         <span class="hero__specialists">Specialists</span>
       </div>
 
       <!-- Service Icons -->
       <div class="hero__service-icons animate-fade-in" style="animation-delay: 0.4s">
-        <div class="hero__service-item">
-          <div class="hero__service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2L8 7h8l-4-5zM8 7L4 12h16L16 7M4 12l4 5h8l4-5M8 17l4 5 4-5"/>
-            </svg>
+        {services.slice(0, 3).map((service, index) => (
+          <div class="hero__service-item">
+            <div class="hero__service-icon">
+              {service.name === 'Snow Removal' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L8 7h8l-4-5zM8 7L4 12h16L16 7M4 12l4 5h8l4-5M8 17l4 5 4-5"/>
+                </svg>
+              )}
+              {service.name === 'Landscaping' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 21h18M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7h-18z"/>
+                </svg>
+              )}
+              {service.name === 'Excavation' && (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3M9 9v.01M9 13v.01M9 17v.01"/>
+                </svg>
+              )}
+            </div>
+            <span>{service.name}</span>
           </div>
-          <span>Snow Removal</span>
-        </div>
-        <div class="hero__service-item">
-          <div class="hero__service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3M9 9v.01M9 13v.01M9 17v.01"/>
-            </svg>
-          </div>
-          <span>Earthworks</span>
-        </div>
-        <div class="hero__service-item">
-          <div class="hero__service-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 21h18M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7h-18z"/>
-            </svg>
-          </div>
-          <span>Landscaping</span>
-        </div>
+        ))}
       </div>
       
       <!-- Description -->
       <p class="hero__description animate-fade-in" style="animation-delay: 0.5s">
-        At Lake County Outdoors, LLC, we specialize in landscaping, excavation, and snow removal. 
-        With over 60 years of combined experience, we are a trusted leader in all things outdoor 
-        transformation and maintenance.
+        {description}
       </p>
       
       <!-- CTA Buttons -->
       <div class="hero__actions animate-fade-in" style="animation-delay: 0.6s">
         <div class="hero__button-wrapper">
-          <Button href="tel:6126550648" variant="primary" size="large" class="hero__button-primary">
+          <Button href={`tel:${ctaButton.phone}`} variant="primary" size="large" class="hero__button-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
-            Call 612-655-0648
+            {ctaButton.text}
             <svg class="hero__button-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -84,20 +88,15 @@ import Button from '../common/Button.astro';
 
       <!-- Trust Indicators -->
       <div class="hero__trust animate-fade-in" style="animation-delay: 0.7s">
-        <div class="hero__trust-item">
-          <span class="hero__trust-number">60+</span>
-          <span class="hero__trust-text">Years Combined Experience</span>
-        </div>
-        <div class="hero__trust-separator"></div>
-        <div class="hero__trust-item">
-          <span class="hero__trust-number">100%</span>
-          <span class="hero__trust-text">Licensed & Insured</span>
-        </div>
-        <div class="hero__trust-separator"></div>
-        <div class="hero__trust-item">
-          <span class="hero__trust-number">24/7</span>
-          <span class="hero__trust-text">Emergency Snow Removal</span>
-        </div>
+        {trustIndicators.map((indicator, index) => (
+          <>
+            <div class="hero__trust-item">
+              <span class="hero__trust-number">{indicator.number}</span>
+              <span class="hero__trust-text">{indicator.text}</span>
+            </div>
+            {index < trustIndicators.length - 1 && <div class="hero__trust-separator"></div>}
+          </>
+        ))}
       </div>
     </div>
   </div>
@@ -289,21 +288,6 @@ import Button from '../common/Button.astro';
   
   .hero__button-primary:hover .hero__button-arrow {
     transform: translateX(4px);
-  }
-  
-  .hero__button-secondary :global(.button) {
-    background-color: var(--white) !important;
-    color: var(--primary) !important;
-    border: 2px solid var(--white) !important;
-    font-weight: 600;
-    opacity: 1 !important;
-  }
-  
-  .hero__button-secondary:hover :global(.button) {
-    background-color: var(--neutral-light) !important;
-    color: var(--primary-dark) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
   
   /* Trust Indicators */

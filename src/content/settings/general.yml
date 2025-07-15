@@ -1,0 +1,13 @@
+companyName: "Lake County Outdoors, LLC"
+phone: "612-655-0648"
+email: "info@lakecountyoutdoor.com"
+address: "Lake County, MN"
+hours:
+  weekdays: "7:00 AM - 6:00 PM"
+  saturday: "8:00 AM - 4:00 PM"
+  sunday: "Closed"
+social:
+  facebook: ""
+  twitter: ""
+  instagram: ""
+  linkedin: ""

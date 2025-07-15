@@ -1,0 +1,14 @@
+name = "decap-oauth"
+main = "decap-oauth-worker.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+# Environment variables will be set in Cloudflare dashboard
+# GITHUB_CLIENT_ID = "your-github-client-id"
+# GITHUB_CLIENT_SECRET = "your-github-client-secret"
+# SITE_URL = "https://your-site.pages.dev"
+
+# Optional: KV namespace for state management
+# [[kv_namespaces]]
+# binding = "OAUTH_STATE"
+# id = "your-kv-namespace-id"
