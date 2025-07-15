@@ -1,0 +1,102 @@
+---
+import Navigation from './Navigation.astro';
+import PhoneCTA from './PhoneCTA.astro';
+import MobileMenu from './MobileMenu.astro';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  <!-- Top Banner -->
+  <div class="header__banner">
+    <div class="container">
+      <div class="header__banner-content">
+        <PhoneCTA />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Header -->
+  <div class="header__main">
+    <div class="container">
+      <div class="header__content">
+        <!-- Logo -->
+        <a href="/" class="header__logo" aria-label="Lake County Outdoors Home">
+          <span class="header__logo-text">Lake County Outdoors, LLC</span>
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <Navigation currentPath={currentPath} />
+        
+        <!-- Mobile Menu Button -->
+        <MobileMenu currentPath={currentPath} />
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Top Banner */
+  .header__banner {
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: var(--space-2) 0;
+  }
+  
+  .header__banner-content {
+    text-align: center;
+  }
+  
+  @media (min-width: 768px) {
+    .header__banner-content {
+      text-align: right;
+    }
+  }
+  
+  /* Main Header */
+  .header__main {
+    background-color: var(--white);
+    padding: var(--space-4) 0;
+  }
+  
+  .header__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  
+  /* Logo */
+  .header__logo {
+    flex-shrink: 0;
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+  
+  .header__logo:hover {
+    opacity: 0.8;
+    text-decoration: none;
+  }
+  
+  .header__logo-text {
+    font-family: var(--font-heading);
+    font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+  }
+  
+  @media (min-width: 768px) {
+    .header__main {
+      padding: var(--space-6) 0;
+    }
+  }
+</style>

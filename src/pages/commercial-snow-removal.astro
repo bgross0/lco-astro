@@ -1,0 +1,523 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/common/Button.astro';
+
+const pageTitle = "Commercial Snow Removal - Lake County Outdoors, LLC";
+const pageDescription = "Professional commercial snow removal services in Lake County. 24/7 emergency response, competitive pricing, and reliable service for businesses.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__background">
+      <div class="hero__overlay"></div>
+    </div>
+    
+    <div class="container">
+      <div class="hero__content">
+        <h1 class="hero__title">
+          Commercial Snow Removal
+          <span class="hero__subtitle">Professional Service You Can Count On</span>
+        </h1>
+        
+        <p class="hero__description">
+          Lake County Outdoors provides reliable commercial snow removal services. 
+          With our extensive fleet and experienced team, we keep your business accessible all winter long.
+        </p>
+        
+        <div class="hero__actions">
+          <Button href="/contact" variant="primary" size="large">
+            Get a Free Quote
+          </Button>
+          <Button href="tel:6126550648" variant="secondary" size="large">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Call 612-655-0648
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services">
+    <div class="container">
+      <div class="services__header">
+        <h2 class="services__title">Our Snow Removal Services</h2>
+        <p class="services__subtitle">
+          Comprehensive solutions for commercial properties
+        </p>
+      </div>
+      
+      <div class="services__grid">
+        <div class="service-card">
+          <div class="service-card__icon">❄️</div>
+          <h3 class="service-card__title">Snow Plowing</h3>
+          <p class="service-card__description">
+            Professional plowing services for parking lots, driveways, and access roads. 
+            Multiple trigger level options available.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-card__icon">🧊</div>
+          <h3 class="service-card__title">Ice Management</h3>
+          <p class="service-card__description">
+            Complete ice control with traditional salt or eco-friendly liquid brine solutions. 
+            Pre-treatment and de-icing services available.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-card__icon">🚛</div>
+          <h3 class="service-card__title">Snow Hauling</h3>
+          <p class="service-card__description">
+            When snow piles up, we haul it away. Rates starting at $115/hour for smaller equipment, 
+            $125/hour for standard equipment.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-card__icon">⚡</div>
+          <h3 class="service-card__title">24/7 Emergency Service</h3>
+          <p class="service-card__description">
+            Round-the-clock emergency response when you need it most. 
+            We're here when other contractors can't keep up.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fleet Section -->
+  <section class="fleet">
+    <div class="container">
+      <div class="fleet__header">
+        <h2 class="fleet__title">Our Equipment Fleet</h2>
+        <p class="fleet__subtitle">
+          Professional-grade equipment ready for any job
+        </p>
+      </div>
+      
+      <div class="fleet__stats">
+        <div class="fleet__stat">
+          <div class="fleet__number">10</div>
+          <div class="fleet__label">Plow Trucks</div>
+        </div>
+        <div class="fleet__stat">
+          <div class="fleet__number">14</div>
+          <div class="fleet__label">Bobcats</div>
+        </div>
+        <div class="fleet__stat">
+          <div class="fleet__number">6</div>
+          <div class="fleet__label">Wheel Loaders</div>
+        </div>
+        <div class="fleet__stat">
+          <div class="fleet__number">2</div>
+          <div class="fleet__label">Tri-Axle Dumps</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing">
+    <div class="container">
+      <div class="pricing__header">
+        <h2 class="pricing__title">Flexible Pricing Options</h2>
+        <p class="pricing__subtitle">
+          Choose the plan that works best for your business
+        </p>
+      </div>
+      
+      <div class="pricing__options">
+        <div class="pricing-card">
+          <h3 class="pricing-card__title">Per Push</h3>
+          <p class="pricing-card__description">
+            Pay only when it snows. Perfect for mild winters with flexible trigger levels 
+            (zero tolerance, 1", or 2").
+          </p>
+        </div>
+        
+        <div class="pricing-card pricing-card--featured">
+          <div class="pricing-card__badge">Most Popular</div>
+          <h3 class="pricing-card__title">Monthly Flat Rate</h3>
+          <p class="pricing-card__description">
+            Predictable budgeting with unlimited snow events. Includes priority service 
+            and ice management.
+          </p>
+        </div>
+        
+        <div class="pricing-card">
+          <h3 class="pricing-card__title">Per Snowfall</h3>
+          <p class="pricing-card__description">
+            One price per snow event regardless of accumulation. Includes return visits 
+            as needed.
+          </p>
+        </div>
+      </div>
+      
+      <div class="pricing__cta">
+        <p class="pricing__note">
+          <strong>Price Match Guarantee:</strong> We'll match any competitor's price from an insured snow/ice management company.
+        </p>
+        <Button href="/contact" variant="primary" size="large">
+          Get Your Custom Quote
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta__content">
+        <h2 class="cta__title">Ready for Reliable Snow Removal?</h2>
+        <p class="cta__description">
+          Join businesses throughout Lake County who trust us for their commercial snow removal needs.
+        </p>
+        <div class="cta__actions">
+          <Button href="/contact" variant="primary" size="large">
+            Request a Quote
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .hero__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/images/snow-removal/snow-removal-wide-1120x559.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+  }
+  
+  .hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(46, 90, 135, 0.95) 0%,
+      rgba(74, 144, 226, 0.85) 100%
+    );
+    z-index: -1;
+  }
+  
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--white);
+    padding: var(--space-8) 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero__title {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    font-weight: var(--font-extrabold);
+    margin-bottom: var(--space-2);
+    color: var(--white);
+    line-height: 1.1;
+  }
+  
+  .hero__subtitle {
+    display: block;
+    font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+    font-weight: var(--font-normal);
+    margin-top: var(--space-2);
+    opacity: 0.95;
+  }
+  
+  .hero__description {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+    opacity: 0.95;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero__actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Services Section */
+  .services {
+    padding: var(--space-20) 0;
+    background-color: var(--white);
+  }
+  
+  .services__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .services__title {
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+  }
+  
+  .services__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-8);
+  }
+  
+  .service-card {
+    text-align: center;
+    padding: var(--space-8);
+    background-color: var(--neutral-light);
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-base);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .service-card__icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-4);
+  }
+  
+  .service-card__title {
+    color: var(--primary);
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-3);
+  }
+  
+  .service-card__description {
+    color: var(--neutral-dark);
+    line-height: 1.5;
+  }
+
+  /* Fleet Section */
+  .fleet {
+    padding: var(--space-20) 0;
+    background-color: var(--neutral-light);
+  }
+  
+  .fleet__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .fleet__title {
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+  }
+  
+  .fleet__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+  }
+  
+  .fleet__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-8);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .fleet__stat {
+    text-align: center;
+  }
+  
+  .fleet__number {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-bold);
+    color: var(--secondary);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+  
+  .fleet__label {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+  }
+
+  /* Pricing Section */
+  .pricing {
+    padding: var(--space-20) 0;
+    background-color: var(--white);
+  }
+  
+  .pricing__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .pricing__title {
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+  }
+  
+  .pricing__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+  }
+  
+  .pricing__options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .pricing-card {
+    position: relative;
+    padding: var(--space-8);
+    background-color: var(--white);
+    border: 2px solid var(--neutral);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all var(--transition-base);
+  }
+  
+  .pricing-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .pricing-card--featured {
+    border-color: var(--primary);
+    transform: scale(1.05);
+  }
+  
+  .pricing-card__badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+  }
+  
+  .pricing-card__title {
+    color: var(--primary);
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .pricing-card__description {
+    color: var(--neutral-dark);
+    line-height: 1.5;
+  }
+  
+  .pricing__cta {
+    text-align: center;
+  }
+  
+  .pricing__note {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    margin-bottom: var(--space-6);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* CTA Section */
+  .cta {
+    background-color: var(--primary);
+    padding: var(--space-16) 0;
+  }
+  
+  .cta__content {
+    text-align: center;
+    color: var(--white);
+  }
+  
+  .cta__title {
+    font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+    margin-bottom: var(--space-4);
+    color: var(--white);
+  }
+  
+  .cta__description {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-8);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.95;
+  }
+  
+  .cta__actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 50vh;
+    }
+    
+    .hero__actions {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .hero__actions > :global(*) {
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .services__grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .pricing__options {
+      grid-template-columns: 1fr;
+    }
+    
+    .pricing-card--featured {
+      transform: scale(1);
+    }
+  }
+</style>

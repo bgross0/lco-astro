@@ -1,0 +1,510 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/common/Button.astro';
+
+const pageTitle = "Landscaping - Lake County Outdoors, LLC";
+const pageDescription = "Professional landscaping services including retaining walls, boulder installation, paver patios, and complete landscape design in Lake County.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__background">
+      <div class="hero__overlay"></div>
+    </div>
+    
+    <div class="container">
+      <div class="hero__content">
+        <h1 class="hero__title">
+          Landscaping Services
+          <span class="hero__subtitle">Transform Your Outdoor Space</span>
+        </h1>
+        
+        <p class="hero__description">
+          From retaining walls to complete landscape design, Lake County Outdoors brings 
+          expertise and quality craftsmanship to every project.
+        </p>
+        
+        <div class="hero__actions">
+          <Button href="/contact" variant="primary" size="large">
+            Get a Free Quote
+          </Button>
+          <Button href="tel:6126550648" variant="secondary" size="large">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Call 612-655-0648
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Gallery Section -->
+  <section class="gallery">
+    <div class="container">
+      <div class="gallery__wrapper">
+        <div class="gallery__main">
+          <img src="/images/landscaping/landscaping-square-1-600x600.jpg" alt="Landscaping showcase" id="galleryMain" />
+        </div>
+        <div class="gallery__thumbnails">
+          <img src="/images/landscaping/landscaping-square-1-600x600.jpg" alt="Retaining walls" class="gallery__thumb active" data-full="/images/landscaping/landscaping-square-1-600x600.jpg" />
+          <img src="/images/landscaping/landscaping-square-2-600x600.jpg" alt="Custom patios" class="gallery__thumb" data-full="/images/landscaping/landscaping-square-2-600x600.jpg" />
+          <img src="/images/landscaping/landscaping-square-3-600x600.jpg" alt="Tree services" class="gallery__thumb" data-full="/images/landscaping/landscaping-square-3-600x600.jpg" />
+          <img src="/images/landscaping/landscaping-square-4-600x600.jpg" alt="Landscaping design" class="gallery__thumb" data-full="/images/landscaping/landscaping-square-4-600x600.jpg" />
+          <img src="/images/landscaping/landscaping-square-5-600x600.jpg" alt="Professional landscaping" class="gallery__thumb" data-full="/images/landscaping/landscaping-square-5-600x600.jpg" />
+          <img src="/images/landscaping/bobcat-excavator.jpg" alt="Excavation equipment" class="gallery__thumb" data-full="/images/landscaping/bobcat-excavator.jpg" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services">
+    <div class="container">
+      <div class="services__header">
+        <h2 class="services__title">Our Landscaping Services</h2>
+        <p class="services__subtitle">Professional outdoor solutions tailored to your needs</p>
+      </div>
+      
+      <div class="services__grid">
+        <!-- Retaining and Boulder Walls -->
+        <div class="service-card">
+          <div class="service-card__icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3h18v18H3z"></path>
+              <path d="M3 9h18"></path>
+              <path d="M3 15h18"></path>
+              <path d="M9 3v18"></path>
+              <path d="M15 3v18"></path>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Expert Retaining and Boulder Wall Construction</h3>
+          <p class="service-card__description">
+            At Lake County Outdoors, we specialize in constructing durable and aesthetically 
+            pleasing retaining and boulder walls. Our skilled team ensures long-lasting 
+            stability for any landscape, blending functionality with beauty. Whether for 
+            residential or commercial properties, we deliver innovative, tailored solutions 
+            to meet your unique needs.
+          </p>
+        </div>
+
+        <!-- Custom Patios -->
+        <div class="service-card">
+          <div class="service-card__icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
+              <line x1="7" y1="2" x2="7" y2="22"></line>
+              <line x1="17" y1="2" x2="17" y2="22"></line>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Custom Patio Specialists</h3>
+          <p class="service-card__description">
+            At Lake County Outdoors we specialize in crafting patios tailored to suit every 
+            lifestyle and aesthetic preference, using high-quality materials and expert 
+            craftsmanship. Our team works closely with clients to design custom patio spaces 
+            that seamlessly blend functionality with elegance, enhancing outdoor living experiences.
+          </p>
+        </div>
+
+        <!-- Concrete Services -->
+        <div class="service-card">
+          <div class="service-card__icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              <polyline points="3 5 21 5"></polyline>
+              <polyline points="3 19 21 19"></polyline>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Premier Concrete Services</h3>
+          <p class="service-card__description">
+            Lake County Outdoors offers top-notch concrete services for residential and 
+            commercial projects. Our skilled team ensures durable and visually appealing 
+            solutions, from driveways and sidewalks to foundations and decorative elements. 
+            Trust us for reliable, long-lasting concrete installations tailored to your needs.
+          </p>
+        </div>
+
+        <!-- Excavation and Demolition -->
+        <div class="service-card">
+          <div class="service-card__icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16z"></path>
+              <path d="M17 18h1"></path>
+              <path d="M12 18h1"></path>
+              <path d="M7 18h1"></path>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Excavation and Demolition</h3>
+          <p class="service-card__description">
+            Lake County Outdoors offers professional excavation and demolition services for 
+            projects of any scale. Our experienced team, equipped with state-of-the-art 
+            equipment and following strict safety protocols, ensures efficient and precise 
+            completion while minimizing disruptions. Whether preparing sites for construction, 
+            removing structures, or clearing land, we deliver reliable solutions tailored to 
+            each project's unique needs.
+          </p>
+        </div>
+
+        <!-- Tree Services -->
+        <div class="service-card">
+          <div class="service-card__icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22v-11"></path>
+              <path d="M9 8v-2a3 3 0 0 1 6 0v2"></path>
+              <path d="M12 8a5 5 0 0 0-5 5c0 1.7.9 3.2 2.2 4.1"></path>
+              <path d="M12 8a5 5 0 0 1 5 5c0 1.7-.9 3.2-2.2 4.1"></path>
+              <path d="M7 13h10"></path>
+              <path d="M7 9h10"></path>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Tree Removal and Tree Trimming</h3>
+          <p class="service-card__description">
+            Lake County Outdoors provides expert tree removal and trimming services for 
+            projects of any size—no job is too big or too small. Our experienced team, 
+            equipped with top-of-the-line equipment and committed to the highest safety 
+            standards, delivers precise and efficient solutions. Whether you need hazardous 
+            tree removal, routine trimming, or large-scale land clearing, we get the job 
+            done right.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta__content">
+        <h2 class="cta__title">Ready to Transform Your Landscape?</h2>
+        <p class="cta__description">
+          Let's discuss your project and bring your outdoor vision to life.
+        </p>
+        <div class="cta__actions">
+          <Button href="/contact" variant="primary" size="large">
+            Schedule a Consultation
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Gallery functionality
+  const galleryMain = document.getElementById('galleryMain');
+  const galleryThumbs = document.querySelectorAll('.gallery__thumb');
+  
+  galleryThumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      // Update main image
+      const fullImageSrc = thumb.dataset.full;
+      const altText = thumb.alt;
+      
+      if (galleryMain) {
+        galleryMain.src = fullImageSrc;
+        galleryMain.alt = altText;
+      }
+      
+      // Update active state
+      galleryThumbs.forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    });
+  });
+</script>
+
+<style>
+  /* Hero Section */
+  .hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .hero__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/images/landscaping/landscaping-square-5-600x600.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+  }
+  
+  .hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(46, 90, 135, 0.95) 0%,
+      rgba(74, 144, 226, 0.85) 100%
+    );
+    z-index: -1;
+  }
+  
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--white);
+    padding: var(--space-8) 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero__title {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    font-weight: var(--font-extrabold);
+    margin-bottom: var(--space-2);
+    color: var(--white);
+    line-height: 1.1;
+  }
+  
+  .hero__subtitle {
+    display: block;
+    font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+    font-weight: var(--font-normal);
+    margin-top: var(--space-2);
+    opacity: 0.95;
+  }
+  
+  .hero__description {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+    opacity: 0.95;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero__actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Gallery Section */
+  .gallery {
+    padding: var(--space-12) 0;
+    background-color: var(--neutral-light);
+  }
+  
+  .gallery__wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .gallery__main {
+    width: 100%;
+    height: 500px;
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .gallery__main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .gallery__thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--space-3);
+  }
+  
+  .gallery__thumb {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all var(--transition-base);
+    border: 2px solid transparent;
+  }
+  
+  .gallery__thumb:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  
+  .gallery__thumb.active {
+    opacity: 1;
+    border-color: var(--primary);
+  }
+
+  /* Services Section */
+  .services {
+    padding: var(--space-20) 0;
+    background-color: var(--white);
+  }
+  
+  .services__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .services__title {
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+    font-size: var(--text-4xl);
+  }
+  
+  .services__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-8);
+  }
+  
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--neutral);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    transition: all var(--transition-base);
+    text-align: center;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary);
+  }
+  
+  .service-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary);
+    color: var(--white);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-6);
+  }
+  
+  .service-card__icon svg {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .service-card__title {
+    color: var(--secondary);
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-4);
+    line-height: 1.3;
+  }
+  
+  .service-card__description {
+    color: var(--neutral-dark);
+    line-height: 1.6;
+    text-align: left;
+  }
+  
+  @media (max-width: 768px) {
+    .gallery__main {
+      height: 300px;
+    }
+    
+    .gallery__thumbnails {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .gallery__thumb {
+      height: 80px;
+    }
+    
+    .services__grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .service-card {
+      padding: var(--space-6);
+    }
+  }
+
+
+  /* CTA Section */
+  .cta {
+    background-color: var(--primary);
+    padding: var(--space-16) 0;
+  }
+  
+  .cta__content {
+    text-align: center;
+    color: var(--white);
+  }
+  
+  .cta__title {
+    font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+    margin-bottom: var(--space-4);
+    color: var(--white);
+  }
+  
+  .cta__description {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-8);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.95;
+  }
+  
+  .cta__actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 50vh;
+    }
+    
+    .hero__actions {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .hero__actions > :global(*) {
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .services__grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .portfolio__grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .process__steps {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+  }
+</style>

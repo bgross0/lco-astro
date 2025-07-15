@@ -1,0 +1,107 @@
+---
+import '../styles/global.css';
+import '../styles/utilities.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { 
+  title = 'Lake County Outdoors, LLC', 
+  description = 'Municipal Contracting, Commercial Snow Removal, Heavy Equipment Rental. Professional outdoor services in Lake County.',
+  image = '/og-image.jpg',
+  canonical
+} = Astro.props;
+
+const currentUrl = Astro.url.href;
+const ogImage = new URL(image, Astro.site).href;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Lake County Outdoors, LLC" />
+    <link rel="canonical" href={canonical || currentUrl} />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:site_name" content="Lake County Outdoors, LLC" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <a href="#main" class="skip-to-content">Skip to content</a>
+    
+    <Header />
+    
+    <main id="main">
+      <slot />
+    </main>
+    
+    <Footer />
+    
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Lake County Outdoors, LLC",
+        "description": "Professional outdoor services including commercial snow removal, landscaping, and municipal contracting in Lake County.",
+        "telephone": "612-655-0648",
+        "email": "info@lakecountyoutdoor.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lake County",
+          "addressRegion": "MN",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "",
+          "longitude": ""
+        },
+        "url": "https://lakecountyoutdoor.com",
+        "image": "https://lakecountyoutdoor.com/og-image.jpg",
+        "priceRange": "$$",
+        "openingHours": "Mo-Fr 07:00-18:00",
+        "sameAs": []
+      }
+    </script>
+  </body>
+</html>

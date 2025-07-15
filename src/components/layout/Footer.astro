@@ -1,0 +1,185 @@
+---
+const currentYear = new Date().getFullYear();
+
+const services = [
+  { label: 'Residential Services', href: '/residential-services' },
+  { label: 'Commercial Services', href: '/commercial-services' },
+  { label: 'Emergency Services', href: '/emergency-services' }
+];
+
+const contact = {
+  phone: '612-655-0648',
+  email: 'info@lakecountyoutdoor.com',
+  address: 'Lake County, MN'
+};
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__content">
+      <!-- Company Info -->
+      <div class="footer__section">
+        <h3 class="footer__title">Lake County Outdoors, LLC</h3>
+        <p class="footer__description">
+          Professional outdoor services including commercial snow removal, landscaping, 
+          and municipal contracting. Serving Lake County and surrounding areas.
+        </p>
+      </div>
+      
+      <!-- Services -->
+      <div class="footer__section">
+        <h4 class="footer__heading">Our Services</h4>
+        <ul class="footer__list">
+          {services.map((service) => (
+            <li class="footer__item">
+              <a href={service.href} class="footer__link">{service.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="footer__section">
+        <h4 class="footer__heading">Contact Us</h4>
+        <div class="footer__contact">
+          <a href={`tel:${contact.phone.replace(/-/g, '')}`} class="footer__contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {contact.phone}
+          </a>
+          <a href={`mailto:${contact.email}`} class="footer__contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {contact.email}
+          </a>
+          <div class="footer__contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {contact.address}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {currentYear} Lake County Outdoors, LLC. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--secondary);
+    color: var(--white);
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-8);
+    margin-top: auto;
+  }
+  
+  .footer__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+  }
+  
+  @media (min-width: 768px) {
+    .footer__content {
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-12);
+    }
+  }
+  
+  /* Sections */
+  .footer__section {
+    max-width: 400px;
+  }
+  
+  .footer__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: var(--space-4);
+  }
+  
+  .footer__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: var(--space-4);
+  }
+  
+  .footer__description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+  }
+  
+  /* Lists */
+  .footer__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer__item {
+    margin-bottom: var(--space-2);
+  }
+  
+  .footer__link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  
+  .footer__link:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+  
+  /* Contact */
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .footer__contact-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  
+  .footer__contact-link:hover {
+    color: var(--white);
+  }
+  
+  .footer__contact-link svg {
+    flex-shrink: 0;
+  }
+  
+  /* Bottom Bar */
+  .footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--space-6);
+    text-align: center;
+  }
+  
+  .footer__copyright {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+</style>

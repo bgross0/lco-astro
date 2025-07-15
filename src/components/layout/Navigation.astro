@@ -1,0 +1,101 @@
+---
+export interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Commercial Snow Removal', href: '/commercial-snow-removal' },
+  { label: 'Landscaping', href: '/landscaping' },
+  { label: 'Municipal Contracting', href: '/municipal-contracting' },
+  { label: 'ICE Management', href: '/ice-management' },
+  { label: 'Contact', href: '/contact' }
+];
+
+const isActive = (href: string) => {
+  if (href === '/') {
+    return currentPath === href;
+  }
+  return currentPath.startsWith(href);
+};
+---
+
+<nav class="nav" aria-label="Main navigation">
+  <ul class="nav__list">
+    {navItems.map((item) => (
+      <li class="nav__item">
+        <a 
+          href={item.href} 
+          class={`nav__link ${isActive(item.href) ? 'nav__link--active' : ''}`}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .nav {
+    display: none;
+  }
+  
+  @media (min-width: 1024px) {
+    .nav {
+      display: block;
+      flex-grow: 1;
+    }
+    
+    .nav__list {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-1);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav__item {
+      margin: 0;
+    }
+    
+    .nav__link {
+      display: block;
+      padding: var(--space-2) var(--space-4);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--neutral-dark);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    
+    .nav__link:hover {
+      color: var(--primary);
+      background-color: rgba(74, 144, 226, 0.1);
+      text-decoration: none;
+    }
+    
+    .nav__link--active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .nav__link--active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: var(--space-4);
+      right: var(--space-4);
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: var(--radius-sm);
+    }
+  }
+</style>

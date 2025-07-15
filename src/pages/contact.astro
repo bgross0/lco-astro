@@ -1,0 +1,580 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/common/Button.astro';
+
+const pageTitle = "Contact - Lake County Outdoors, LLC";
+const pageDescription = "Contact Lake County Outdoors for commercial snow removal, landscaping, and municipal contracting services. Serving Edina, MN and surrounding areas.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="container">
+      <div class="hero__content">
+        <h1 class="hero__title">Contact Us</h1>
+        <p class="hero__subtitle">
+          Let's discuss how we can help with your outdoor service needs
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact">
+    <div class="container">
+      <div class="contact__grid">
+        <!-- Contact Form -->
+        <div class="contact__form-section">
+          <div class="contact__form-card">
+            <h2 class="contact__form-title">Request a Quote</h2>
+            <p class="contact__form-subtitle">
+              Fill out the form below and we'll get back to you within 24 hours
+            </p>
+            
+            <form class="form" action="#" method="POST">
+              <div class="form__row">
+                <div class="form__group">
+                  <label for="firstName" class="form__label">First Name</label>
+                  <input 
+                    type="text" 
+                    id="firstName" 
+                    name="firstName" 
+                    class="form__input" 
+                    required
+                  />
+                </div>
+                <div class="form__group">
+                  <label for="lastName" class="form__label">Last Name</label>
+                  <input 
+                    type="text" 
+                    id="lastName" 
+                    name="lastName" 
+                    class="form__input" 
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div class="form__row">
+                <div class="form__group">
+                  <label for="email" class="form__label">Email</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form__input" 
+                    required
+                  />
+                </div>
+                <div class="form__group">
+                  <label for="phone" class="form__label">Phone</label>
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    class="form__input"
+                    placeholder="(xxx) xxx-xxxx"
+                  />
+                </div>
+              </div>
+              
+              <div class="form__group">
+                <label for="service" class="form__label">Service Needed</label>
+                <select id="service" name="service" class="form__select" required>
+                  <option value="">Select a service</option>
+                  <option value="commercial-snow-removal">Commercial Snow Removal</option>
+                  <option value="landscaping">Landscaping</option>
+                  <option value="municipal-contracting">Municipal Contracting</option>
+                  <option value="ice-management">ICE Management</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              
+              <div class="form__group">
+                <label for="message" class="form__label">Message</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="5" 
+                  class="form__textarea" 
+                  placeholder="Tell us about your project or service needs..."
+                  required
+                ></textarea>
+              </div>
+              
+              <button type="submit" class="form__submit">
+                Send Message
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="contact__info-section">
+          <div class="contact__info-card">
+            <h3 class="contact__info-title">Get in Touch</h3>
+            
+            <div class="contact__info-item">
+              <div class="contact__info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <div class="contact__info-content">
+                <h4>Phone</h4>
+                <a href="tel:6126550648" class="contact__info-link">
+                  (612) 655-0648
+                </a>
+                <p class="contact__info-note">Available 24/7 for emergencies</p>
+              </div>
+            </div>
+            
+            <div class="contact__info-item">
+              <div class="contact__info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="contact__info-content">
+                <h4>Email</h4>
+                <a href="mailto:info@lakecountyoutdoor.com" class="contact__info-link">
+                  info@lakecountyoutdoor.com
+                </a>
+                <p class="contact__info-note">We respond within 24 hours</p>
+              </div>
+            </div>
+            
+            <div class="contact__info-item">
+              <div class="contact__info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div class="contact__info-content">
+                <h4>Service Area</h4>
+                <p>Edina, MN and surrounding areas</p>
+                <p class="contact__info-note">Commercial properties throughout the metro</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="contact__hours-card">
+            <h3 class="contact__info-title">Business Hours</h3>
+            <div class="contact__hours">
+              <div class="contact__hours-row">
+                <span>Monday - Friday</span>
+                <span>7:00 AM - 6:00 PM</span>
+              </div>
+              <div class="contact__hours-row">
+                <span>Saturday</span>
+                <span>8:00 AM - 4:00 PM</span>
+              </div>
+              <div class="contact__hours-row">
+                <span>Sunday</span>
+                <span>Closed</span>
+              </div>
+            </div>
+            <p class="contact__hours-note">
+              <strong>Emergency Services:</strong> Available 24/7 for snow removal and urgent needs
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="map">
+    <div class="container">
+      <div class="map__header">
+        <h2 class="map__title">Our Service Area</h2>
+        <p class="map__subtitle">
+          Proudly serving Hennepin County and surrounding counties throughout the Minneapolis-St. Paul metro area
+        </p>
+      </div>
+      
+      <div class="map__container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d723621.8990398735!2d-93.6319107!3d45.0059978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52b2d4e3f3f3f3f3%3A0x3f3f3f3f3f3f3f3f!2sHennepin%20County%2C%20MN!5e0!3m2!1sen!2sus!4v1234567890"
+          width="100%"
+          height="500"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Lake County Outdoors Service Area - Hennepin County and Surrounding Areas"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta__content">
+        <h2 class="cta__title">Ready to Get Started?</h2>
+        <p class="cta__description">
+          Contact us today for a free consultation and quote
+        </p>
+        <div class="cta__actions">
+          <Button href="tel:6126550648" variant="primary" size="large">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Call (612) 655-0648
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    padding: var(--space-16) 0 var(--space-12);
+    color: var(--white);
+    overflow: hidden;
+  }
+  
+  .hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  
+  .hero__content {
+    position: relative;
+    text-align: center;
+  }
+  
+  .hero__title {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-4);
+  }
+  
+  .hero__subtitle {
+    font-size: var(--text-xl);
+    opacity: 0.95;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Contact Section */
+  .contact {
+    padding: var(--space-20) 0;
+    background-color: var(--neutral-light);
+  }
+  
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  /* Form Section */
+  .contact__form-card {
+    background: var(--white);
+    padding: var(--space-12);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .contact__form-title {
+    font-size: var(--text-3xl);
+    color: var(--primary);
+    margin-bottom: var(--space-3);
+  }
+  
+  .contact__form-subtitle {
+    color: var(--neutral-dark);
+    margin-bottom: var(--space-8);
+  }
+  
+  .form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+  
+  .form__group {
+    margin-bottom: var(--space-6);
+  }
+  
+  .form__label {
+    display: block;
+    font-weight: var(--font-medium);
+    color: var(--neutral-dark);
+    margin-bottom: var(--space-2);
+    font-size: var(--text-sm);
+  }
+  
+  .form__input,
+  .form__select,
+  .form__textarea {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 2px solid var(--neutral);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-family: inherit;
+    transition: all var(--transition-fast);
+    background-color: var(--white);
+  }
+  
+  .form__input:focus,
+  .form__select:focus,
+  .form__textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  }
+  
+  .form__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  .form__submit {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background-color: var(--primary);
+    color: var(--white);
+    padding: var(--space-4) var(--space-8);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    margin-top: var(--space-4);
+  }
+  
+  .form__submit:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .form__submit svg {
+    transition: transform var(--transition-fast);
+  }
+  
+  .form__submit:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Info Section */
+  .contact__info-card,
+  .contact__hours-card {
+    background: var(--white);
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--space-6);
+  }
+  
+  .contact__info-title {
+    font-size: var(--text-2xl);
+    color: var(--primary);
+    margin-bottom: var(--space-6);
+  }
+  
+  .contact__info-item {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  
+  .contact__info-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .contact__info-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background-color: rgba(74, 144, 226, 0.1);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+  }
+  
+  .contact__info-content h4 {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    margin-bottom: var(--space-1);
+  }
+  
+  .contact__info-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    transition: color var(--transition-fast);
+  }
+  
+  .contact__info-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+  }
+  
+  .contact__info-note {
+    font-size: var(--text-sm);
+    color: var(--neutral-dark);
+    margin-top: var(--space-1);
+  }
+  
+  .contact__hours {
+    margin-bottom: var(--space-6);
+  }
+  
+  .contact__hours-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--neutral-light);
+  }
+  
+  .contact__hours-row:last-child {
+    border-bottom: none;
+  }
+  
+  .contact__hours-note {
+    padding: var(--space-4);
+    background-color: rgba(74, 144, 226, 0.05);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    color: var(--neutral-dark);
+  }
+
+  /* Map Section */
+  .map {
+    padding: var(--space-20) 0;
+    background-color: var(--white);
+  }
+  
+  .map__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .map__title {
+    font-size: var(--text-3xl);
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+  }
+  
+  .map__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .map__container {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    background-color: var(--neutral-light);
+  }
+  
+  .map__container iframe {
+    display: block;
+    filter: grayscale(20%);
+    transition: filter var(--transition-base);
+  }
+  
+  .map__container:hover iframe {
+    filter: grayscale(0%);
+  }
+
+  /* CTA Section */
+  .cta {
+    background-color: var(--primary);
+    padding: var(--space-16) 0;
+  }
+  
+  .cta__content {
+    text-align: center;
+    color: var(--white);
+  }
+  
+  .cta__title {
+    font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+    margin-bottom: var(--space-4);
+  }
+  
+  .cta__description {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-8);
+    opacity: 0.95;
+  }
+  
+  .cta__actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .contact__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    
+    .contact__form-card {
+      padding: var(--space-8);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--space-12) 0 var(--space-8);
+    }
+    
+    .contact {
+      padding: var(--space-12) 0;
+    }
+    
+    .contact__form-card {
+      padding: var(--space-6);
+    }
+    
+    .form__row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    
+    .form__submit {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .contact__info-card,
+    .contact__hours-card {
+      padding: var(--space-6);
+    }
+    
+    .map__container iframe {
+      height: 350px;
+    }
+  }
+</style>

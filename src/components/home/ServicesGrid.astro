@@ -1,0 +1,93 @@
+---
+import ServiceCard from '../services/ServiceCard.astro';
+
+const services = [
+  {
+    title: 'Commercial Snow Removal',
+    description: 'Professional snow and ice management for commercial properties. 24/7 emergency service available.',
+    image: '/images/snow-removal/snow-removal-hero-600x300.jpg',
+    href: '/commercial-snow-removal',
+    icon: 'snowflake'
+  },
+  {
+    title: 'Landscaping Services',
+    description: 'Expert retaining walls, boulder installation, paver patios, and complete landscape design.',
+    image: '/images/landscaping/landscaping-square-1-600x600.jpg',
+    href: '/landscaping',
+    icon: 'tree'
+  },
+  {
+    title: 'Municipal Contracting',
+    description: 'Reliable municipal services including road maintenance, snow removal, and infrastructure work.',
+    image: '/images/equipment/equipment-2-600x616.jpg',
+    href: '/municipal-contracting',
+    icon: 'building'
+  },
+  {
+    title: 'ICE Management',
+    description: 'Complete ice control solutions with pre-treatment, de-icing, and anti-icing services.',
+    image: '/images/equipment/equipment-4-600x389.jpg',
+    href: '/ice-management',
+    icon: 'shield'
+  }
+];
+---
+
+<section class="services-grid">
+  <div class="container">
+    <div class="services-grid__header">
+      <h2 class="services-grid__title">Our Services</h2>
+      <p class="services-grid__subtitle">
+        Professional outdoor services you can count on, year-round
+      </p>
+    </div>
+    
+    <div class="services-grid__grid">
+      {services.map((service) => (
+        <ServiceCard {...service} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-grid {
+    background-color: var(--neutral-light);
+  }
+  
+  .services-grid__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .services-grid__title {
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+  }
+  
+  .services-grid__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .services-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-8);
+  }
+  
+  @media (min-width: 768px) {
+    .services-grid__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .services-grid__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+  }
+</style>

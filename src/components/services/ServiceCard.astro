@@ -1,0 +1,199 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  image: string;
+  href: string;
+  icon?: string;
+}
+
+const { title, description, image, href, icon } = Astro.props;
+
+const getIcon = (iconName: string) => {
+  switch (iconName) {
+    case 'snowflake':
+      return `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="2" x2="12" y2="22"></line>
+        <path d="M20 16l-6-6 6-6"></path>
+        <path d="M4 8l6 6-6 6"></path>
+        <path d="M20 8l-6 6 6 6"></path>
+        <path d="M4 16l6-6-6-6"></path>
+      </svg>`;
+    case 'tree':
+      return `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L7 7l5 5-5 5 5 5 5-5-5-5 5-5z"></path>
+        <line x1="12" y1="22" x2="12" y2="16"></line>
+      </svg>`;
+    case 'building':
+      return `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+        <path d="M9 22v-4h6v4"></path>
+        <path d="M8 6h.01"></path>
+        <path d="M16 6h.01"></path>
+        <path d="M12 6h.01"></path>
+        <path d="M12 10h.01"></path>
+        <path d="M12 14h.01"></path>
+        <path d="M16 10h.01"></path>
+        <path d="M16 14h.01"></path>
+        <path d="M8 10h.01"></path>
+        <path d="M8 14h.01"></path>
+      </svg>`;
+    case 'shield':
+      return `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      </svg>`;
+    default:
+      return '';
+  }
+};
+---
+
+<article class="service-card">
+  <a href={href} class="service-card__link">
+    <div class="service-card__image-wrapper">
+      <img 
+        src={image} 
+        alt={title}
+        class="service-card__image"
+        loading="lazy"
+        width="400"
+        height="300"
+      />
+      <div class="service-card__overlay">
+        {icon && (
+          <div class="service-card__icon" set:html={getIcon(icon)} />
+        )}
+      </div>
+    </div>
+    
+    <div class="service-card__content">
+      <h3 class="service-card__title">{title}</h3>
+      <p class="service-card__description">{description}</p>
+      <span class="service-card__cta">
+        Learn More 
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .service-card {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+    height: 100%;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .service-card__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .service-card__image-wrapper {
+    position: relative;
+    padding-top: 75%; /* 4:3 Aspect Ratio */
+    overflow: hidden;
+  }
+  
+  .service-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+  
+  .service-card:hover .service-card__image {
+    transform: scale(1.05);
+  }
+  
+  .service-card__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+  
+  .service-card:hover .service-card__overlay {
+    opacity: 1;
+  }
+  
+  .service-card__icon {
+    background-color: var(--white);
+    color: var(--primary);
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.8);
+    transition: transform var(--transition-base);
+  }
+  
+  .service-card:hover .service-card__icon {
+    transform: scale(1);
+  }
+  
+  .service-card__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+  }
+  
+  .service-card__title {
+    color: var(--primary);
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-3);
+  }
+  
+  .service-card__description {
+    color: var(--neutral-dark);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    margin-bottom: var(--space-4);
+    flex: 1;
+  }
+  
+  .service-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--primary);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-sm);
+    transition: gap var(--transition-fast);
+  }
+  
+  .service-card:hover .service-card__cta {
+    gap: var(--space-2);
+  }
+</style>

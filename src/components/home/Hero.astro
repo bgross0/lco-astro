@@ -1,0 +1,177 @@
+---
+import Button from '../common/Button.astro';
+---
+
+<section class="hero">
+  <div class="hero__background">
+    <div class="hero__overlay"></div>
+  </div>
+  
+  <div class="container">
+    <div class="hero__content">
+      <h1 class="hero__title">
+        Lake County Outdoors
+        <span class="hero__subtitle">Professional Outdoor Services</span>
+      </h1>
+      
+      <div class="hero__services">
+        <span class="hero__service">Snow Specialists</span>
+        <span class="hero__separator">•</span>
+        <span class="hero__service">Earthworks</span>
+        <span class="hero__separator">•</span>
+        <span class="hero__service">Landscaping</span>
+      </div>
+      
+      <p class="hero__description">
+        At Lake County Outdoors, LLC, we specialize in landscaping, excavation, and snow removal. 
+        With over 60 years of combined experience, we are a trusted leader in all things outdoor 
+        transformation and maintenance.
+      </p>
+      
+      <div class="hero__actions">
+        <Button href="/contact" variant="primary" size="large">
+          Get a Free Quote
+        </Button>
+        <Button href="tel:6126550648" variant="secondary" size="large">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Call 612-655-0648
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .hero__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/images/equipment/equipment-2-600x616.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+  }
+  
+  @media (max-width: 768px) {
+    .hero__background {
+      background-image: url('/images/equipment/equipment-hero-600x300.jpg');
+    }
+  }
+  
+  .hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(46, 90, 135, 0.9) 0%,
+      rgba(74, 144, 226, 0.8) 100%
+    );
+    z-index: -1;
+  }
+  
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--white);
+    padding: var(--space-8) 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero__title {
+    font-size: clamp(var(--text-4xl), 6vw, var(--text-6xl));
+    font-weight: var(--font-extrabold);
+    margin-bottom: var(--space-2);
+    color: var(--white);
+    line-height: 1.1;
+  }
+  
+  .hero__subtitle {
+    display: block;
+    font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+    font-weight: var(--font-normal);
+    margin-top: var(--space-2);
+    opacity: 0.95;
+  }
+  
+  .hero__services {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+  }
+  
+  .hero__service {
+    color: var(--white);
+  }
+  
+  .hero__separator {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .hero__description {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+    opacity: 0.95;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero__actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero {
+      min-height: 70vh;
+    }
+    
+    .hero__services {
+      font-size: var(--text-base);
+      gap: var(--space-2);
+    }
+    
+    .hero__description {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-6);
+    }
+    
+    .hero__actions {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .hero__actions > :global(*) {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>

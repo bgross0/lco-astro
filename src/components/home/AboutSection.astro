@@ -1,0 +1,166 @@
+---
+import Button from '../common/Button.astro';
+---
+
+<section class="about">
+  <div class="container">
+    <div class="about__grid">
+      <div class="about__content">
+        <h2 class="about__title">
+          Our Commitment to Quality
+        </h2>
+        
+        <p class="about__text">
+          At Lake County Outdoors, LLC, we deliver high-quality snow removal and landscaping 
+          services using top-tier materials and equipment. Our team stays current with the 
+          latest techniques and industry standards.
+        </p>
+        
+        <p class="about__text">
+          With a comprehensive fleet of 10 trucks, 14 Bobcats, 6 wheel loaders, and 2 tri-axle 
+          dump trucks with salters, we efficiently handle any snow removal challenge or land 
+          renovation project. Our dedicated team ensures reliability and constantly strives to 
+          deliver the best to our customers.
+        </p>
+        
+        <div class="about__features">
+          <div class="about__feature">
+            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>24/7 Emergency Service</span>
+          </div>
+          
+          <div class="about__feature">
+            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Licensed & Insured</span>
+          </div>
+          
+          <div class="about__feature">
+            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Free Estimates</span>
+          </div>
+          
+          <div class="about__feature">
+            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>60+ Years Combined Experience</span>
+          </div>
+        </div>
+        
+        <div class="about__actions">
+          <Button href="/contact" variant="primary">
+            Get Started Today
+          </Button>
+        </div>
+      </div>
+      
+      <div class="about__images">
+        <div class="about__image-grid">
+          <img 
+            src="/images/equipment/equipment-1-600x287.jpg" 
+            alt="CAT 299D3 Skid Steer"
+            class="about__image about__image--1"
+            loading="lazy"
+            width="400"
+            height="300"
+          />
+          <img 
+            src="/images/landscaping/landscaping-square-1-600x600.jpg" 
+            alt="Professional retaining wall installation"
+            class="about__image about__image--2"
+            loading="lazy"
+            width="400"
+            height="300"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+  
+  .about__title {
+    color: var(--secondary);
+    margin-bottom: var(--space-6);
+  }
+  
+  .about__text {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    line-height: 1.7;
+  }
+  
+  .about__features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+  
+  .about__feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: var(--font-medium);
+    color: var(--neutral-dark);
+  }
+  
+  .about__feature-icon {
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+  
+  .about__actions {
+    margin-top: var(--space-8);
+  }
+  
+  .about__images {
+    display: none;
+  }
+  
+  .about__image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  
+  .about__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .about__image--1 {
+    transform: translateY(-20px);
+  }
+  
+  .about__image--2 {
+    transform: translateY(20px);
+  }
+  
+  @media (min-width: 1024px) {
+    .about__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .about__images {
+      display: block;
+    }
+  }
+</style>
