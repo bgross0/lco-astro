@@ -3,7 +3,7 @@ backend:
   name: github
   repo: bgross0/lco-astro
   branch: main
-  base_url: https://lco-web.pages.dev
+  base_url: https://lakecountyoutdoor.com
   auth_endpoint: /api/auth
 
 # Media files storage
@@ -11,8 +11,8 @@ media_folder: "public/images/uploads" # Media files will be stored here
 public_folder: "/images/uploads" # Public URL path
 
 # Site URL for preview
-site_url: https://lco-web.pages.dev # Update with your actual domain
-display_url: https://lco-web.pages.dev
+site_url: https://lakecountyoutdoor.com
+display_url: https://lakecountyoutdoor.com
 
 # CMS configuration
 publish_mode: editorial_workflow
