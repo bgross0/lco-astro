@@ -44,7 +44,7 @@
 <style>
   .client-satisfaction {
     background-color: var(--white);
-    padding: var(--space-16) 0;
+    padding: var(--space-12) 0;
   }
   
   .satisfaction__content {
@@ -92,12 +92,22 @@
   }
   
   @media (min-width: 768px) {
+    .client-satisfaction {
+      padding: var(--space-16) 0;
+    }
+    
     .satisfaction__text {
       text-align: left;
     }
     
     .satisfaction__experience {
       text-align: left;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .client-satisfaction {
+      padding: var(--space-20) 0;
     }
   }
 </style>

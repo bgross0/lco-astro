@@ -1,4 +1,6 @@
 ---
+import Icon from '../common/Icon.astro';
+
 export interface Props {
   currentPath: string;
 }
@@ -10,7 +12,7 @@ const navItems = [
   { label: 'Commercial Snow Removal', href: '/commercial-snow-removal' },
   { label: 'Landscaping', href: '/landscaping' },
   { label: 'Municipal Contracting', href: '/municipal-contracting' },
-  { label: 'ICE Management', href: '/ice-management' },
+  { label: 'Ice Management', href: '/ice-management' },
   { label: 'Contact', href: '/contact' }
 ];
 
@@ -20,6 +22,9 @@ const isActive = (href: string) => {
   }
   return currentPath.startsWith(href);
 };
+
+const phoneNumber = '612-655-0648';
+const phoneLink = `tel:${phoneNumber.replace(/-/g, '')}`;
 ---
 
 <nav class="nav" aria-label="Main navigation">
@@ -35,6 +40,12 @@ const isActive = (href: string) => {
         </a>
       </li>
     ))}
+    <li class="nav__item nav__item--phone">
+      <a href={phoneLink} class="nav__phone-btn">
+        <Icon name="phone" size={18} />
+        <span>{phoneNumber}</span>
+      </a>
+    </li>
   </ul>
 </nav>
 
@@ -46,14 +57,13 @@ const isActive = (href: string) => {
   @media (min-width: 1024px) {
     .nav {
       display: block;
-      flex-grow: 1;
     }
     
     .nav__list {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: var(--space-1);
+      justify-content: center;
+      gap: 0;
       list-style: none;
       margin: 0;
       padding: 0;
@@ -65,15 +75,16 @@ const isActive = (href: string) => {
     
     .nav__link {
       display: block;
-      padding: var(--space-2) var(--space-4);
+      padding: var(--space-2) var(--space-3);
       font-family: var(--font-body);
-      font-size: var(--text-base);
+      font-size: var(--text-sm);
       font-weight: 500;
       color: var(--neutral-dark);
       text-decoration: none;
       border-radius: var(--radius-md);
       transition: all var(--transition-fast);
       position: relative;
+      white-space: nowrap;
     }
     
     .nav__link:hover {
@@ -96,6 +107,52 @@ const isActive = (href: string) => {
       height: 3px;
       background-color: var(--primary);
       border-radius: var(--radius-sm);
+    }
+    
+    /* Phone button */
+    .nav__item--phone {
+      margin-left: var(--space-4);
+    }
+    
+    .nav__phone-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background-color: var(--primary);
+      color: var(--white);
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: var(--radius-full);
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .nav__phone-btn:hover {
+      background-color: var(--white);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      text-decoration: none;
+    }
+    
+    .nav__phone-btn span {
+      font-size: var(--text-sm);
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .nav__link {
+      font-size: var(--text-base);
+      padding: var(--space-2) var(--space-4);
+    }
+    
+    .nav__phone-btn {
+      padding: var(--space-2) var(--space-4);
+    }
+    
+    .nav__phone-btn span {
+      font-size: var(--text-base);
     }
   }
 </style>

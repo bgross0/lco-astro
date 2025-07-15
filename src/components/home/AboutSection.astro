@@ -1,5 +1,6 @@
 ---
 import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
 ---
 
 <section class="about">
@@ -25,30 +26,22 @@ import Button from '../common/Button.astro';
         
         <div class="about__features">
           <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+            <Icon name="check" size={24} class="about__feature-icon" />
             <span>24/7 Emergency Service</span>
           </div>
           
           <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+            <Icon name="check" size={24} class="about__feature-icon" />
             <span>Licensed & Insured</span>
           </div>
           
           <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+            <Icon name="check" size={24} class="about__feature-icon" />
             <span>Free Estimates</span>
           </div>
           
           <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+            <Icon name="check" size={24} class="about__feature-icon" />
             <span>60+ Years Combined Experience</span>
           </div>
         </div>
@@ -85,6 +78,10 @@ import Button from '../common/Button.astro';
 </section>
 
 <style>
+  .about {
+    padding: var(--space-12) 0;
+  }
+  
   .about__grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -154,7 +151,17 @@ import Button from '../common/Button.astro';
     transform: translateY(20px);
   }
   
+  @media (min-width: 768px) {
+    .about {
+      padding: var(--space-16) 0;
+    }
+  }
+  
   @media (min-width: 1024px) {
+    .about {
+      padding: var(--space-20) 0;
+    }
+    
     .about__grid {
       grid-template-columns: 1fr 1fr;
     }

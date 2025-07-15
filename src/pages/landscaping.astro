@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/common/Button.astro';
+import Icon from '../components/common/Icon.astro';
 
 const pageTitle = "Landscaping - Lake County Outdoors, LLC";
 const pageDescription = "Professional landscaping services including retaining walls, boulder installation, paver patios, and complete landscape design in Lake County.";
@@ -30,9 +31,7 @@ const pageDescription = "Professional landscaping services including retaining w
             Get a Free Quote
           </Button>
           <Button href="tel:6126550648" variant="secondary" size="large">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
+            <Icon name="phone" size={20} />
             Call 612-655-0648
           </Button>
         </div>
@@ -71,13 +70,7 @@ const pageDescription = "Professional landscaping services including retaining w
         <!-- Retaining and Boulder Walls -->
         <div class="service-card">
           <div class="service-card__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 3h18v18H3z"></path>
-              <path d="M3 9h18"></path>
-              <path d="M3 15h18"></path>
-              <path d="M9 3v18"></path>
-              <path d="M15 3v18"></path>
-            </svg>
+            <Icon name="wall" size={48} color="var(--white)" />
           </div>
           <h3 class="service-card__title">Expert Retaining and Boulder Wall Construction</h3>
           <p class="service-card__description">
@@ -92,12 +85,7 @@ const pageDescription = "Professional landscaping services including retaining w
         <!-- Custom Patios -->
         <div class="service-card">
           <div class="service-card__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
-              <line x1="7" y1="2" x2="7" y2="22"></line>
-              <line x1="17" y1="2" x2="17" y2="22"></line>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-            </svg>
+            <Icon name="sun" size={48} color="var(--white)" />
           </div>
           <h3 class="service-card__title">Custom Patio Specialists</h3>
           <p class="service-card__description">
@@ -111,11 +99,7 @@ const pageDescription = "Professional landscaping services including retaining w
         <!-- Concrete Services -->
         <div class="service-card">
           <div class="service-card__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-              <polyline points="3 5 21 5"></polyline>
-              <polyline points="3 19 21 19"></polyline>
-            </svg>
+            <Icon name="hammer" size={48} color="var(--white)" />
           </div>
           <h3 class="service-card__title">Premier Concrete Services</h3>
           <p class="service-card__description">
@@ -129,12 +113,7 @@ const pageDescription = "Professional landscaping services including retaining w
         <!-- Excavation and Demolition -->
         <div class="service-card">
           <div class="service-card__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16z"></path>
-              <path d="M17 18h1"></path>
-              <path d="M12 18h1"></path>
-              <path d="M7 18h1"></path>
-            </svg>
+            <Icon name="bulldozer" size={48} color="var(--white)" />
           </div>
           <h3 class="service-card__title">Excavation and Demolition</h3>
           <p class="service-card__description">
@@ -150,14 +129,7 @@ const pageDescription = "Professional landscaping services including retaining w
         <!-- Tree Services -->
         <div class="service-card">
           <div class="service-card__icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22v-11"></path>
-              <path d="M9 8v-2a3 3 0 0 1 6 0v2"></path>
-              <path d="M12 8a5 5 0 0 0-5 5c0 1.7.9 3.2 2.2 4.1"></path>
-              <path d="M12 8a5 5 0 0 1 5 5c0 1.7-.9 3.2-2.2 4.1"></path>
-              <path d="M7 13h10"></path>
-              <path d="M7 9h10"></path>
-            </svg>
+            <Icon name="tree" size={48} color="var(--white)" />
           </div>
           <h3 class="service-card__title">Tree Removal and Tree Trimming</h3>
           <p class="service-card__description">
@@ -403,11 +375,12 @@ const pageDescription = "Professional landscaping services including retaining w
     color: var(--white);
     border-radius: var(--radius-full);
     margin-bottom: var(--space-6);
+    position: relative;
   }
   
-  .service-card__icon svg {
-    width: 48px;
-    height: 48px;
+  .service-card__icon :global(i) {
+    font-size: 48px !important;
+    color: var(--white) !important;
   }
   
   .service-card__title {

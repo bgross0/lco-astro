@@ -1,4 +1,6 @@
 ---
+import Icon from '../common/Icon.astro';
+
 const currentYear = new Date().getFullYear();
 
 const services = [
@@ -9,7 +11,7 @@ const services = [
 
 const contact = {
   phone: '612-655-0648',
-  email: 'info@lakecountyoutdoor.com',
+  email: 'caden@lakecountyoutdoor.com',
   address: 'Lake County, MN'
 };
 ---
@@ -19,7 +21,9 @@ const contact = {
     <div class="footer__content">
       <!-- Company Info -->
       <div class="footer__section">
-        <h3 class="footer__title">Lake County Outdoors, LLC</h3>
+        <div class="footer__logo-wrapper">
+          <img src="/lco-2025.svg" alt="Lake County Outdoors" class="footer__logo" />
+        </div>
         <p class="footer__description">
           Professional outdoor services including commercial snow removal, landscaping, 
           and municipal contracting. Serving Lake County and surrounding areas.
@@ -43,23 +47,15 @@ const contact = {
         <h4 class="footer__heading">Contact Us</h4>
         <div class="footer__contact">
           <a href={`tel:${contact.phone.replace(/-/g, '')}`} class="footer__contact-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <Icon name="phone" size={16} />
             {contact.phone}
           </a>
           <a href={`mailto:${contact.email}`} class="footer__contact-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <Icon name="envelope" size={16} />
             {contact.email}
           </a>
           <div class="footer__contact-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <Icon name="map-pin" size={16} />
             {contact.address}
           </div>
         </div>
@@ -96,6 +92,10 @@ const contact = {
       grid-template-columns: 2fr 1fr 1fr;
       gap: var(--space-12);
     }
+    
+    .footer__section:first-child {
+      text-align: left;
+    }
   }
   
   /* Sections */
@@ -103,12 +103,28 @@ const contact = {
     max-width: 400px;
   }
   
-  .footer__title {
-    font-family: var(--font-heading);
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: var(--space-4);
+  .footer__section:first-child {
+    text-align: center;
+  }
+  
+  .footer__logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 108px;
+    height: 108px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    margin: 0 auto var(--space-6);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+  }
+  
+  .footer__logo {
+    height: 100px;
+    width: auto;
+    opacity: 0.95;
   }
   
   .footer__heading {
@@ -181,5 +197,36 @@ const contact = {
     color: rgba(255, 255, 255, 0.6);
     font-size: var(--text-sm);
     margin: 0;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 767px) {
+    .footer__content {
+      text-align: center;
+    }
+    
+    .footer__section {
+      margin: 0 auto;
+    }
+    
+    .footer__logo-wrapper {
+      width: 88px;
+      height: 88px;
+    }
+    
+    .footer__logo {
+      height: 80px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .footer__logo-wrapper {
+      width: 124px;
+      height: 124px;
+    }
+    
+    .footer__logo {
+      height: 116px;
+    }
   }
 </style>

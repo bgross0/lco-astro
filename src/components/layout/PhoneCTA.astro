@@ -6,8 +6,8 @@ const phoneLink = `tel:${phoneNumber.replace(/-/g, '')}`;
 <div class="phone-cta">
   <span class="phone-cta__text">Call</span>
   <a href={phoneLink} class="phone-cta__link">
-    <svg class="phone-cta__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg class="phone-cta__icon" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/>
     </svg>
     <span class="phone-cta__number">{phoneNumber}</span>
   </a>
@@ -16,10 +16,11 @@ const phoneLink = `tel:${phoneNumber.replace(/-/g, '')}`;
 
 <style>
   .phone-cta {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-sm);
+    margin: 0 auto;
   }
   
   .phone-cta__text {
@@ -34,19 +35,20 @@ const phoneLink = `tel:${phoneNumber.replace(/-/g, '')}`;
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-1) var(--space-3);
-    background-color: var(--warning);
-    color: var(--white);
+    background-color: var(--white);
+    color: var(--primary);
     text-decoration: none;
     font-weight: 700;
     border-radius: var(--radius-full);
     transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
   }
   
   .phone-cta__link:hover {
-    background-color: var(--white);
-    color: var(--warning);
+    background-color: var(--neutral-light);
+    color: var(--secondary);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
     text-decoration: none;
   }
   

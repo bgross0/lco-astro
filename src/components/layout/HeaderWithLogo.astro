@@ -1,0 +1,133 @@
+---
+import Navigation from './Navigation.astro';
+import PhoneCTA from './PhoneCTA.astro';
+import MobileMenu from './MobileMenu.astro';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  <!-- Top Banner -->
+  <div class="header__banner">
+    <div class="container">
+      <div class="header__banner-content">
+        <PhoneCTA />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Header -->
+  <div class="header__main">
+    <div class="container">
+      <div class="header__content">
+        <!-- Logo with badge style -->
+        <a href="/" class="header__logo" aria-label="Lake County Outdoors Home">
+          <img 
+            src="/images/logo-badge.svg" 
+            alt="Lake County Outdoors" 
+            class="header__logo-badge"
+            width="50"
+            height="50"
+          />
+          <span class="header__logo-text">Lake County Outdoors, LLC</span>
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <Navigation currentPath={currentPath} />
+        
+        <!-- Mobile Menu Button -->
+        <MobileMenu currentPath={currentPath} />
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Top Banner */
+  .header__banner {
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: var(--space-2) 0;
+  }
+  
+  .header__banner-content {
+    text-align: center;
+  }
+  
+  /* Main Header */
+  .header__main {
+    background-color: var(--white);
+    padding: var(--space-4) 0;
+  }
+  
+  .header__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+  
+  /* Logo with badge */
+  .header__logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+  
+  .header__logo:hover {
+    opacity: 0.8;
+    text-decoration: none;
+  }
+  
+  .header__logo-badge {
+    width: 50px;
+    height: 50px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: transform var(--transition-base);
+  }
+  
+  .header__logo:hover .header__logo-badge {
+    transform: scale(1.05);
+  }
+  
+  .header__logo-text {
+    font-family: var(--font-heading);
+    font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+  }
+  
+  @media (min-width: 768px) {
+    .header__main {
+      padding: var(--space-6) 0;
+    }
+    
+    .header__logo-badge {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .header__logo-text {
+      display: none; /* Hide text on very small screens to save space */
+    }
+    
+    .header__logo-badge {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>

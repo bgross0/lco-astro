@@ -1,0 +1,509 @@
+---
+import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
+---
+
+<section class="hero">
+  <!-- Background accents -->
+  <div class="hero__accent hero__accent--1"></div>
+  <div class="hero__accent hero__accent--2"></div>
+  <div class="hero__accent hero__accent--3"></div>
+  
+  <div class="container">
+    <div class="hero__row hero__row--main">
+      <div class="hero__col hero__col--content">
+        <div class="hero__logo-wrapper">
+          <img src="/lco-2025.svg" alt="Lake County Outdoors" class="hero__logo" />
+        </div>
+        <p class="hero__lead">
+          At Lake County Outdoors, LLC, we specialize in landscaping, excavation, and snow removal. 
+          With over 60 years of combined experience, we are a trusted leader in all things outdoor 
+          transformation and maintenance.
+        </p>
+        <div class="hero__actions">
+          <Button href="/contact" variant="primary" size="large">
+            Get a Free Quote
+          </Button>
+          <Button href="tel:6126550648" variant="secondary" size="large">
+            <Icon name="phone" size={20} />
+            Call 612-655-0648
+          </Button>
+        </div>
+      </div>
+      <div class="hero__col hero__col--slideshow">
+        <div class="hero__slideshow">
+          <div class="hero__slides">
+            <img 
+              src="/images/landscaping/landscaping-square-5-600x600.jpg" 
+              alt="Professional landscaping services"
+              class="hero__slide hero__slide--active"
+            />
+            <img 
+              src="/images/equipment/equipment-2-600x616.jpg" 
+              alt="Equipment and machinery"
+              class="hero__slide"
+            />
+            <img 
+              src="/images/snow-removal/snow-removal-hero-600x300.jpg" 
+              alt="Snow removal services"
+              class="hero__slide"
+            />
+            <img 
+              src="/images/landscaping/bobcat-excavator.jpg" 
+              alt="Excavation equipment"
+              class="hero__slide"
+            />
+          </div>
+          <div class="hero__dots">
+            <button class="hero__dot hero__dot--active" aria-label="Go to slide 1"></button>
+            <button class="hero__dot" aria-label="Go to slide 2"></button>
+            <button class="hero__dot" aria-label="Go to slide 3"></button>
+            <button class="hero__dot" aria-label="Go to slide 4"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero__row hero__row--services">
+      <div class="hero__service-item">
+        <div class="hero__service-icon">
+          <Icon name="snowflake" size={48} color="var(--primary)" />
+        </div>
+        <h4 class="hero__service-title">Snow Specialists</h4>
+        <p class="hero__service-text">Commercial snow removal experts</p>
+      </div>
+      
+      <div class="hero__service-item">
+        <div class="hero__service-icon">
+          <Icon name="bulldozer" size={48} color="var(--primary)" />
+        </div>
+        <h4 class="hero__service-title">Earthworks</h4>
+        <p class="hero__service-text">Professional excavation services</p>
+      </div>
+      
+      <div class="hero__service-item">
+        <div class="hero__service-icon">
+          <Icon name="tree" size={48} color="var(--primary)" />
+        </div>
+        <h4 class="hero__service-title">Landscaping</h4>
+        <p class="hero__service-text">Complete landscape design</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: var(--space-16) 0 var(--space-12) 0;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+    overflow: hidden;
+  }
+  
+  /* Subtle geometric accents */
+  .hero__accent {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  /* Large accent - original position */
+  .hero__accent--1 {
+    top: -50%;
+    right: -10%;
+    width: 800px;
+    height: 800px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    opacity: 0.03;
+    animation: float 20s ease-in-out infinite;
+  }
+  
+  @media (max-width: 768px) {
+    .hero__accent--1 {
+      width: 400px;
+      height: 400px;
+      right: -20%;
+    }
+  }
+  
+  /* Medium accent - bottom left */
+  .hero__accent--2 {
+    bottom: -30%;
+    left: -15%;
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(45deg, var(--secondary) 0%, var(--primary) 100%);
+    opacity: 0.02;
+    animation: float 25s ease-in-out infinite reverse;
+  }
+  
+  /* Small accent - middle */
+  .hero__accent--3 {
+    top: 40%;
+    left: 30%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    opacity: 0.04;
+    animation: float 15s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(30px, -30px) scale(1.05);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.95);
+    }
+  }
+  
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Main row */
+  .hero__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-12);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .hero__row--main {
+    margin-bottom: calc(var(--space-8) + 10px);
+  }
+  
+  .hero__row--services {
+    gap: var(--space-6);
+    margin-top: var(--space-4);
+  }
+  
+  /* Columns */
+  .hero__col {
+    flex: 1;
+    max-width: 600px;
+  }
+  
+  .hero__col--content {
+    text-align: left;
+  }
+  
+  .hero__col--slideshow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Logo */
+  .hero__logo-wrapper {
+    margin-bottom: var(--space-6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero__logo {
+    height: 210px;
+    width: auto;
+    display: block;
+  }
+  
+  @media (max-width: 768px) {
+    .hero__logo {
+      height: 150px;
+    }
+  }
+  
+  .hero__lead {
+    font-size: var(--text-xl);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+    color: var(--neutral-dark);
+  }
+  
+  /* Actions */
+  .hero__actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  
+  /* Slideshow */
+  .hero__slideshow {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+  }
+  
+  @media (max-width: 768px) {
+    .hero__slideshow {
+      aspect-ratio: 4/3;
+    }
+  }
+  
+  .hero__slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .hero__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+  }
+  
+  .hero__slide--active {
+    opacity: 1;
+  }
+  
+  .hero__dots {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-2);
+  }
+  
+  .hero__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: 0;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .hero__dot::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid var(--white);
+  }
+  
+  @media (min-width: 769px) {
+    .hero__dot {
+      min-width: auto;
+      min-height: auto;
+      width: 10px;
+      height: 10px;
+    }
+    
+    .hero__dot::after {
+      display: none;
+    }
+  }
+  
+  .hero__dot--active {
+    background-color: var(--white);
+    width: 24px;
+    border-radius: 5px;
+  }
+  
+  .hero__dot:hover {
+    background-color: var(--white);
+  }
+  
+  /* Service items */
+  .hero__service-item {
+    text-align: center;
+    flex: 1;
+  }
+  
+  .hero__service-icon {
+    margin-bottom: var(--space-4);
+    color: var(--primary);
+  }
+  
+  .hero__service-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-2);
+    color: var(--secondary);
+  }
+  
+  .hero__service-text {
+    font-size: var(--text-base);
+    color: var(--neutral-dark);
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero {
+      padding: var(--space-12) 0 var(--space-10) 0;
+      min-height: auto;
+    }
+    
+    .hero__row--main {
+      flex-direction: column;
+    }
+    
+    .hero__col {
+      max-width: 100%;
+    }
+    
+    .hero__col--content {
+      text-align: center;
+    }
+    
+    .hero__col--slideshow {
+      width: 100%;
+      max-width: 400px;
+      margin: var(--space-6) auto 0;
+    }
+    
+    .hero__slideshow {
+      max-width: 350px;
+    }
+    
+    .hero__row--services {
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    
+    .hero__service-item {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--space-8) 0;
+      overflow-x: hidden;
+    }
+    
+    .hero__logo-wrapper {
+      text-align: center;
+    }
+    
+    .hero__lead {
+      text-align: center;
+      font-size: var(--text-base);
+    }
+    
+    .hero__actions {
+      justify-content: center;
+    }
+    
+    .hero__slideshow {
+      max-width: 300px;
+    }
+    
+    .hero__row--services {
+      flex-direction: column;
+    }
+    
+    .hero__accent--2,
+    .hero__accent--3 {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .hero__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .hero__actions > :global(*) {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<script>
+  // Slideshow functionality
+  const slides = document.querySelectorAll('.hero__slide');
+  const dots = document.querySelectorAll('.hero__dot');
+  let currentSlide = 0;
+  
+  function showSlide(index: number) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('hero__slide--active'));
+    dots.forEach(dot => dot.classList.remove('hero__dot--active'));
+    
+    // Add active class to current slide and dot
+    slides[index].classList.add('hero__slide--active');
+    dots[index].classList.add('hero__dot--active');
+    
+    currentSlide = index;
+  }
+  
+  // Add click handlers to dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+  });
+  
+  // Auto-advance slideshow
+  setInterval(() => {
+    const nextSlide = (currentSlide + 1) % slides.length;
+    showSlide(nextSlide);
+  }, 5000); // Change slide every 5 seconds
+  
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  const slideshow = document.querySelector('.hero__slideshow');
+  
+  if (slideshow) {
+    slideshow.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    slideshow.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+  }
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swipe left - next slide
+        const nextSlide = (currentSlide + 1) % slides.length;
+        showSlide(nextSlide);
+      } else {
+        // Swipe right - previous slide
+        const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prevSlide);
+      }
+    }
+  }
+</script>

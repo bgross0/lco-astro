@@ -4,7 +4,7 @@ import ServiceCard from '../services/ServiceCard.astro';
 const services = [
   {
     title: 'Commercial Snow Removal',
-    description: 'Professional snow and ice management for commercial properties. 24/7 emergency service available.',
+    description: 'Professional snow and Ice Management for commercial properties. 24/7 emergency service available.',
     image: '/images/snow-removal/snow-removal-hero-600x300.jpg',
     href: '/commercial-snow-removal',
     icon: 'snowflake'
@@ -19,14 +19,14 @@ const services = [
   {
     title: 'Municipal Contracting',
     description: 'Reliable municipal services including road maintenance, snow removal, and infrastructure work.',
-    image: '/images/equipment/equipment-2-600x616.jpg',
+    image: '/municipal.jpg',
     href: '/municipal-contracting',
     icon: 'building'
   },
   {
-    title: 'ICE Management',
+    title: 'Ice Management',
     description: 'Complete ice control solutions with pre-treatment, de-icing, and anti-icing services.',
-    image: '/images/equipment/equipment-4-600x389.jpg',
+    image: '/ice.jpg',
     href: '/ice-management',
     icon: 'shield'
   }
@@ -53,6 +53,7 @@ const services = [
 <style>
   .services-grid {
     background-color: var(--neutral-light);
+    padding: var(--space-12) 0;
   }
   
   .services-grid__header {
@@ -79,12 +80,20 @@ const services = [
   }
   
   @media (min-width: 768px) {
+    .services-grid {
+      padding: var(--space-16) 0;
+    }
+    
     .services-grid__grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   
   @media (min-width: 1024px) {
+    .services-grid {
+      padding: var(--space-20) 0;
+    }
+    
     .services-grid__grid {
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-6);

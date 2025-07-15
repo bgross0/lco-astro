@@ -1,0 +1,41 @@
+---
+export interface Props {
+  name: string;
+  size?: number;
+  weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill';
+  color?: string;
+  class?: string;
+}
+
+const { name, size = 24, weight = 'regular', color = 'currentColor', class: className = '' } = Astro.props;
+
+// Phosphor icons use specific class names
+const weightClass = weight !== 'regular' ? `-${weight}` : '';
+const iconClass = `ph-${name}${weightClass}`;
+---
+
+<i 
+  class={`ph ${iconClass} ${className}`} 
+  style={`font-size: ${size}px; color: ${color};`}
+  aria-hidden="true"
+></i>
+
+<style is:global>
+  @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css');
+  @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css');
+  @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css');
+  @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css');
+  @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css');
+  @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css');
+</style>
+
+<script>
+  // Load Phosphor Icons script
+  if (typeof window !== 'undefined' && !window.IconsLoaded) {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    script.async = true;
+    document.head.appendChild(script);
+    window.IconsLoaded = true;
+  }
+</script>
