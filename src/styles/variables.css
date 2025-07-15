@@ -68,8 +68,8 @@
   --z-tooltip: 1050;
   
   /* Container */
-  --container-max: 1200px;
-  --container-padding: var(--space-6);
+  --container-max: 1280px;
+  --container-padding: var(--space-4);
   
   /* Header */
   --header-height: 80px;
@@ -79,12 +79,12 @@
 /* Media Queries */
 @media (min-width: 768px) {
   :root {
-    --container-padding: var(--space-8);
+    --container-padding: var(--space-6);
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --container-padding: var(--space-10);
+    --container-padding: var(--space-8);
   }
 }
