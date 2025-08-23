@@ -1,0 +1,19 @@
+---
+import { getEntry } from 'astro:content';
+import { AboutV3 } from './AboutV3';
+
+const homepage = await getEntry('homepage', 'content');
+const { about } = homepage.data;
+
+const aboutData = {
+  title: about.title || "About Lake County Outdoors",
+  subtitle: about.subtitle,
+  content: about.content || "At Lake County Outdoors, we bring over 60 years of combined experience to every project. Our commitment to excellence and attention to detail sets us apart in the industry.",
+  mission: about.mission,
+  vision: about.vision,
+  values: about.values || ["Quality Craftsmanship", "Customer Satisfaction", "Environmental Responsibility", "Professional Excellence"],
+  image: about.image
+};
+---
+
+<AboutV3 about={aboutData} client:visible />

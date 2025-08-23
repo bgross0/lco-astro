@@ -1,0 +1,200 @@
+---
+import { getPhone, getPhoneLink } from '../../lib/settings.js';
+
+const currentPath = Astro.url.pathname;
+const phone = getPhone();
+const phoneLink = getPhoneLink();
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', 
+    href: '#',
+    dropdown: [
+      { label: 'Commercial Snow Removal', href: '/services/commercial-snow-removal' },
+      { label: 'Landscaping', href: '/services/landscaping' },
+      { label: 'Municipal Contracting', href: '/services/municipal-contracting' },
+      { label: 'Ice Management', href: '/services/ice-management' },
+    ]
+  },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' }
+];
+
+const isActive = (href: string) => {
+  if (href === '/') return currentPath === href;
+  return currentPath.startsWith(href);
+};
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm" transition:persist>
+  <div class="container mx-auto px-4">
+    <nav class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center" data-astro-prefetch>
+        <img 
+          src="/lco-final.png" 
+          alt="Lake County Outdoors"
+          class="h-12 w-auto"
+          transition:name="logo"
+        />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center space-x-8">
+        {navItems.map((item) => (
+          item.dropdown ? (
+            <div class="relative group">
+              <button class="flex items-center space-x-1 text-gray-700 hover:text-primary-600 font-medium transition-colors">
+                <span>{item.label}</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <!-- Dropdown -->
+              <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
+                <div class="py-2">
+                  {item.dropdown.map((subItem) => (
+                    <a 
+                      href={subItem.href}
+                      class={`block px-4 py-3 text-sm hover:bg-gray-50 transition-colors ${
+                        isActive(subItem.href) ? 'text-primary-600 bg-primary-50' : 'text-gray-700'
+                      }`}
+                      data-astro-prefetch
+                    >
+                      {subItem.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a 
+              href={item.href}
+              class={`text-gray-700 hover:text-primary-600 font-medium transition-colors ${
+                isActive(item.href) ? 'text-primary-600' : ''
+              }`}
+              data-astro-prefetch
+            >
+              {item.label}
+            </a>
+          )
+        ))}
+        
+        <!-- CTA Buttons -->
+        <div class="flex items-center space-x-4 ml-8">
+          <a 
+            href={phoneLink}
+            class="flex items-center space-x-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+            </svg>
+            <span>{phone}</span>
+          </a>
+          
+          <a 
+            href="/contact"
+            class="px-6 py-2.5 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transform hover:scale-105 transition-all duration-200"
+            data-astro-prefetch
+          >
+            Get Quote
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button 
+        id="mobile-menu-button"
+        class="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile menu -->
+  <div 
+    id="mobile-menu"
+    class="lg:hidden fixed inset-0 bg-white transform translate-x-full transition-transform duration-300 z-50"
+  >
+    <div class="p-4">
+      <div class="flex items-center justify-between mb-8">
+        <img src="/lco-final.png" alt="Lake County Outdoors" class="h-10" />
+        <button 
+          id="mobile-menu-close"
+          class="p-2 rounded-lg hover:bg-gray-100"
+          aria-label="Close menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <nav class="space-y-4">
+        {navItems.map((item) => (
+          item.dropdown ? (
+            <div>
+              <div class="text-gray-900 font-semibold mb-2">{item.label}</div>
+              <div class="ml-4 space-y-2">
+                {item.dropdown.map((subItem) => (
+                  <a 
+                    href={subItem.href}
+                    class={`block py-2 text-gray-600 ${
+                      isActive(subItem.href) ? 'text-primary-600' : ''
+                    }`}
+                  >
+                    {subItem.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a 
+              href={item.href}
+              class={`block py-2 text-lg font-medium ${
+                isActive(item.href) ? 'text-primary-600' : 'text-gray-900'
+              }`}
+            >
+              {item.label}
+            </a>
+          )
+        ))}
+        
+        <div class="pt-4 border-t">
+          <a href={phoneLink} class="flex items-center space-x-3 py-3 text-gray-900 font-medium">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+            </svg>
+            <span>{phone}</span>
+          </a>
+          
+          <a 
+            href="/contact"
+            class="block w-full mt-4 px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg text-center"
+          >
+            Get Free Quote
+          </a>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.remove('translate-x-full');
+  });
+
+  mobileMenuClose?.addEventListener('click', () => {
+    mobileMenu?.classList.add('translate-x-full');
+  });
+</script>

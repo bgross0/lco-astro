@@ -1,0 +1,106 @@
+---
+import { getEntry } from 'astro:content';
+
+const homepage = await getEntry('homepage', 'content');
+const { clientSatisfaction } = homepage.data;
+---
+
+<section class="py-20 bg-white relative overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary-500 rounded-full filter blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary-500 rounded-full filter blur-3xl"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12 animate-fade-in">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          {clientSatisfaction.title}
+        </h2>
+      </div>
+
+      <!-- Main content -->
+      <div class="space-y-6 mb-12">
+        {clientSatisfaction.paragraphs.map((paragraph, index) => (
+          <p 
+            class="text-lg text-gray-600 leading-relaxed animate-slide-up"
+            style={`animation-delay: ${index * 100}ms`}
+          >
+            {paragraph}
+          </p>
+        ))}
+      </div>
+
+      <!-- Experience section -->
+      <div class="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8 md:p-12 animate-slide-up">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">
+          {clientSatisfaction.experienceTitle}
+        </h3>
+        <p class="text-lg text-gray-600 mb-6">
+          {clientSatisfaction.experienceText}
+        </p>
+        <p class="text-xl font-semibold text-primary-600">
+          {clientSatisfaction.highlight}
+        </p>
+
+        <!-- Client logos or trust indicators -->
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          <p class="text-sm text-gray-500 mb-4 text-center">Trusted by leading organizations</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-gray-400">Fortune 100</div>
+              <div class="text-xs text-gray-500">Companies</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-gray-400">Schools</div>
+              <div class="text-xs text-gray-500">& Institutions</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-gray-400">Retail</div>
+              <div class="text-xs text-gray-500">Centers</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-gray-400">Municipal</div>
+              <div class="text-xs text-gray-500">Properties</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid md:grid-cols-3 gap-8 mt-12">
+        <div class="text-center animate-fade-in">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </div>
+          <div class="text-3xl font-bold text-gray-900 mb-2">1000+</div>
+          <div class="text-gray-600">Properties Serviced</div>
+        </div>
+
+        <div class="text-center animate-fade-in" style="animation-delay: 100ms">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-secondary-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="text-3xl font-bold text-gray-900 mb-2">99%</div>
+          <div class="text-gray-600">Client Retention Rate</div>
+        </div>
+
+        <div class="text-center animate-fade-in" style="animation-delay: 200ms">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </div>
+          <div class="text-3xl font-bold text-gray-900 mb-2">15+</div>
+          <div class="text-gray-600">Years of Growth</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

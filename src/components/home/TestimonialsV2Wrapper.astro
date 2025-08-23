@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import { TestimonialsV2 } from './TestimonialsV2';
+
+const testimonials = await getCollection('testimonials');
+const testimonialsData = testimonials.map(testimonial => ({
+  name: testimonial.data.name,
+  title: testimonial.data.title,
+  content: testimonial.data.content,
+  rating: testimonial.data.rating || 5,
+  location: testimonial.data.location
+}));
+---
+
+<TestimonialsV2 testimonials={testimonialsData} client:visible />

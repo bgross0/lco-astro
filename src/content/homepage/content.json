@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "headline": "Lake County Outdoors, LLC",
+    "description": "At Lake County Outdoors, LLC, we specialize in landscaping, excavation, and snow removal. With over 60 years of combined experience, we are a trusted leader in all things outdoor transformation and maintenance.",
+    "ctaPrimary": {
+      "text": "Get a Free Quote",
+      "link": "/contact"
+    },
+    "ctaSecondary": {
+      "text": "Call 612-655-0648",
+      "link": "tel:6126550648"
+    },
+    "images": [
+      {
+        "src": "/images/landscaping/landscaping-square-5-600x600.jpg",
+        "alt": "Professional landscaping services"
+      },
+      {
+        "src": "/images/equipment/equipment-2-600x616.jpg",
+        "alt": "Equipment and machinery"
+      },
+      {
+        "src": "/images/snow-removal/snow-removal-hero-600x300.jpg",
+        "alt": "Snow removal services"
+      }
+    ]
+  },
+  "about": {
+    "title": "Our Commitment to Quality",
+    "paragraphs": [
+      "At Lake County Outdoors, LLC, we deliver high-quality snow removal and landscaping services using top-tier materials and equipment. Our team stays current with the latest techniques and industry standards.",
+      "With a comprehensive fleet of 10 trucks, 14 Bobcats, 6 wheel loaders, and 2 tri-axle dump trucks with salters, we efficiently handle any snow removal challenge or land renovation project. Our dedicated team ensures reliability and constantly strives to deliver the best to our customers."
+    ],
+    "features": [
+      {
+        "icon": "check",
+        "text": "24/7 Emergency Service"
+      },
+      {
+        "icon": "check",
+        "text": "Licensed & Insured"
+      },
+      {
+        "icon": "check",
+        "text": "Free Estimates"
+      },
+      {
+        "icon": "check",
+        "text": "60+ Years Combined Experience"
+      }
+    ]
+  },
+  "clientSatisfaction": {
+    "title": "Our Client Satisfaction",
+    "paragraphs": [
+      "Creating a valuable experience and a beautiful finished product for our clients is what Lake County Outdoors values most. That's why we communicate efficiently, work to understand the needs of our customers, and deliver the best results.",
+      "We offer services to a diverse range of clients, including major retailers, and essential service providers like schools, public institutions, and residential homes.",
+      "Our commitment to excellence and professionalism ensures safe and accessible environments for customers and employees, all while getting the job done in the best and most efficient way."
+    ],
+    "experienceTitle": "Our Experience",
+    "experienceText": "We service a wide range of properties, from residential lots to expansive malls and Fortune 100 corporate headquarters, handling diverse projects with precision and efficiency.",
+    "highlight": "Choose Lake County Outdoors, LLC for tailored solutions to meet all your commercial property needs."
+  },
+  "equipment": {
+    "title": "Our Equipment Fleet",
+    "subtitle": "Professional-grade equipment ready for any job",
+    "stats": [
+      {
+        "number": 10,
+        "label": "Plow Trucks"
+      },
+      {
+        "number": 14,
+        "label": "Bobcats"
+      },
+      {
+        "number": 6,
+        "label": "Wheel Loaders"
+      },
+      {
+        "number": 2,
+        "label": "Tri-Axle Dumps"
+      }
+    ]
+  }
+}

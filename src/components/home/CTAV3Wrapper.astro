@@ -1,0 +1,19 @@
+---
+import { getEntry } from 'astro:content';
+import { CTAV3 } from './CTAV3';
+
+const homepage = await getEntry('homepage', 'content');
+const { cta } = homepage.data;
+
+const ctaData = {
+  headline: cta?.headline || "Ready to Transform Your Property?",
+  subheadline: cta?.subheadline || "Get a free consultation and quote today",
+  buttonText: cta?.buttonText || "Get Free Quote",
+  buttonLink: cta?.buttonLink || "/contact",
+  secondaryButtonText: cta?.secondaryButtonText || "Call Now",
+  secondaryButtonLink: cta?.secondaryButtonLink || "tel:+1234567890",
+  features: cta?.features
+};
+---
+
+<CTAV3 cta={ctaData} client:visible />

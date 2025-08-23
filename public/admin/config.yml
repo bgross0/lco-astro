@@ -1,7 +1,7 @@
 # Decap CMS Configuration for Lake County Outdoors
 backend:
   name: github
-  repo: bgross0/lco-astro
+  repo: lakecountyoutodoor/lco-astro
   branch: main
   base_url: https://lakecountyoutdoor.com
   auth_endpoint: /api/auth
@@ -16,7 +16,7 @@ display_url: https://lakecountyoutdoor.com
 
 # CMS configuration
 publish_mode: editorial_workflow
-logo_url: /lco-2025.svg
+logo_url: /lco-final.png
 
 # Collections
 collections:
@@ -76,24 +76,24 @@ collections:
       - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
-  # Pages (for editing existing pages)
-  - name: "pages"
-    label: "Pages"
-    label_singular: "Page"
+  # Homepage Components (for editing homepage sections)
+  - name: "homepage"
+    label: "Homepage"
+    label_singular: "Section"
+    folder: "src/content/homepage"
+    create: false
+    extension: "json"
+    format: "json"
     files:
-      - label: "Home Page"
-        name: "home"
-        file: "src/pages/index.astro"
+      - label: "Hero Section"
+        name: "hero"
+        file: "src/content/homepage/hero.json"
         fields:
           - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "markdown" }
-      
-      - label: "Contact Page"
-        name: "contact"
-        file: "src/pages/contact.astro"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "CTA Text", name: "ctaText", widget: "string" }
+          - { label: "CTA Link", name: "ctaLink", widget: "string" }
 
   # Site Settings (optional)
   - name: "settings"

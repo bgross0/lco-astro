@@ -1,0 +1,93 @@
+---
+import { getPhone, getPhoneLink } from '../../lib/settings.js';
+
+const phone = getPhone();
+const phoneLink = getPhoneLink();
+---
+
+<section class="relative py-20 overflow-hidden">
+  <!-- Background with gradient and pattern -->
+  <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600"></div>
+  <div class="absolute inset-0 bg-black/10"></div>
+  
+  <!-- Animated shapes -->
+  <div class="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-1/2 translate-y-1/2 animate-pulse animation-delay-2000"></div>
+
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Main heading -->
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-in">
+        Ready to Transform Your Property?
+      </h2>
+      
+      <!-- Subheading -->
+      <p class="text-xl md:text-2xl text-white/90 mb-10 animate-slide-up">
+        Get professional outdoor services from Lake County's most trusted team.
+        Free quotes, competitive pricing, and guaranteed satisfaction.
+      </p>
+
+      <!-- Features -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="flex items-center justify-center space-x-3 animate-slide-up">
+          <svg class="w-6 h-6 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-white font-medium">Free Estimates</span>
+        </div>
+        <div class="flex items-center justify-center space-x-3 animate-slide-up" style="animation-delay: 100ms">
+          <svg class="w-6 h-6 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-white font-medium">Licensed & Insured</span>
+        </div>
+        <div class="flex items-center justify-center space-x-3 animate-slide-up" style="animation-delay: 200ms">
+          <svg class="w-6 h-6 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-white font-medium">24/7 Emergency Service</span>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay: 300ms">
+        <a 
+          href="/contact"
+          class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold bg-white text-primary-600 rounded-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-xl"
+          data-astro-prefetch
+        >
+          Get Your Free Quote
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+        
+        <a 
+          href={phoneLink}
+          class="inline-flex items-center justify-center gap-3 px-8 py-4 text-lg font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg hover:bg-white/30 transform hover:scale-105 transition-all duration-200"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+          </svg>
+          Call {phone}
+        </a>
+      </div>
+
+      <!-- Urgency text -->
+      <p class="mt-8 text-white/80 text-sm animate-fade-in" style="animation-delay: 400ms">
+        <span class="inline-flex items-center">
+          <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+          </svg>
+          Limited spots available for this season - Book now!
+        </span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+</style>

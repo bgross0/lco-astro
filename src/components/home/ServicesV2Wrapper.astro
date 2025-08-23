@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import { ServicesV2 } from './ServicesV2';
+
+const services = await getCollection('services');
+const servicesData = services.map(service => ({
+  title: service.data.title,
+  description: service.data.shortDescription || service.data.description,
+  icon: service.data.icon || 'tree',
+  link: `/services/${service.slug}`,
+  features: service.data.features ? service.data.features.map(f => 
+    typeof f === 'string' ? f : f.description || f.title
+  ) : []
+}));
+---
+
+<ServicesV2 services={servicesData} client:load />

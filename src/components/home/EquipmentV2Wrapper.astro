@@ -1,0 +1,23 @@
+---
+import { getEntry } from 'astro:content';
+import { EquipmentV2 } from './EquipmentV2';
+
+const homepage = await getEntry('homepage', 'content');
+const { equipment } = homepage.data;
+
+const equipmentData = equipment?.items || [
+  { name: "Commercial Mowers", description: "Professional-grade zero-turn mowers for efficient lawn maintenance", category: "Mowing" },
+  { name: "Excavators", description: "Heavy-duty excavation equipment for landscaping and construction projects", category: "Construction" },
+  { name: "Snow Plows", description: "Industrial snow removal equipment for winter services", category: "Snow Removal" },
+  { name: "Stump Grinders", description: "High-powered grinders for complete stump removal", category: "Tree Service" },
+  { name: "Wood Chippers", description: "Commercial chippers for efficient debris processing", category: "Tree Service" },
+  { name: "Leaf Blowers", description: "Industrial backpack and walk-behind blowers", category: "Maintenance" }
+];
+---
+
+<EquipmentV2 
+  equipment={equipmentData} 
+  title={equipment?.title || "Professional Equipment"}
+  subtitle={equipment?.subtitle || "State-of-the-art tools and machinery for every project"}
+  client:visible 
+/>

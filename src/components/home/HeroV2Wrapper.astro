@@ -1,0 +1,9 @@
+---
+import { getEntry } from 'astro:content';
+import { HeroV2 } from './HeroV2';
+
+const homepage = await getEntry('homepage', 'content');
+const { hero } = homepage.data;
+---
+
+<HeroV2 hero={hero} client:load />

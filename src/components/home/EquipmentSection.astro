@@ -1,0 +1,80 @@
+---
+import { getEntry } from 'astro:content';
+
+const homepage = await getEntry('homepage', 'content');
+const { equipment } = homepage.data;
+---
+
+<section class="equipment">
+  <div class="container">
+    <div class="equipment__header">
+      <h2 class="equipment__title">{equipment.title}</h2>
+      <p class="equipment__subtitle">{equipment.subtitle}</p>
+    </div>
+    
+    <div class="equipment__stats">
+      {equipment.stats.map((stat) => (
+        <div class="equipment__stat">
+          <div class="equipment__number">{stat.number}</div>
+          <div class="equipment__label">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .equipment {
+    padding: var(--space-16) 0;
+    background-color: var(--neutral-light);
+  }
+  
+  .equipment__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .equipment__title {
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  
+  .equipment__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .equipment__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-8);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .equipment__stat {
+    text-align: center;
+  }
+  
+  .equipment__number {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-bold);
+    color: var(--secondary);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+  
+  .equipment__label {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+  }
+
+  @media (min-width: 768px) {
+    .equipment {
+      padding: var(--space-20) 0;
+    }
+  }
+</style>

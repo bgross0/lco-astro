@@ -1,0 +1,218 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/common/Button.astro';
+import Icon from '../../components/common/Icon.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: service,
+  }));
+}
+
+const service = Astro.props;
+const { Content } = await service.render();
+---
+
+<BaseLayout
+  title={`${service.data.title} | Lake County Outdoors`}
+  description={service.data.description}
+  image={service.data.image}
+>
+  <section class="service-hero">
+    <div class="service-hero__background" style={`background-image: url(${service.data.image})`}>
+      <div class="service-hero__overlay"></div>
+    </div>
+    
+    <div class="container">
+      <div class="service-hero__content">
+        <h1 class="service-hero__title">{service.data.title}</h1>
+        <p class="service-hero__description">{service.data.description}</p>
+        
+        <div class="service-hero__actions">
+          <Button href="/contact" variant="primary" size="large">
+            Get a Free Quote
+          </Button>
+          <Button href="tel:6126550648" variant="secondary" size="large">
+            <Icon name="phone" size={20} />
+            Call 612-655-0648
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-content">
+    <div class="container">
+      <div class="service-content__wrapper">
+        <Content />
+      </div>
+      
+      <div class="service-content__cta">
+        <h2>Ready to Get Started?</h2>
+        <p>Contact Lake County Outdoors today for professional {service.data.title.toLowerCase()} services.</p>
+        <Button href="/contact" variant="primary" size="large">
+          Request Your Free Quote
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service-hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .service-hero__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+  }
+  
+  .service-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(46, 90, 135, 0.95) 0%,
+      rgba(74, 144, 226, 0.85) 100%
+    );
+    z-index: -1;
+  }
+  
+  .service-hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--white);
+    padding: var(--space-8) 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .service-hero__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: var(--font-extrabold);
+    margin-bottom: var(--space-4);
+    color: var(--white);
+    line-height: 1.1;
+  }
+  
+  .service-hero__description {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+    opacity: 0.95;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .service-hero__actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .service-content {
+    padding: var(--space-16) 0;
+  }
+  
+  .service-content__wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .service-content__wrapper :global(h2) {
+    color: var(--primary);
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+    font-size: var(--text-2xl);
+  }
+  
+  .service-content__wrapper :global(h3) {
+    color: var(--primary);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-xl);
+  }
+  
+  .service-content__wrapper :global(p) {
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+    color: var(--neutral-dark);
+  }
+  
+  .service-content__wrapper :global(ul),
+  .service-content__wrapper :global(ol) {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-8);
+  }
+  
+  .service-content__wrapper :global(li) {
+    margin-bottom: var(--space-2);
+    line-height: 1.7;
+    color: var(--neutral-dark);
+  }
+  
+  .service-content__wrapper :global(strong) {
+    color: var(--primary);
+    font-weight: 600;
+  }
+  
+  .service-content__cta {
+    margin-top: var(--space-16);
+    padding: var(--space-8);
+    background: var(--neutral-light);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .service-content__cta h2 {
+    color: var(--primary);
+    margin-bottom: var(--space-3);
+  }
+  
+  .service-content__cta p {
+    color: var(--neutral-dark);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-lg);
+  }
+
+  @media (max-width: 768px) {
+    .service-hero {
+      min-height: 40vh;
+    }
+    
+    .service-hero__actions {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .service-hero__actions > :global(*) {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>

@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+
+// Get all services from content collection
+const services = await getCollection('services');
+
+// Sort by order field, then by title
+services.sort((a, b) => {
+  const orderA = a.data.order ?? 999;
+  const orderB = b.data.order ?? 999;
+  if (orderA !== orderB) return orderA - orderB;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+// Icon mapping
+const getIcon = (title: string) => {
+  const titleLower = title.toLowerCase();
+  if (titleLower.includes('snow')) return 'M12 2C11.45 2 11 2.45 11 3V7.61C9.27 8.17 8 9.76 8 11.67C8 12.44 8.19 13.16 8.52 13.79L4.48 17.82C4.09 18.21 4.09 18.84 4.48 19.23C4.68 19.43 4.94 19.53 5.2 19.53S5.73 19.43 5.93 19.23L9.96 15.2C10.59 15.53 11.31 15.72 12.08 15.72C12.85 15.72 13.57 15.53 14.2 15.2L18.23 19.23C18.43 19.43 18.69 19.53 18.95 19.53S19.48 19.43 19.68 19.23C20.07 18.84 20.07 18.21 19.68 17.82L15.64 13.79C15.97 13.16 16.16 12.44 16.16 11.67C16.16 9.76 14.89 8.17 13.16 7.61V3C13.16 2.45 12.71 2 12.16 2H12Z';
+  if (titleLower.includes('landscap')) return 'M10.5 2C10.5 2 8.5 4.67 8.5 7C8.5 8.38 9.62 9.5 11 9.5S13.5 8.38 13.5 7C13.5 4.67 11.5 2 11.5 2H10.5M17 8V10H22V8H17M2 8V10H7V8H2M17 12V22H19V12H17M13 12V22H15V12H13M9 12V22H11V12H9M5 12V22H7V12H5Z';
+  if (titleLower.includes('municipal')) return 'M12 2L2 7V9H4V20H11V14H13V20H20V9H22V7L12 2M12 4.44L18 7.56V9H16V18H15V12H9V18H8V9H6V7.56L12 4.44Z';
+  if (titleLower.includes('ice')) return 'M12 2L8.5 8.5L2 12L8.5 15.5L12 22L15.5 15.5L22 12L15.5 8.5L12 2M12 6.67L14.18 10.82L18.33 13L14.18 15.18L12 19.33L9.82 15.18L5.67 13L9.82 10.82L12 6.67Z';
+  return 'M12 2L2 7L12 12L22 7L12 2M2 17L12 22L22 17L20 16L12 20L4 16L2 17Z';
+};
+---
+
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <!-- Section header -->
+    <div class="text-center mb-16 animate-fade-in">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Our Services
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Professional outdoor services you can count on, year-round
+      </p>
+    </div>
+    
+    <!-- Services grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {services.map((service, index) => (
+        <a 
+          href={`/services/${service.slug}`}
+          class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden animate-slide-up"
+          style={`animation-delay: ${index * 100}ms`}
+          data-astro-prefetch
+        >
+          <!-- Service image -->
+          <div class="aspect-video overflow-hidden bg-gradient-to-br from-primary-500 to-secondary-600">
+            <img 
+              src={service.data.image} 
+              alt={service.data.title}
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          </div>
+          
+          <!-- Service content -->
+          <div class="p-6">
+            <!-- Icon -->
+            <div class="mb-4 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center group-hover:bg-primary-200 transition-colors">
+              <svg class="w-6 h-6 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d={getIcon(service.data.title)} />
+              </svg>
+            </div>
+            
+            <!-- Title -->
+            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+              {service.data.title}
+            </h3>
+            
+            <!-- Description -->
+            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+              {service.data.description}
+            </p>
+            
+            <!-- CTA -->
+            <div class="flex items-center text-primary-600 font-semibold">
+              <span class="text-sm">Learn More</span>
+              <svg class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Hover effect overlay -->
+          <div class="absolute inset-0 bg-gradient-to-r from-primary-600/0 to-secondary-600/0 group-hover:from-primary-600/10 group-hover:to-secondary-600/10 transition-all duration-300 pointer-events-none"></div>
+        </a>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-16">
+      <p class="text-lg text-gray-600 mb-6">
+        Need a custom solution? We're here to help.
+      </p>
+      <a 
+        href="/contact"
+        class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+        data-astro-prefetch
+      >
+        Get Your Free Quote
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
