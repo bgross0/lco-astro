@@ -80,20 +80,18 @@ collections:
   - name: "homepage"
     label: "Homepage"
     label_singular: "Section"
-    folder: "src/content/homepage"
-    create: false
-    extension: "json"
-    format: "json"
     files:
       - label: "Hero Section"
         name: "hero"
         file: "src/content/homepage/hero.json"
+        extension: "json"
+        format: "json"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Subtitle", name: "subtitle", widget: "string" }
-          - { label: "Description", name: "description", widget: "text" }
-          - { label: "CTA Text", name: "ctaText", widget: "string" }
-          - { label: "CTA Link", name: "ctaLink", widget: "string" }
+          - { label: "Title", name: "title", widget: "string", required: true }
+          - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
+          - { label: "Description", name: "description", widget: "text", required: true }
+          - { label: "CTA Text", name: "ctaText", widget: "string", default: "Get a Free Quote" }
+          - { label: "CTA Link", name: "ctaLink", widget: "string", default: "/contact" }
 
   # Site Settings (optional)
   - name: "settings"
