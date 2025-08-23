@@ -1,18 +1,18 @@
 ---
 import Icon from '../common/Icon.astro';
+import settings from '../../data/settings.json';
+import navigation from '../../content/homepage/navigation.json';
 
 const currentYear = new Date().getFullYear();
 
-const services = [
-  { label: 'Residential Services', href: '/residential-services' },
-  { label: 'Commercial Services', href: '/commercial-services' },
-  { label: 'Emergency Services', href: '/emergency-services' }
-];
+// Use footer links from navigation config
+const services = navigation.footerLinks;
 
+// Use contact info from settings
 const contact = {
-  phone: '612-655-0648',
-  email: 'caden@lakecountyoutdoor.com',
-  address: 'Lake County, MN'
+  phone: settings.phone,
+  email: settings.email,
+  address: settings.address
 };
 ---
 
@@ -22,11 +22,10 @@ const contact = {
       <!-- Company Info -->
       <div class="footer__section">
         <div class="footer__logo-wrapper">
-          <img src="/lco-final.png" alt="Lake County Outdoors" class="footer__logo" />
+          <img src="/lco-final.png" alt={settings.site_title} class="footer__logo" />
         </div>
         <p class="footer__description">
-          Professional outdoor services including commercial snow removal, landscaping, 
-          and municipal contracting. Serving Lake County and surrounding areas.
+          {settings.site_description}
         </p>
       </div>
       
@@ -65,7 +64,7 @@ const contact = {
     <!-- Bottom Bar -->
     <div class="footer__bottom">
       <p class="footer__copyright">
-        &copy; {currentYear} Lake County Outdoors, LLC. All rights reserved.
+        &copy; {currentYear} {settings.site_title}. All rights reserved.
       </p>
     </div>
   </div>

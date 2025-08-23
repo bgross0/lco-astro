@@ -2,9 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/common/Button.astro';
 import Icon from '../components/common/Icon.astro';
+import contactData from '../content/pages/contact.json';
+import settings from '../data/settings.json';
 
-const pageTitle = "Contact - Lake County Outdoors, LLC";
-const pageDescription = "Contact Lake County Outdoors for commercial snow removal, landscaping, and municipal contracting services. Serving Edina, MN and surrounding areas.";
+const pageTitle = contactData.seo.title;
+const pageDescription = contactData.seo.description;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -13,9 +15,9 @@ const pageDescription = "Contact Lake County Outdoors for commercial snow remova
     <div class="hero__overlay"></div>
     <div class="container">
       <div class="hero__content">
-        <h1 class="hero__title">Contact Us</h1>
+        <h1 class="hero__title">{contactData.hero.title}</h1>
         <p class="hero__subtitle">
-          Let's discuss how we can help with your outdoor service needs
+          {contactData.hero.subtitle}
         </p>
       </div>
     </div>
@@ -28,9 +30,9 @@ const pageDescription = "Contact Lake County Outdoors for commercial snow remova
         <!-- Contact Form -->
         <div class="contact__form-section">
           <div class="contact__form-card">
-            <h2 class="contact__form-title">Request a Quote</h2>
+            <h2 class="contact__form-title">{contactData.form.title}</h2>
             <p class="contact__form-subtitle">
-              Fill out the form below and we'll get back to you within 24 hours
+              {contactData.form.subtitle}
             </p>
             
             <form class="form" action="#" method="POST">
@@ -115,7 +117,7 @@ const pageDescription = "Contact Lake County Outdoors for commercial snow remova
         <!-- Contact Info -->
         <div class="contact__info-section">
           <div class="contact__info-card">
-            <h3 class="contact__info-title">Get in Touch</h3>
+            <h3 class="contact__info-title">{contactData.info.title}</h3>
             
             <div class="contact__info-item">
               <div class="contact__info-icon">
@@ -123,10 +125,10 @@ const pageDescription = "Contact Lake County Outdoors for commercial snow remova
               </div>
               <div class="contact__info-content">
                 <h4>Phone</h4>
-                <a href="tel:6126550648" class="contact__info-link">
-                  (612) 655-0648
+                <a href={`tel:${settings.phone.replace(/-/g, '')}`} class="contact__info-link">
+                  {settings.phone}
                 </a>
-                <p class="contact__info-note">Available 24/7 for emergencies</p>
+                <p class="contact__info-note">{settings.hours}</p>
               </div>
             </div>
             
@@ -136,8 +138,8 @@ const pageDescription = "Contact Lake County Outdoors for commercial snow remova
               </div>
               <div class="contact__info-content">
                 <h4>Email</h4>
-                <a href="mailto:caden@lakecountyoutdoor.com" class="contact__info-link">
-                  caden@lakecountyoutdoor.com
+                <a href={`mailto:${settings.email}`} class="contact__info-link">
+                  {settings.email}
                 </a>
                 <p class="contact__info-note">We respond within 24 hours</p>
               </div>
@@ -149,7 +151,7 @@ const pageDescription = "Contact Lake County Outdoors for commercial snow remova
               </div>
               <div class="contact__info-content">
                 <h4>Service Area</h4>
-                <p>Edina, MN and surrounding areas</p>
+                <p>{settings.address}</p>
                 <p class="contact__info-note">Commercial properties throughout the metro</p>
               </div>
             </div>
@@ -172,7 +174,7 @@ const pageDescription = "Contact Lake County Outdoors for commercial snow remova
               </div>
             </div>
             <p class="contact__hours-note">
-              <strong>Emergency Services:</strong> Available 24/7 for snow removal and urgent needs
+              <strong>Emergency Services:</strong> {contactData.info.emergencyText}
             </p>
           </div>
         </div>

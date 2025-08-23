@@ -1,0 +1,72 @@
+{
+  "hero": {
+    "title": "Contact Us",
+    "subtitle": "Let's discuss how we can help with your outdoor service needs"
+  },
+  "form": {
+    "title": "Request a Quote",
+    "subtitle": "Fill out the form below and we'll get back to you within 24 hours",
+    "submitButtonText": "Send Message",
+    "fields": [
+      {
+        "name": "firstName",
+        "label": "First Name",
+        "type": "text",
+        "required": true,
+        "width": "half"
+      },
+      {
+        "name": "lastName",
+        "label": "Last Name",
+        "type": "text",
+        "required": true,
+        "width": "half"
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true,
+        "width": "full"
+      },
+      {
+        "name": "phone",
+        "label": "Phone Number",
+        "type": "tel",
+        "required": false,
+        "width": "full"
+      },
+      {
+        "name": "service",
+        "label": "Service Needed",
+        "type": "select",
+        "required": true,
+        "width": "full",
+        "options": [
+          "Commercial Snow Removal",
+          "Landscaping Services",
+          "Municipal Contracting",
+          "Ice Management",
+          "Other"
+        ]
+      },
+      {
+        "name": "message",
+        "label": "Project Details",
+        "type": "textarea",
+        "required": true,
+        "width": "full",
+        "placeholder": "Please describe your project or service needs..."
+      }
+    ]
+  },
+  "info": {
+    "title": "Get in Touch",
+    "description": "We're here to help with all your outdoor service needs. Contact us today for a free consultation and quote.",
+    "emergencyText": "For emergency snow removal services, call us directly for immediate assistance."
+  },
+  "seo": {
+    "title": "Contact - Lake County Outdoors, LLC",
+    "description": "Contact Lake County Outdoors for commercial snow removal, landscaping, and municipal contracting services. Serving Edina, MN and surrounding areas."
+  }
+}

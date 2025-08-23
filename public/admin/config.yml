@@ -140,6 +140,25 @@ collections:
                 fields:
                   - { label: "Number", name: "number", widget: "number" }
                   - { label: "Label", name: "label", widget: "string" }
+          
+          - label: "CTA Section"
+            name: "cta"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - label: "Primary Button"
+                name: "primaryButton"
+                widget: "object"
+                fields:
+                  - { label: "Text", name: "text", widget: "string" }
+                  - { label: "Link", name: "link", widget: "string" }
+              - label: "Secondary Button"
+                name: "secondaryButton"
+                widget: "object"
+                fields:
+                  - { label: "Text", name: "text", widget: "string" }
+                  - { label: "Link", name: "link", widget: "string" }
 
   # Site Settings (optional)
   - name: "settings"
@@ -157,6 +176,7 @@ collections:
           - { label: "Phone Number", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Address", name: "address", widget: "text" }
+          - { label: "Hours", name: "hours", widget: "string" }
           - label: "Social Media"
             name: "social"
             widget: "object"
@@ -164,3 +184,52 @@ collections:
               - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
               - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
               - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+      
+      - label: "Navigation"
+        name: "navigation"
+        file: "src/content/homepage/navigation.json"
+        fields:
+          - label: "Main Menu"
+            name: "mainMenu"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Link", name: "href", widget: "string" }
+              - { label: "Order", name: "order", widget: "number" }
+          - label: "Footer Links"
+            name: "footerLinks"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Link", name: "href", widget: "string" }
+      
+      - label: "Contact Page"
+        name: "contact"
+        file: "src/content/pages/contact.json"
+        fields:
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+          - label: "Form Settings"
+            name: "form"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - { label: "Submit Button Text", name: "submitButtonText", widget: "string" }
+          - label: "Contact Info"
+            name: "info"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Emergency Text", name: "emergencyText", widget: "string" }
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - { label: "Page Title", name: "title", widget: "string" }
+              - { label: "Meta Description", name: "description", widget: "text" }

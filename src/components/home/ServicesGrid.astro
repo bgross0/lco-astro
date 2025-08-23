@@ -1,36 +1,26 @@
 ---
+import { getCollection } from 'astro:content';
 import ServiceCard from '../services/ServiceCard.astro';
 
-const services = [
-  {
-    title: 'Commercial Snow Removal',
-    description: 'Professional snow and Ice Management for commercial properties. 24/7 emergency service available.',
-    image: '/images/snow-removal/snow-removal-hero-600x300.jpg',
-    href: '/commercial-snow-removal',
-    icon: 'snowflake'
-  },
-  {
-    title: 'Landscaping Services',
-    description: 'Expert retaining walls, boulder installation, paver patios, and complete landscape design.',
-    image: '/images/landscaping/landscaping-square-1-600x600.jpg',
-    href: '/landscaping',
-    icon: 'tree'
-  },
-  {
-    title: 'Municipal Contracting',
-    description: 'Reliable municipal services including road maintenance, snow removal, and infrastructure work.',
-    image: '/municipal.jpg',
-    href: '/municipal-contracting',
-    icon: 'building'
-  },
-  {
-    title: 'Ice Management',
-    description: 'Complete ice control solutions with pre-treatment, de-icing, and anti-icing services.',
-    image: '/ice.jpg',
-    href: '/ice-management',
-    icon: 'shield'
-  }
-];
+// Get all services from the content collection
+const servicesCollection = await getCollection('services');
+
+// Sort by order field if it exists, otherwise alphabetically
+const services = servicesCollection
+  .sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.data.title.localeCompare(b.data.title);
+  })
+  .map(service => ({
+    title: service.data.title,
+    description: service.data.description,
+    image: service.data.image,
+    href: `/services/${service.slug}`,
+    icon: service.slug.includes('snow') || service.slug.includes('ice') ? 'snowflake' : 
+          service.slug.includes('landscap') ? 'tree' : 'building'
+  }));
 ---
 
 <section class="services-grid">

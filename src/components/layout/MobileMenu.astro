@@ -1,19 +1,14 @@
 ---
+import navigation from '../../content/homepage/navigation.json';
+
 export interface Props {
   currentPath: string;
 }
 
 const { currentPath } = Astro.props;
 
-const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Commercial Snow Removal', href: '/services/commercial-snow-removal' },
-  { label: 'Landscaping', href: '/services/landscaping' },
-  { label: 'Municipal Contracting', href: '/services/municipal-contracting' },
-  { label: 'Ice Management', href: '/services/ice-management' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' }
-];
+// Use navigation items from JSON, sorted by order
+const navItems = navigation.mainMenu.sort((a, b) => a.order - b.order);
 
 const isActive = (href: string) => {
   if (href === '/') {

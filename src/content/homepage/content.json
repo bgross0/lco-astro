@@ -82,5 +82,17 @@
         "label": "Tri-Axle Dumps"
       }
     ]
+  },
+  "cta": {
+    "title": "Call 612-655-0648 TODAY!",
+    "description": "We stay in constant communication with our customers until the job is done. To get a free quote, or if you have questions or special requests, just drop us a line.",
+    "primaryButton": {
+      "text": "Get Your Free Quote",
+      "link": "/contact"
+    },
+    "secondaryButton": {
+      "text": "Call Now: 612-655-0648",
+      "link": "tel:6126550648"
+    }
   }
 }

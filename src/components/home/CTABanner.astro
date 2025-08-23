@@ -1,25 +1,27 @@
 ---
 import Button from '../common/Button.astro';
 import Icon from '../common/Icon.astro';
+import contentData from '../../content/homepage/content.json';
+
+const { cta } = contentData;
 ---
 
 <section class="cta-banner">
   <div class="container">
     <div class="cta-banner__content">
       <h2 class="cta-banner__title">
-        Call 612-655-0648 TODAY!
+        {cta.title}
       </h2>
       <p class="cta-banner__text">
-        We stay in constant communication with our customers until the job is done. 
-        To get a free quote, or if you have questions or special requests, just drop us a line.
+        {cta.description}
       </p>
       <div class="cta-banner__actions">
-        <Button href="/contact" variant="primary" size="large">
-          Get Your Free Quote
+        <Button href={cta.primaryButton.link} variant="primary" size="large">
+          {cta.primaryButton.text}
         </Button>
-        <Button href="tel:6126550648" variant="secondary" size="large">
+        <Button href={cta.secondaryButton.link} variant="secondary" size="large">
           <Icon name="phone" size={20} />
-          Call Now: 612-655-0648
+          {cta.secondaryButton.text}
         </Button>
       </div>
     </div>
