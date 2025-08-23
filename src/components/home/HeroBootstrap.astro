@@ -1,6 +1,7 @@
 ---
 import Button from '../common/Button.astro';
 import Icon from '../common/Icon.astro';
+import heroData from '../../content/homepage/hero.json';
 ---
 
 <section class="hero">
@@ -13,16 +14,14 @@ import Icon from '../common/Icon.astro';
     <div class="hero__row hero__row--main">
       <div class="hero__col hero__col--content">
         <div class="hero__logo-wrapper">
-          <img src="/lco-final.png" alt="Lake County Outdoors" class="hero__logo" />
+          <img src="/lco-final.png" alt={heroData.title} class="hero__logo" />
         </div>
         <p class="hero__lead">
-          At Lake County Outdoors, LLC, we specialize in landscaping, excavation, and snow removal. 
-          With over 60 years of combined experience, we are a trusted leader in all things outdoor 
-          transformation and maintenance.
+          {heroData.description}
         </p>
         <div class="hero__actions">
-          <Button href="/contact" variant="primary" size="large">
-            Get a Free Quote
+          <Button href={heroData.ctaLink} variant="primary" size="large">
+            {heroData.ctaText}
           </Button>
           <Button href="tel:6126550648" variant="secondary" size="large">
             <Icon name="phone" size={20} />

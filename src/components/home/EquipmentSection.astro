@@ -1,8 +1,7 @@
 ---
-import { getEntry } from 'astro:content';
+import contentData from '../../content/homepage/content.json';
 
-const homepage = await getEntry('homepage', 'content');
-const { equipment } = homepage.data;
+const { equipment } = contentData;
 ---
 
 <section class="equipment">

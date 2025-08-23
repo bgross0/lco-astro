@@ -92,6 +92,54 @@ collections:
           - { label: "Description", name: "description", widget: "text", required: true }
           - { label: "CTA Text", name: "ctaText", widget: "string", default: "Get a Free Quote" }
           - { label: "CTA Link", name: "ctaLink", widget: "string", default: "/contact" }
+      
+      - label: "All Content Sections"
+        name: "content"
+        file: "src/content/homepage/content.json"
+        extension: "json"
+        format: "json"
+        fields:
+          - label: "About Section"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Paragraphs"
+                name: "paragraphs"
+                widget: "list"
+                field: { label: "Paragraph", name: "paragraph", widget: "text" }
+              - label: "Features"
+                name: "features"
+                widget: "list"
+                fields:
+                  - { label: "Icon", name: "icon", widget: "string" }
+                  - { label: "Text", name: "text", widget: "string" }
+          
+          - label: "Client Satisfaction"
+            name: "clientSatisfaction"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Paragraphs"
+                name: "paragraphs"
+                widget: "list"
+                field: { label: "Paragraph", name: "paragraph", widget: "text" }
+              - { label: "Experience Title", name: "experienceTitle", widget: "string" }
+              - { label: "Experience Text", name: "experienceText", widget: "text" }
+              - { label: "Highlight", name: "highlight", widget: "text" }
+          
+          - label: "Equipment"
+            name: "equipment"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - label: "Stats"
+                name: "stats"
+                widget: "list"
+                fields:
+                  - { label: "Number", name: "number", widget: "number" }
+                  - { label: "Label", name: "label", widget: "string" }
 
   # Site Settings (optional)
   - name: "settings"

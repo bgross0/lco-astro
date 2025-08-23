@@ -1,6 +1,9 @@
 ---
 import Button from '../common/Button.astro';
 import Icon from '../common/Icon.astro';
+import contentData from '../../content/homepage/content.json';
+
+const { about } = contentData;
 ---
 
 <section class="about">
@@ -8,42 +11,22 @@ import Icon from '../common/Icon.astro';
     <div class="about__grid">
       <div class="about__content">
         <h2 class="about__title">
-          Our Commitment to Quality
+          {about.title}
         </h2>
         
-        <p class="about__text">
-          At Lake County Outdoors, LLC, we deliver high-quality snow removal and landscaping 
-          services using top-tier materials and equipment. Our team stays current with the 
-          latest techniques and industry standards.
-        </p>
-        
-        <p class="about__text">
-          With a comprehensive fleet of 10 trucks, 14 Bobcats, 6 wheel loaders, and 2 tri-axle 
-          dump trucks with salters, we efficiently handle any snow removal challenge or land 
-          renovation project. Our dedicated team ensures reliability and constantly strives to 
-          deliver the best to our customers.
-        </p>
+        {about.paragraphs.map((paragraph) => (
+          <p class="about__text">
+            {paragraph}
+          </p>
+        ))}
         
         <div class="about__features">
-          <div class="about__feature">
-            <Icon name="check" size={24} class="about__feature-icon" />
-            <span>24/7 Emergency Service</span>
-          </div>
-          
-          <div class="about__feature">
-            <Icon name="check" size={24} class="about__feature-icon" />
-            <span>Licensed & Insured</span>
-          </div>
-          
-          <div class="about__feature">
-            <Icon name="check" size={24} class="about__feature-icon" />
-            <span>Free Estimates</span>
-          </div>
-          
-          <div class="about__feature">
-            <Icon name="check" size={24} class="about__feature-icon" />
-            <span>60+ Years Combined Experience</span>
-          </div>
+          {about.features.map((feature) => (
+            <div class="about__feature">
+              <Icon name={feature.icon} size={24} class="about__feature-icon" />
+              <span>{feature.text}</span>
+            </div>
+          ))}
         </div>
         
         <div class="about__actions">
