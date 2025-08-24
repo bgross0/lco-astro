@@ -15,7 +15,7 @@ site_url: https://lakecountyoutdoor.com
 display_url: https://lakecountyoutdoor.com
 
 # CMS configuration
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow  # Disabled to enable image uploads
 logo_url: /lco-final.png
 
 # Collections
