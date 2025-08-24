@@ -38,22 +38,16 @@ const { about } = contentData;
       
       <div class="about__images">
         <div class="about__image-grid">
-          <img 
-            src="/images/equipment/equipment-1-600x287.jpg" 
-            alt="CAT 299D3 Skid Steer"
-            class="about__image about__image--1"
-            loading="lazy"
-            width="400"
-            height="300"
-          />
-          <img 
-            src="/images/landscaping/landscaping-square-1-600x600.jpg" 
-            alt="Professional retaining wall installation"
-            class="about__image about__image--2"
-            loading="lazy"
-            width="400"
-            height="300"
-          />
+          {about.images && about.images.map((image, index) => (
+            <img 
+              src={image.src}
+              alt={image.alt}
+              class={`about__image about__image--${index + 1}`}
+              loading="lazy"
+              width="400"
+              height="300"
+            />
+          ))}
         </div>
       </div>
     </div>

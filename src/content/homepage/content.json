@@ -22,6 +22,10 @@
       {
         "src": "/images/snow-removal/snow-removal-hero-600x300.jpg",
         "alt": "Snow removal services"
+      },
+      {
+        "src": "/images/landscaping/bobcat-excavator.jpg",
+        "alt": "Excavation equipment"
       }
     ]
   },
@@ -30,6 +34,16 @@
     "paragraphs": [
       "At Lake County Outdoors, LLC, we deliver high-quality snow removal and landscaping services using top-tier materials and equipment. Our team stays current with the latest techniques and industry standards.",
       "With a comprehensive fleet of 10 trucks, 14 Bobcats, 6 wheel loaders, and 2 tri-axle dump trucks with salters, we efficiently handle any snow removal challenge or land renovation project. Our dedicated team ensures reliability and constantly strives to deliver the best to our customers."
+    ],
+    "images": [
+      {
+        "src": "/images/equipment/equipment-1-600x287.jpg",
+        "alt": "Professional equipment fleet"
+      },
+      {
+        "src": "/images/landscaping/landscaping-square-1-600x600.jpg",
+        "alt": "Landscaping project showcase"
+      }
     ],
     "features": [
       {
@@ -86,6 +100,7 @@
   "cta": {
     "title": "Call 612-655-0648 TODAY!",
     "description": "We stay in constant communication with our customers until the job is done. To get a free quote, or if you have questions or special requests, just drop us a line.",
+    "backgroundImage": "/images/snow-removal/snow-removal-full-914x726.jpg",
     "primaryButton": {
       "text": "Get Your Free Quote",
       "link": "/contact"

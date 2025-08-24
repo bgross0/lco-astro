@@ -6,7 +6,7 @@ import contentData from '../../content/homepage/content.json';
 const { cta } = contentData;
 ---
 
-<section class="cta-banner">
+<section class="cta-banner" style={`background-image: linear-gradient(135deg, rgba(27, 107, 255, 0.9) 0%, rgba(5, 42, 122, 0.9) 100%), url('${cta.backgroundImage}');`}>
   <div class="container">
     <div class="cta-banner__content">
       <h2 class="cta-banner__title">
@@ -30,9 +30,8 @@ const { cta } = contentData;
 
 <style>
   .cta-banner {
-    background: 
-      linear-gradient(135deg, rgba(27, 107, 255, 0.9) 0%, rgba(5, 42, 122, 0.9) 100%),
-      url('/images/snow-removal/snow-removal-full-914x726.jpg') center/cover;
+    background-size: cover;
+    background-position: center;
     color: var(--white);
     position: relative;
     overflow: hidden;

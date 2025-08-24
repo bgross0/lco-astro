@@ -1,10 +1,13 @@
 # Decap CMS Configuration for Lake County Outdoors
 backend:
   name: github
-  repo: lakecountyoutodoor/lco-astro
+  repo: lakecountyoutdoor/lco-astro
   branch: main
   base_url: https://lakecountyoutdoor.com
   auth_endpoint: /api/auth
+  
+# Enable local backend proxy for local development
+local_backend: true
 
 # Media files storage
 media_folder: "public/images/uploads" # Media files will be stored here
@@ -99,15 +102,34 @@ collections:
         extension: "json"
         format: "json"
         fields:
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Images"
+                name: "images"
+                widget: "list"
+                fields:
+                  - { label: "Image", name: "src", widget: "image" }
+                  - { label: "Alt Text", name: "alt", widget: "string" }
+          
           - label: "About Section"
             name: "about"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Title", name: "title", widget: "string" }
               - label: "Paragraphs"
                 name: "paragraphs"
                 widget: "list"
                 field: { label: "Paragraph", name: "paragraph", widget: "text" }
+              - label: "Images"
+                name: "images"
+                widget: "list"
+                fields:
+                  - { label: "Image", name: "src", widget: "image" }
+                  - { label: "Alt Text", name: "alt", widget: "string" }
               - label: "Features"
                 name: "features"
                 widget: "list"
@@ -144,9 +166,11 @@ collections:
           - label: "CTA Section"
             name: "cta"
             widget: "object"
+            collapsed: true
             fields:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
+              - { label: "Background Image", name: "backgroundImage", widget: "image" }
               - label: "Primary Button"
                 name: "primaryButton"
                 widget: "object"
@@ -173,6 +197,8 @@ collections:
         fields:
           - { label: "Site Title", name: "site_title", widget: "string" }
           - { label: "Site Description", name: "site_description", widget: "text" }
+          - { label: "Logo", name: "logo", widget: "image", required: true }
+          - { label: "OG Image (Social Share)", name: "og_image", widget: "image", required: false }
           - { label: "Phone Number", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Address", name: "address", widget: "text" }
