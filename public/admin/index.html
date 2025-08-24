@@ -34,23 +34,32 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   
   <script>
-    // Debug OAuth issues
-    console.log('Decap CMS loaded');
-    
-    // Log any errors
-    window.addEventListener('error', (e) => {
-      console.error('CMS Error:', e);
-    });
-    
-    // Check if popups are blocked
-    setTimeout(() => {
-      const testPopup = window.open('', '', 'width=1,height=1');
-      if (!testPopup || testPopup.closed || typeof testPopup.closed == 'undefined') {
-        console.warn('Popups may be blocked! Please allow popups for this site.');
-      } else {
-        testPopup.close();
+    // Handle token in URL hash (for redirect flow)
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      console.log('Token found in URL, processing...');
+      
+      // Parse the token from the hash
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const token = params.get('access_token');
+      
+      if (token) {
+        console.log('Token extracted, attempting to authenticate...');
+        
+        // Store the token and reload to trigger CMS auth
+        localStorage.setItem('decap-cms-user', JSON.stringify({
+          access_token: token,
+          token_type: 'bearer',
+          provider: 'github'
+        }));
+        
+        // Clean URL and reload
+        window.location.hash = '';
+        window.location.reload();
       }
-    }, 1000);
+    }
+    
+    console.log('Decap CMS loaded');
   </script>
 </body>
 </html>

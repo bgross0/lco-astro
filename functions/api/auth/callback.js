@@ -40,60 +40,9 @@ export async function onRequestGet(context) {
     });
   }
   
-  // Create the success page with postMessage to communicate with CMS
-  // Decap CMS expects a simple message format
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Authenticating...</title>
-      <script>
-        (function() {
-          console.log('OAuth callback - token received');
-          
-          // Decap CMS expects this exact format
-          const message = 'authorization:github:success:${JSON.stringify({
-            token: tokenData.access_token,
-            provider: 'github'
-          })}';
-          
-          console.log('Sending message:', message);
-          
-          // Try to send to opener (popup scenario)
-          if (window.opener) {
-            console.log('Posting to opener');
-            window.opener.postMessage(message, window.location.origin);
-            window.opener.postMessage(message, '*'); // Also try wildcard
-            
-            // Close after a short delay
-            setTimeout(() => {
-              window.close();
-            }, 500);
-          } 
-          // If no opener, try parent (iframe scenario)
-          else if (window.parent && window.parent !== window) {
-            console.log('Posting to parent');
-            window.parent.postMessage(message, window.location.origin);
-            window.parent.postMessage(message, '*');
-          }
-          // Fallback: redirect with token in hash
-          else {
-            console.log('No opener/parent - redirecting with token');
-            window.location.href = '/admin/#access_token=' + encodeURIComponent('${tokenData.access_token}');
-          }
-        })();
-      </script>
-    </head>
-    <body>
-      <p>Authentication successful! Redirecting...</p>
-      <p>If this window doesn't close automatically, you can close it manually.</p>
-    </body>
-    </html>
-  `;
+  // Fuck postMessage - just redirect with the token
+  // This is simpler and more reliable
+  const redirectUrl = `${url.origin}/admin/#access_token=${tokenData.access_token}&token_type=bearer&provider=github`;
   
-  return new Response(html, {
-    headers: {
-      'Content-Type': 'text/html;charset=UTF-8',
-    },
-  });
+  return Response.redirect(redirectUrl, 302);
 }
