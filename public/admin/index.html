@@ -32,5 +32,25 @@
 <body>
   <!-- Include the script that builds the page and powers Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    // Debug OAuth issues
+    console.log('Decap CMS loaded');
+    
+    // Log any errors
+    window.addEventListener('error', (e) => {
+      console.error('CMS Error:', e);
+    });
+    
+    // Check if popups are blocked
+    setTimeout(() => {
+      const testPopup = window.open('', '', 'width=1,height=1');
+      if (!testPopup || testPopup.closed || typeof testPopup.closed == 'undefined') {
+        console.warn('Popups may be blocked! Please allow popups for this site.');
+      } else {
+        testPopup.close();
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
