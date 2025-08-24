@@ -103,17 +103,23 @@
             console.log('Token received from OAuth:', data.token.substring(0, 10) + '...');
             
             // Store the token in the format Decap expects
+            // Based on Decap CMS source, it expects this exact structure
             const authData = {
-              access_token: data.token,
-              token_type: 'bearer',
-              provider: 'github',
-              token: data.token
+              backendName: 'github',
+              token: data.token,
+              api: {
+                apiRoot: 'https://api.github.com',
+                token: data.token,
+                requestFunction: (...args) => fetch(...args),
+                hasWriteAccess: () => true
+              }
             };
             
-            // Store in all possible locations
-            localStorage.setItem('decap-cms-user', JSON.stringify(authData));
+            // Store in the key that Decap CMS checks
             localStorage.setItem('netlify-cms-user', JSON.stringify(authData));
-            localStorage.setItem('gotrue.user', JSON.stringify(authData));
+            
+            // Also try the newer key name
+            localStorage.setItem('decap-cms-user', JSON.stringify(authData));
             
             console.log('Token stored, reloading page...');
             
@@ -145,18 +151,21 @@
       if (token) {
         console.log('Token extracted from URL:', token.substring(0, 10) + '...');
         
-        // Create the auth data object
+        // Create the auth data object in the format Decap expects
         const authData = {
-          access_token: token,
-          token_type: 'bearer',
-          provider: 'github',
-          token: token
+          backendName: 'github',
+          token: token,
+          api: {
+            apiRoot: 'https://api.github.com',
+            token: token,
+            requestFunction: (...args) => fetch(...args),
+            hasWriteAccess: () => true
+          }
         };
         
-        // Store in all possible locations
-        localStorage.setItem('decap-cms-user', JSON.stringify(authData));
+        // Store in the keys that Decap CMS checks
         localStorage.setItem('netlify-cms-user', JSON.stringify(authData));
-        localStorage.setItem('gotrue.user', JSON.stringify(authData));
+        localStorage.setItem('decap-cms-user', JSON.stringify(authData));
         
         console.log('Auth data stored, cleaning URL...');
         
@@ -245,7 +254,40 @@
       console.log('Auth cleared - reloading...');
       window.location.reload();
     };
-    console.log('💡 Tip: Run clearAuth() in console to clear authentication and test login again');
+    
+    // Helper to fix existing token format
+    window.fixAuth = function() {
+      const stored = localStorage.getItem('decap-cms-user') || localStorage.getItem('netlify-cms-user');
+      if (stored) {
+        try {
+          const data = JSON.parse(stored);
+          const token = data.access_token || data.token;
+          if (token) {
+            console.log('Fixing auth format with token:', token.substring(0, 10) + '...');
+            
+            const fixedAuth = {
+              backendName: 'github',
+              token: token,
+              api: {
+                apiRoot: 'https://api.github.com',
+                token: token,
+                requestFunction: (...args) => fetch(...args),
+                hasWriteAccess: () => true
+              }
+            };
+            
+            localStorage.setItem('netlify-cms-user', JSON.stringify(fixedAuth));
+            localStorage.setItem('decap-cms-user', JSON.stringify(fixedAuth));
+            console.log('Auth fixed - reloading...');
+            window.location.reload();
+          }
+        } catch (e) {
+          console.error('Error fixing auth:', e);
+        }
+      }
+    };
+    
+    console.log('💡 Tip: Run clearAuth() to clear authentication or fixAuth() to fix token format');
   </script>
 </body>
 </html>
