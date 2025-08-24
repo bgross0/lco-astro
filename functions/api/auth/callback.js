@@ -40,12 +40,37 @@ export async function onRequestGet(context) {
     });
   }
   
-  // Try the implicit flow format that Decap CMS might expect
-  // Using the format: #access_token=TOKEN (no extra slash)
-  const tokenString = encodeURIComponent(tokenData.access_token);
-  const redirectUrl = `${url.origin}/admin/#access_token=${tokenString}&token_type=bearer`;
+  // Return HTML that will post the message to the opener window
+  // This is the exact format that Decap CMS expects based on working implementations
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Authenticating...</title>
+    </head>
+    <body>
+      <script>
+        const token = '${tokenData.access_token}';
+        const message = 'authorization:github:success:' + JSON.stringify({ token: token });
+        
+        console.log('Sending message to opener:', message);
+        
+        if (window.opener) {
+          window.opener.postMessage(message, '*');
+          window.close();
+        } else {
+          // Fallback: redirect with token in hash
+          window.location.href = '${url.origin}/admin/#access_token=' + encodeURIComponent(token) + '&token_type=bearer';
+        }
+      </script>
+      <p>Authentication successful. This window should close automatically.</p>
+    </body>
+    </html>
+  `;
   
-  console.log('Redirecting to:', redirectUrl);
-  
-  return Response.redirect(redirectUrl, 302);
+  return new Response(html, {
+    headers: {
+      'Content-Type': 'text/html',
+    },
+  });
 }
