@@ -1,0 +1,12 @@
+# Netlify configuration for Identity service only
+# The site is hosted on Cloudflare Pages, but we use Netlify Identity for CMS auth
+
+[build]
+  # Dummy build command since we're not actually building on Netlify
+  command = "echo 'Using Netlify for Identity only'"
+  publish = "dist"
+
+# Enable Identity service
+[identity]
+  # Enable Git Gateway for the Identity service
+  git_gateway = true
