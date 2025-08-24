@@ -120,8 +120,8 @@ const { formName = "contact", className = "" } = Astro.props;
 
 <script>
   // Form validation and submission handling
-  const form = document.getElementById('contact-form') as HTMLFormElement;
-  const formMessage = document.getElementById('form-message') as HTMLDivElement;
+  const form = document.getElementById('contact-form');
+  const formMessage = document.getElementById('form-message');
   
   // Validation patterns
   const patterns = {
@@ -141,10 +141,10 @@ const { formName = "contact", className = "" } = Astro.props;
   };
   
   // Validate individual field
-  function validateField(field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement): boolean {
+  function validateField(field) {
     const fieldName = field.name;
     const value = field.value.trim();
-    const errorElement = document.getElementById(`${fieldName}-error`) as HTMLSpanElement;
+    const errorElement = document.getElementById(`${fieldName}-error`);
     
     // Clear previous error
     errorElement.textContent = '';
@@ -158,10 +158,10 @@ const { formName = "contact", className = "" } = Astro.props;
     }
     
     // Pattern validation for specific fields
-    if (value && patterns[fieldName as keyof typeof patterns]) {
-      const pattern = patterns[fieldName as keyof typeof patterns];
+    if (value && patterns[fieldName]) {
+      const pattern = patterns[fieldName];
       if (!pattern.test(value)) {
-        errorElement.textContent = errorMessages[fieldName as keyof typeof errorMessages];
+        errorElement.textContent = errorMessages[fieldName];
         field.classList.add('error');
         return false;
       }
@@ -171,8 +171,8 @@ const { formName = "contact", className = "" } = Astro.props;
   }
   
   // Validate entire form
-  function validateForm(): boolean {
-    const fields = form.querySelectorAll('input, textarea, select') as NodeListOf<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
+  function validateForm() {
+    const fields = form.querySelectorAll('input, textarea, select');
     let isValid = true;
     
     fields.forEach(field => {
@@ -186,7 +186,7 @@ const { formName = "contact", className = "" } = Astro.props;
   
   // Add real-time validation
   form.addEventListener('blur', (e) => {
-    const target = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    const target = e.target;
     if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') {
       validateField(target);
     }
@@ -208,7 +208,7 @@ const { formName = "contact", className = "" } = Astro.props;
     }
     
     // Disable submit button
-    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const submitButton = form.querySelector('button[type="submit"]');
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
     
@@ -219,7 +219,7 @@ const { formName = "contact", className = "" } = Astro.props;
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString()
+        body: new URLSearchParams(formData).toString()
       });
       
       if (response.ok) {
@@ -242,15 +242,15 @@ const { formName = "contact", className = "" } = Astro.props;
   });
   
   // Phone number formatting
-  const phoneInput = document.getElementById('phone') as HTMLInputElement;
+  const phoneInput = document.getElementById('phone');
   phoneInput.addEventListener('input', (e) => {
-    let value = (e.target as HTMLInputElement).value.replace(/\D/g, '');
+    let value = (e.target).value.replace(/\D/g, '');
     if (value.length >= 6) {
       value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
     } else if (value.length >= 3) {
       value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     }
-    (e.target as HTMLInputElement).value = value;
+    (e.target).value = value;
   });
 </script>
 

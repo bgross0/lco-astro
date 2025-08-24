@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Login - Lake County Outdoors</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-container {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .logo {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .logo img {
+      height: 80px;
+      width: auto;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: 500;
+    }
+    
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e1e1e1;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    button:hover {
+      background: #5a67d8;
+    }
+    
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .error {
+      background: #fee;
+      color: #c33;
+      padding: 0.75rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      text-align: center;
+      display: none;
+    }
+    
+    .divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      color: #999;
+      position: relative;
+    }
+    
+    .divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: #e1e1e1;
+    }
+    
+    .divider span {
+      background: white;
+      padding: 0 1rem;
+      position: relative;
+    }
+    
+    .google-btn {
+      background: white;
+      color: #333;
+      border: 2px solid #e1e1e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .google-btn:hover {
+      background: #f8f8f8;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <img src="/lco-final.png" alt="Lake County Outdoors">
+    </div>
+    
+    <h1>CMS Login</h1>
+    <p class="subtitle">Sign in to manage your content</p>
+    
+    <div class="error" id="error"></div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required placeholder="admin@lakecountyoutdoor.com">
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="Enter your password">
+      </div>
+      
+      <button type="submit" id="submitBtn">Sign In</button>
+    </form>
+    
+    <div class="divider">
+      <span>OR</span>
+    </div>
+    
+    <button type="button" class="google-btn" onclick="loginWithGoogle()">
+      <svg width="20" height="20" viewBox="0 0 20 20">
+        <path fill="#4285F4" d="M19.6 10.23c0-.71-.06-1.4-.18-2.05H10v3.87h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.34z"/>
+        <path fill="#34A853" d="M10 20c2.7 0 4.96-.9 6.62-2.43l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.59-4.12H1.09v2.59A10 10 0 0010 20z"/>
+        <path fill="#FBBC05" d="M4.41 11.91A6 6 0 014.1 10c0-.66.11-1.3.31-1.91V5.5H1.09A10 10 0 000 10c0 1.61.39 3.14 1.09 4.5l3.32-2.59z"/>
+        <path fill="#EA4335" d="M10 3.96c1.47 0 2.79.5 3.82 1.5l2.87-2.87A10 10 0 0010 0 10 10 0 001.09 5.5l3.32 2.59c.79-2.36 3-4.13 5.59-4.13z"/>
+      </svg>
+      Sign in with Google
+    </button>
+  </div>
+  
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorDiv = document.getElementById('error');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      errorDiv.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in...';
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        // Open popup for OAuth flow
+        const authWindow = window.open('', 'auth', 'width=500,height=600');
+        
+        // Post credentials to our auth endpoint
+        const response = await fetch('/api/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        
+        if (response.ok) {
+          const html = await response.text();
+          authWindow.document.write(html);
+          
+          // Listen for success message
+          window.addEventListener('message', (e) => {
+            if (e.data && e.data.includes('authorization:github:success')) {
+              window.location.href = '/admin/';
+            }
+          });
+        } else {
+          authWindow.close();
+          throw new Error('Invalid email or password');
+        }
+      } catch (err) {
+        errorDiv.textContent = err.message;
+        errorDiv.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
+    });
+    
+    function loginWithGoogle() {
+      window.open('/api/auth/google', 'auth', 'width=500,height=600');
+      
+      window.addEventListener('message', (e) => {
+        if (e.data && e.data.includes('authorization:github:success')) {
+          window.location.href = '/admin/';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

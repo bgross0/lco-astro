@@ -46,8 +46,8 @@ const isActive = (href: string) => {
 </div>
 
 <script>
-  const toggle = document.querySelector('.mobile-menu__toggle') as HTMLButtonElement;
-  const nav = document.querySelector('.mobile-menu__nav') as HTMLElement;
+  const toggle = document.querySelector('.mobile-menu__toggle');
+  const nav = document.querySelector('.mobile-menu__nav');
   const body = document.body;
   
   let isOpen = false;
@@ -70,7 +70,7 @@ const isActive = (href: string) => {
   
   // Close menu on click outside
   document.addEventListener('click', (e) => {
-    if (isOpen && !nav.contains(e.target as Node) && !toggle.contains(e.target as Node)) {
+    if (isOpen && !nav.contains(e.target) && !toggle.contains(e.target)) {
       toggleMenu();
     }
   });

@@ -110,8 +110,8 @@ import Button from '../common/Button.astro';
 </style>
 
 <script>
-  const form = document.getElementById('contactForm') as HTMLFormElement;
-  const formMessage = document.getElementById('formMessage') as HTMLDivElement;
+  const form = document.getElementById('contactForm');
+  const formMessage = document.getElementById('formMessage');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();

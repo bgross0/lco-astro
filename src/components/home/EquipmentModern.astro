@@ -106,7 +106,7 @@ const icons = {
   const counters = document.querySelectorAll('.counter');
   const speed = 200;
 
-  const animateCounter = (counter: Element) => {
+  const animateCounter = (counter) => {
     const target = +(counter.getAttribute('data-target') || 0);
     const increment = target / speed;
     let current = 0;
