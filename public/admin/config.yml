@@ -7,7 +7,9 @@ backend:
   auth_endpoint: api/auth
 
 # Media files storage
-media_folder: "public/images" # Show all images in the media library
+# Note: Decap CMS doesn't scan subdirectories. New uploads go to /images root
+# Existing images are in /equipment, /landscaping, /snow-removal subfolders
+media_folder: "public/images" # Media library folder
 public_folder: "/images" # Public URL path
 
 # Site URL for preview
