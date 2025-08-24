@@ -120,6 +120,55 @@
     
     // Check what's in localStorage
     console.log('Current localStorage keys:', Object.keys(localStorage));
+    
+    // Debug: Check the stored auth data
+    const storedAuth = localStorage.getItem('decap-cms-user');
+    if (storedAuth) {
+      try {
+        const authData = JSON.parse(storedAuth);
+        console.log('Stored auth data:', {
+          hasToken: !!authData.access_token,
+          tokenPrefix: authData.access_token ? authData.access_token.substring(0, 10) : 'none',
+          provider: authData.provider,
+          tokenType: authData.token_type
+        });
+        
+        // Check if Decap recognizes the auth
+        setTimeout(() => {
+          const loginButton = document.querySelector('[data-testid="login-button"]');
+          const logoutButton = document.querySelector('[aria-label="Log out"]');
+          
+          if (loginButton) {
+            console.warn('Login button still visible - Decap not recognizing auth');
+            console.log('Attempting to manually trigger authentication...');
+            
+            // Try to force Decap to recognize the token
+            if (window.CMS && window.CMS.init) {
+              console.log('Reinitializing CMS with stored token...');
+              window.location.reload();
+            }
+          } else if (logoutButton) {
+            console.log('✅ User is authenticated - logout button found');
+          } else {
+            console.log('Cannot determine auth state - no login/logout buttons found');
+          }
+        }, 3000);
+      } catch (e) {
+        console.error('Error parsing stored auth:', e);
+      }
+    } else {
+      console.log('No auth data stored');
+    }
+    
+    // Add a helper to clear auth for testing
+    window.clearAuth = function() {
+      localStorage.removeItem('decap-cms-user');
+      localStorage.removeItem('netlify-cms-user');
+      localStorage.removeItem('gotrue.user');
+      console.log('Auth cleared - reloading...');
+      window.location.reload();
+    };
+    console.log('💡 Tip: Run clearAuth() in console to clear authentication and test login again');
   </script>
 </body>
 </html>
