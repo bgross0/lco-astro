@@ -7,8 +7,8 @@ backend:
   auth_endpoint: api/auth
 
 # Media files storage
-media_folder: "public/images/uploads" # Media files will be stored here
-public_folder: "/images/uploads" # Public URL path
+media_folder: "public/images" # Show all images in the media library
+public_folder: "/images" # Public URL path
 
 # Site URL for preview
 site_url: https://lakecountyoutdoor.com
