@@ -27,7 +27,8 @@ export async function onRequestGet(context) {
   
   // Build the callback URL - ensure it uses the correct domain
   const callbackUrl = `${url.origin}/api/auth/callback`;
-  console.log('OAuth callback URL:', callbackUrl);
+  console.log('OAuth initiated - callback URL:', callbackUrl);
+  console.log('OAuth initiated - client ID:', CLIENT_ID ? 'Set' : 'Missing!');
   
   // Redirect to GitHub OAuth
   const authUrl = new URL(GITHUB_AUTH_URL);

@@ -41,6 +41,7 @@ export async function onRequestGet(context) {
   }
   
   // Create the success page with postMessage to communicate with CMS
+  // Decap CMS expects a simple message format
   const html = `
     <!DOCTYPE html>
     <html>
@@ -48,50 +49,44 @@ export async function onRequestGet(context) {
       <title>Authenticating...</title>
       <script>
         (function() {
-          const authResponse = {
-            token: '${tokenData.access_token}',
+          console.log('OAuth callback - token received');
+          
+          // Decap CMS expects this exact format
+          const message = 'authorization:github:success:${JSON.stringify({
+            token: tokenData.access_token,
             provider: 'github'
-          };
+          })}';
           
-          console.log('Auth callback executing...');
+          console.log('Sending message:', message);
           
-          // Try multiple message formats for compatibility
-          const message = 'authorization:github:success:' + JSON.stringify(authResponse);
-          
+          // Try to send to opener (popup scenario)
           if (window.opener) {
-            console.log('Posting message to opener...');
-            // Post to the opener with the origin
-            window.opener.postMessage(message, '*');
+            console.log('Posting to opener');
+            window.opener.postMessage(message, window.location.origin);
+            window.opener.postMessage(message, '*'); // Also try wildcard
             
-            // Also try the specific format Decap CMS expects
-            window.opener.postMessage({
-              auth: {
-                token: '${tokenData.access_token}',
-                provider: 'github'
-              }
-            }, '*');
-            
+            // Close after a short delay
             setTimeout(() => {
               window.close();
-            }, 100);
-          } else if (window.parent && window.parent !== window) {
-            console.log('Posting message to parent...');
+            }, 500);
+          } 
+          // If no opener, try parent (iframe scenario)
+          else if (window.parent && window.parent !== window) {
+            console.log('Posting to parent');
+            window.parent.postMessage(message, window.location.origin);
             window.parent.postMessage(message, '*');
-            window.parent.postMessage({
-              auth: {
-                token: '${tokenData.access_token}',
-                provider: 'github'
-              }
-            }, '*');
-          } else {
-            console.log('No opener or parent found');
-            document.body.innerHTML = '<p>Authentication successful! You can close this window.</p>';
+          }
+          // Fallback: redirect with token in hash
+          else {
+            console.log('No opener/parent - redirecting with token');
+            window.location.href = '/admin/#access_token=' + encodeURIComponent('${tokenData.access_token}');
           }
         })();
       </script>
     </head>
     <body>
-      <p>Authenticating... This window should close automatically.</p>
+      <p>Authentication successful! Redirecting...</p>
+      <p>If this window doesn't close automatically, you can close it manually.</p>
     </body>
     </html>
   `;
