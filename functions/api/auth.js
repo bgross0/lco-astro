@@ -25,11 +25,17 @@ export async function onRequestGet(context) {
     return new Response('Only GitHub OAuth is supported', { status: 400 });
   }
   
+  // Build the callback URL - ensure it uses the correct domain
+  const callbackUrl = `${url.origin}/api/auth/callback`;
+  console.log('OAuth callback URL:', callbackUrl);
+  
   // Redirect to GitHub OAuth
   const authUrl = new URL(GITHUB_AUTH_URL);
   authUrl.searchParams.set('client_id', CLIENT_ID);
   authUrl.searchParams.set('scope', scope);
-  authUrl.searchParams.set('redirect_uri', `${url.origin}/api/auth/callback`);
+  authUrl.searchParams.set('redirect_uri', callbackUrl);
+  
+  console.log('Redirecting to GitHub OAuth:', authUrl.toString());
   
   return Response.redirect(authUrl.toString(), 302);
 }

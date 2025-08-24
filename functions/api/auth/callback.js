@@ -11,8 +11,11 @@ export async function onRequestGet(context) {
   const code = url.searchParams.get('code');
   
   if (!code) {
+    console.error('OAuth callback: No code provided');
     return new Response('No code provided', { status: 400 });
   }
+  
+  console.log('OAuth callback: Exchanging code for token...');
   
   // Exchange code for access token
   const tokenResponse = await fetch(GITHUB_TOKEN_URL, {
@@ -29,6 +32,7 @@ export async function onRequestGet(context) {
   });
   
   const tokenData = await tokenResponse.json();
+  console.log('OAuth callback: Token response received', tokenData.access_token ? 'Token present' : 'No token');
   
   if (tokenData.error) {
     return new Response(`GitHub OAuth error: ${tokenData.error_description || tokenData.error}`, {
@@ -43,25 +47,51 @@ export async function onRequestGet(context) {
     <head>
       <title>Authenticating...</title>
       <script>
-        const authResponse = {
-          token: '${tokenData.access_token}',
-          provider: 'github'
-        };
-        
-        if (window.opener) {
-          window.opener.postMessage(
-            'authorization:github:success:' + JSON.stringify(authResponse),
-            window.location.origin
-          );
-          window.close();
-        } else {
-          document.body.innerHTML = '<p>Authentication successful! This window should close automatically.</p>';
-          setTimeout(() => window.close(), 2000);
-        }
+        (function() {
+          const authResponse = {
+            token: '${tokenData.access_token}',
+            provider: 'github'
+          };
+          
+          console.log('Auth callback executing...');
+          
+          // Try multiple message formats for compatibility
+          const message = 'authorization:github:success:' + JSON.stringify(authResponse);
+          
+          if (window.opener) {
+            console.log('Posting message to opener...');
+            // Post to the opener with the origin
+            window.opener.postMessage(message, '*');
+            
+            // Also try the specific format Decap CMS expects
+            window.opener.postMessage({
+              auth: {
+                token: '${tokenData.access_token}',
+                provider: 'github'
+              }
+            }, '*');
+            
+            setTimeout(() => {
+              window.close();
+            }, 100);
+          } else if (window.parent && window.parent !== window) {
+            console.log('Posting message to parent...');
+            window.parent.postMessage(message, '*');
+            window.parent.postMessage({
+              auth: {
+                token: '${tokenData.access_token}',
+                provider: 'github'
+              }
+            }, '*');
+          } else {
+            console.log('No opener or parent found');
+            document.body.innerHTML = '<p>Authentication successful! You can close this window.</p>';
+          }
+        })();
       </script>
     </head>
     <body>
-      <p>Authenticating...</p>
+      <p>Authenticating... This window should close automatically.</p>
     </body>
     </html>
   `;

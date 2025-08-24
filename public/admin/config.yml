@@ -5,9 +5,6 @@ backend:
   branch: main
   base_url: https://lakecountyoutdoor.com
   auth_endpoint: /api/auth
-  
-# Enable local backend proxy for local development
-local_backend: true
 
 # Media files storage
 media_folder: "public/images/uploads" # Media files will be stored here
