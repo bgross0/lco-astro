@@ -196,6 +196,27 @@
         
         // Test if the token can access the repo
         if (authData.token) {
+          // First check what scopes the token has
+          fetch('https://api.github.com/user', {
+            headers: {
+              'Authorization': `token ${authData.token}`,
+              'Accept': 'application/vnd.github.v3+json'
+            }
+          }).then(response => {
+            const scopes = response.headers.get('x-oauth-scopes');
+            console.log('Token scopes:', scopes || 'none');
+            if (!scopes || !scopes.includes('repo')) {
+              console.error('❌ Token missing "repo" scope needed for private repositories');
+              console.log('You need to reauthorize with the correct scopes');
+            }
+            return response.json();
+          }).then(user => {
+            console.log('Authenticated as:', user.login);
+          }).catch(err => {
+            console.error('Error checking token:', err);
+          });
+          
+          // Then test repo access
           fetch('https://api.github.com/repos/lakecountyoutdoor/lco-astro', {
             headers: {
               'Authorization': `token ${authData.token}`,
@@ -204,14 +225,28 @@
           }).then(response => {
             if (response.ok) {
               console.log('✅ Token can access the repository');
+              return response.json();
             } else if (response.status === 404) {
-              console.error('❌ Repository not found or token lacks access. The repo might be private.');
-              console.log('Make sure the OAuth app has access to the private repo.');
+              console.error('❌ Repository not found or token lacks access');
+              console.log('Solutions:');
+              console.log('1. Grant the OAuth app access to the organization at:');
+              console.log('   https://github.com/settings/applications');
+              console.log('2. Or reauthorize by running clearAuth() and logging in again');
+              throw new Error('No repo access');
             } else {
               console.error('❌ Token test failed with status:', response.status);
+              throw new Error(`Status ${response.status}`);
+            }
+          }).then(repo => {
+            if (repo) {
+              console.log('Repository details:', {
+                name: repo.name,
+                private: repo.private,
+                permissions: repo.permissions
+              });
             }
           }).catch(err => {
-            console.error('Error testing token:', err);
+            // Error already logged above
           });
         }
         
