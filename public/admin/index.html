@@ -188,11 +188,32 @@
       try {
         const authData = JSON.parse(storedAuth);
         console.log('Stored auth data:', {
-          hasToken: !!authData.access_token,
-          tokenPrefix: authData.access_token ? authData.access_token.substring(0, 10) : 'none',
-          provider: authData.provider,
-          tokenType: authData.token_type
+          hasToken: !!authData.token,
+          tokenPrefix: authData.token ? authData.token.substring(0, 10) : 'none',
+          backendName: authData.backendName,
+          hasApi: !!authData.api
         });
+        
+        // Test if the token can access the repo
+        if (authData.token) {
+          fetch('https://api.github.com/repos/lakecountyoutdoor/lco-astro', {
+            headers: {
+              'Authorization': `token ${authData.token}`,
+              'Accept': 'application/vnd.github.v3+json'
+            }
+          }).then(response => {
+            if (response.ok) {
+              console.log('✅ Token can access the repository');
+            } else if (response.status === 404) {
+              console.error('❌ Repository not found or token lacks access. The repo might be private.');
+              console.log('Make sure the OAuth app has access to the private repo.');
+            } else {
+              console.error('❌ Token test failed with status:', response.status);
+            }
+          }).catch(err => {
+            console.error('Error testing token:', err);
+          });
+        }
         
         // Check if Decap recognizes the auth
         setTimeout(() => {
