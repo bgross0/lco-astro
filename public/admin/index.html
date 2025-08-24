@@ -36,30 +36,71 @@
   <script>
     // Handle token in URL hash (for redirect flow)
     if (window.location.hash && window.location.hash.includes('access_token')) {
-      console.log('Token found in URL, processing...');
+      console.log('Token found in URL:', window.location.hash);
       
-      // Parse the token from the hash
-      const hash = window.location.hash.substring(1);
+      // Parse the token from the hash (handle both #access_token and #/access_token)
+      let hash = window.location.hash.substring(1);
+      // Remove leading slash if present
+      if (hash.startsWith('/')) {
+        hash = hash.substring(1);
+      }
+      
       const params = new URLSearchParams(hash);
       const token = params.get('access_token');
       
       if (token) {
-        console.log('Token extracted, attempting to authenticate...');
+        console.log('Token extracted:', token.substring(0, 10) + '...');
         
-        // Store the token and reload to trigger CMS auth
-        localStorage.setItem('decap-cms-user', JSON.stringify({
+        // Create the auth data object
+        const authData = {
           access_token: token,
           token_type: 'bearer',
+          provider: 'github',
+          token: token // Also include just 'token' as some versions expect this
+        };
+        
+        // Try multiple storage methods that Decap might check
+        localStorage.setItem('decap-cms-user', JSON.stringify(authData));
+        localStorage.setItem('netlify-cms-user', JSON.stringify(authData)); // Old name
+        localStorage.setItem('gotrue.user', JSON.stringify(authData)); // Another possible key
+        
+        // Also try posting a message in case Decap is listening
+        window.postMessage(`authorization:github:success:${JSON.stringify({
+          token: token,
           provider: 'github'
-        }));
+        })}`, '*');
+        
+        console.log('Auth data stored, cleaning URL...');
         
         // Clean URL and reload
-        window.location.hash = '';
-        window.location.reload();
+        window.history.replaceState(null, '', window.location.pathname);
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
       }
     }
     
     console.log('Decap CMS loaded');
+    
+    // Check what's in localStorage
+    console.log('Current localStorage keys:', Object.keys(localStorage));
+    
+    // If we have a token but aren't logged in, try to trigger auth manually
+    setTimeout(() => {
+      const stored = localStorage.getItem('decap-cms-user');
+      if (stored && !document.querySelector('[data-testid="login-button"]')) {
+        console.log('Have token but not logged in, attempting manual auth...');
+        
+        const authData = JSON.parse(stored);
+        // Try to manually trigger Decap CMS authentication
+        if (window.CMS) {
+          console.log('Attempting to authenticate with CMS object...');
+          window.CMS.registerBackend('github', {
+            getToken: () => Promise.resolve(authData.access_token)
+          });
+        }
+      }
+    }, 2000);
   </script>
 </body>
 </html>

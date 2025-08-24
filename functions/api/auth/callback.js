@@ -40,9 +40,12 @@ export async function onRequestGet(context) {
     });
   }
   
-  // Fuck postMessage - just redirect with the token
-  // This is simpler and more reliable
-  const redirectUrl = `${url.origin}/admin/#access_token=${tokenData.access_token}&token_type=bearer&provider=github`;
+  // Try the implicit flow format that Decap CMS might expect
+  // Using the format: #access_token=TOKEN (no extra slash)
+  const tokenString = encodeURIComponent(tokenData.access_token);
+  const redirectUrl = `${url.origin}/admin/#access_token=${tokenString}&token_type=bearer`;
+  
+  console.log('Redirecting to:', redirectUrl);
   
   return Response.redirect(redirectUrl, 302);
 }
