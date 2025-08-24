@@ -1,24 +1,29 @@
 ---
-title: "Municipal Contracting"
-description: "Reliable municipal services including road maintenance, snow removal, and infrastructure work."
-image: "/images/equipment/equipment-hero-600x300.jpg"
+title: Municipal Contracting
+description: Reliable municipal services including road maintenance, snow
+  removal, and infrastructure work.
+image: /images/landscaping-square-3-600x600.jpg
 order: 2
 hero:
-  subtitle: "Trusted Partner for Government Contracts"
-  backgroundImage: "/images/equipment/equipment-1-600x287.jpg"
+  subtitle: Trusted Partner for Government Contracts
+  backgroundImage: /images/equipment/equipment-1-600x287.jpg
 features:
-  - icon: "road"
-    title: "Road Maintenance"
-    description: "Street sweeping and cleaning, pothole repair, line striping, shoulder maintenance."
-  - icon: "snowflake"
-    title: "Winter Operations"
-    description: "Municipal snow plowing, road salting and de-icing, priority route management, emergency response."
-  - icon: "building"
-    title: "Infrastructure Support"
-    description: "Storm drain maintenance, right-of-way clearing, park and facility maintenance, emergency cleanup."
-  - icon: "clipboard"
-    title: "Compliance & Reporting"
-    description: "Fully compliant with regulations, detailed documentation, transparent billing, responsive service."
+  - icon: road
+    title: Road Maintenance
+    description: Street sweeping and cleaning, pothole repair, line striping,
+      shoulder maintenance.
+  - icon: snowflake
+    title: Winter Operations
+    description: Municipal snow plowing, road salting and de-icing, priority route
+      management, emergency response.
+  - icon: building
+    title: Infrastructure Support
+    description: Storm drain maintenance, right-of-way clearing, park and facility
+      maintenance, emergency cleanup.
+  - icon: clipboard
+    title: Compliance & Reporting
+    description: Fully compliant with regulations, detailed documentation,
+      transparent billing, responsive service.
 ---
 
 ## Professional Municipal Contracting Services
