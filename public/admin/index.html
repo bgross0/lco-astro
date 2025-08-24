@@ -30,8 +30,60 @@
   </style>
 </head>
 <body>
+  <!-- Root element for Decap CMS to render into -->
+  <div id="nc-root"></div>
+  
   <!-- Include the script that builds the page and powers Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    // Initialize Decap CMS with error handling
+    window.addEventListener('error', function(e) {
+      console.error('Global error:', e.error || e.message);
+      if (e.message && e.message.includes('auth') || e.message && e.message.includes('token')) {
+        console.error('Auth-related error detected');
+      }
+    });
+    
+    // Monitor CMS initialization
+    console.log('Waiting for CMS to initialize...');
+    
+    // Check if CMS object exists
+    setTimeout(() => {
+      if (window.CMS) {
+        console.log('CMS object found:', window.CMS);
+        
+        // Try to manually init if needed
+        if (window.CMS.init && typeof window.CMS.init === 'function') {
+          console.log('CMS.init function available');
+        }
+        
+        // Check for any CMS errors
+        if (window.CMS.getBackend) {
+          try {
+            const backend = window.CMS.getBackend();
+            console.log('CMS Backend:', backend);
+          } catch (e) {
+            console.error('Error getting backend:', e);
+          }
+        }
+      } else {
+        console.error('CMS object not found - Decap CMS may have failed to load');
+      }
+      
+      // Check if there's a root element where CMS should render
+      const root = document.getElementById('nc-root') || document.getElementById('root');
+      if (root) {
+        console.log('Root element found:', root);
+        console.log('Root element children:', root.children.length);
+        if (root.children.length === 0) {
+          console.error('Root element is empty - CMS failed to render');
+        }
+      } else {
+        console.error('No root element found for CMS');
+      }
+    }, 1000);
+  </script>
   
   <script>
     // Listen for OAuth callback message from popup window
