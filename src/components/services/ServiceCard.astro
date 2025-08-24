@@ -132,6 +132,12 @@ const { title, description, image, href, icon } = Astro.props;
     padding: var(--space-6);
   }
   
+  @media (max-width: 640px) {
+    .service-card__content {
+      padding: var(--space-4);
+    }
+  }
+  
   .service-card__title {
     color: var(--primary);
     font-size: var(--text-xl);

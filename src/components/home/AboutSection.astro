@@ -128,6 +128,16 @@ const { about } = contentData;
     transform: translateY(20px);
   }
   
+  @media (max-width: 768px) {
+    .about__text {
+      font-size: var(--text-base);
+    }
+    
+    .about__feature {
+      padding: var(--space-2);
+    }
+  }
+  
   @media (min-width: 768px) {
     .about {
       padding: var(--space-16) 0;

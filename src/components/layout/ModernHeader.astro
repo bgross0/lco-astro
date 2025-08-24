@@ -106,7 +106,7 @@ const isActive = (href: string) => {
       <!-- Mobile menu button -->
       <button 
         id="mobile-menu-button"
-        class="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+        class="lg:hidden p-3 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="Toggle menu"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,14 +119,14 @@ const isActive = (href: string) => {
   <!-- Mobile menu -->
   <div 
     id="mobile-menu"
-    class="lg:hidden fixed inset-0 bg-white transform translate-x-full transition-transform duration-300 z-50"
+    class="lg:hidden fixed inset-y-0 right-0 w-full max-w-sm bg-white transform translate-x-full transition-transform duration-300 z-50 shadow-2xl"
   >
     <div class="p-4">
       <div class="flex items-center justify-between mb-8">
         <img src="/lco-final.png" alt="Lake County Outdoors" class="h-10" />
         <button 
           id="mobile-menu-close"
-          class="p-2 rounded-lg hover:bg-gray-100"
+          class="p-3 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Close menu"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,12 +189,31 @@ const isActive = (href: string) => {
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenuClose = document.getElementById('mobile-menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
+  const body = document.body;
 
-  mobileMenuButton?.addEventListener('click', () => {
+  function openMenu() {
     mobileMenu?.classList.remove('translate-x-full');
+    body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileMenu?.classList.add('translate-x-full');
+    body.style.overflow = '';
+  }
+
+  mobileMenuButton?.addEventListener('click', openMenu);
+  mobileMenuClose?.addEventListener('click', closeMenu);
+
+  // Close menu when clicking outside
+  mobileMenu?.addEventListener('click', (e) => {
+    if (e.target === mobileMenu) {
+      closeMenu();
+    }
   });
 
-  mobileMenuClose?.addEventListener('click', () => {
-    mobileMenu?.classList.add('translate-x-full');
+  // Close menu when clicking on a link
+  const mobileMenuLinks = mobileMenu?.querySelectorAll('a');
+  mobileMenuLinks?.forEach(link => {
+    link.addEventListener('click', closeMenu);
   });
 </script>

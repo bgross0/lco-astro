@@ -62,16 +62,34 @@ const Component = href ? 'a' : 'button';
   .btn--small {
     padding: var(--space-2) var(--space-4);
     font-size: var(--text-sm);
+    min-height: 36px;
   }
   
   .btn--medium {
     padding: var(--space-3) var(--space-6);
     font-size: var(--text-base);
+    min-height: 44px;
   }
   
   .btn--large {
     padding: var(--space-4) var(--space-8);
     font-size: var(--text-lg);
+    min-height: 52px;
+  }
+  
+  @media (max-width: 768px) {
+    .btn--small {
+      min-height: 44px;
+      padding: var(--space-3) var(--space-4);
+    }
+    
+    .btn--medium {
+      min-height: 48px;
+    }
+    
+    .btn--large {
+      min-height: 52px;
+    }
   }
   
   /* Variants */
