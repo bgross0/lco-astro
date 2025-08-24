@@ -3,6 +3,8 @@ backend:
   name: github
   repo: lakecountyoutdoor/lco-astro
   branch: main
+  base_url: https://lakecountyoutdoor.com
+  auth_endpoint: api/auth
 
 # Media files storage
 media_folder: "public/images/uploads" # Media files will be stored here
