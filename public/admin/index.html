@@ -135,22 +135,47 @@
         
         // Check if Decap recognizes the auth
         setTimeout(() => {
-          const loginButton = document.querySelector('[data-testid="login-button"]');
-          const logoutButton = document.querySelector('[aria-label="Log out"]');
+          // Try multiple selectors for login/logout detection
+          const loginButton = document.querySelector('[data-testid="login-button"]') || 
+                             document.querySelector('.nc-githubAuthenticationPage-button') ||
+                             document.querySelector('button[class*="login"]');
+          
+          const logoutButton = document.querySelector('[aria-label="Log out"]') ||
+                              document.querySelector('[title="Log out"]') ||
+                              document.querySelector('button[class*="logout"]');
+          
+          // Check for CMS content that indicates successful auth
+          const cmsContent = document.querySelector('.nc-app-header') || 
+                            document.querySelector('[class*="AppHeader"]') ||
+                            document.querySelector('.nc-collectionPage-sidebar');
+          
+          // Log the entire auth data for debugging
+          console.log('Full stored auth:', authData);
           
           if (loginButton) {
-            console.warn('Login button still visible - Decap not recognizing auth');
-            console.log('Attempting to manually trigger authentication...');
+            console.warn('❌ Login button still visible - Decap not recognizing auth');
+            console.log('Login button found:', loginButton);
             
-            // Try to force Decap to recognize the token
-            if (window.CMS && window.CMS.init) {
-              console.log('Reinitializing CMS with stored token...');
-              window.location.reload();
+            // Check if the token might be expired or invalid
+            if (authData.access_token) {
+              console.log('Token exists but not recognized. Token starts with:', authData.access_token.substring(0, 20));
+              console.log('Try running clearAuth() and logging in again');
             }
           } else if (logoutButton) {
             console.log('✅ User is authenticated - logout button found');
+          } else if (cmsContent) {
+            console.log('✅ CMS content visible - user appears to be authenticated');
           } else {
-            console.log('Cannot determine auth state - no login/logout buttons found');
+            console.log('⚠️ Cannot determine auth state - page might still be loading');
+            console.log('Current page title:', document.title);
+            console.log('Body classes:', document.body.className);
+            
+            // Log any error messages
+            const errorElement = document.querySelector('.nc-errorBoundary') || 
+                               document.querySelector('[class*="error"]');
+            if (errorElement) {
+              console.error('Error element found:', errorElement.textContent);
+            }
           }
         }, 3000);
       } catch (e) {
