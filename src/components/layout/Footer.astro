@@ -66,6 +66,9 @@ const contact = {
       <p class="footer__copyright">
         &copy; {currentYear} {settings.site_title}. All rights reserved.
       </p>
+      <p class="footer__credit">
+        Website by <a href="https://axsys.dev" target="_blank" rel="noopener" class="footer__credit-link">Axsys</a>
+      </p>
     </div>
   </div>
 </footer>
@@ -196,6 +199,42 @@ const contact = {
     color: rgba(255, 255, 255, 0.6);
     font-size: var(--text-sm);
     margin: 0;
+  }
+  
+  .footer__credit {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: var(--text-xs);
+    margin: var(--space-2) 0 0 0;
+  }
+  
+  .footer__credit-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    position: relative;
+  }
+  
+  .footer__credit-link:hover {
+    color: var(--white);
+    text-decoration: none;
+  }
+  
+  .footer__credit-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--white);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-fast);
+  }
+  
+  .footer__credit-link:hover::after {
+    transform: scaleX(1);
   }
   
   /* Responsive adjustments */

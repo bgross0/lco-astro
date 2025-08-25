@@ -5,7 +5,7 @@ export function getSettings() {
 }
 
 export function getPhone() {
-  return settings.phone || '(847) 555-0123';
+  return settings.phone || '(612) 655-0648';
 }
 
 export function getPhoneLink() {
