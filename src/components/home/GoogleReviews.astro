@@ -218,7 +218,7 @@ const reviews = [
             <div class="review-card" data-index={index}>
               <div class="review-card__header">
                 <div class="review-card__author">
-                  <div class="review-card__avatar">
+                  <div class="review-card__avatar" data-color={index % 7}>
                     {review.author.charAt(0)}
                   </div>
                   <div>
@@ -262,11 +262,6 @@ const reviews = [
       <div class="gbp-card">
         <div class="gbp-card__content">
           <h3 class="gbp-card__title">See All Our Reviews on Google</h3>
-          <p class="gbp-card__text">
-            We're proud of our 5-star rating from 27 satisfied customers. 
-            Visit our Google Business Profile to read all reviews and see why 
-            Lake County Outdoors is the trusted choice for outdoor services.
-          </p>
           <div class="gbp-card__buttons">
             <a 
               href={reviewStats.googleBusinessUrl}
@@ -314,8 +309,8 @@ const reviews = [
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-4) var(--space-6);
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-6);
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: var(--radius-lg);
@@ -335,10 +330,11 @@ const reviews = [
   }
 
   .trust-badge__rating {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: var(--font-bold);
     color: var(--black);
     line-height: 1;
+    margin-right: -8px;
   }
 
   .trust-badge__stars {
@@ -353,9 +349,10 @@ const reviews = [
 
   .trust-badge__count {
     color: #5f6368;
-    font-size: var(--text-sm);
-    font-weight: 500;
+    font-size: var(--text-xs);
+    font-weight: 400;
     text-align: center;
+    margin-top: 0;
   }
 
   .reviews__subtitle {
@@ -487,13 +484,13 @@ const reviews = [
 
   .review-card {
     background: var(--white);
-    padding: var(--space-6);
+    padding: var(--space-4);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-fast);
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-3);
     min-width: 300px;
     flex: 0 0 calc(25% - var(--space-3));
   }
@@ -546,6 +543,36 @@ const reviews = [
     font-weight: var(--font-bold);
     font-size: var(--text-lg);
   }
+  
+  /* Avatar color variations for more organic look */
+  .review-card__avatar[data-color="0"] {
+    background: #4285F4; /* Google Blue */
+  }
+  
+  .review-card__avatar[data-color="1"] {
+    background: #34A853; /* Google Green */
+  }
+  
+  .review-card__avatar[data-color="2"] {
+    background: #EA4335; /* Google Red */
+  }
+  
+  .review-card__avatar[data-color="3"] {
+    background: #FBBC04; /* Google Yellow */
+    color: var(--black);
+  }
+  
+  .review-card__avatar[data-color="4"] {
+    background: #9C27B0; /* Purple */
+  }
+  
+  .review-card__avatar[data-color="5"] {
+    background: #FF6B6B; /* Coral */
+  }
+  
+  .review-card__avatar[data-color="6"] {
+    background: #00ACC1; /* Cyan */
+  }
 
   .review-card__name {
     font-weight: var(--font-semibold);
@@ -570,8 +597,9 @@ const reviews = [
 
   .review-card__text {
     color: var(--neutral-dark);
-    line-height: 1.6;
+    line-height: 1.5;
     flex: 1;
+    font-size: var(--text-sm);
   }
 
   .review-card__source {
@@ -580,7 +608,7 @@ const reviews = [
     gap: var(--space-2);
     font-size: var(--text-sm);
     color: var(--neutral);
-    padding-top: var(--space-3);
+    padding-top: var(--space-2);
     border-top: 1px solid var(--neutral-light);
   }
 
@@ -605,13 +633,6 @@ const reviews = [
   .gbp-card__title {
     color: var(--white);
     font-size: var(--text-2xl);
-    margin-bottom: var(--space-4);
-  }
-
-  .gbp-card__text {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: var(--text-lg);
-    line-height: 1.6;
     margin-bottom: var(--space-6);
   }
 

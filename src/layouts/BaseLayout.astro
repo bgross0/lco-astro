@@ -14,7 +14,7 @@ export interface Props {
 const { 
   title = 'Lake County Outdoors, LLC', 
   description = 'Municipal Contracting, Commercial Snow Removal, Heavy Equipment Rental. Professional outdoor services in Lake County.',
-  image = '/og-image.jpg',
+  image = '/lco-final.png',
   canonical
 } = Astro.props;
 
@@ -42,6 +42,9 @@ const ogImage = new URL(image, Astro.site).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content="Lake County Outdoors Logo" />
     <meta property="og:locale" content="en_US" />
     
     <!-- Twitter Card -->
@@ -54,9 +57,9 @@ const ogImage = new URL(image, Astro.site).href;
     <meta name="theme-color" content="#4A90E2" />
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/lco-final.png" />
+    <link rel="shortcut icon" type="image/png" href="/lco-final.png" />
+    <link rel="apple-touch-icon" href="/lco-final.png" />
     
     <!-- Fonts Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

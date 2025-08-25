@@ -95,6 +95,27 @@ collections:
           - { label: "CTA Text", name: "ctaText", widget: "string", default: "Get a Free Quote" }
           - { label: "CTA Link", name: "ctaLink", widget: "string", default: "/contact" }
       
+      - label: "Services Showcase"
+        name: "services-showcase"
+        file: "src/content/homepage/services-showcase.json"
+        extension: "json"
+        format: "json"
+        fields:
+          - { label: "Title", name: "title", widget: "string", required: true }
+          - { label: "Subtitle", name: "subtitle", widget: "string", required: true }
+          - { label: "Auto-Scroll Interval (ms)", name: "autoScrollInterval", widget: "number", default: 5000, hint: "Time in milliseconds between automatic transitions (5000 = 5 seconds)" }
+          - label: "Services"
+            name: "services"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string", required: true }
+              - { label: "Title", name: "title", widget: "string", required: true }
+              - { label: "Subtitle", name: "subtitle", widget: "string", required: true }
+              - { label: "Icon Class", name: "icon", widget: "string", hint: "Phosphor icon class (e.g., 'ph ph-snowflake')" }
+              - { label: "Image", name: "image", widget: "image", required: true }
+              - { label: "Link", name: "href", widget: "string", required: true }
+              - { label: "Order", name: "order", widget: "number", required: true, hint: "Display order (lower numbers appear first)" }
+      
       - label: "All Content Sections"
         name: "content"
         file: "src/content/homepage/content.json"

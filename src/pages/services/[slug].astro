@@ -79,7 +79,7 @@ const { Content } = await service.render();
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    z-index: -2;
+    z-index: 0;
   }
   
   .service-hero__overlay {
@@ -90,15 +90,15 @@ const { Content } = await service.render();
     bottom: 0;
     background: linear-gradient(
       135deg,
-      rgba(46, 90, 135, 0.95) 0%,
-      rgba(74, 144, 226, 0.85) 100%
+      rgba(46, 90, 135, 0.75) 0%,
+      rgba(74, 144, 226, 0.65) 100%
     );
-    z-index: -1;
+    z-index: 1;
   }
   
   .service-hero__content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     text-align: center;
     color: var(--white);
     padding: var(--space-8) 0;

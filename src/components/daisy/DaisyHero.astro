@@ -4,7 +4,7 @@ import contentData from '../../content/homepage/content.json';
 import settings from '../../data/settings.json';
 ---
 
-<div class="hero min-h-screen bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
+<div class="hero min-h-screen bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5">
   <div class="hero-content flex-col lg:flex-row-reverse max-w-7xl">
     <!-- Carousel -->
     <div class="carousel w-full max-w-md rounded-box shadow-2xl overflow-hidden h-64 md:h-80">
@@ -21,8 +21,9 @@ import settings from '../../data/settings.json';
     
     <!-- Content -->
     <div>
-      <img src={settings.logo} alt={heroData.title} class="h-20 mx-auto lg:mx-0 mb-6" />
-      <p class="text-xl py-6">{heroData.description}</p>
+      <img src={settings.logo} alt={heroData.title} class="h-24 mx-auto lg:mx-0 mb-6 drop-shadow-lg" />
+      <h1 class="text-5xl font-bold mb-4">Lake County Outdoors</h1>
+      <p class="text-xl py-6 text-base-content/80 max-w-lg">{heroData.description}</p>
       <div class="flex flex-col sm:flex-row gap-4">
         <a href={heroData.ctaLink} class="btn btn-primary btn-lg">
           {heroData.ctaText}
@@ -36,7 +37,7 @@ import settings from '../../data/settings.json';
       </div>
       
       <!-- Stats -->
-      <div class="stats shadow mt-8">
+      <div class="stats shadow-lg mt-8 bg-base-100">
         <div class="stat">
           <div class="stat-figure text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"

@@ -21,19 +21,19 @@ const testimonials = [
 ];
 ---
 
-<section class="py-16 bg-base-200">
+<section class="py-20 bg-gradient-to-b from-base-200 to-base-100">
   <div class="container mx-auto px-4">
     <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-primary mb-4">What Our Clients Say</h2>
-      <p class="text-xl text-base-content/70">Trusted by homeowners and businesses across Lake County</p>
+      <h2 class="text-5xl font-bold text-primary mb-4">What Our Clients Say</h2>
+      <p class="text-xl text-base-content/70 max-w-2xl mx-auto">Trusted by homeowners and businesses across Lake County</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {testimonials.map((testimonial) => (
-        <div class="card bg-base-100 shadow-xl">
+        <div class="card bg-gradient-to-br from-base-100 to-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
           <div class="card-body">
             <!-- Rating -->
-            <div class="rating rating-sm mb-4">
+            <div class="rating rating-md mb-4">
               {[...Array(5)].map((_, i) => (
                 <input type="radio" name={`rating-${testimonial.name}`} class="mask mask-star-2 bg-warning" checked={i === testimonial.rating - 1} disabled />
               ))}
@@ -61,7 +61,7 @@ const testimonials = [
     
     <!-- Google Reviews Integration -->
     <div class="mt-12 text-center">
-      <div class="inline-flex items-center gap-4 bg-base-100 rounded-box p-6 shadow-lg">
+      <div class="inline-flex items-center gap-6 bg-gradient-to-r from-white to-base-100 rounded-2xl p-8 shadow-2xl border border-base-200">
         <img src="/images/google-logo.svg" alt="Google" class="h-10" />
         <div class="text-left">
           <div class="flex items-center gap-2">
@@ -74,7 +74,12 @@ const testimonials = [
           </div>
           <p class="text-sm text-base-content/60">Based on 127 Google Reviews</p>
         </div>
-        <a href="#" class="btn btn-primary btn-sm">View All Reviews</a>
+        <a href="#" class="btn btn-primary">
+          View All Reviews
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
       </div>
     </div>
   </div>

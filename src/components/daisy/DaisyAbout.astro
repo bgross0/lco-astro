@@ -4,19 +4,19 @@ import contentData from '../../content/homepage/content.json';
 const aboutData = contentData.about;
 ---
 
-<section class="py-16 bg-base-100">
+<section class="py-20 bg-gradient-to-b from-base-100 to-base-200">
   <div class="container mx-auto px-4">
     <div class="flex flex-col lg:flex-row items-center gap-12">
       <!-- Image Side -->
       <div class="lg:w-1/2">
-        <div class="mockup-window border bg-base-300 overflow-hidden">
+        <div class="mockup-window border-base-300 bg-base-300 shadow-2xl">
           <img src={aboutData.images?.[0]?.src || '/images/equipment/equipment-1-600x287.jpg'} alt="Lake County Outdoors team" class="w-full h-auto object-contain" />
         </div>
       </div>
       
       <!-- Content Side -->
       <div class="lg:w-1/2">
-        <h2 class="text-4xl font-bold text-secondary mb-6">{aboutData.title}</h2>
+        <h2 class="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-6">{aboutData.title}</h2>
         {aboutData.paragraphs?.map((paragraph) => (
           <p class="text-lg text-base-content/80 mb-4">{paragraph}</p>
         ))}
@@ -25,7 +25,11 @@ const aboutData = contentData.about;
         <div class="space-y-4 mb-8">
           {aboutData.features?.map((feature) => (
             <div class="flex items-start gap-3">
-              <div class="badge badge-primary badge-lg mt-1">✓</div>
+              <div class="badge badge-primary badge-lg mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
               <div>
                 <h4 class="font-semibold text-base-content">{feature.title}</h4>
                 <p class="text-sm text-base-content/70">{feature.description}</p>
@@ -54,7 +58,7 @@ const aboutData = contentData.about;
         </div>
         
         <!-- Stats -->
-        <div class="stats stats-vertical lg:stats-horizontal shadow">
+        <div class="stats stats-vertical lg:stats-horizontal shadow-xl bg-base-100">
           <div class="stat">
             <div class="stat-title">Experience</div>
             <div class="stat-value text-primary">60+</div>
