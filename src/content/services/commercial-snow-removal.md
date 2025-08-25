@@ -1,43 +1,51 @@
 ---
-title: "Commercial Snow Removal"
-description: "Professional snow and Ice Management for commercial properties. 24/7 emergency service available."
-image: "/images/snow-removal/snow-removal-hero-600x300.jpg"
-order: 0
-hero:
-  subtitle: "Professional Service You Can Count On"
-  backgroundImage: "/images/snow-removal/snow-removal-wide-1120x559.jpg"
-features:
-  - icon: "snowflake"
-    title: "Snow Plowing"
-    description: "Professional plowing services for parking lots, driveways, and access roads. Multiple trigger level options available."
-  - icon: "cube"
-    title: "Ice Management"
-    description: "Complete ice control with traditional salt or eco-friendly liquid brine solutions. Pre-treatment and de-icing services available."
-  - icon: "truck"
-    title: "Snow Hauling"
-    description: "When snow piles up, we haul it away. Rates starting at $115/hour for smaller equipment, $125/hour for standard equipment."
-  - icon: "lightning"
-    title: "24/7 Emergency Service"
-    description: "Round-the-clock emergency response when you need it most. We're here when other contractors can't keep up."
 pricing:
-  - title: "Per Push"
-    description: "Pay only when it snows. Perfect for mild winters with flexible trigger levels (zero tolerance, 1\", or 2\")."
+  - title: Per Push
+    description: Pay only when it snows. Perfect for mild winters with flexible
+      trigger levels (zero tolerance, 1", or 2").
     featured: false
-  - title: "Monthly Flat Rate"
-    description: "Predictable budgeting with unlimited snow events. Includes priority service and Ice Management."
+  - title: Monthly Flat Rate
+    description: Predictable budgeting with unlimited snow events. Includes priority
+      service and Ice Management.
     featured: true
-  - title: "Per Snowfall"
-    description: "One price per snow event regardless of accumulation. Includes return visits as needed."
+  - title: Per Snowfall
+    description: One price per snow event regardless of accumulation. Includes
+      return visits as needed.
     featured: false
 equipment:
   - number: 10
-    label: "Plow Trucks"
+    label: Plow Trucks
   - number: 14
-    label: "Bobcats"
+    label: Bobcats
   - number: 6
-    label: "Wheel Loaders"
+    label: Wheel Loaders
   - number: 2
-    label: "Tri-Axle Dumps"
+    label: Tri-Axle Dumps
+title: Commercial Snow Removal
+description: Professional snow and Ice Management for commercial properties.
+  24/7 emergency service available.
+order: 0
+hero:
+  subtitle: Professional Service You Can Count On
+  backgroundImage: /images/snow-removal/snow-removal-wide-1120x559.jpg
+image: /images/IMG_8045.png
+features:
+  - icon: snowflake
+    title: Snow Plowing
+    description: Professional plowing services for parking lots, driveways, and
+      access roads. Multiple trigger level options available.
+  - icon: cube
+    title: Ice Management
+    description: Complete ice control with traditional salt or eco-friendly liquid
+      brine solutions. Pre-treatment and de-icing services available.
+  - icon: truck
+    title: Snow Hauling
+    description: When snow piles up, we haul it away. Rates starting at $115/hour
+      for smaller equipment, $125/hour for standard equipment.
+  - icon: lightning
+    title: 24/7 Emergency Service
+    description: Round-the-clock emergency response when you need it most. We're
+      here when other contractors can't keep up.
 ---
 
 ## Reliable Commercial Snow Removal Services
