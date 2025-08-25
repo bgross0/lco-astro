@@ -149,5 +149,35 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        lakecounty: {
+          "primary": "#4A90E2",
+          "primary-content": "#ffffff",
+          "secondary": "#2E5A87",
+          "secondary-content": "#ffffff",
+          "accent": "#60a5fa",
+          "accent-content": "#ffffff",
+          "neutral": "#3d4451",
+          "neutral-content": "#ffffff",
+          "base-100": "#ffffff",
+          "base-200": "#f8f9fa",
+          "base-300": "#e9ecef",
+          "base-content": "#1f2937",
+          "info": "#3abff8",
+          "success": "#36d399",
+          "warning": "#fbbd23",
+          "error": "#f87272",
+        },
+      },
+    ],
+    darkTheme: false,
+    base: true, // Enable base styles for proper DaisyUI rendering
+    styled: true,
+    utils: true,
+    prefix: "", // Could use "daisy-" to prefix all DaisyUI classes
+    logs: false,
+  },
 }

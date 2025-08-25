@@ -1,0 +1,63 @@
+---
+export interface Props {
+  faqs: Array<{
+    question: string;
+    answer: string;
+  }>;
+}
+
+const { faqs } = Astro.props;
+---
+
+<section class="py-16 bg-base-100">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-secondary mb-3">Frequently Asked Questions</h2>
+      <p class="text-lg text-base-content/70">Get answers to common questions about our services</p>
+    </div>
+    
+    <div class="max-w-3xl mx-auto space-y-2">
+      {faqs.map((faq, index) => (
+        <div class="collapse collapse-plus bg-base-100 border border-base-300" style={`animation-delay: ${index * 0.1}s`}>
+          <input type="radio" name="faq-accordion" checked={index === 0} />
+          <div class="collapse-title text-xl font-medium text-primary">
+            {faq.question}
+          </div>
+          <div class="collapse-content">
+            <p class="text-base-content/80 leading-relaxed pt-2">{faq.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="divider my-12"></div>
+    
+    <div class="text-center">
+      <p class="text-lg text-base-content/70 mb-4">Have more questions?</p>
+      <a href="/contact" class="btn btn-primary btn-lg gap-2">
+        Contact us for more information
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .collapse {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+</style>

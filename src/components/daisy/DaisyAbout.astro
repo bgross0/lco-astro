@@ -1,0 +1,79 @@
+---
+import contentData from '../../content/homepage/content.json';
+
+const aboutData = contentData.about;
+---
+
+<section class="py-16 bg-base-100">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row items-center gap-12">
+      <!-- Image Side -->
+      <div class="lg:w-1/2">
+        <div class="mockup-window border bg-base-300 overflow-hidden">
+          <img src={aboutData.images?.[0]?.src || '/images/equipment/equipment-1-600x287.jpg'} alt="Lake County Outdoors team" class="w-full h-auto object-contain" />
+        </div>
+      </div>
+      
+      <!-- Content Side -->
+      <div class="lg:w-1/2">
+        <h2 class="text-4xl font-bold text-secondary mb-6">{aboutData.title}</h2>
+        {aboutData.paragraphs?.map((paragraph) => (
+          <p class="text-lg text-base-content/80 mb-4">{paragraph}</p>
+        ))}
+        
+        <!-- Features with badges -->
+        <div class="space-y-4 mb-8">
+          {aboutData.features?.map((feature) => (
+            <div class="flex items-start gap-3">
+              <div class="badge badge-primary badge-lg mt-1">✓</div>
+              <div>
+                <h4 class="font-semibold text-base-content">{feature.title}</h4>
+                <p class="text-sm text-base-content/70">{feature.description}</p>
+              </div>
+            </div>
+          )) || (
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex items-center gap-2">
+                <div class="badge badge-primary">✓</div>
+                <span>60+ Years Experience</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="badge badge-primary">✓</div>
+                <span>Licensed & Insured</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="badge badge-primary">✓</div>
+                <span>24/7 Emergency Service</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="badge badge-primary">✓</div>
+                <span>Free Estimates</span>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats stats-vertical lg:stats-horizontal shadow">
+          <div class="stat">
+            <div class="stat-title">Experience</div>
+            <div class="stat-value text-primary">60+</div>
+            <div class="stat-desc">Years in business</div>
+          </div>
+          
+          <div class="stat">
+            <div class="stat-title">Projects</div>
+            <div class="stat-value text-secondary">500+</div>
+            <div class="stat-desc">Completed annually</div>
+          </div>
+          
+          <div class="stat">
+            <div class="stat-title">Satisfaction</div>
+            <div class="stat-value text-accent">100%</div>
+            <div class="stat-desc">Customer guarantee</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,73 @@
+---
+import Button from '../common/Button.astro';
+
+export interface Props {
+  pricing: Array<{
+    title: string;
+    price: string;
+    description: string;
+    features: string[];
+    featured?: boolean;
+    badge?: string;
+  }>;
+}
+
+const { pricing } = Astro.props;
+---
+
+<section class="py-16 bg-base-100">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-secondary mb-3">Flexible Pricing Options</h2>
+      <p class="text-lg text-base-content/70">Choose the plan that works best for your business</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      {pricing.map((plan) => (
+        <div class={`card bg-base-100 shadow-xl relative ${plan.featured ? 'ring-2 ring-primary scale-105' : ''}`}>
+          {plan.badge && (
+            <div class="badge badge-primary absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap">
+              {plan.badge}
+            </div>
+          )}
+          
+          <div class="card-body">
+            <h3 class="card-title text-2xl text-primary justify-center mb-4">{plan.title}</h3>
+            
+            <div class="text-center pb-6 border-b-2 border-base-200 mb-6">
+              <div class="text-4xl font-bold text-secondary mb-2">{plan.price}</div>
+              <p class="text-sm text-base-content/70">{plan.description}</p>
+            </div>
+            
+            <ul class="space-y-3 flex-1 mb-6">
+              {plan.features.map((feature) => (
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span class="text-base-content/80">{feature}</span>
+                </li>
+              ))}
+            </ul>
+            
+            <div class="card-actions justify-center">
+              <Button 
+                href="/contact" 
+                variant={plan.featured ? "primary" : "outline"}
+                size="md"
+                wide
+              >
+                Get Started
+              </Button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="text-center text-sm text-base-content/60">
+      <p>All prices subject to property size and specific requirements.</p>
+      <p>Contact us for a custom quote tailored to your needs.</p>
+    </div>
+  </div>
+</section>

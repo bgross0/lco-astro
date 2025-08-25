@@ -1,5 +1,6 @@
 ---
 import contentData from '../../content/homepage/content.json';
+import GoogleReviews from './GoogleReviews.astro';
 
 const { clientSatisfaction } = contentData;
 ---
@@ -29,6 +30,9 @@ const { clientSatisfaction } = contentData;
     </div>
   </div>
 </section>
+
+<!-- Google Reviews Section -->
+<GoogleReviews />
 
 <style>
   .client-satisfaction {

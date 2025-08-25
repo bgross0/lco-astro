@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+
+// Get all services from the content collection
+const servicesCollection = await getCollection('services');
+
+// Sort by order field if it exists, otherwise alphabetically
+const services = servicesCollection
+  .sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.data.title.localeCompare(b.data.title);
+  })
+  .map(service => ({
+    title: service.data.title,
+    description: service.data.description,
+    image: service.data.image,
+    href: `/services/${service.slug}`,
+    icon: service.slug.includes('snow') || service.slug.includes('ice') ? 'snowflake' : 
+          service.slug.includes('landscap') ? 'tree' : 
+          service.slug.includes('municipal') ? 'building' : 'wrench'
+  }));
+---
+
+<section class="py-16 bg-base-200">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-primary mb-4">Our Services</h2>
+      <p class="text-xl text-base-content/70">Professional outdoor services for every season</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {services.map((service) => (
+        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 overflow-hidden">
+          <figure class="h-48 bg-base-200">
+            <img src={service.image} alt={service.title} class="w-full h-full object-cover" />
+          </figure>
+          <div class="card-body">
+            <div class="badge badge-primary badge-outline mb-2">
+              {service.icon === 'snowflake' && '❄️ Winter'}
+              {service.icon === 'tree' && '🌳 Landscaping'}
+              {service.icon === 'building' && '🏛️ Municipal'}
+              {service.icon === 'wrench' && '🔧 Equipment'}
+            </div>
+            <h3 class="card-title text-lg">{service.title}</h3>
+            <p class="text-sm text-base-content/70">{service.description}</p>
+            <div class="card-actions justify-end mt-4">
+              <a href={service.href} class="btn btn-primary btn-sm">Learn More</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -275,49 +275,33 @@ import settings from '../../data/settings.json';
   }
   
   .hero__dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     border: 2px solid var(--white);
     background-color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: all var(--transition-fast);
     padding: 0;
-    min-width: 44px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  
-  .hero__dot::after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 2px solid var(--white);
   }
   
   @media (min-width: 769px) {
     .hero__dot {
-      min-width: auto;
-      min-height: auto;
       width: 10px;
       height: 10px;
-    }
-    
-    .hero__dot::after {
-      display: none;
     }
   }
   
   .hero__dot--active {
     background-color: var(--white);
-    width: 24px;
+    width: 20px;
     border-radius: 5px;
+  }
+  
+  @media (min-width: 769px) {
+    .hero__dot--active {
+      width: 24px;
+    }
   }
   
   .hero__dot:hover {

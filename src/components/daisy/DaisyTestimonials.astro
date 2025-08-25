@@ -1,0 +1,81 @@
+---
+const testimonials = [
+  {
+    name: "John Anderson",
+    role: "Property Manager",
+    content: "Lake County Outdoors has been our go-to for snow removal for 5 years. Their reliability and professionalism are unmatched.",
+    rating: 5
+  },
+  {
+    name: "Sarah Mitchell",
+    role: "Homeowner",
+    content: "The landscaping work they did transformed our property. Attention to detail and excellent communication throughout the project.",
+    rating: 5
+  },
+  {
+    name: "Mike Thompson",
+    role: "Business Owner",
+    content: "24/7 emergency snow removal service has saved us countless times. They're always there when we need them most.",
+    rating: 5
+  }
+];
+---
+
+<section class="py-16 bg-base-200">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-primary mb-4">What Our Clients Say</h2>
+      <p class="text-xl text-base-content/70">Trusted by homeowners and businesses across Lake County</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {testimonials.map((testimonial) => (
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <!-- Rating -->
+            <div class="rating rating-sm mb-4">
+              {[...Array(5)].map((_, i) => (
+                <input type="radio" name={`rating-${testimonial.name}`} class="mask mask-star-2 bg-warning" checked={i === testimonial.rating - 1} disabled />
+              ))}
+            </div>
+            
+            <!-- Content -->
+            <p class="text-base-content/80 italic mb-4">"{testimonial.content}"</p>
+            
+            <!-- Author -->
+            <div class="flex items-center gap-4">
+              <div class="avatar placeholder">
+                <div class="bg-primary text-primary-content rounded-full w-12">
+                  <span class="text-xl">{testimonial.name.split(' ').map(n => n[0]).join('')}</span>
+                </div>
+              </div>
+              <div>
+                <h4 class="font-semibold">{testimonial.name}</h4>
+                <p class="text-sm text-base-content/60">{testimonial.role}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- Google Reviews Integration -->
+    <div class="mt-12 text-center">
+      <div class="inline-flex items-center gap-4 bg-base-100 rounded-box p-6 shadow-lg">
+        <img src="/images/google-logo.svg" alt="Google" class="h-10" />
+        <div class="text-left">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl font-bold">4.9</span>
+            <div class="rating rating-sm">
+              {[...Array(5)].map(() => (
+                <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              ))}
+            </div>
+          </div>
+          <p class="text-sm text-base-content/60">Based on 127 Google Reviews</p>
+        </div>
+        <a href="#" class="btn btn-primary btn-sm">View All Reviews</a>
+      </div>
+    </div>
+  </div>
+</section>

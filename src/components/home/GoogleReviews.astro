@@ -1,0 +1,823 @@
+---
+import Icon from '../common/Icon.astro';
+
+// This component showcases Google Business Profile reviews
+// For full integration, you'll need to:
+// 1. Set up Google Places API or use a widget service
+// 2. Add your Place ID or widget code
+// 3. Fetch actual reviews data
+
+const reviewStats = {
+  totalReviews: 27,
+  averageRating: 5.0,
+  googleBusinessUrl: 'https://maps.app.goo.gl/hoFQbvFjQv1oz1Hr9'
+};
+
+// Real Google Reviews from Lake County Outdoors
+const reviews = [
+  {
+    author: "Aroona Events",
+    rating: 5,
+    text: "For excellence and beyond!! I recently had the pleasure of working with Lake County Outdoors for an ambitious project: transforming a 10-acre lot into a stunning outdoor wedding and event venue.",
+    date: "a month ago"
+  },
+  {
+    author: "Tony Azzazi",
+    rating: 5,
+    text: "Lake Country Outdoors exceeded expectations from start to finish. Their attention to detail and overall quality of work was top-notch. You can tell they take real pride in what they do. What stood out even more was their communication.",
+    date: "a month ago"
+  },
+  {
+    author: "Jager Sorenson",
+    rating: 5,
+    text: "The crew came always showed up on time and worked their butts off to get my landscaping done after a storm. Really easy to work with and talk to. All n all they were great people and would recommend.",
+    date: "a month ago"
+  },
+  {
+    author: "Luke Wottreng",
+    rating: 5,
+    text: "Lake County Outdoors is reliable, fast, and professional. They keep our property clear and safe all winter. Highly recommend their snow removal services!",
+    date: "a month ago"
+  },
+  {
+    author: "Conrad Killen",
+    rating: 5,
+    text: "Lake county does my apartment complex and they do a great job! I highly recommend these guys, quick, great cost and a do a phenomenal job.",
+    date: "a month ago"
+  },
+  {
+    author: "Charlie Vedder",
+    rating: 5,
+    text: "Great commercial snow plowing. Helped out a lot in the winter with the parking lot. Always made our lot easily accessible and in a timely manner.",
+    date: "a month ago"
+  },
+  {
+    author: "T Schnell",
+    rating: 5,
+    text: "Great snow service. Very reliable and consistent. Would definitely recommend.",
+    date: "a month ago"
+  },
+  {
+    author: "Logan Hoppe",
+    rating: 5,
+    text: "Caden takes care of snow removal quick and effectively. Even in the most heavy snowfall the job gets done. They make sure the use extreme care in making sure it is done safely. Highly recommend!",
+    date: "8 months ago"
+  },
+  {
+    author: "Peter Bergeron",
+    rating: 5,
+    text: "I have just recently worked with Lake Country Outdoors/ Blizzard Plowing. The Company did what they said they would do. It's always tough to stay in communication with clients but they seam to have succeeded at it.",
+    date: "a month ago"
+  },
+  {
+    author: "Kate Miller",
+    rating: 5,
+    text: "The crew was great to work with this past season and reliable. Would recommend.",
+    date: "a month ago"
+  },
+  {
+    author: "Lauren Stenslie",
+    rating: 5,
+    text: "This service is very well managed and definitely recommend to anyone.",
+    date: "a month ago"
+  },
+  {
+    author: "Sean Parnell",
+    rating: 5,
+    text: "Wonderful company. Always showed up on time and even offered to plow my grandmas sidewalk for free when it snowed a bunch.",
+    date: "10 months ago"
+  },
+  {
+    author: "Will Marnach",
+    rating: 5,
+    text: "Caden and his team manage snow and ice management several properties of mine. His bid was reasonable and communication was exceptional.",
+    date: "8 months ago"
+  },
+  {
+    author: "Kris Forsman",
+    rating: 5,
+    text: "Caden is so easy and honest to work with!!",
+    date: "a month ago"
+  },
+  {
+    author: "Mike Warner",
+    rating: 5,
+    text: "Great company to work with. Caden was very responsive throughout my project and I felt prioritized.",
+    date: "a year ago"
+  },
+  {
+    author: "Jameson W",
+    rating: 5,
+    text: "Great and Reliable Service. Highly recommend LCO for any snow needs.",
+    date: "8 months ago"
+  },
+  {
+    author: "Andrew Koch",
+    rating: 5,
+    text: "Quick Response and competitive price for snow removal. Very Professional.",
+    date: "8 months ago"
+  },
+  {
+    author: "Jake Manfred",
+    rating: 5,
+    text: "Caden and his crew serve great service no matter the conditions.",
+    date: "10 months ago"
+  },
+  {
+    author: "Grayson Spronk",
+    rating: 5,
+    text: "Amazing, reliable crew!",
+    date: "a month ago"
+  },
+  {
+    author: "Sean Parnell",
+    rating: 5,
+    text: "Caden does a good job. He made sure to remove the snow every time.",
+    date: "a year ago"
+  },
+  {
+    author: "Navin Subedi",
+    rating: 5,
+    text: "I called them as I needed an area of mine plowed as soon as possible. They were very responsive got the job done fast.",
+    date: "a year ago"
+  },
+  {
+    author: "Keller Gonyea",
+    rating: 5,
+    text: "Good reliable services. Will be sticking with them again this year.",
+    date: "10 months ago"
+  },
+  {
+    author: "Andrew Simonson",
+    rating: 5,
+    text: "Unreal services from these guys, came in early before I had to head to work and I was good to go!",
+    date: "19 hours ago"
+  },
+  {
+    author: "Mitchell Platt",
+    rating: 5,
+    text: "Lake County Outdoors did an amazing and fast job on a boulder retaining wall for me. Great communication from everyone involved with the whole project. I would highly recommend them for any type of project like this.",
+    date: "2 days ago"
+  },
+  {
+    author: "Kaylee Sanchez",
+    rating: 5,
+    text: "Excellent service and professional team!",
+    date: "4 weeks ago"
+  },
+  {
+    author: "Charlie Brinkman",
+    rating: 5,
+    text: "Outstanding work and great customer service!",
+    date: "a year ago"
+  },
+  {
+    author: "Kai Sather",
+    rating: 5,
+    text: "Highly professional and reliable service!",
+    date: "a year ago"
+  }
+];
+---
+
+<section class="google-reviews">
+  <div class="container">
+    <div class="reviews__title-section">
+      <h2 class="reviews__main-title">What Customers Say</h2>
+      <div class="reviews__trust-badge">
+        <div class="trust-badge__top">
+          <img 
+            src="/images/google-logo.svg" 
+            alt="Google" 
+            class="trust-badge__logo"
+            width="80"
+            height="28"
+          />
+          <span class="trust-badge__rating">{reviewStats.averageRating}</span>
+          <div class="trust-badge__stars">
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+            <span class="star-filled">★</span>
+          </div>
+        </div>
+        <div class="trust-badge__count">{reviewStats.totalReviews} Verified Reviews</div>
+      </div>
+      <p class="reviews__subtitle">Real feedback from our satisfied customers</p>
+    </div>
+
+    <div class="reviews__carousel-container">
+      <button class="carousel__nav carousel__nav--prev" aria-label="Previous reviews">
+        <Icon name="arrow-left" size={24} />
+      </button>
+      
+      <div class="reviews__carousel">
+        <div class="reviews__track">
+          {reviews.map((review, index) => (
+            <div class="review-card" data-index={index}>
+              <div class="review-card__header">
+                <div class="review-card__author">
+                  <div class="review-card__avatar">
+                    {review.author.charAt(0)}
+                  </div>
+                  <div>
+                    <div class="review-card__name">{review.author}</div>
+                    <div class="review-card__date">{review.date}</div>
+                  </div>
+                </div>
+                <div class="review-card__stars">
+                  {[...Array(review.rating)].map(() => (
+                    <span class="star-filled">★</span>
+                  ))}
+                </div>
+              </div>
+              <p class="review-card__text">{review.text}</p>
+              <div class="review-card__source">
+                <img src="/images/google-logo.svg" alt="Google" width="16" height="16" style="display: inline-block; vertical-align: middle;" />
+                <span>Posted on Google</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <button class="carousel__nav carousel__nav--next" aria-label="Next reviews">
+        <Icon name="arrow-right" size={24} />
+      </button>
+    </div>
+    
+    <div class="carousel__dots">
+      {[...Array(Math.ceil(reviews.length / 4))].map((_, index) => (
+        <button 
+          class="carousel__dot" 
+          data-slide={index}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+      ))}
+    </div>
+
+    <!-- Google Business Profile Link Section -->
+    <div class="reviews__gbp-section">
+      <div class="gbp-card">
+        <div class="gbp-card__content">
+          <h3 class="gbp-card__title">See All Our Reviews on Google</h3>
+          <p class="gbp-card__text">
+            We're proud of our 5-star rating from 27 satisfied customers. 
+            Visit our Google Business Profile to read all reviews and see why 
+            Lake County Outdoors is the trusted choice for outdoor services.
+          </p>
+          <div class="gbp-card__buttons">
+            <a 
+              href={reviewStats.googleBusinessUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="gbp-card__btn gbp-card__btn--primary"
+            >
+              <Icon name="google" size={20} />
+              View on Google Maps
+            </a>
+            <a 
+              href={reviewStats.googleBusinessUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="gbp-card__btn gbp-card__btn--secondary"
+            >
+              Write a Review
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .google-reviews {
+    padding: var(--space-12) 0;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+  }
+
+  .reviews__title-section {
+    text-align: center;
+    margin-bottom: var(--space-10);
+  }
+
+  .reviews__main-title {
+    font-size: var(--text-4xl);
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+    font-weight: var(--font-bold);
+  }
+
+  .reviews__trust-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
+    backdrop-filter: blur(10px);
+  }
+
+  .trust-badge__top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .trust-badge__logo {
+    height: 28px;
+    width: auto;
+  }
+
+  .trust-badge__rating {
+    font-size: 24px;
+    font-weight: var(--font-bold);
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .trust-badge__stars {
+    display: flex;
+    gap: 1px;
+  }
+
+  .trust-badge__stars .star-filled {
+    color: #FFC107;
+    font-size: 20px;
+  }
+
+  .trust-badge__count {
+    color: #5f6368;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .reviews__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .star-icon,
+  .star-icon :global(svg) {
+    color: #FFC107 !important;
+    fill: #FFC107 !important;
+  }
+
+  .star-icon--small,
+  .star-icon--small :global(svg) {
+    color: #FFC107 !important;
+    fill: #FFC107 !important;
+  }
+
+  .reviews__score {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--primary);
+  }
+
+  .reviews__count {
+    color: var(--neutral-dark);
+    font-size: var(--text-sm);
+  }
+
+  .reviews__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    background: var(--primary);
+    color: var(--white);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-semibold);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .reviews__cta:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Carousel Container */
+  .reviews__carousel-container {
+    position: relative;
+    margin-bottom: var(--space-6);
+  }
+
+  .reviews__carousel {
+    overflow: hidden;
+    margin: 0 var(--space-10);
+  }
+
+  .reviews__track {
+    display: flex;
+    gap: var(--space-4);
+    transition: transform 0.5s ease;
+  }
+
+  /* Carousel Navigation */
+  .carousel__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--white);
+    border: 2px solid var(--neutral-light);
+    border-radius: var(--radius-full);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    z-index: 2;
+    box-shadow: var(--shadow-md);
+  }
+
+  .carousel__nav:hover {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .carousel__nav--prev {
+    left: 0;
+  }
+
+  .carousel__nav--next {
+    right: 0;
+  }
+
+  /* Carousel Dots */
+  .carousel__dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  .carousel__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--neutral-light);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .carousel__dot:hover {
+    background: var(--primary-light);
+  }
+
+  .carousel__dot.active {
+    background: var(--primary);
+    width: 30px;
+  }
+
+  .review-card {
+    background: var(--white);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 300px;
+    flex: 0 0 calc(25% - var(--space-3));
+  }
+
+  @media (max-width: 1200px) {
+    .review-card {
+      flex: 0 0 calc(33.333% - var(--space-3));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .review-card {
+      flex: 0 0 calc(50% - var(--space-3));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .review-card {
+      flex: 0 0 calc(100% - var(--space-3));
+    }
+  }
+
+  .review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .review-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .review-card__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .review-card__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-bold);
+    font-size: var(--text-lg);
+  }
+
+  .review-card__name {
+    font-weight: var(--font-semibold);
+    color: var(--black);
+  }
+
+  .review-card__date {
+    font-size: var(--text-sm);
+    color: var(--neutral);
+  }
+
+  .review-card__stars {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .star-filled {
+    color: #FFC107;
+    font-size: 16px;
+  }
+
+  .review-card__text {
+    color: var(--neutral-dark);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .review-card__source {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--neutral);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--neutral-light);
+  }
+
+  /* Google Business Profile Section */
+  .reviews__gbp-section {
+    margin-top: var(--space-10);
+  }
+
+  .gbp-card {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-10);
+    text-align: center;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .gbp-card__content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .gbp-card__title {
+    color: var(--white);
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .gbp-card__text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+
+  .gbp-card__buttons {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .gbp-card__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-semibold);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    min-height: 48px;
+  }
+
+  .gbp-card__btn--primary {
+    background: var(--white);
+    color: var(--primary);
+  }
+
+  .gbp-card__btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .gbp-card__btn--secondary {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+  }
+
+  .gbp-card__btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .google-reviews {
+      padding: var(--space-8) 0;
+    }
+
+    .reviews__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .reviews__badge {
+      justify-content: center;
+    }
+
+    .reviews__cta {
+      text-align: center;
+      justify-content: center;
+    }
+
+    .reviews__carousel {
+      margin: 0 var(--space-6);
+    }
+
+    .carousel__nav {
+      width: 40px;
+      height: 40px;
+    }
+
+    .review-card {
+      padding: var(--space-4);
+    }
+  }
+</style>
+
+<script>
+  // Carousel functionality
+  const track = document.querySelector('.reviews__track') as HTMLElement;
+  const cards = document.querySelectorAll('.review-card');
+  const prevBtn = document.querySelector('.carousel__nav--prev') as HTMLButtonElement;
+  const nextBtn = document.querySelector('.carousel__nav--next') as HTMLButtonElement;
+  const dots = document.querySelectorAll('.carousel__dot');
+  
+  if (track && cards.length > 0) {
+    let currentIndex = 0;
+    let cardsPerView = 4;
+    
+    // Calculate cards per view based on screen width
+    function updateCardsPerView() {
+      if (window.innerWidth <= 600) {
+        cardsPerView = 1;
+      } else if (window.innerWidth <= 900) {
+        cardsPerView = 2;
+      } else if (window.innerWidth <= 1200) {
+        cardsPerView = 3;
+      } else {
+        cardsPerView = 4;
+      }
+    }
+    
+    function updateCarousel() {
+      const cardWidth = cards[0].getBoundingClientRect().width;
+      const gap = 16; // space-4
+      const offset = currentIndex * (cardWidth + gap);
+      track.style.transform = `translateX(-${offset}px)`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        const slideIndex = Math.floor(currentIndex / cardsPerView);
+        dot.classList.toggle('active', index === slideIndex);
+      });
+    }
+    
+    function goToNext() {
+      if (currentIndex < cards.length - cardsPerView) {
+        currentIndex += cardsPerView;
+        if (currentIndex > cards.length - cardsPerView) {
+          currentIndex = cards.length - cardsPerView;
+        }
+        updateCarousel();
+      } else {
+        // Loop back to start
+        currentIndex = 0;
+        updateCarousel();
+      }
+    }
+    
+    function goToPrev() {
+      if (currentIndex > 0) {
+        currentIndex -= cardsPerView;
+        if (currentIndex < 0) {
+          currentIndex = 0;
+        }
+        updateCarousel();
+      } else {
+        // Go to last set
+        currentIndex = Math.max(0, cards.length - cardsPerView);
+        updateCarousel();
+      }
+    }
+    
+    // Event listeners
+    prevBtn?.addEventListener('click', goToPrev);
+    nextBtn?.addEventListener('click', goToNext);
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentIndex = index * cardsPerView;
+        if (currentIndex > cards.length - cardsPerView) {
+          currentIndex = cards.length - cardsPerView;
+        }
+        updateCarousel();
+      });
+    });
+    
+    // Auto-scroll
+    let autoScrollInterval: number;
+    
+    function startAutoScroll() {
+      autoScrollInterval = setInterval(goToNext, 5000);
+    }
+    
+    function stopAutoScroll() {
+      clearInterval(autoScrollInterval);
+    }
+    
+    // Pause on hover
+    const carousel = document.querySelector('.reviews__carousel-container');
+    carousel?.addEventListener('mouseenter', stopAutoScroll);
+    carousel?.addEventListener('mouseleave', startAutoScroll);
+    
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    track?.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      stopAutoScroll();
+    });
+    
+    track?.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          goToNext();
+        } else {
+          goToPrev();
+        }
+      }
+      startAutoScroll();
+    });
+    
+    // Initialize
+    updateCardsPerView();
+    updateCarousel();
+    startAutoScroll();
+    
+    // Update on resize
+    window.addEventListener('resize', () => {
+      updateCardsPerView();
+      updateCarousel();
+    });
+  }
+</script>

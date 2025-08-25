@@ -13,5 +13,8 @@
     "astro": "^5.11.1",
     "astro-imagetools": "^0.9.0",
     "phosphor-icons": "^1.4.2"
+  },
+  "devDependencies": {
+    "daisyui": "^5.0.50"
   }
 }

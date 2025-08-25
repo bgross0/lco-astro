@@ -1,0 +1,496 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/services/ServiceHero.astro';
+import ServiceFeatures from '../../components/services/ServiceFeatures.astro';
+import ServicePricing from '../../components/services/ServicePricing.astro';
+import ServiceEquipment from '../../components/services/ServiceEquipment.astro';
+import ServiceProcess from '../../components/services/ServiceProcess.astro';
+import ServiceFAQ from '../../components/services/ServiceFAQ.astro';
+import ServiceCTA from '../../components/services/ServiceCTA.astro';
+import Button from '../../components/common/Button.astro';
+import Icon from '../../components/common/Icon.astro';
+
+// Example data structure for Commercial Snow Removal
+const serviceData = {
+  title: "Commercial Snow Removal",
+  description: "Professional snow and ice management for commercial properties. 24/7 emergency service available.",
+  hero: {
+    title: "Professional Commercial Snow Removal Services",
+    subtitle: "Keep Your Business Accessible All Winter Long",
+    backgroundImage: "/images/snow-removal/snow-removal-hero-600x300.jpg",
+    badges: ["24/7 Emergency", "Licensed & Insured", "60+ Years Experience"]
+  },
+  features: [
+    {
+      icon: "snowflake",
+      title: "Snow Plowing",
+      description: "Professional plowing services for parking lots, driveways, and access roads. Multiple trigger level options available."
+    },
+    {
+      icon: "cube",
+      title: "Ice Management",
+      description: "Complete ice control with traditional salt or eco-friendly liquid brine solutions. Pre-treatment and de-icing services available."
+    },
+    {
+      icon: "truck",
+      title: "Snow Hauling",
+      description: "When snow piles up, we haul it away. Rates starting at $115/hour for smaller equipment, $125/hour for standard equipment."
+    },
+    {
+      icon: "lightning",
+      title: "24/7 Emergency Service",
+      description: "Round-the-clock emergency response when you need it most. We're here when other contractors can't keep up."
+    },
+    {
+      icon: "check-circle",
+      title: "Sidewalk Clearing",
+      description: "Complete sidewalk and walkway maintenance to ensure safe pedestrian access to your business."
+    },
+    {
+      icon: "file-text",
+      title: "Service Documentation",
+      description: "Detailed service logs and documentation for liability protection and record keeping."
+    }
+  ],
+  pricing: [
+    {
+      title: "Per Push",
+      price: "Starting at $75",
+      description: "Pay only when it snows. Perfect for mild winters with flexible trigger levels.",
+      features: [
+        "Zero tolerance, 1\", or 2\" triggers",
+        "No monthly fees",
+        "Pay per service",
+        "Best for light winters"
+      ],
+      featured: false
+    },
+    {
+      title: "Monthly Flat Rate",
+      price: "Custom Quote",
+      description: "Predictable budgeting with unlimited snow events. Includes priority service.",
+      features: [
+        "Unlimited snow events",
+        "Priority service",
+        "Ice management included",
+        "Budget certainty",
+        "24/7 emergency response"
+      ],
+      featured: true,
+      badge: "Most Popular"
+    },
+    {
+      title: "Per Snowfall",
+      price: "Starting at $150",
+      description: "One price per snow event regardless of accumulation.",
+      features: [
+        "Fixed price per event",
+        "Return visits included",
+        "2-6\" accumulation",
+        "Great for moderate winters"
+      ],
+      featured: false
+    }
+  ],
+  equipment: [
+    { number: 10, label: "Plow Trucks", icon: "truck" },
+    { number: 14, label: "Bobcats", icon: "truck" },
+    { number: 6, label: "Wheel Loaders", icon: "truck" },
+    { number: 2, label: "Tri-Axle Dumps", icon: "truck" }
+  ],
+  process: [
+    {
+      step: 1,
+      title: "Initial Consultation",
+      description: "We assess your property and discuss your specific snow removal needs and requirements."
+    },
+    {
+      step: 2,
+      title: "Custom Proposal",
+      description: "Receive a detailed proposal with service levels, pricing options, and contract terms."
+    },
+    {
+      step: 3,
+      title: "Contract Signing",
+      description: "Review and sign your service agreement before the winter season begins."
+    },
+    {
+      step: 4,
+      title: "Pre-Season Prep",
+      description: "We mark your property, identify priority areas, and prepare our equipment."
+    },
+    {
+      step: 5,
+      title: "Active Monitoring",
+      description: "Our team monitors weather 24/7 and deploys crews based on your trigger levels."
+    },
+    {
+      step: 6,
+      title: "Service & Documentation",
+      description: "Complete service with detailed logs and photos for your records."
+    }
+  ],
+  faqs: [
+    {
+      question: "What are trigger levels?",
+      answer: "Trigger levels determine when we begin snow removal. Options include zero tolerance (any accumulation), 1 inch, or 2 inches. You choose based on your needs and budget."
+    },
+    {
+      question: "Do you provide ice management services?",
+      answer: "Yes! We offer complete ice management including pre-treatment with liquid brine, traditional rock salt application, and eco-friendly alternatives."
+    },
+    {
+      question: "What areas do you service?",
+      answer: "We service all of Lake County and surrounding areas. Our fleet allows us to handle properties from small lots to large commercial complexes."
+    },
+    {
+      question: "How quickly can you respond to emergency calls?",
+      answer: "Our 24/7 emergency response team typically arrives within 1-2 hours of your call, weather permitting."
+    },
+    {
+      question: "Do you offer seasonal contracts?",
+      answer: "Yes, we offer seasonal contracts with various pricing structures to fit your budget and needs. Contact us for a custom quote."
+    },
+    {
+      question: "What happens if my regular contractor can't keep up?",
+      answer: "We're here to help! We offer emergency services and can often accommodate new clients mid-season when other contractors fail to deliver."
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={`${serviceData.title} | Lake County Outdoors`}
+  description={serviceData.description}
+>
+  <!-- Hero Section -->
+  <ServiceHero hero={serviceData.hero} />
+
+  <!-- Main Content Container -->
+  <div class="service-template">
+    <!-- Quick Stats Bar -->
+    <section class="stats-bar">
+      <div class="container">
+        <div class="stats-bar__grid">
+          <div class="stat">
+            <Icon name="clock" size={32} />
+            <div>
+              <strong>24/7</strong>
+              <span>Emergency Service</span>
+            </div>
+          </div>
+          <div class="stat">
+            <Icon name="shield-check" size={32} />
+            <div>
+              <strong>Fully Insured</strong>
+              <span>Licensed & Bonded</span>
+            </div>
+          </div>
+          <div class="stat">
+            <Icon name="star" size={32} />
+            <div>
+              <strong>60+ Years</strong>
+              <span>Combined Experience</span>
+            </div>
+          </div>
+          <div class="stat">
+            <Icon name="phone" size={32} />
+            <div>
+              <strong>612-655-0648</strong>
+              <span>Call Now</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Overview -->
+    <section class="service-overview">
+      <div class="container">
+        <div class="overview-grid">
+          <div class="overview-content">
+            <h2>Reliable Commercial Snow Removal You Can Count On</h2>
+            <p class="lead">
+              When winter strikes Lake County, your business needs a snow removal partner you can trust. 
+              Lake County Outdoors provides comprehensive commercial snow removal services to keep your 
+              property accessible and safe throughout the harshest winter conditions.
+            </p>
+            <p>
+              Our experienced team and professional-grade equipment ensure your parking lots, sidewalks, 
+              and access roads are cleared quickly and efficiently. With multiple service options and 
+              24/7 emergency response, we're the reliable partner your business needs.
+            </p>
+            
+            <div class="overview-highlights">
+              <h3>Why Choose Lake County Outdoors?</h3>
+              <ul>
+                <li><Icon name="check" size={20} /> Guaranteed response times with priority service contracts</li>
+                <li><Icon name="check" size={20} /> Complete fleet of 32+ pieces of equipment</li>
+                <li><Icon name="check" size={20} /> Detailed service documentation and logs</li>
+                <li><Icon name="check" size={20} /> Flexible pricing options to fit your budget</li>
+                <li><Icon name="check" size={20} /> Local, family-owned business you can trust</li>
+              </ul>
+            </div>
+
+            <div class="overview-actions">
+              <Button href="/contact" variant="primary" size="large">
+                Get Your Free Quote
+              </Button>
+              <Button href="tel:6126550648" variant="outline" size="large">
+                <Icon name="phone" size={20} />
+                Call 612-655-0648
+              </Button>
+            </div>
+          </div>
+          
+          <div class="overview-sidebar">
+            <div class="sidebar-card">
+              <h3>Quick Contact</h3>
+              <div class="contact-info">
+                <a href="tel:6126550648" class="contact-item">
+                  <Icon name="phone" size={20} />
+                  <span>612-655-0648</span>
+                </a>
+                <a href="mailto:caden@lakecountyoutdoor.com" class="contact-item">
+                  <Icon name="envelope" size={20} />
+                  <span>Email Us</span>
+                </a>
+                <div class="contact-item">
+                  <Icon name="clock" size={20} />
+                  <span>24/7 Emergency</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="sidebar-card">
+              <h3>Service Areas</h3>
+              <ul class="service-areas">
+                <li>Lake County</li>
+                <li>Commercial Properties</li>
+                <li>Retail Centers</li>
+                <li>Office Buildings</li>
+                <li>Industrial Facilities</li>
+                <li>Municipal Buildings</li>
+              </ul>
+            </div>
+
+            <div class="sidebar-card emergency">
+              <h3>Emergency Service?</h3>
+              <p>Need immediate snow removal? We're here 24/7.</p>
+              <Button href="tel:6126550648" variant="primary" size="medium" class="full-width">
+                Call Emergency Line
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <ServiceFeatures features={serviceData.features} />
+
+    <!-- Equipment Section -->
+    <ServiceEquipment equipment={serviceData.equipment} />
+
+    <!-- Pricing Section -->
+    <ServicePricing pricing={serviceData.pricing} />
+
+    <!-- Process Section -->
+    <ServiceProcess process={serviceData.process} />
+
+    <!-- FAQ Section -->
+    <ServiceFAQ faqs={serviceData.faqs} />
+
+    <!-- Final CTA -->
+    <ServiceCTA 
+      title="Ready to Secure Your Snow Removal?"
+      description="Don't wait until the first snowfall. Lock in your commercial snow removal contract today."
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .service-template {
+    background: var(--white);
+  }
+
+  /* Stats Bar */
+  .stats-bar {
+    background: var(--primary);
+    color: var(--white);
+    padding: var(--space-8) 0;
+    margin-top: -1px;
+  }
+
+  .stats-bar__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .stat strong {
+    display: block;
+    font-size: var(--text-xl);
+    margin-bottom: 2px;
+  }
+
+  .stat span {
+    font-size: var(--text-sm);
+    opacity: 0.9;
+  }
+
+  /* Service Overview */
+  .service-overview {
+    padding: var(--space-16) 0;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .overview-content h2 {
+    color: var(--secondary);
+    margin-bottom: var(--space-6);
+  }
+
+  .lead {
+    font-size: var(--text-xl);
+    line-height: 1.6;
+    color: var(--neutral-dark);
+    margin-bottom: var(--space-4);
+  }
+
+  .overview-highlights {
+    background: var(--neutral-light);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    margin: var(--space-8) 0;
+  }
+
+  .overview-highlights h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .overview-highlights ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .overview-highlights li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    color: var(--neutral-dark);
+  }
+
+  .overview-highlights li :global(.icon) {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .overview-actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  /* Sidebar */
+  .overview-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .sidebar-card {
+    background: var(--white);
+    border: 2px solid var(--neutral-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+
+  .sidebar-card.emergency {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    border-color: var(--primary);
+  }
+
+  .sidebar-card h3 {
+    color: var(--primary);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--neutral-dark);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-item:hover {
+    color: var(--primary);
+  }
+
+  .service-areas {
+    list-style: none;
+    padding: 0;
+  }
+
+  .service-areas li {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--neutral-light);
+    color: var(--neutral-dark);
+  }
+
+  .service-areas li:last-child {
+    border-bottom: none;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  /* Responsive */
+  @media (min-width: 1024px) {
+    .overview-grid {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .overview-sidebar {
+      position: sticky;
+      top: var(--space-8);
+      height: fit-content;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .stats-bar__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .overview-actions {
+      flex-direction: column;
+    }
+
+    .overview-actions > :global(*) {
+      width: 100%;
+    }
+  }
+</style>

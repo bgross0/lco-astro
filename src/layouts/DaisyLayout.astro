@@ -1,6 +1,5 @@
 ---
-import '../styles/global.css';
-import '../styles/utilities.css';
+import '../styles/daisy-styles.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 
@@ -23,7 +22,7 @@ const ogImage = new URL(image, Astro.site).href;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="lakecounty">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -73,7 +72,7 @@ const ogImage = new URL(image, Astro.site).href;
     
     <Header />
     
-    <main id="main" class="main-content">
+    <main id="main">
       <slot />
     </main>
     

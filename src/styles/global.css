@@ -198,6 +198,17 @@ section {
   padding: var(--space-16) 0;
 }
 
+/* Main content spacing for fixed header */
+.main-content {
+  padding-top: 80px;
+}
+
+@media (max-width: 1023px) {
+  .main-content {
+    padding-top: 100px;
+  }
+}
+
 @media (min-width: 768px) {
   section {
     padding: var(--space-20) 0;

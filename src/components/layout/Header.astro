@@ -10,6 +10,11 @@ const currentPath = Astro.url.pathname;
   <div class="header__main">
     <div class="container">
       <div class="header__content">
+        <!-- Logo (visible on mobile and desktop) -->
+        <a href="/" class="header__logo">
+          <img src="/lco-final.png" alt="Lake County Outdoors" />
+        </a>
+        
         <!-- Desktop Navigation -->
         <Navigation currentPath={currentPath} />
         
@@ -22,10 +27,13 @@ const currentPath = Astro.url.pathname;
 
 <style>
   .header {
-    position: sticky;
+    position: fixed;
     top: var(--space-4);
+    left: 0;
+    right: 0;
     z-index: var(--z-sticky);
     padding: 0 var(--space-4);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   /* Main Header */
@@ -38,6 +46,7 @@ const currentPath = Astro.url.pathname;
     margin: 0 auto;
     padding: var(--space-2) var(--space-4);
     border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .container {
@@ -50,6 +59,15 @@ const currentPath = Astro.url.pathname;
     align-items: center;
     justify-content: center;
     gap: var(--space-4);
+  }
+  
+  .header__logo {
+    display: none;
+  }
+  
+  .header__logo img {
+    height: 40px;
+    width: auto;
   }
   
   
@@ -70,6 +88,25 @@ const currentPath = Astro.url.pathname;
     .header__content {
       justify-content: space-between;
     }
+    
+    .header__logo {
+      display: block;
+    }
+    
+    /* When scrolled on mobile - lock to top */
+    .header--scrolled-mobile {
+      top: 0;
+      padding: 0;
+    }
+    
+    .header--scrolled-mobile .header__main {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 255, 255, 0.98);
+    }
   }
   
   /* Desktop adjustments */
@@ -77,13 +114,13 @@ const currentPath = Astro.url.pathname;
     .header__main {
       padding: var(--space-3) var(--space-6);
     }
+    
+    .header__logo {
+      display: none;
+    }
   }
   
-  /* Animation on scroll */
-  .header {
-    transition: all var(--transition-base);
-  }
-  
+  /* Desktop scroll animation */
   .header--scrolled {
     top: var(--space-2);
   }
@@ -97,16 +134,36 @@ const currentPath = Astro.url.pathname;
   // Add scroll effect to header
   let lastScrollY = 0;
   const header = document.querySelector('.header');
+  let isMobile = window.innerWidth < 1024;
   
   window.addEventListener('scroll', () => {
     const currentScrollY = window.scrollY;
     
     if (currentScrollY > 50) {
-      header?.classList.add('header--scrolled');
+      if (isMobile) {
+        // On mobile, lock to top
+        header?.classList.add('header--scrolled-mobile');
+      } else {
+        // On desktop, just add shadow
+        header?.classList.add('header--scrolled');
+      }
     } else {
       header?.classList.remove('header--scrolled');
+      header?.classList.remove('header--scrolled-mobile');
     }
     
     lastScrollY = currentScrollY;
+  });
+  
+  // Update on resize
+  window.addEventListener('resize', () => {
+    const wasMobile = isMobile;
+    isMobile = window.innerWidth < 1024;
+    
+    // Reset classes if switching between mobile/desktop
+    if (wasMobile !== isMobile) {
+      header?.classList.remove('header--scrolled');
+      header?.classList.remove('header--scrolled-mobile');
+    }
   });
 </script>

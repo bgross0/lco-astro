@@ -1,0 +1,26 @@
+---
+import DaisyLayout from '../layouts/DaisyLayout.astro';
+import DaisyHero from '../components/daisy/DaisyHero.astro';
+import DaisyServices from '../components/daisy/DaisyServices.astro';
+import DaisyAbout from '../components/daisy/DaisyAbout.astro';
+import DaisyTestimonials from '../components/daisy/DaisyTestimonials.astro';
+import DaisyCTA from '../components/daisy/DaisyCTA.astro';
+
+// Use the same data as homepage
+import heroData from '../content/homepage/hero.json';
+import contentData from '../content/homepage/content.json';
+import settings from '../data/settings.json';
+---
+
+<DaisyLayout title="DaisyUI Demo - Lake County Outdoors">
+  <div class="alert alert-info max-w-4xl mx-auto my-4">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <span>This is a DaisyUI demo page. <a href="/" class="link link-hover font-bold">Return to original homepage</a></span>
+  </div>
+  
+  <DaisyHero />
+  <DaisyServices />
+  <DaisyAbout />
+  <DaisyTestimonials />
+  <DaisyCTA />
+</DaisyLayout>
