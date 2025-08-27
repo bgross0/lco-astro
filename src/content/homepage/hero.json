@@ -3,5 +3,23 @@
   "subtitle": "Professional Outdoor Services",
   "description": "At Lake County Outdoors, LLC, we specialize in landscaping, excavation, and snow removal. With over 60 years of combined experience, we are a trusted leader in all things outdoor transformation and maintenance.",
   "ctaText": "Get a Free Quote",
-  "ctaLink": "/contact"
+  "ctaLink": "/contact",
+  "images": [
+    {
+      "src": "/images/snow-removal-full-914x726.jpg",
+      "alt": "Professional landscaping services"
+    },
+    {
+      "src": "/images/equipment/equipment-2-600x616.jpg",
+      "alt": "Equipment and machinery"
+    },
+    {
+      "src": "/images/snow-removal/snow-removal-hero-600x300.jpg",
+      "alt": "Snow removal services"
+    },
+    {
+      "src": "/images/landscaping/bobcat-excavator.jpg",
+      "alt": "Excavation equipment"
+    }
+  ]
 }

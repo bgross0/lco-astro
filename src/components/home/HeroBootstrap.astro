@@ -2,7 +2,6 @@
 import Button from '../common/Button.astro';
 import Icon from '../common/Icon.astro';
 import heroData from '../../content/homepage/hero.json';
-import contentData from '../../content/homepage/content.json';
 import settings from '../../data/settings.json';
 ---
 
@@ -34,7 +33,7 @@ import settings from '../../data/settings.json';
       <div class="hero__col hero__col--slideshow">
         <div class="hero__slideshow">
           <div class="hero__slides">
-            {contentData.hero.images.map((image, index) => (
+            {heroData.images.map((image, index) => (
               <img 
                 src={image.src}
                 alt={image.alt}
@@ -43,7 +42,7 @@ import settings from '../../data/settings.json';
             ))}
           </div>
           <div class="hero__dots">
-            {contentData.hero.images.map((_, index) => (
+            {heroData.images.map((_, index) => (
               <button 
                 class={`hero__dot ${index === 0 ? 'hero__dot--active' : ''}`}
                 aria-label={`Go to slide ${index + 1}`}
