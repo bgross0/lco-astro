@@ -26,14 +26,19 @@
       "order": 5
     },
     {
+      "label": "Service Areas",
+      "href": "/service-areas",
+      "order": 6
+    },
+    {
       "label": "Blog",
       "href": "/blog",
-      "order": 6
+      "order": 7
     },
     {
       "label": "Contact",
       "href": "/contact",
-      "order": 7
+      "order": 8
     }
   ],
   "footerLinks": [

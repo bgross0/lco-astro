@@ -338,6 +338,41 @@ collections:
               - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
               - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
               - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+          - label: "Analytics & Tracking"
+            name: "analytics"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Google Tag Manager ID", name: "gtmId", widget: "string", required: false, hint: "GTM-XXXXXXX" }
+              - { label: "Google Analytics ID", name: "gaId", widget: "string", required: false, hint: "G-XXXXXXXXXX" }
+              - { label: "Enable Tracking", name: "enableTracking", widget: "boolean", default: true }
+          - label: "A/B Tests"
+            name: "abTests"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Homepage CTA Test"
+                name: "homepageCTA"
+                widget: "object"
+                fields:
+                  - { label: "Enable Test", name: "enabled", widget: "boolean", default: false }
+                  - label: "Variants"
+                    name: "variants"
+                    widget: "list"
+                    fields:
+                      - { label: "Button Text", name: "text", widget: "string" }
+                      - { label: "Tracking Label", name: "trackingLabel", widget: "string", hint: "e.g., variant_a" }
+              - label: "Contact Button Test"
+                name: "contactButton"
+                widget: "object"
+                fields:
+                  - { label: "Enable Test", name: "enabled", widget: "boolean", default: false }
+                  - label: "Variants"
+                    name: "variants"
+                    widget: "list"
+                    fields:
+                      - { label: "Button Text", name: "text", widget: "string" }
+                      - { label: "Tracking Label", name: "trackingLabel", widget: "string" }
       
       - label: "Navigation"
         name: "navigation"

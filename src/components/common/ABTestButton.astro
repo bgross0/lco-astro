@@ -1,0 +1,68 @@
+---
+import Button from './Button.astro';
+
+export interface Props {
+  variants: {
+    text: string;
+    color?: string;
+    trackingLabel: string;
+  }[];
+  href: string;
+  size?: 'small' | 'medium' | 'large';
+  className?: string;
+  testName: string;
+}
+
+const { variants, href, size = 'medium', className = '', testName } = Astro.props;
+
+// Simple A/B test selection based on timestamp
+// In production, this would use cookies or localStorage for consistency
+const variantIndex = new Date().getSeconds() % variants.length;
+const selectedVariant = variants[variantIndex];
+---
+
+<Button
+  href={href}
+  variant={selectedVariant.color || 'primary'}
+  size={size}
+  class={`ab-test-button ${className}`}
+  data-test-name={testName}
+  data-variant={selectedVariant.trackingLabel}
+  onclick={`
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'ab_test_click', {
+        'test_name': '${testName}',
+        'variant': '${selectedVariant.trackingLabel}',
+        'button_text': '${selectedVariant.text}'
+      });
+    }
+  `}
+>
+  {selectedVariant.text}
+</Button>
+
+<script>
+  // Track A/B test impressions
+  document.addEventListener('DOMContentLoaded', () => {
+    const abButtons = document.querySelectorAll('.ab-test-button');
+    abButtons.forEach(button => {
+      const testName = button.getAttribute('data-test-name');
+      const variant = button.getAttribute('data-variant');
+      
+      // Send impression event to GA4
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'ab_test_impression', {
+          'test_name': testName,
+          'variant': variant
+        });
+      }
+      
+      // Store in localStorage for consistent experience
+      const storageKey = `ab_test_${testName}`;
+      const stored = localStorage.getItem(storageKey);
+      if (!stored) {
+        localStorage.setItem(storageKey, variant);
+      }
+    });
+  });
+</script>

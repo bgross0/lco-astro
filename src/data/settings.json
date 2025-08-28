@@ -24,5 +24,27 @@
     "saturday": "8:00 AM - 4:00 PM",
     "sunday": "Closed",
     "emergency": "24/7 Available"
+  },
+  "analytics": {
+    "gtmId": "",
+    "gaId": "",
+    "enableTracking": false
+  },
+  "abTests": {
+    "homepageCTA": {
+      "enabled": false,
+      "variants": [
+        {"text": "Get a Free Quote", "trackingLabel": "control"},
+        {"text": "Get Your Free Estimate", "trackingLabel": "variant_a"},
+        {"text": "Request Quote Now", "trackingLabel": "variant_b"}
+      ]
+    },
+    "contactButton": {
+      "enabled": false,
+      "variants": [
+        {"text": "Send Message", "trackingLabel": "control"},
+        {"text": "Get Started", "trackingLabel": "variant_a"}
+      ]
+    }
   }
 }
