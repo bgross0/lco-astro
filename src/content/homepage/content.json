@@ -38,7 +38,7 @@
     ],
     "images": [
       {
-        "src": "/images/equipment/equipment-1-600x287.jpg",
+        "src": "/images/equipment-4-600x389.jpg",
         "alt": "Professional equipment fleet"
       },
       {
@@ -114,7 +114,7 @@
   "reviews": {
     "title": "What Our Customers Say",
     "subtitle": "Real reviews from satisfied customers",
-    "rating": 5.0,
+    "rating": 5,
     "reviewCount": 32,
     "googleBusinessUrl": "https://maps.app.goo.gl/hoFQbvFjQv1oz1Hr9",
     "shapoWidgetId": "shapo-widget-5e08326267aa05c21435"
