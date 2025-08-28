@@ -203,6 +203,18 @@ collections:
                 fields:
                   - { label: "Text", name: "text", widget: "string" }
                   - { label: "Link", name: "link", widget: "string" }
+          
+          - label: "Reviews Section"
+            name: "reviews"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Section Title", name: "title", widget: "string", default: "What Our Customers Say" }
+              - { label: "Section Subtitle", name: "subtitle", widget: "string", default: "Real reviews from satisfied customers" }
+              - { label: "Google Rating", name: "rating", widget: "number", default: 5.0, min: 0, max: 5, value_type: "float" }
+              - { label: "Total Reviews Count", name: "reviewCount", widget: "number", default: 32 }
+              - { label: "Google Business URL", name: "googleBusinessUrl", widget: "string", default: "https://maps.app.goo.gl/hoFQbvFjQv1oz1Hr9" }
+              - { label: "Shapo Widget ID", name: "shapoWidgetId", widget: "string", default: "shapo-widget-5e08326267aa05c21435", hint: "The ID from your Shapo reviews widget" }
 
   # Site Settings (optional)
   - name: "settings"
@@ -219,10 +231,19 @@ collections:
           - { label: "Site Description", name: "site_description", widget: "text" }
           - { label: "Logo", name: "logo", widget: "image", required: true }
           - { label: "OG Image (Social Share)", name: "og_image", widget: "image", required: false }
-          - { label: "Phone Number", name: "phone", widget: "string" }
+          - { label: "Operations Phone", name: "cellphone", widget: "string" }
+          - { label: "Office Phone", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Address", name: "address", widget: "text" }
           - { label: "Hours", name: "hours", widget: "string" }
+          - label: "Business Location"
+            name: "geo"
+            widget: "object"
+            fields:
+              - { label: "Latitude", name: "latitude", widget: "number", value_type: "float", default: 44.8697 }
+              - { label: "Longitude", name: "longitude", widget: "number", value_type: "float", default: -93.3503 }
+          - { label: "Price Range", name: "priceRange", widget: "string", default: "$$", hint: "Use $ signs (e.g., $$)" }
+          - { label: "Opening Hours Schema", name: "openingHours", widget: "string", default: "Mo-Su 00:00-24:00", hint: "Schema.org format" }
           - label: "Social Media"
             name: "social"
             widget: "object"

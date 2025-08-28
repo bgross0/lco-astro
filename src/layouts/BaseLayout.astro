@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/utilities.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import settings from '../data/settings.json';
 
 export interface Props {
   title: string;
@@ -12,14 +13,25 @@ export interface Props {
 }
 
 const { 
-  title = 'Lake County Outdoors, LLC', 
-  description = 'Municipal Contracting, Commercial Snow Removal, Heavy Equipment Rental. Professional outdoor services in Lake County.',
-  image = '/lco-final.png',
+  title = settings.site_title, 
+  description = settings.site_description,
+  image = settings.logo,
   canonical
 } = Astro.props;
 
 const currentUrl = Astro.url.href;
 const ogImage = new URL(image, Astro.site).href;
+
+// Extract phone number from cellphone string
+const phoneMatch = settings.cellphone.match(/\((\d{3})\)\s*(\d{3})-(\d{4})/);
+const phoneNumber = phoneMatch ? `${phoneMatch[1]}-${phoneMatch[2]}-${phoneMatch[3]}` : '612-655-0648';
+
+// Parse address
+const addressParts = settings.address.split(',').map(part => part.trim());
+const streetAddress = addressParts[0] || '7777 Washington Ave S, Suite 4';
+const addressLocality = addressParts[1] || 'Edina';
+const addressRegion = addressParts[2]?.split(' ')[0] || 'MN';
+const postalCode = addressParts[2]?.split(' ')[1] || '55439';
 ---
 
 <!DOCTYPE html>
@@ -56,20 +68,27 @@ const ogImage = new URL(image, Astro.site).href;
     <!-- Theme Color -->
     <meta name="theme-color" content="#4A90E2" />
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/lco-final.png" />
-    <link rel="shortcut icon" type="image/png" href="/lco-final.png" />
-    <link rel="apple-touch-icon" href="/lco-final.png" />
+    <!-- Favicon - Multiple sizes for better support -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     
     <!-- Fonts Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
     <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
     
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
+    
+    <!-- Shapo Reviews Widget -->
+    <script id="shapo-embed-js" type="text/javascript" src="https://cdn.shapo.io/js/embed.js" defer></script>
+    <script type="application/ld+json" id="shapo-ratingschema-c301e81c93"></script>
   </head>
   <body>
     <a href="#main" class="skip-to-content">Skip to content</a>
@@ -83,32 +102,32 @@ const ogImage = new URL(image, Astro.site).href;
     <Footer />
     
     <!-- Local Business Schema -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Lake County Outdoors, LLC",
-        "description": "Professional outdoor services including commercial snow removal, landscaping, and municipal contracting in Lake County.",
-        "telephone": "612-655-0648",
-        "email": "caden@lakecountyoutdoor.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Lake County",
-          "addressRegion": "MN",
-          "addressCountry": "US"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "",
-          "longitude": ""
-        },
-        "url": "https://lakecountyoutdoor.com",
-        "image": "https://lakecountyoutdoor.com/og-image.jpg",
-        "priceRange": "$$",
-        "openingHours": "Mo-Fr 07:00-18:00",
-        "sameAs": []
-      }
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": settings.site_title,
+      "description": settings.site_description,
+      "telephone": phoneNumber,
+      "email": settings.email,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": streetAddress,
+        "addressLocality": addressLocality,
+        "addressRegion": addressRegion,
+        "postalCode": postalCode,
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": settings.geo.latitude.toString(),
+        "longitude": settings.geo.longitude.toString()
+      },
+      "url": "https://lakecountyoutdoor.com",
+      "image": `https://lakecountyoutdoor.com${settings.logo}`,
+      "priceRange": settings.priceRange,
+      "openingHours": settings.openingHours,
+      "sameAs": Object.values(settings.social).filter(url => url)
+    })}></script>
     
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">

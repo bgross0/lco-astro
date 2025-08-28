@@ -20,7 +20,8 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
             href={service.href}
             class={`option ${index === 0 ? 'active' : ''}`}
             data-service-id={service.id}
-            style={`background-image: url('${service.image}');`}
+            data-bg-image={service.image}
+            style={index === 0 ? `background-image: url('${service.image}');` : ''}
           >
             <div class="shadow"></div>
             <div class="label">
@@ -442,6 +443,24 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   let currentIndex = 0;
   let autoScrollTimer;
   
+  // Lazy load background images
+  function loadBackgroundImage(element: Element) {
+    const bgImage = element.getAttribute('data-bg-image');
+    if (bgImage && !element.style.backgroundImage) {
+      (element as HTMLElement).style.backgroundImage = `url('${bgImage}')`;
+    }
+  }
+  
+  // Load images for visible and adjacent options
+  function loadVisibleImages() {
+    options.forEach((option, index) => {
+      // Load current, previous, and next images
+      if (Math.abs(index - currentIndex) <= 1) {
+        loadBackgroundImage(option);
+      }
+    });
+  }
+  
   function setActiveOption(index: number) {
     const currentActive = document.querySelector('.option.active');
     if (currentActive) {
@@ -451,6 +470,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     if (options[index]) {
       options[index].classList.add('active');
       currentIndex = index;
+      loadVisibleImages(); // Load images when changing active option
       
       // Reset progress bar with proper animation
       const progressFill = document.querySelector('.progress-fill') as HTMLElement;
@@ -511,6 +531,9 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   
   // Entrance animation
   window.addEventListener('DOMContentLoaded', () => {
+    // Load initial images
+    loadVisibleImages();
+    
     options.forEach((el, i) => {
       setTimeout(() => {
         el.classList.add('animated');

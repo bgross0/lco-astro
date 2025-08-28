@@ -19,7 +19,8 @@ const isActive = (href: string) => {
   return currentPath.startsWith(href);
 };
 
-const phoneNumber = settings.phone;
+// Use operations number for the navbar, just the number without label
+const phoneNumber = "612-655-0648";
 const phoneLink = `tel:${phoneNumber.replace(/-/g, '')}`;
 ---
 

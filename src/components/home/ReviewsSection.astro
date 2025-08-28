@@ -1,0 +1,331 @@
+---
+// Combined Reviews Section with Shapo widget and Google Review Badge
+import content from '../../content/homepage/content.json';
+
+const { reviews } = content;
+---
+
+<section class="reviews-section">
+  <div class="container">
+    <div class="reviews-header">
+      <h2 class="reviews-title">{reviews.title}</h2>
+      <p class="reviews-subtitle">{reviews.subtitle}</p>
+    </div>
+    
+    <!-- Shapo Widget Container -->
+    <div id={reviews.shapoWidgetId}></div>
+    
+    <!-- Google Review Badge Below Shapo -->
+    <div class="badge-wrapper">
+      <div class="google-review-badge" onclick={`window.open('${reviews.googleBusinessUrl}', '_blank')`}>
+        <div class="badge-header">
+            <svg class="google-icon" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            <h3 class="badge-title">Customer Reviews</h3>
+        </div>
+        
+        <div class="badge-content">
+            <div class="rating-container">
+                <div class="rating-number">{reviews.rating}</div>
+                <div class="stars-container">
+                    <div class="star">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div class="star-filled" style="width: 100%;">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="star">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div class="star-filled" style="width: 100%;">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="star">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div class="star-filled" style="width: 100%;">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="star">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div class="star-filled" style="width: 100%;">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="star">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div class="star-filled" style="width: 100%;">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="review-count">
+                Based on <strong>{reviews.reviewCount}</strong> Google Reviews
+            </p>
+        </div>
+        
+        <div class="powered-by">
+            <span>Reviews from</span>
+            <svg viewBox="0 0 74 24" fill="none">
+                <path d="M9.24 8.19v2.46h5.88c-.18 1.38-.64 2.39-1.34 3.1-.86.86-2.2 1.8-4.54 1.8-3.62 0-6.45-2.92-6.45-6.54s2.83-6.54 6.45-6.54c1.95 0 3.38.77 4.43 1.76L15.4 2.5C13.94 1.08 11.98 0 9.24 0 4.28 0 .11 4.04.11 9s4.17 9 9.13 9c2.68 0 4.7-.88 6.28-2.52 1.62-1.62 2.13-3.91 2.13-5.75 0-.57-.04-1.1-.13-1.54H9.24z" fill="#4285F4"/>
+                <path d="M25 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z" fill="#EA4335"/>
+                <path d="M53.58 7.49h-.09c-.57-.68-1.67-1.3-3.06-1.3C47.53 6.19 45 8.72 45 12c0 3.26 2.53 5.81 5.43 5.81 1.39 0 2.49-.62 3.06-1.32h.09v.81c0 2.22-1.19 3.41-3.1 3.41-1.56 0-2.53-1.12-2.93-2.07l-2.22.92c.64 1.54 2.33 3.43 5.15 3.43 2.99 0 5.52-1.76 5.52-6.05V6.49h-2.42v1zm-2.93 8.03c-1.76 0-3.1-1.5-3.1-3.52 0-2.05 1.34-3.52 3.1-3.52 1.74 0 3.1 1.5 3.1 3.54.01 2.03-1.36 3.5-3.1 3.5z" fill="#4285F4"/>
+                <path d="M38 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z" fill="#FBBC05"/>
+                <path d="M58 .24h2.51v17.57H58V.24z" fill="#34A853"/>
+                <path d="M68.26 15.52c-1.3 0-2.22-.59-2.82-1.76l7.77-3.21-.26-.66c-.48-1.3-1.96-3.7-4.97-3.7-2.99 0-5.48 2.35-5.48 5.81 0 3.26 2.46 5.81 5.76 5.81 2.66 0 4.2-1.63 4.84-2.57l-1.98-1.32c-.66.96-1.56 1.6-2.86 1.6zm-.18-7.15c1.03 0 1.91.53 2.2 1.28l-5.25 2.17c0-2.44 1.73-3.45 3.05-3.45z" fill="#EA4335"/>
+            </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .reviews-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .reviews-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+
+  .reviews-subtitle {
+    font-size: 20px;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Ensure Shapo widget is responsive */
+  [id^="shapo-widget"] {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 60px;
+  }
+
+  /* Badge wrapper for centering */
+  .badge-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  /* Google Review Badge Styles */
+  .google-review-badge {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    display: inline-block;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 30px 50px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    max-width: 500px;
+    min-width: 450px;
+  }
+
+  .google-review-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border-color: #4285f4;
+  }
+
+  .google-review-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(66, 133, 244, 0.1), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .google-review-badge:hover::before {
+    left: 100%;
+  }
+
+  .badge-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .google-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .badge-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+
+  .rating-container {
+    margin-bottom: 15px;
+  }
+
+  .rating-number {
+    font-size: 42px;
+    font-weight: bold;
+    color: #fbbc04;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .stars-container {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin: 10px 0;
+  }
+
+  .star {
+    width: 24px;
+    height: 24px;
+    position: relative;
+  }
+
+  .star svg {
+    width: 100%;
+    height: 100%;
+    fill: #e0e0e0;
+  }
+
+  .star .star-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  .star .star-filled svg {
+    fill: #fbbc04;
+  }
+
+  .review-count {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+
+  .review-count strong {
+    color: #333;
+    font-weight: 600;
+  }
+
+  .powered-by {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 12px;
+    color: #999;
+  }
+
+  .powered-by svg {
+    width: 60px;
+    height: auto;
+  }
+
+  /* Slow down Shapo carousel scroll speed */
+  :global(.shapo-carousel),
+  :global([class*="shapo"] [class*="carousel"]),
+  :global([class*="shapo"] [class*="scroll"]),
+  :global([class*="shapo"] [class*="slide"]) {
+    animation-duration: 40s !important;
+    transition-duration: 1s !important;
+  }
+
+  :global(.shapo-widget-container *[style*="animation"]),
+  :global([id^="shapo-widget"] *[style*="animation"]) {
+    animation-duration: 40s !important;
+  }
+
+  :global(.shapo-widget-container *[style*="transform"]),
+  :global([id^="shapo-widget"] *[style*="transform"]) {
+    transition: transform 1s ease-in-out !important;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .reviews-section {
+      padding: 60px 0;
+    }
+
+    .reviews-title {
+      font-size: 36px;
+    }
+
+    .reviews-subtitle {
+      font-size: 18px;
+      padding: 0 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .google-review-badge {
+      padding: 20px 25px;
+      min-width: unset;
+      max-width: 100%;
+    }
+    
+    .rating-number {
+      font-size: 36px;
+    }
+  }
+</style>

@@ -1,0 +1,355 @@
+---
+// Elfsight-style Google Reviews Widget (without their script)
+const reviews = [
+  {
+    id: 1,
+    author: "quinn walek",
+    avatar: "Q",
+    rating: 5,
+    date: "19 hours ago",
+    text: "Caden and crew did a phenomenal job landscaping and hardscaping our property!! 10/10 definitely recommend!",
+    verified: true
+  },
+  {
+    id: 2,
+    author: "Aroona Events",
+    avatar: "A",
+    rating: 5,
+    date: "a month ago",
+    text: "For excellence and beyond!! I recently had the pleasure of working with Lake County Outdoors for an ambitious project: transforming a 10-acre lot into a stunning outdoor wedding and event venue.",
+    verified: true
+  },
+  {
+    id: 3,
+    author: "Tony Azzazi",
+    avatar: "T",
+    rating: 5,
+    date: "a month ago",
+    text: "Lake Country Outdoors exceeded expectations from start to finish. Their attention to detail and overall quality of work was top-notch. You can tell they take real pride in what they do. What stood out even more was their communication.",
+    verified: true
+  },
+  {
+    id: 4,
+    author: "Jager Sorenson",
+    avatar: "J",
+    rating: 5,
+    date: "a month ago",
+    text: "The crew came always showed up on time and worked their butts off to get my landscaping done after a storm. Really easy to work with and talk to. All n all they were great people and would recommend.",
+    verified: true
+  },
+  {
+    id: 5,
+    author: "Luke Wottreng",
+    avatar: "L",
+    rating: 5,
+    date: "a month ago",
+    text: "Lake County Outdoors is reliable, fast, and professional. They keep our property clear and safe all winter. Highly recommend their snow removal services!",
+    verified: true
+  },
+  {
+    id: 6,
+    author: "Conrad Killen",
+    avatar: "C",
+    rating: 5,
+    date: "a month ago",
+    text: "Lake county does my apartment complex and they do a great job! I highly recommend these guys, quick, great cost and a do a phenomenal job.",
+    verified: true
+  }
+];
+
+const businessInfo = {
+  name: "Lake County Outdoors",
+  address: "7777 Washington Ave S, Edina, MN 55439, USA",
+  rating: 5.0,
+  totalReviews: 32,
+  placeId: "ChIJtoDYm1xD9ocRxOiBbYxfn9w"
+};
+---
+
+<section class="elfsight-widget-container">
+  <div class="widget-wrapper">
+    <!-- Header -->
+    <div class="widget-header">
+      <div class="google-header">
+        <img src="/images/google-logo-reviews.svg" alt="Google" class="google-logo" />
+        <span class="reviews-text">Reviews</span>
+      </div>
+      <div class="rating-row">
+        <span class="rating-number">5.0</span>
+        <div class="stars">
+          {[...Array(5)].map(() => (
+            <svg class="star" viewBox="0 0 24 24">
+              <path fill="#FFC107" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          ))}
+        </div>
+        <span class="review-count">({businessInfo.totalReviews})</span>
+      </div>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div class="reviews-grid">
+      {reviews.map(review => (
+        <div class="review-card">
+          <div class="review-header">
+            <div class="author-info">
+              <div class="author-avatar" style={`background: ${
+                ['#4285F4', '#34A853', '#EA4335', '#FBBC04', '#9C27B0', '#FF6B6B'][review.id % 6]
+              }`}>
+                {review.avatar}
+              </div>
+              <div class="author-details">
+                <div class="author-name">
+                  {review.author}
+                  {review.verified && (
+                    <svg class="verified-badge" viewBox="0 0 14 14" fill="none">
+                      <path fill="#197BFF" d="M6.757.236a.35.35 0 01.486 0l1.58 1.515a.35.35 0 00.336.096l2.186-.499a.35.35 0 01.398.28l.412 2.197a.35.35 0 00.215.271l2.064.813a.35.35 0 01.15.459l-1.135 1.94a.35.35 0 000 .384l1.134 1.94a.35.35 0 01-.15.459l-2.063.813a.35.35 0 00-.215.271l-.412 2.197a.35.35 0 01-.398.28l-2.186-.499a.35.35 0 00-.336.096l-1.58 1.515a.35.35 0 01-.486 0l-1.58-1.515a.35.35 0 00-.336-.096l-2.186.499a.35.35 0 01-.398-.28l-.412-2.197a.35.35 0 00-.215-.271L.236 8.91a.35.35 0 01-.15-.459l1.134-1.94a.35.35 0 000-.384L.086 4.187a.35.35 0 01.15-.459l2.063-.813a.35.35 0 00.215-.271L2.926.447a.35.35 0 01.398-.28l2.186.499a.35.35 0 00.336-.096L6.757.236z"/>
+                      <path fill="white" d="M9.621 4.929a.437.437 0 10-.618-.618L6.125 7.189 4.997 6.061a.437.437 0 10-.618.618l1.436 1.436a.438.438 0 00.618 0l3.188-3.186z"/>
+                    </svg>
+                  )}
+                </div>
+                <div class="review-date">{review.date}</div>
+              </div>
+            </div>
+            <div class="review-rating">
+              {[...Array(5)].map(() => (
+                <svg class="star-small" viewBox="0 0 14 14" fill="none">
+                  <path d="M6.82617 11.442L3.54617 13.166C3.46353 13.2093 3.3704 13.2287 3.27746 13.2218C3.18453 13.2149 3.09551 13.1819 3.02083 13.127C2.94615 13.0721 2.88874 12.9976 2.85517 12.912C2.82161 12.8265 2.81308 12.7335 2.83051 12.6433L3.50951 8.97533L0.845508 6.37633C0.779043 6.31122 0.732601 6.22889 0.711198 6.13837C0.689795 6.04785 0.694354 5.95281 0.724507 5.86483C0.754661 5.77685 0.80905 5.69915 0.88161 5.64037C0.954169 5.58159 1.04217 5.54406 1.13551 5.53233L4.82851 5.02333L6.46751 1.61033C6.50827 1.52781 6.57222 1.45867 6.65161 1.41082C6.731 1.36298 6.82247 1.33832 6.91584 1.33966C7.00921 1.341 7.10044 1.36829 7.17905 1.41843C7.25766 1.46857 7.32039 1.53956 7.36051 1.62333L8.99951 5.02333L12.6925 5.53233C12.7859 5.54406 12.8738 5.58159 12.9464 5.64037C13.0189 5.69915 13.0733 5.77685 13.1035 5.86483C13.1336 5.95281 13.1382 6.04785 13.1168 6.13837C13.0954 6.22889 13.049 6.31122 12.9825 6.37633L10.3185 8.97533L10.9975 12.6433C11.0149 12.7335 11.0064 12.8265 10.9728 12.912C10.9393 12.9976 10.8818 13.0721 10.8072 13.127C10.7325 13.1819 10.6435 13.2149 10.5505 13.2218C10.4576 13.2287 10.3645 13.2093 10.2818 13.166L7.00184 11.442C6.92744 11.4033 6.84411 11.3832 6.75951 11.3832C6.67491 11.3832 6.59158 11.4033 6.51718 11.442H6.82617Z" 
+                    fill="#FFC107"/>
+                </svg>
+              ))}
+            </div>
+          </div>
+          <p class="review-text">{review.text}</p>
+          <div class="review-footer">
+            <svg class="google-icon" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            <span class="source-text">Posted on Google</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- View More Button -->
+    <div class="widget-footer">
+      <a href={`https://www.google.com/maps/place/?q=place_id:${businessInfo.placeId}`} 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="view-more-btn">
+        View all reviews on Google
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .elfsight-widget-container {
+    padding: 60px 0;
+    background: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .widget-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .widget-header {
+    background: white;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .google-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .google-logo {
+    width: 92px;
+    height: 30px;
+  }
+
+  .reviews-text {
+    font-size: 32px;
+    font-weight: 400;
+    color: #202124;
+    font-family: 'Product Sans', 'Roboto', sans-serif;
+    margin-left: 4px;
+  }
+
+  .rating-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .rating-number {
+    font-size: 48px;
+    font-weight: 400;
+    color: #202124;
+    line-height: 1;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    margin-left: 8px;
+  }
+
+  .star {
+    width: 36px;
+    height: 36px;
+  }
+
+  .review-count {
+    font-size: 20px;
+    color: #70757a;
+    font-family: 'Roboto', sans-serif;
+    margin-left: 8px;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .reviews-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .review-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .author-info {
+    display: flex;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .author-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .author-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #202124;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .verified-badge {
+    width: 14px;
+    height: 14px;
+  }
+
+  .review-date {
+    font-size: 12px;
+    color: #70757a;
+  }
+
+  .review-rating {
+    display: flex;
+    gap: 1px;
+  }
+
+  .star-small {
+    width: 14px;
+    height: 14px;
+  }
+
+  .review-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #3c4043;
+    margin: 0 0 12px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .review-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid #e8eaed;
+  }
+
+  .google-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .source-text {
+    font-size: 12px;
+    color: #70757a;
+  }
+
+  .widget-footer {
+    text-align: center;
+  }
+
+  .view-more-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+
+  .view-more-btn:hover {
+    background: #1557b0;
+  }
+</style>

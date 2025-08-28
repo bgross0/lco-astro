@@ -1,0 +1,92 @@
+---
+// Google Reviews widget from Elfsight
+// Widget ID: 1957bd89-ac5c-4a71-9a3c-3f169ef3de8c
+---
+
+<section class="google-reviews-elfsight">
+  <div class="container">
+    <div class="reviews__title-section">
+      <h2 class="reviews__main-title">What Customers Say</h2>
+      <p class="reviews__subtitle">Real feedback from our satisfied customers</p>
+    </div>
+
+    <!-- Elfsight Google Reviews Widget -->
+    <div class="reviews__widget-container">
+      <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+      <div class="elfsight-app-1957bd89-ac5c-4a71-9a3c-3f169ef3de8c" data-elfsight-app-lazy></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .google-reviews-elfsight {
+    padding: var(--space-12) 0;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+
+  .reviews__title-section {
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .reviews__main-title {
+    font-size: var(--text-4xl);
+    color: var(--primary);
+    margin-bottom: var(--space-4);
+    font-weight: var(--font-bold);
+  }
+
+  .reviews__subtitle {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .reviews__widget-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Hide Elfsight branding */
+  :global(a[href*="elfsight.com"]) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+
+  /* Additional selector to ensure complete hiding */
+  :global(.elfsight-app-1957bd89-ac5c-4a71-9a3c-3f169ef3de8c a[target="_blank"][rel="noreferrer"]) {
+    display: none !important;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .google-reviews-elfsight {
+      padding: var(--space-8) 0;
+    }
+
+    .reviews__title-section {
+      margin-bottom: var(--space-6);
+    }
+
+    .reviews__main-title {
+      font-size: var(--text-3xl);
+    }
+
+    .reviews__subtitle {
+      font-size: var(--text-base);
+      padding: 0 var(--space-4);
+    }
+  }
+</style>

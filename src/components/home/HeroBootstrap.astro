@@ -3,6 +3,11 @@ import Button from '../common/Button.astro';
 import Icon from '../common/Icon.astro';
 import heroData from '../../content/homepage/hero.json';
 import settings from '../../data/settings.json';
+
+// Extract phone number from cellphone string
+const phoneNumber = settings.cellphone.match(/\((\d{3})\)\s*(\d{3})-(\d{4})/);
+const phoneHref = phoneNumber ? `tel:${phoneNumber[1]}${phoneNumber[2]}${phoneNumber[3]}` : 'tel:6126550648';
+const phoneDisplay = phoneNumber ? `Call ${phoneNumber[1]}-${phoneNumber[2]}-${phoneNumber[3]}` : settings.cellphone.replace('Operations ', '');
 ---
 
 <section class="hero">
@@ -15,7 +20,7 @@ import settings from '../../data/settings.json';
     <div class="hero__row hero__row--main">
       <div class="hero__col hero__col--content">
         <div class="hero__logo-wrapper">
-          <img src={settings.logo} alt={heroData.title} class="hero__logo" />
+          <img src={settings.logo} alt="Lake County Outdoors Logo" class="hero__logo" />
         </div>
         <p class="hero__lead">
           {heroData.description}
@@ -24,9 +29,9 @@ import settings from '../../data/settings.json';
           <Button href={heroData.ctaLink} variant="primary" size="large">
             {heroData.ctaText}
           </Button>
-          <Button href="tel:6126550648" variant="secondary" size="large">
+          <Button href={phoneHref} variant="secondary" size="large">
             <Icon name="phone" size={20} />
-            Call 612-655-0648
+            {phoneDisplay}
           </Button>
         </div>
       </div>

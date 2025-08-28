@@ -35,7 +35,16 @@ const pageDescription = contactData.seo.description;
               {contactData.form.subtitle}
             </p>
             
-            <form class="form" action="#" method="POST">
+            <form class="form" action="https://formsubmit.co/info@lakecountyoutdoor.com" method="POST">
+              <!-- FormSubmit Configuration -->
+              <input type="hidden" name="_subject" value="New Contact Form Submission" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <!-- Redirect to thank you page after submission -->
+              <input type="hidden" name="_next" value="https://lakecountyoutdoor.com/thank-you" />
+              
+              <!-- Honeypot spam protection -->
+              <input type="text" name="_honey" style="display:none" />
               <div class="form__row">
                 <div class="form__group">
                   <label for="firstName" class="form__label">First Name</label>
@@ -45,6 +54,7 @@ const pageDescription = contactData.seo.description;
                     name="firstName" 
                     class="form__input" 
                     required
+                    aria-required="true"
                   />
                 </div>
                 <div class="form__group">
@@ -55,6 +65,7 @@ const pageDescription = contactData.seo.description;
                     name="lastName" 
                     class="form__input" 
                     required
+                    aria-required="true"
                   />
                 </div>
               </div>
@@ -68,6 +79,7 @@ const pageDescription = contactData.seo.description;
                     name="email" 
                     class="form__input" 
                     required
+                    aria-required="true"
                   />
                 </div>
                 <div class="form__group">
@@ -84,7 +96,7 @@ const pageDescription = contactData.seo.description;
               
               <div class="form__group">
                 <label for="service" class="form__label">Service Needed</label>
-                <select id="service" name="service" class="form__select" required>
+                <select id="service" name="service" class="form__select" required aria-required="true">
                   <option value="">Select a service</option>
                   <option value="commercial-snow-removal">Commercial Snow Removal</option>
                   <option value="landscaping">Landscaping</option>
@@ -103,6 +115,7 @@ const pageDescription = contactData.seo.description;
                   class="form__textarea" 
                   placeholder="Tell us about your project or service needs..."
                   required
+                  aria-required="true"
                 ></textarea>
               </div>
               

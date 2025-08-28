@@ -10,6 +10,7 @@ const services = navigation.footerLinks;
 
 // Use contact info from settings
 const contact = {
+  cellphone: settings.cellphone,
   phone: settings.phone,
   email: settings.email,
   address: settings.address
@@ -45,7 +46,11 @@ const contact = {
       <div class="footer__section">
         <h4 class="footer__heading">Contact Us</h4>
         <div class="footer__contact">
-          <a href={`tel:${contact.phone.replace(/-/g, '')}`} class="footer__contact-link">
+          <a href={`tel:${contact.cellphone.replace(/[^0-9]/g, '')}`} class="footer__contact-link">
+            <Icon name="phone" size={16} />
+            {contact.cellphone}
+          </a>
+          <a href={`tel:${contact.phone.replace(/[^0-9]/g, '')}`} class="footer__contact-link">
             <Icon name="phone" size={16} />
             {contact.phone}
           </a>

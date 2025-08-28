@@ -110,5 +110,13 @@
       "text": "Call Now: 612-655-0648",
       "link": "tel:6126550648"
     }
+  },
+  "reviews": {
+    "title": "What Our Customers Say",
+    "subtitle": "Real reviews from satisfied customers",
+    "rating": 5.0,
+    "reviewCount": 32,
+    "googleBusinessUrl": "https://maps.app.goo.gl/hoFQbvFjQv1oz1Hr9",
+    "shapoWidgetId": "shapo-widget-5e08326267aa05c21435"
   }
 }

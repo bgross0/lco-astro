@@ -1,0 +1,89 @@
+---
+// Shapo Reviews Widget Component
+---
+
+<section class="shapo-reviews-section">
+  <div class="container">
+    <div class="reviews-header">
+      <h2 class="reviews-title">What Our Customers Say</h2>
+      <p class="reviews-subtitle">Real reviews from satisfied customers</p>
+    </div>
+    
+    <!-- Shapo Widget Container -->
+    <div id="shapo-widget-5e08326267aa05c21435"></div>
+  </div>
+</section>
+
+<style>
+  .shapo-reviews-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .reviews-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .reviews-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+
+  .reviews-subtitle {
+    font-size: 20px;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Ensure Shapo widget is responsive */
+  #shapo-widget-5e08326267aa05c21435 {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Slow down Shapo carousel scroll speed */
+  :global(.shapo-carousel),
+  :global([class*="shapo"] [class*="carousel"]),
+  :global([class*="shapo"] [class*="scroll"]),
+  :global([class*="shapo"] [class*="slide"]) {
+    animation-duration: 40s !important; /* Increase from default (usually 20s) */
+    transition-duration: 1s !important; /* Slower transitions */
+  }
+
+  /* Target Shapo's auto-scroll animation */
+  :global(.shapo-widget-container *[style*="animation"]),
+  :global(#shapo-widget-5e08326267aa05c21435 *[style*="animation"]) {
+    animation-duration: 40s !important;
+  }
+
+  /* Slow down any transform-based animations */
+  :global(.shapo-widget-container *[style*="transform"]),
+  :global(#shapo-widget-5e08326267aa05c21435 *[style*="transform"]) {
+    transition: transform 1s ease-in-out !important;
+  }
+
+  @media (max-width: 768px) {
+    .shapo-reviews-section {
+      padding: 60px 0;
+    }
+
+    .reviews-title {
+      font-size: 36px;
+    }
+
+    .reviews-subtitle {
+      font-size: 18px;
+      padding: 0 20px;
+    }
+  }
+</style>

@@ -1,25 +1,37 @@
 ---
+import settings from '../../data/settings.json';
+
 export interface Props {
   formName?: string;
   className?: string;
+  email?: string; // Email where form submissions will be sent
 }
 
-const { formName = "contact", className = "" } = Astro.props;
+const { 
+  formName = "contact", 
+  className = "",
+  email = settings.email
+} = Astro.props;
+
 ---
 
 <form 
-  id="contact-form"
-  name={formName}
+  action={`https://formsubmit.co/${email}`}
   method="POST"
-  data-netlify="true"
-  netlify-honeypot="bot-field"
   class={`contact-form ${className}`}
 >
-  <!-- Honeypot field for spam protection -->
-  <input type="hidden" name="bot-field" />
-  <input type="hidden" name="form-name" value={formName} />
+  <!-- FormSubmit Configuration -->
+  <input type="hidden" name="_subject" value="New Contact Form Submission" />
+  <input type="hidden" name="_captcha" value="false" /> <!-- Disable captcha -->
+  <input type="hidden" name="_template" value="table" /> <!-- Email template style -->
   
-  <!-- Success/Error Messages -->
+  <!-- Redirect to thank you page after submission -->
+  <input type="hidden" name="_next" value="https://lakecountyoutdoor.com/thank-you" />
+  
+  <!-- Honeypot spam protection -->
+  <input type="text" name="_honey" style="display:none" />
+  
+  <!-- Error Messages (only shown for validation) -->
   <div id="form-message" class="form-message" aria-live="polite"></div>
   
   <!-- Name Field -->
@@ -120,7 +132,7 @@ const { formName = "contact", className = "" } = Astro.props;
 
 <script>
   // Form validation and submission handling
-  const form = document.getElementById('contact-form');
+  const form = document.querySelector('.contact-form');
   const formMessage = document.getElementById('form-message');
   
   // Validation patterns
@@ -192,52 +204,25 @@ const { formName = "contact", className = "" } = Astro.props;
     }
   }, true);
   
-  // Handle form submission
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    // Clear any previous messages
-    formMessage.textContent = '';
-    formMessage.className = 'form-message';
-    
+  // Handle form validation before submission
+  form.addEventListener('submit', (e) => {
     // Validate form
     if (!validateForm()) {
-      formMessage.textContent = 'Please correct the errors below.';
-      formMessage.classList.add('error');
-      return;
+      e.preventDefault();
+      const formMessage = document.getElementById('form-message');
+      if (formMessage) {
+        formMessage.textContent = 'Please correct the errors below.';
+        formMessage.className = 'form-message error';
+        formMessage.style.display = 'block';
+      }
+      return false;
     }
     
-    // Disable submit button
+    // Form is valid, let FormSubmit handle the submission
     const submitButton = form.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.textContent = 'Sending...';
-    
-    try {
-      const formData = new FormData(form);
-      
-      // Submit to Netlify Forms or your chosen endpoint
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
-      });
-      
-      if (response.ok) {
-        // Success
-        formMessage.textContent = 'Thank you for your message! We\'ll get back to you soon.';
-        formMessage.classList.add('success');
-        form.reset();
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      // Error
-      formMessage.textContent = 'Sorry, there was an error sending your message. Please try again or call us at 612-655-0648.';
-      formMessage.classList.add('error');
-    } finally {
-      // Re-enable submit button
-      submitButton.disabled = false;
-      submitButton.textContent = 'Send Message';
+    if (submitButton) {
+      submitButton.textContent = 'Sending...';
+      submitButton.disabled = true;
     }
   });
   
