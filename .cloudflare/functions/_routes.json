@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "exclude": [
+    "/_media/*",
+    "/public/_media/*"
+  ],
+  "include": [
+    "/*"
+  ]
+}

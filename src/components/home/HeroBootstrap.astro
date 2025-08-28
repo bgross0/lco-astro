@@ -42,6 +42,7 @@ const phoneDisplay = phoneNumber ? `Call ${phoneNumber[1]}-${phoneNumber[2]}-${p
               <img 
                 src={image.src}
                 alt={image.alt}
+                loading={index === 0 ? "eager" : "lazy"}
                 class={`hero__slide ${index === 0 ? 'hero__slide--active' : ''}`}
               />
             ))}

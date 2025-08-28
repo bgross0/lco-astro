@@ -28,7 +28,7 @@ order: 0
 hero:
   subtitle: Professional Service You Can Count On
   backgroundImage: /images/snow-removal/snow-removal-wide-1120x559.jpg
-image: /images/IMG_8045.png
+image: /images/snow-removal/snow-removal-hero-600x300.jpg
 features:
   - icon: snowflake
     title: Snow Plowing
