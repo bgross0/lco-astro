@@ -37,6 +37,21 @@ collections:
       - { label: "Description", name: "description", widget: "text", required: true }
       - { label: "Featured Image", name: "image", widget: "image", required: true }
       - { label: "Display Order", name: "order", widget: "number", required: false, default: 0, hint: "Lower numbers appear first" }
+      - label: "SEO Settings"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Meta Title", name: "metaTitle", widget: "string", required: false, pattern: ['.{0,60}', "Max 60 characters"], hint: "Leave blank to use page title" }
+          - { label: "Meta Description", name: "metaDescription", widget: "text", required: false, pattern: ['.{0,160}', "Max 160 characters"], hint: "Leave blank to use page description" }
+          - { label: "Focus Keyword", name: "focusKeyword", widget: "string", required: false, hint: "Primary keyword to optimize for" }
+          - { label: "Canonical URL", name: "canonicalUrl", widget: "string", required: false, hint: "Leave blank for default" }
+          - label: "Schema Type"
+            name: "schemaType"
+            widget: "select"
+            required: false
+            options: ["Service", "Product", "LocalBusiness", "Article"]
+            default: "Service"
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
   # Testimonials Collection
@@ -76,7 +91,54 @@ collections:
       - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
       - { label: "Tags", name: "tags", widget: "list", required: false }
       - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Meta Title", name: "metaTitle", widget: "string", required: false, pattern: ['.{0,60}', "Max 60 characters"] }
+          - { label: "Meta Description", name: "metaDescription", widget: "text", required: false, pattern: ['.{0,160}', "Max 160 characters"] }
+          - { label: "Focus Keyword", name: "focusKeyword", widget: "string", required: false }
       - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # Service Areas Page
+  - name: "pages"
+    label: "Pages"
+    delete: false
+    files:
+      - label: "Service Areas"
+        name: "service-areas"
+        file: "src/content/pages/service-areas.json"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string", default: "Service Areas" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string", default: "Serving the Twin Cities Metro Area" }
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text", default: "Professional outdoor services throughout Minneapolis-St. Paul and surrounding communities" }
+          - label: "Primary Cities"
+            name: "primaryCities"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "City Name", name: "name", widget: "string" }
+              - { label: "Response Time", name: "responseTime", widget: "string", hint: "e.g., 30-minute response" }
+              - { label: "Special Note", name: "note", widget: "string", required: false }
+          - label: "Additional Cities"
+            name: "additionalCities"
+            widget: "list"
+            hint: "Other cities you serve (will display as a list)"
+          - label: "Service Area Map"
+            name: "serviceMap"
+            widget: "object"
+            fields:
+              - { label: "Center Latitude", name: "lat", widget: "number", value_type: "float", default: 44.9778 }
+              - { label: "Center Longitude", name: "lng", widget: "number", value_type: "float", default: -93.2650 }
+              - { label: "Radius (miles)", name: "radius", widget: "number", default: 30 }
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - { label: "Meta Title", name: "metaTitle", widget: "string", default: "Service Areas - Twin Cities Snow Removal & Landscaping" }
+              - { label: "Meta Description", name: "metaDescription", widget: "text", default: "Lake County Outdoors serves Edina, Minneapolis, Bloomington, and the entire Twin Cities metro area with commercial snow removal, landscaping, and excavation services." }
+              - { label: "Keywords", name: "keywords", widget: "list", default: ["twin cities snow removal", "minneapolis landscaping", "edina commercial plowing", "bloomington excavation"] }
 
   # Homepage Components (for editing homepage sections)
   - name: "homepage"

@@ -1,0 +1,71 @@
+{
+  "title": "Service Areas",
+  "heroTitle": "Serving the Twin Cities Metro Area",
+  "heroSubtitle": "Professional outdoor services throughout Minneapolis-St. Paul and surrounding communities",
+  "primaryCities": [
+    {
+      "name": "Edina",
+      "responseTime": "20-minute response",
+      "note": "Headquarters location"
+    },
+    {
+      "name": "Minneapolis",
+      "responseTime": "30-minute response",
+      "note": "Downtown & commercial districts"
+    },
+    {
+      "name": "Bloomington",
+      "responseTime": "25-minute response",
+      "note": "Including Mall of America area"
+    },
+    {
+      "name": "St. Louis Park",
+      "responseTime": "20-minute response",
+      "note": null
+    },
+    {
+      "name": "Minnetonka",
+      "responseTime": "25-minute response",
+      "note": null
+    },
+    {
+      "name": "Eden Prairie",
+      "responseTime": "30-minute response",
+      "note": null
+    }
+  ],
+  "additionalCities": [
+    "Richfield",
+    "Hopkins",
+    "Golden Valley",
+    "Plymouth",
+    "Wayzata",
+    "Excelsior",
+    "Chanhassen",
+    "St. Paul",
+    "Roseville",
+    "Burnsville",
+    "Savage",
+    "Prior Lake",
+    "Shakopee",
+    "Apple Valley",
+    "Eagan"
+  ],
+  "serviceMap": {
+    "lat": 44.8697,
+    "lng": -93.3503,
+    "radius": 30
+  },
+  "seo": {
+    "metaTitle": "Service Areas - Twin Cities Snow Removal & Landscaping",
+    "metaDescription": "Lake County Outdoors serves Edina, Minneapolis, Bloomington, and the entire Twin Cities metro area with commercial snow removal, landscaping, and excavation services.",
+    "keywords": [
+      "twin cities snow removal",
+      "minneapolis landscaping",
+      "edina commercial plowing",
+      "bloomington excavation",
+      "minnesota snow management",
+      "metro area landscaping services"
+    ]
+  }
+}

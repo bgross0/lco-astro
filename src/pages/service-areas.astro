@@ -1,0 +1,286 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/common/Button.astro';
+import Icon from '../components/common/Icon.astro';
+import serviceAreaData from '../content/pages/service-areas.json';
+
+const { title, heroTitle, heroSubtitle, primaryCities, additionalCities, serviceMap, seo } = serviceAreaData;
+---
+
+<BaseLayout title={seo.metaTitle} description={seo.metaDescription}>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero__title">{heroTitle}</h1>
+      <p class="hero__subtitle">{heroSubtitle}</p>
+    </div>
+  </section>
+
+  <!-- Primary Service Areas -->
+  <section class="service-areas">
+    <div class="container">
+      <h2 class="section-title">Primary Service Areas</h2>
+      <div class="cities-grid">
+        {primaryCities.map((city) => (
+          <div class="city-card">
+            <div class="city-card__header">
+              <Icon name="map-pin" size={24} color="var(--primary)" />
+              <h3 class="city-card__name">{city.name}</h3>
+            </div>
+            <div class="city-card__details">
+              <p class="city-card__response">
+                <Icon name="clock" size={16} />
+                {city.responseTime}
+              </p>
+              {city.note && (
+                <p class="city-card__note">{city.note}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Cities -->
+  <section class="additional-cities">
+    <div class="container">
+      <h2 class="section-title">We Also Serve</h2>
+      <div class="cities-list">
+        {additionalCities.map((city, index) => (
+          <>
+            <span class="city-name">{city}</span>
+            {index < additionalCities.length - 1 && <span class="separator">•</span>}
+          </>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services CTA -->
+  <section class="services-cta">
+    <div class="container">
+      <h2 class="section-title">Our Services Throughout the Metro</h2>
+      <div class="services-grid">
+        <div class="service-item">
+          <Icon name="snowflake" size={48} color="var(--primary)" />
+          <h3>Commercial Snow Removal</h3>
+          <p>24/7 snow plowing and ice management for businesses across the Twin Cities</p>
+        </div>
+        <div class="service-item">
+          <Icon name="tree" size={48} color="var(--primary)" />
+          <h3>Professional Landscaping</h3>
+          <p>Complete landscape design, installation, and maintenance services</p>
+        </div>
+        <div class="service-item">
+          <Icon name="bulldozer" size={48} color="var(--primary)" />
+          <h3>Excavation Services</h3>
+          <p>Site preparation, grading, and earthwork for commercial projects</p>
+        </div>
+      </div>
+      <div class="cta-actions">
+        <Button href="/contact" variant="primary" size="large">
+          Get a Free Quote for Your Area
+        </Button>
+        <Button href="tel:6126550648" variant="secondary" size="large">
+          <Icon name="phone" size={20} />
+          Call Now: 612-655-0648
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: var(--white);
+    padding: var(--space-20) 0;
+    text-align: center;
+  }
+
+  .hero__title {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-xl);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+
+  .service-areas {
+    padding: var(--space-16) 0;
+    background: var(--neutral-light);
+  }
+
+  .section-title {
+    font-size: var(--text-3xl);
+    text-align: center;
+    margin-bottom: var(--space-12);
+    color: var(--secondary);
+  }
+
+  .cities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .city-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+  }
+
+  .city-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .city-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .city-card__name {
+    font-size: var(--text-2xl);
+    color: var(--secondary);
+    margin: 0;
+  }
+
+  .city-card__details {
+    color: var(--neutral-dark);
+  }
+
+  .city-card__response {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    font-weight: var(--font-medium);
+  }
+
+  .city-card__note {
+    color: var(--primary);
+    font-size: var(--text-sm);
+    font-style: italic;
+  }
+
+  .additional-cities {
+    padding: var(--space-12) 0;
+  }
+
+  .cities-list {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 2;
+  }
+
+  .city-name {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+  }
+
+  .separator {
+    margin: 0 var(--space-3);
+    color: var(--neutral);
+  }
+
+  .services-cta {
+    padding: var(--space-16) 0;
+    background: linear-gradient(to bottom, var(--white) 0%, var(--neutral-light) 100%);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-8);
+    max-width: 900px;
+    margin: 0 auto var(--space-12);
+  }
+
+  .service-item {
+    text-align: center;
+  }
+
+  .service-item h3 {
+    margin: var(--space-4) 0 var(--space-2);
+    color: var(--secondary);
+  }
+
+  .service-item p {
+    color: var(--neutral-dark);
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .hero__title {
+      font-size: var(--text-3xl);
+    }
+
+    .cities-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-actions > * {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Commercial Services - Twin Cities Metro",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Lake County Outdoors, LLC"
+  },
+  "areaServed": [
+    ...primaryCities.map(city => ({
+      "@type": "City",
+      "name": city.name,
+      "containedInPlace": {
+        "@type": "State",
+        "name": "Minnesota"
+      }
+    })),
+    ...additionalCities.map(city => ({
+      "@type": "City",
+      "name": city
+    }))
+  ],
+  "serviceType": ["Commercial Snow Removal", "Landscaping", "Excavation"],
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "servicePhone": {
+      "@type": "ContactPoint",
+      "telephone": "+1-612-655-0648",
+      "contactType": "sales",
+      "availableLanguage": "English",
+      "areaServed": "US-MN"
+    }
+  }
+})}></script>
