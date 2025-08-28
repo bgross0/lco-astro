@@ -5,9 +5,12 @@ import InteractiveServicesShowcase from '../components/home/InteractiveServicesS
 import AboutSection from '../components/home/AboutSection.astro';
 import ReviewsSection from '../components/home/ReviewsSection.astro';
 import CTABanner from '../components/home/CTABanner.astro';
+
+const title = 'Lake County Outdoors | Commercial Snow Removal & Landscaping Services | Edina, MN';
+const description = 'Professional commercial snow removal, landscaping, and municipal contracting services in Edina, Minnesota. 24/7 emergency service, fully insured, serving the Twin Cities metro area.';
 ---
 
-<BaseLayout>
+<BaseLayout title={title} description={description}>
   <Hero />
   <InteractiveServicesShowcase />
   <AboutSection />
