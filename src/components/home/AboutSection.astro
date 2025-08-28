@@ -30,8 +30,8 @@ const { about } = contentData;
         </div>
         
         <div class="about__actions">
-          <Button href="/contact" variant="primary">
-            Get Started Today
+          <Button href={about.buttonLink || "/contact"} variant="primary">
+            {about.buttonText || "Get Started Today"}
           </Button>
         </div>
       </div>

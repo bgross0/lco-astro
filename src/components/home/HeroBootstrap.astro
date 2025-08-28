@@ -60,29 +60,15 @@ const phoneDisplay = phoneNumber ? `Call ${phoneNumber[1]}-${phoneNumber[2]}-${p
     </div>
     
     <div class="hero__row hero__row--services">
-      <div class="hero__service-item">
-        <div class="hero__service-icon">
-          <Icon name="snowflake" size={48} color="var(--primary)" />
+      {heroData.bottomServices && heroData.bottomServices.map((service) => (
+        <div class="hero__service-item">
+          <div class="hero__service-icon">
+            <Icon name={service.icon} size={48} color="var(--primary)" />
+          </div>
+          <h4 class="hero__service-title">{service.title}</h4>
+          <p class="hero__service-text">{service.description}</p>
         </div>
-        <h4 class="hero__service-title">Snow Specialists</h4>
-        <p class="hero__service-text">Commercial snow removal experts</p>
-      </div>
-      
-      <div class="hero__service-item">
-        <div class="hero__service-icon">
-          <Icon name="bulldozer" size={48} color="var(--primary)" />
-        </div>
-        <h4 class="hero__service-title">Earthworks</h4>
-        <p class="hero__service-text">Professional excavation services</p>
-      </div>
-      
-      <div class="hero__service-item">
-        <div class="hero__service-icon">
-          <Icon name="tree" size={48} color="var(--primary)" />
-        </div>
-        <h4 class="hero__service-title">Landscaping</h4>
-        <p class="hero__service-text">Complete landscape design</p>
-      </div>
+      ))}
     </div>
   </div>
 </section>

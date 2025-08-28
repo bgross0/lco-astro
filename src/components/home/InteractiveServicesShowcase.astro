@@ -246,11 +246,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     width: 0;
     background: var(--primary);
     border-radius: 2px;
-  }
-  
-  @keyframes progressAnimation {
-    0% { width: 0; }
-    100% { width: 100%; }
+    transition: width 100ms linear;
   }
   
   /* Animations */
@@ -443,6 +439,11 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   let currentIndex = 0;
   let autoScrollTimer;
   
+  // Progress bar animation variables
+  let animationStartTime = 0;
+  let animationId = null;
+  const progressFill = document.querySelector('.progress-fill') as HTMLElement;
+  
   // Lazy load background images
   function loadBackgroundImage(element: Element) {
     const bgImage = element.getAttribute('data-bg-image');
@@ -461,6 +462,40 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     });
   }
   
+  // Progress bar animation functions
+  function animateProgress() {
+    const currentTime = Date.now();
+    const elapsed = currentTime - animationStartTime;
+    const progress = Math.min((elapsed / intervalTime) * 100, 100);
+    
+    if (progressFill) {
+      progressFill.style.width = `${progress}%`;
+    }
+    
+    if (progress < 100) {
+      animationId = requestAnimationFrame(animateProgress);
+    }
+  }
+  
+  function startProgress() {
+    stopProgress();
+    if (progressFill) {
+      progressFill.style.width = '0%';
+      // Small delay to ensure the width reset is rendered
+      setTimeout(() => {
+        animationStartTime = Date.now();
+        animateProgress();
+      }, 10);
+    }
+  }
+  
+  function stopProgress() {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+  
   function setActiveOption(index: number) {
     const currentActive = document.querySelector('.option.active');
     if (currentActive) {
@@ -472,39 +507,34 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
       currentIndex = index;
       loadVisibleImages(); // Load images when changing active option
       
-      // Reset progress bar with proper animation
-      const progressFill = document.querySelector('.progress-fill') as HTMLElement;
-      if (progressFill) {
-        // Remove animation class
-        progressFill.style.animation = 'none';
-        progressFill.style.width = '0%';
-        
-        // Force reflow to restart animation
-        void progressFill.offsetHeight;
-        
-        // Add animation back
-        progressFill.style.animation = `progressAnimation ${intervalTime}ms linear forwards`;
-      }
+      // Start the progress animation
+      startProgress();
     }
   }
   
-  // Auto-scroll function
+  // Auto-scroll function with synchronized progress
   function startAutoScroll() {
     // Clear any existing interval first
     stopAutoScroll();
     
-    autoScrollTimer = setInterval(() => {
+    // Start progress animation immediately
+    startProgress();
+    
+    // Set timer for exactly intervalTime
+    autoScrollTimer = setTimeout(() => {
       const nextIndex = (currentIndex + 1) % options.length;
-      requestAnimationFrame(() => {
-        setActiveOption(nextIndex);
-      });
+      setActiveOption(nextIndex);
+      // Recursively continue auto-scrolling
+      startAutoScroll();
     }, intervalTime);
   }
   
   function stopAutoScroll() {
     if (autoScrollTimer) {
-      clearInterval(autoScrollTimer);
+      clearTimeout(autoScrollTimer);
+      autoScrollTimer = null;
     }
+    stopProgress();
   }
   
   // Manual click handling
@@ -542,12 +572,6 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     
     // Start auto-scroll after animations complete
     setTimeout(() => {
-      // Set initial progress bar animation
-      const progressFill = document.querySelector('.progress-fill');
-      if (progressFill) {
-        progressFill.style.animation = `progressAnimation ${intervalTime}ms linear forwards`;
-      }
-      
       startAutoScroll();
     }, 1000);
   });
@@ -597,5 +621,20 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   }, { passive: true });
   
   // Clean up on page unload
-  window.addEventListener('beforeunload', stopAutoScroll);
+  window.addEventListener('beforeunload', () => {
+    stopAutoScroll();
+    stopProgress();
+  });
+  
+  // Handle page visibility changes
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoScroll();
+    } else {
+      // Resume when page becomes visible again
+      setTimeout(() => {
+        startAutoScroll();
+      }, 500);
+    }
+  });
 </script>

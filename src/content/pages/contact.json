@@ -63,7 +63,9 @@
   "info": {
     "title": "Get in Touch",
     "description": "We're here to help with all your outdoor service needs. Contact us today for a free consultation and quote.",
-    "emergencyText": "For emergency snow removal services, call us directly for immediate assistance."
+    "emergencyText": "For emergency snow removal services, call us directly for immediate assistance.",
+    "emailResponseTime": "We respond within 24 hours",
+    "serviceAreaNote": "Commercial properties throughout the metro"
   },
   "seo": {
     "title": "Contact - Lake County Outdoors, LLC",

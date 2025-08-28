@@ -120,7 +120,7 @@ const pageDescription = contactData.seo.description;
               </div>
               
               <button type="submit" class="form__submit">
-                Send Message
+                {contactData.form.submitButtonText || "Send Message"}
                 <Icon name="arrow-right" size={20} />
               </button>
             </form>
@@ -154,7 +154,7 @@ const pageDescription = contactData.seo.description;
                 <a href={`mailto:${settings.email}`} class="contact__info-link">
                   {settings.email}
                 </a>
-                <p class="contact__info-note">We respond within 24 hours</p>
+                <p class="contact__info-note">{contactData.info.emailResponseTime || "We respond within 24 hours"}</p>
               </div>
             </div>
             
@@ -165,7 +165,7 @@ const pageDescription = contactData.seo.description;
               <div class="contact__info-content">
                 <h4>Service Area</h4>
                 <p>{settings.address}</p>
-                <p class="contact__info-note">Commercial properties throughout the metro</p>
+                <p class="contact__info-note">{contactData.info.serviceAreaNote || "Commercial properties throughout the metro"}</p>
               </div>
             </div>
           </div>
@@ -175,15 +175,15 @@ const pageDescription = contactData.seo.description;
             <div class="contact__hours">
               <div class="contact__hours-row">
                 <span>Monday - Friday</span>
-                <span>7:00 AM - 6:00 PM</span>
+                <span>{settings.businessHours?.weekdays || "7:00 AM - 6:00 PM"}</span>
               </div>
               <div class="contact__hours-row">
                 <span>Saturday</span>
-                <span>8:00 AM - 4:00 PM</span>
+                <span>{settings.businessHours?.saturday || "8:00 AM - 4:00 PM"}</span>
               </div>
               <div class="contact__hours-row">
                 <span>Sunday</span>
-                <span>Closed</span>
+                <span>{settings.businessHours?.sunday || "Closed"}</span>
               </div>
             </div>
             <p class="contact__hours-note">

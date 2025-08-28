@@ -18,5 +18,11 @@
     "longitude": -93.3503
   },
   "priceRange": "$$",
-  "openingHours": "Mo-Su 00:00-24:00"
+  "openingHours": "Mo-Su 00:00-24:00",
+  "businessHours": {
+    "weekdays": "7:00 AM - 6:00 PM",
+    "saturday": "8:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergency": "24/7 Available"
+  }
 }

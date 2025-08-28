@@ -101,6 +101,14 @@ collections:
             fields:
               - { label: "Image", name: "src", widget: "image", required: true }
               - { label: "Alt Text", name: "alt", widget: "string", required: true, hint: "Describe the image for accessibility" }
+          - label: "Bottom Service Icons"
+            name: "bottomServices"
+            widget: "list"
+            max: 3
+            fields:
+              - { label: "Icon", name: "icon", widget: "string", hint: "Icon name (e.g., snowflake, bulldozer, tree)" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "string" }
       
       - label: "Services Showcase"
         name: "services-showcase"
@@ -163,6 +171,8 @@ collections:
                 fields:
                   - { label: "Icon", name: "icon", widget: "string" }
                   - { label: "Text", name: "text", widget: "string" }
+              - { label: "Button Text", name: "buttonText", widget: "string", default: "Get Started Today" }
+              - { label: "Button Link", name: "buttonLink", widget: "string", default: "/contact" }
           
           - label: "Client Satisfaction"
             name: "clientSatisfaction"
@@ -251,6 +261,14 @@ collections:
               - { label: "Longitude", name: "longitude", widget: "number", value_type: "float", default: -93.3503 }
           - { label: "Price Range", name: "priceRange", widget: "string", default: "$$", hint: "Use $ signs (e.g., $$)" }
           - { label: "Opening Hours Schema", name: "openingHours", widget: "string", default: "Mo-Su 00:00-24:00", hint: "Schema.org format" }
+          - label: "Business Hours Display"
+            name: "businessHours"
+            widget: "object"
+            fields:
+              - { label: "Monday - Friday", name: "weekdays", widget: "string", default: "7:00 AM - 6:00 PM" }
+              - { label: "Saturday", name: "saturday", widget: "string", default: "8:00 AM - 4:00 PM" }
+              - { label: "Sunday", name: "sunday", widget: "string", default: "Closed" }
+              - { label: "Emergency", name: "emergency", widget: "string", default: "24/7 Available" }
           - label: "Social Media"
             name: "social"
             widget: "object"
@@ -293,7 +311,14 @@ collections:
             fields:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Subtitle", name: "subtitle", widget: "string" }
-              - { label: "Submit Button Text", name: "submitButtonText", widget: "string" }
+              - { label: "Submit Button Text", name: "submitButtonText", widget: "string", default: "Send Message" }
+              - { label: "Message Placeholder", name: "messagePlaceholder", widget: "string", default: "Tell us about your project or service needs..." }
+              - label: "Service Options"
+                name: "serviceOptions"
+                widget: "list"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value", name: "value", widget: "string" }
           - label: "Contact Info"
             name: "info"
             widget: "object"
@@ -301,6 +326,8 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
               - { label: "Emergency Text", name: "emergencyText", widget: "string" }
+              - { label: "Email Response Time", name: "emailResponseTime", widget: "string", default: "We respond within 24 hours" }
+              - { label: "Service Area Note", name: "serviceAreaNote", widget: "string", default: "Commercial properties throughout the metro" }
           - label: "SEO"
             name: "seo"
             widget: "object"

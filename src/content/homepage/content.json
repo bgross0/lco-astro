@@ -63,7 +63,9 @@
         "icon": "check",
         "text": "60+ Years Combined Experience"
       }
-    ]
+    ],
+    "buttonText": "Get Started Today",
+    "buttonLink": "/contact"
   },
   "clientSatisfaction": {
     "title": "Our Client Satisfaction",

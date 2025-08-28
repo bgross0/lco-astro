@@ -21,5 +21,22 @@
       "src": "/images/landscaping/bobcat-excavator.jpg",
       "alt": "Excavation equipment"
     }
+  ],
+  "bottomServices": [
+    {
+      "icon": "snowflake",
+      "title": "Snow Specialists",
+      "description": "Commercial snow removal experts"
+    },
+    {
+      "icon": "bulldozer",
+      "title": "Earthworks",
+      "description": "Professional excavation services"
+    },
+    {
+      "icon": "tree",
+      "title": "Landscaping",
+      "description": "Complete landscape design"
+    }
   ]
 }
