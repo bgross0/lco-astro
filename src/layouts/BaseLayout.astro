@@ -77,15 +77,32 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
     <link rel="manifest" href="/site.webmanifest?v=3" />
     
-    <!-- Fonts Preconnect -->
+    <!-- Fonts: preconnect + non-blocking stylesheet load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+      />
+    </noscript>
     
     <!-- Phosphor Icons - Removed CDN loading, using inline SVG icons instead -->
     
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
     
+    <!-- Preload critical brand image to improve LCP -->
+    {settings.logo && (
+      <link rel="preload" as="image" href={settings.logo} fetchpriority="high" />
+    )}
+
     <!-- Google Tag Manager -->
     {settings.analytics?.enableTracking && settings.analytics?.gtmId && (
       <script set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -96,18 +113,7 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     )}
     <!-- End Google Tag Manager -->
     
-    <!-- Shapo Reviews Widget - Load after page is interactive -->
-    <script>
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          const script = document.createElement('script');
-          script.id = 'shapo-embed-js';
-          script.src = 'https://cdn.shapo.io/js/embed.js';
-          script.defer = true;
-          document.head.appendChild(script);
-        }, 2000); // Load 2 seconds after page load
-      });
-    </script>
+    <!-- Shapo Reviews Widget is now loaded contextually in ReviewsSection -->
     <script type="application/ld+json" id="shapo-ratingschema-c301e81c93"></script>
   </head>
   <body>
@@ -162,21 +168,44 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
       "sameAs": Object.values(settings.social).filter(url => url)
     })}></script>
     
-    <!--Start of Tawk.to Script - Delayed Loading-->
+    <!-- Tawk.to chat: load on user intent (when footer appears or on first interaction) -->
     <script type="text/javascript">
-    window.addEventListener('load', () => {
-      setTimeout(() => {
+    (function(){
+      var loaded=false;
+      function loadTawk(){
+        if(loaded) return; loaded=true;
         var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
         (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/68ab739ae831f01925325a73/1j3ern4m7';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
+          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+          s1.async=true;
+          s1.src='https://embed.tawk.to/68ab739ae831f01925325a73/1j3ern4m7';
+          s1.charset='UTF-8';
+          s1.setAttribute('crossorigin','*');
+          s0.parentNode.insertBefore(s1,s0);
         })();
-      }, 3000); // Load 3 seconds after page load
-    });
+      }
+      function onFirstInteraction(){
+        window.removeEventListener('scroll', onFirstInteraction);
+        window.removeEventListener('mousemove', onFirstInteraction);
+        window.removeEventListener('keydown', onFirstInteraction);
+        loadTawk();
+      }
+      // Load when footer enters the viewport
+      window.addEventListener('DOMContentLoaded', function(){
+        var footer=document.querySelector('footer.footer');
+        if('IntersectionObserver' in window && footer){
+          var io=new IntersectionObserver(function(entries){
+            entries.forEach(function(e){ if(e.isIntersecting){ io.disconnect(); loadTawk(); }});
+          }, { rootMargin: '200px' });
+          io.observe(footer);
+        } else {
+          // Fallback: load on first interaction
+          window.addEventListener('scroll', onFirstInteraction, { passive: true });
+          window.addEventListener('mousemove', onFirstInteraction, { passive: true });
+          window.addEventListener('keydown', onFirstInteraction, { passive: true });
+        }
+      });
+    })();
     </script>
     <!--End of Tawk.to Script-->
   </body>

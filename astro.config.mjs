@@ -11,11 +11,41 @@ export default defineConfig({
     tailwind(),
   ],
   build: {
-    inlineStylesheets: 'auto'
+    inlineStylesheets: 'auto',
+    // Enable aggressive asset optimization
+    assets: '_assets'
   },
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp'
     }
-  }
+  },
+  vite: {
+    build: {
+      // Enable minification
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      },
+      // Enable CSS code splitting
+      cssCodeSplit: true,
+      // Optimize chunk size
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor': ['astro:content']
+          }
+        }
+      }
+    },
+    // Enable compression
+    ssr: {
+      noExternal: ['tailwindcss']
+    }
+  },
+  compressHTML: true,
+  output: 'static'
 });

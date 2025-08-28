@@ -56,20 +56,29 @@ const ogImage = new URL(image, Astro.site).href;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
     
-    <!-- Fonts Preconnect -->
+    <!-- Fonts: preconnect + non-blocking stylesheet load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      />
+    </noscript>
     
     <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
     
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
     
     <style>
-      /* Import Inter font for DaisyUI pages */
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-      
       /* Base styles for DaisyUI layout */
       [data-theme="lakecounty"] {
         font-family: 'Inter', system-ui, sans-serif;

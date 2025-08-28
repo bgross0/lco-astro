@@ -22,11 +22,17 @@ const { Content } = await post.render();
   <article class="blog-post">
     <div class="blog-post__hero">
       {post.data.image && (
-        <img 
-          src={post.data.image} 
-          alt={post.data.imageAlt || post.data.title}
-          class="blog-post__hero-image"
-        />
+        <picture>
+          <source srcset={post.data.image.replace(/\.(jpe?g|png)$/i, '.webp')} type="image/webp" />
+          <img 
+            src={post.data.image} 
+            alt={post.data.imageAlt || post.data.title}
+            class="blog-post__hero-image"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
       )}
       <div class="container">
         <div class="blog-post__header">

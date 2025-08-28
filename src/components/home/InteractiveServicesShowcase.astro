@@ -442,13 +442,13 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   // Progress bar animation variables
   let animationStartTime = 0;
   let animationId = null;
-  const progressFill = document.querySelector('.progress-fill') as HTMLElement;
+  const progressFill = document.querySelector('.progress-fill');
   
   // Lazy load background images
-  function loadBackgroundImage(element: Element) {
+  function loadBackgroundImage(element) {
     const bgImage = element.getAttribute('data-bg-image');
     if (bgImage && !element.style.backgroundImage) {
-      (element as HTMLElement).style.backgroundImage = `url('${bgImage}')`;
+      element.style.backgroundImage = `url('${bgImage}')`;
     }
   }
   
@@ -496,7 +496,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     }
   }
   
-  function setActiveOption(index: number) {
+  function setActiveOption(index) {
     const currentActive = document.querySelector('.option.active');
     if (currentActive) {
       currentActive.classList.remove('active');
@@ -540,22 +540,21 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   // Manual click handling
   options.forEach((option, index) => {
     option.addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      // If already active, navigate to the service page
-      if (option.classList.contains('active')) {
-        window.location.href = option.getAttribute('href') || '#';
+      const isActive = option.classList.contains('active');
+      const isMeta = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0;
+
+      // If not active and not a meta/aux click, activate instead of navigating
+      if (!isActive && !isMeta) {
+        e.preventDefault();
+        stopAutoScroll();
+        setActiveOption(index);
+        // Restart auto-scroll after user interaction
+        setTimeout(() => {
+          startAutoScroll();
+        }, 10000);
         return;
       }
-      
-      // Otherwise, make it active
-      stopAutoScroll();
-      setActiveOption(index);
-      
-      // Restart auto-scroll after user interaction
-      setTimeout(() => {
-        startAutoScroll();
-      }, 10000); // Wait 10 seconds before resuming auto-scroll
+      // If active (or meta/aux click), allow default navigation behavior
     });
   });
   
@@ -620,8 +619,8 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     handleSwipe();
   }, { passive: true });
   
-  // Clean up on page unload
-  window.addEventListener('beforeunload', () => {
+  // Cleanup using page lifecycle that preserves BFCache
+  window.addEventListener('pagehide', () => {
     stopAutoScroll();
     stopProgress();
   });

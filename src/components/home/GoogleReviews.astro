@@ -814,7 +814,7 @@ const reviews = [
     track?.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
       stopAutoScroll();
-    });
+    }, { passive: true });
     
     track?.addEventListener('touchend', (e) => {
       touchEndX = e.changedTouches[0].clientX;
@@ -828,7 +828,7 @@ const reviews = [
         }
       }
       startAutoScroll();
-    });
+    }, { passive: true });
     
     // Initialize
     updateCardsPerView();

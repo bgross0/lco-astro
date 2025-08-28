@@ -31,12 +31,15 @@ const isActive = (href: string) => {
     <nav class="flex items-center justify-between h-20">
       <!-- Logo -->
       <a href="/" class="flex items-center" data-astro-prefetch>
-        <img 
-          src="/lco-final.png" 
-          alt="Lake County Outdoors"
-          class="h-12 w-auto"
-          transition:name="logo"
-        />
+        <picture>
+          <source srcset="/lco-final.webp" type="image/webp" />
+          <img 
+            src="/lco-final.png" 
+            alt="Lake County Outdoors"
+            class="h-12 w-auto"
+            transition:name="logo"
+          />
+        </picture>
       </a>
 
       <!-- Desktop Navigation -->
@@ -123,7 +126,10 @@ const isActive = (href: string) => {
   >
     <div class="p-4">
       <div class="flex items-center justify-between mb-8">
-        <img src="/lco-final.png" alt="Lake County Outdoors" class="h-10" />
+        <picture>
+          <source srcset="/lco-final.webp" type="image/webp" />
+          <img src="/lco-final.png" alt="Lake County Outdoors" class="h-10" />
+        </picture>
         <button 
           id="mobile-menu-close"
           class="p-3 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center"

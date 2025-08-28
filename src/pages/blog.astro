@@ -31,7 +31,12 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
             <article class="blog-card">
               {post.data.image && (
                 <div class="blog-card__image">
-                  <img src={post.data.image} alt={post.data.imageAlt || post.data.title} loading="lazy" />
+                  {(() => { const webp = post.data.image?.replace(/\.(jpe?g|png)$/i, '.webp'); return (
+                    <picture>
+                      <source srcset={webp} type="image/webp" />
+                      <img src={post.data.image} alt={post.data.imageAlt || post.data.title} loading="lazy" decoding="async" />
+                    </picture>
+                  ); })()}
                 </div>
               )}
               <div class="blog-card__content">

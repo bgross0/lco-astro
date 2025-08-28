@@ -34,7 +34,10 @@ const isActive = (href: string) => {
     <!-- Logo at top -->
     <div class="mobile-menu__header">
       <a href="/" class="mobile-menu__logo">
-        <img src="/lco-final.png" alt="Lake County Outdoors" />
+        <picture>
+          <source srcset="/lco-final.webp" type="image/webp" />
+          <img src="/lco-final.png" alt="Lake County Outdoors" width="52" height="52" loading="lazy" decoding="async" />
+        </picture>
       </a>
     </div>
     

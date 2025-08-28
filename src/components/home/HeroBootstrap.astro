@@ -20,7 +20,7 @@ const phoneDisplay = phoneNumber ? `Call ${phoneNumber[1]}-${phoneNumber[2]}-${p
     <div class="hero__row hero__row--main">
       <div class="hero__col hero__col--content">
         <div class="hero__logo-wrapper">
-          <img src={settings.logo} alt="Lake County Outdoors Logo" class="hero__logo" width="240" height="240" />
+          <img src={settings.logo} alt="Lake County Outdoors Logo" class="hero__logo" width="240" height="240" fetchpriority="high" />
         </div>
         <p class="hero__lead">
           {heroData.description}
@@ -38,14 +38,21 @@ const phoneDisplay = phoneNumber ? `Call ${phoneNumber[1]}-${phoneNumber[2]}-${p
       <div class="hero__col hero__col--slideshow">
         <div class="hero__slideshow">
           <div class="hero__slides">
-            {heroData.images.map((image, index) => (
-              <img 
-                src={image.src}
-                alt={image.alt}
-                loading={index === 0 ? "eager" : "lazy"}
-                class={`hero__slide ${index === 0 ? 'hero__slide--active' : ''}`}
-              />
-            ))}
+            {heroData.images.map((image, index) => {
+              const webp = image.src.replace(/\.(jpe?g|png)$/i, '.webp');
+              return (
+                <picture class={`hero__slide ${index === 0 ? 'hero__slide--active' : ''}`}>
+                  <source srcset={webp} type="image/webp" />
+                  <img 
+                    src={image.src}
+                    alt={image.alt}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    {...(index === 0 ? { fetchpriority: 'high' } : {})}
+                    class="w-full h-full object-cover"
+                  />
+                </picture>
+              );
+            })}
           </div>
           <div class="hero__dots">
             {heroData.images.map((_, index) => (
@@ -458,12 +465,12 @@ const phoneDisplay = phoneNumber ? `Call ${phoneNumber[1]}-${phoneNumber[2]}-${p
   if (slideshow) {
     slideshow.addEventListener('touchstart', (e) => {
       touchStartX = e.changedTouches[0].screenX;
-    });
+    }, { passive: true });
     
     slideshow.addEventListener('touchend', (e) => {
       touchEndX = e.changedTouches[0].screenX;
       handleSwipe();
-    });
+    }, { passive: true });
   }
   
   function handleSwipe() {

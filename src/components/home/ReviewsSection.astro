@@ -329,3 +329,34 @@ const { reviews } = content;
     }
   }
 </style>
+
+<script>
+  // Load Shapo widget only when the reviews section is near viewport
+  (function(){
+    const shapoId = "{reviews.shapoWidgetId}";
+    const container = document.currentScript?.previousElementSibling?.previousElementSibling || document.querySelector('.reviews-section');
+    const shapoTarget = document.getElementById(shapoId);
+    if(!shapoTarget) return;
+    let loaded=false;
+    function loadShapo(){
+      if(loaded) return; loaded=true;
+      if(document.getElementById('shapo-embed-js')) return;
+      const s=document.createElement('script');
+      s.id='shapo-embed-js';
+      s.src='https://cdn.shapo.io/js/embed.js';
+      s.defer=true;
+      document.head.appendChild(s);
+    }
+    if('IntersectionObserver' in window && container){
+      const io=new IntersectionObserver((entries)=>{
+        entries.forEach((e)=>{ if(e.isIntersecting){ io.disconnect(); loadShapo(); }});
+      }, { rootMargin: '300px' });
+      io.observe(container);
+    } else {
+      // Fallback: on first user interaction
+      const handler = () => { loadShapo(); window.removeEventListener('scroll', handler); window.removeEventListener('mousemove', handler); };
+      window.addEventListener('scroll', handler, { passive: true });
+      window.addEventListener('mousemove', handler, { passive: true });
+    }
+  })();
+</script>

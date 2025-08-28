@@ -1,8 +1,7 @@
 /* Import Variables */
 @import './variables.css';
 
-/* Import Font Files */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+/* Fonts are loaded via non-blocking <link> in BaseLayout */
 
 /* Reset & Base Styles */
 *,
