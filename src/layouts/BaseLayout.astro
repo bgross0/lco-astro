@@ -80,14 +80,23 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
+    <!-- Phosphor Icons - Removed CDN loading, using inline SVG icons instead -->
     
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
     
-    <!-- Shapo Reviews Widget -->
-    <script id="shapo-embed-js" type="text/javascript" src="https://cdn.shapo.io/js/embed.js" defer></script>
+    <!-- Shapo Reviews Widget - Load after page is interactive -->
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const script = document.createElement('script');
+          script.id = 'shapo-embed-js';
+          script.src = 'https://cdn.shapo.io/js/embed.js';
+          script.defer = true;
+          document.head.appendChild(script);
+        }, 2000); // Load 2 seconds after page load
+      });
+    </script>
     <script type="application/ld+json" id="shapo-ratingschema-c301e81c93"></script>
   </head>
   <body>
@@ -129,17 +138,21 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
       "sameAs": Object.values(settings.social).filter(url => url)
     })}></script>
     
-    <!--Start of Tawk.to Script-->
+    <!--Start of Tawk.to Script - Delayed Loading-->
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/68ab739ae831f01925325a73/1j3ern4m7';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/68ab739ae831f01925325a73/1j3ern4m7';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+      }, 3000); // Load 3 seconds after page load
+    });
     </script>
     <!--End of Tawk.to Script-->
   </body>
