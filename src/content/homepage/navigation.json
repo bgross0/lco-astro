@@ -6,39 +6,42 @@
       "order": 1
     },
     {
-      "label": "Commercial Snow Removal",
-      "href": "/services/commercial-snow-removal",
-      "order": 2
-    },
-    {
-      "label": "Landscaping",
-      "href": "/services/landscaping",
-      "order": 3
-    },
-    {
-      "label": "Municipal Contracting",
-      "href": "/services/municipal-contracting",
-      "order": 4
-    },
-    {
-      "label": "Ice Management",
-      "href": "/services/ice-management",
-      "order": 5
+      "label": "Services",
+      "href": "#",
+      "order": 2,
+      "dropdown": [
+        {
+          "label": "Commercial Snow Removal",
+          "href": "/services/commercial-snow-removal"
+        },
+        {
+          "label": "Landscaping",
+          "href": "/services/landscaping"
+        },
+        {
+          "label": "Municipal Contracting",
+          "href": "/services/municipal-contracting"
+        },
+        {
+          "label": "Ice Management",
+          "href": "/services/ice-management"
+        }
+      ]
     },
     {
       "label": "Service Areas",
       "href": "/service-areas",
-      "order": 6
+      "order": 3
     },
     {
       "label": "Blog",
       "href": "/blog",
-      "order": 7
+      "order": 4
     },
     {
       "label": "Contact",
       "href": "/contact",
-      "order": 8
+      "order": 5
     }
   ],
   "footerLinks": [
