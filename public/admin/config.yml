@@ -94,6 +94,13 @@ collections:
           - { label: "Description", name: "description", widget: "text", required: true }
           - { label: "CTA Text", name: "ctaText", widget: "string", default: "Get a Free Quote" }
           - { label: "CTA Link", name: "ctaLink", widget: "string", default: "/contact" }
+          - label: "Hero Images Carousel"
+            name: "images"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            fields:
+              - { label: "Image", name: "src", widget: "image", required: true }
+              - { label: "Alt Text", name: "alt", widget: "string", required: true, hint: "Describe the image for accessibility" }
       
       - label: "Services Showcase"
         name: "services-showcase"
