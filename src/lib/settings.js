@@ -14,7 +14,7 @@ export function getPhoneLink() {
 }
 
 export function getEmail() {
-  return settings.email || 'info@lakecountyoutdoors.com';
+  return settings.email || 'cadenf@lakecountyoutdoors.com';
 }
 
 export function getAddress() {
