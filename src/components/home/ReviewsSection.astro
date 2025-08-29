@@ -330,10 +330,10 @@ const { reviews } = content;
   }
 </style>
 
-<script>
+<script define:vars={{ shapoWidgetId: reviews.shapoWidgetId }}>
   // Load Shapo widget only when the reviews section is near viewport
   (function(){
-    const shapoId = "{reviews.shapoWidgetId}";
+    const shapoId = shapoWidgetId;
     const container = document.currentScript?.previousElementSibling?.previousElementSibling || document.querySelector('.reviews-section');
     const shapoTarget = document.getElementById(shapoId);
     if(!shapoTarget) return;
