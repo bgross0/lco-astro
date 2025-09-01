@@ -47,7 +47,7 @@ const isActive = (href: string) => {
         {navItems.map((item) => (
           item.dropdown ? (
             <div class="relative group">
-              <button class="flex items-center space-x-1 text-gray-700 hover:text-primary-600 font-medium transition-colors">
+              <button class="flex items-center space-x-1 text-gray-700 hover:text-primary font-medium transition-colors">
                 <span>{item.label}</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -61,7 +61,7 @@ const isActive = (href: string) => {
                     <a 
                       href={subItem.href}
                       class={`block px-4 py-3 text-sm hover:bg-gray-50 transition-colors ${
-                        isActive(subItem.href) ? 'text-primary-600 bg-primary-50' : 'text-gray-700'
+                        isActive(subItem.href) ? 'text-primary bg-primary-light' : 'text-gray-700'
                       }`}
                       data-astro-prefetch
                     >
@@ -74,8 +74,8 @@ const isActive = (href: string) => {
           ) : (
             <a 
               href={item.href}
-              class={`text-gray-700 hover:text-primary-600 font-medium transition-colors ${
-                isActive(item.href) ? 'text-primary-600' : ''
+              class={`text-gray-700 hover:text-primary font-medium transition-colors ${
+                isActive(item.href) ? 'text-primary' : ''
               }`}
               data-astro-prefetch
             >
@@ -88,7 +88,7 @@ const isActive = (href: string) => {
         <div class="flex items-center space-x-4 ml-8">
           <a 
             href={phoneLink}
-            class="flex items-center space-x-2 text-gray-700 hover:text-primary-600 font-medium transition-colors whitespace-nowrap"
+            class="flex items-center space-x-2 text-gray-700 hover:text-primary font-medium transition-colors whitespace-nowrap"
           >
             <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
@@ -98,7 +98,7 @@ const isActive = (href: string) => {
           
           <a 
             href="/contact"
-            class="px-6 py-2.5 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transform hover:scale-105 transition-all duration-200"
+            class="px-6 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transform hover:scale-105 transition-all duration-200"
             data-astro-prefetch
           >
             Get Quote
@@ -223,3 +223,44 @@ const isActive = (href: string) => {
     link.addEventListener('click', closeMenu);
   });
 </script>
+
+<style>
+  /* Color mappings for Tailwind-style classes */
+  .text-primary {
+    color: var(--primary);
+  }
+  
+  .hover\:text-primary:hover {
+    color: var(--primary);
+  }
+  
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  
+  .hover\:bg-primary-dark:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .bg-primary-light {
+    background-color: rgba(74, 144, 226, 0.1); /* Light primary background */
+  }
+  
+  /* Mobile menu styles */
+  #mobile-menu {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Dropdown styles */
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 1;
+  }
+  
+  .group:hover .group-hover\:visible {
+    visibility: visible;
+  }
+  
+  .group:hover .group-hover\:translate-y-0 {
+    transform: translateY(0);
+  }
+</style>
