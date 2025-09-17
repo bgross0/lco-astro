@@ -2,6 +2,8 @@ name: Optimize Images
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'public/images/**'
       - 'src/content/**/*.md'

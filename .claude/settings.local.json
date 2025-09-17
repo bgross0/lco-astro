@@ -26,7 +26,8 @@
       "Bash(npm init:*)",
       "Bash(npm install:*)",
       "Bash(git checkout:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(awk:*)"
     ],
     "deny": []
   }
