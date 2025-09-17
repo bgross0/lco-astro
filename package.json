@@ -10,8 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "optimize-images": "node scripts/optimize-images.js",
-    "optimize-images:smart": "node scripts/optimize-images-v2.js",
-    "postinstall": "node -e \"if(process.env.CF_PAGES) process.exit(0)\" || echo 'Skipping postinstall on Cloudflare'"
+    "optimize-images:smart": "node scripts/optimize-images-v2.js"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.1",
