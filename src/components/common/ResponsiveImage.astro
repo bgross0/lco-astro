@@ -1,0 +1,72 @@
+---
+/**
+ * ResponsiveImage Component
+ * Optimized image loading without Cloudflare Pro
+ * Uses native browser features for best performance
+ */
+
+export interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  sizes?: string;
+  widths?: number[];
+  priority?: boolean;
+}
+
+const {
+  src,
+  alt,
+  class: className = '',
+  loading = 'lazy',
+  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+  widths = [640, 768, 1024, 1280, 1536],
+  priority = false
+} = Astro.props;
+
+// Generate WebP version path
+const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+
+// For srcset, we'll use the original images at different sizes
+// You'll need to generate these with a build script
+const generateSrcset = (baseSrc: string, widths: number[]) => {
+  const ext = baseSrc.match(/\.(jpg|jpeg|png|webp)$/i)?.[0] || '.jpg';
+  const base = baseSrc.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+
+  // For now, return the same image (will need build process to generate sizes)
+  return baseSrc;
+};
+---
+
+<picture class={className}>
+  {/* WebP version for browsers that support it */}
+  <source
+    type="image/webp"
+    srcset={webpSrc}
+    sizes={sizes}
+  />
+
+  {/* Original format fallback */}
+  <img
+    src={src}
+    alt={alt}
+    loading={priority ? 'eager' : loading}
+    decoding={priority ? 'sync' : 'async'}
+    class={className}
+    fetchpriority={priority ? 'high' : 'auto'}
+    sizes={sizes}
+  />
+</picture>
+
+<style>
+  picture {
+    display: contents;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

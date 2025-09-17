@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceHeroV2 from '../components/services/ServiceHeroV2.astro';
+
+// Test data for landscaping service
+const landscapingHeroData = {
+  title: "Professional Landscaping Services",
+  subtitle: "Transform Your Outdoor Space",
+  description: "From design to installation, we create stunning landscapes that enhance your property's beauty and value. Our experienced team handles everything with precision and care.",
+  images: [
+    "/images/landscaping/landscaping-square-1-600x600.jpg",
+    "/images/landscaping/landscaping-square-2-600x600.jpg",
+    "/images/landscaping/landscaping-square-3-600x600.jpg",
+    "/images/landscaping/landscaping-square-4-600x600.jpg",
+    "/images/landscaping/landscaping-square-5-600x600.jpg"
+  ],
+  ctaPrimary: {
+    text: "Get Your Free Quote",
+    href: "/contact"
+  },
+  ctaSecondary: {
+    text: "Call (612) 655-0648",
+    href: "tel:6126550648"
+  }
+};
+
+// Test data for snow removal service
+const snowRemovalHeroData = {
+  title: "Commercial Snow Removal",
+  subtitle: "Reliable Winter Solutions",
+  description: "Keep your business accessible all winter long with our comprehensive snow removal services. Available 24/7 for emergency response.",
+  images: [
+    "/images/snow-removal/snow-removal-hero-600x300.jpg",
+    "/images/snow-removal/snow-removal-wide-1120x559.jpg",
+    "/images/cat-299d3-snow.jpg",
+    "/images/truck-mid-plow.jpg",
+    "/images/loader-snow-bucket.jpg"
+  ],
+  ctaPrimary: {
+    text: "Request Service Quote",
+    href: "/contact"
+  },
+  ctaSecondary: {
+    text: "Emergency: (612) 655-0648",
+    href: "tel:6126550648"
+  }
+};
+
+// Test data for equipment rental service
+const equipmentHeroData = {
+  title: "Equipment Rental Services",
+  subtitle: "Professional Grade Equipment",
+  description: "Rent top-quality construction and landscaping equipment for your next project. Delivery and pickup available.",
+  images: [
+    "/images/equipment/equipment-hero-600x300.jpg",
+    "/images/equipment/equipment-1-600x287.jpg",
+    "/images/equipment/equipment-2-600x616.jpg",
+    "/images/equipment/equipment-3-600x409.jpg",
+    "/images/equipment/equipment-4-600x389.jpg"
+  ],
+  ctaPrimary: {
+    text: "View Equipment Catalog",
+    href: "/equipment"
+  },
+  ctaSecondary: {
+    text: "Reserve Now: (612) 655-0648",
+    href: "tel:6126550648"
+  }
+};
+---
+
+<BaseLayout title="Service Hero V2 Test Page | Lake County Outdoors" description="Testing new service hero component">
+  <div class="test-container">
+    <h1 class="test-title">Service Hero V2 Component Test Page</h1>
+    <p class="test-description">
+      This page showcases the new Service Hero V2 component with different service configurations.
+      Each hero section demonstrates the gallery slideshow, responsive layout, and interactive features.
+    </p>
+
+    <!-- Landscaping Hero Example -->
+    <section class="test-section">
+      <h2 class="section-title">Example 1: Landscaping Service</h2>
+      <ServiceHeroV2 {...landscapingHeroData} />
+    </section>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Snow Removal Hero Example -->
+    <section class="test-section">
+      <h2 class="section-title">Example 2: Snow Removal Service</h2>
+      <ServiceHeroV2 {...snowRemovalHeroData} />
+    </section>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Equipment Rental Hero Example -->
+    <section class="test-section">
+      <h2 class="section-title">Example 3: Equipment Rental Service</h2>
+      <ServiceHeroV2 {...equipmentHeroData} />
+    </section>
+
+    <!-- Features List -->
+    <section class="features-section">
+      <h2 class="features-title">Component Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>🎨 Visual Design</h3>
+          <ul>
+            <li>Split layout (40/60) on desktop</li>
+            <li>Glass morphism content area</li>
+            <li>Gradient backgrounds matching brand</li>
+            <li>Ken Burns effect on images</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h3>🎠 Gallery Features</h3>
+          <ul>
+            <li>Auto-rotating carousel (5s intervals)</li>
+            <li>Manual navigation controls</li>
+            <li>Dot indicators</li>
+            <li>Thumbnail preview strip</li>
+            <li>Touch/swipe support</li>
+            <li>Pause on hover</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Responsive</h3>
+          <ul>
+            <li>Mobile-first design</li>
+            <li>Stacked layout on mobile</li>
+            <li>Gallery above content on small screens</li>
+            <li>Optimized touch interactions</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h3>⚡ Performance</h3>
+          <ul>
+            <li>Lazy loading for images</li>
+            <li>Smooth CSS transitions</li>
+            <li>Hardware-accelerated animations</li>
+            <li>Optimized for Core Web Vitals</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test Notes -->
+    <section class="notes-section">
+      <h2 class="notes-title">Testing Notes</h2>
+      <div class="notes-content">
+        <p><strong>Desktop Testing:</strong></p>
+        <ul>
+          <li>✅ Check split layout alignment (40% content / 60% gallery)</li>
+          <li>✅ Verify glass morphism effect on content area</li>
+          <li>✅ Test hover states on buttons and gallery controls</li>
+          <li>✅ Confirm thumbnail strip visibility and functionality</li>
+        </ul>
+
+        <p><strong>Mobile Testing:</strong></p>
+        <ul>
+          <li>✅ Verify stacked layout (gallery on top)</li>
+          <li>✅ Test swipe gestures for gallery navigation</li>
+          <li>✅ Check button sizing and touch targets</li>
+          <li>✅ Ensure text readability on small screens</li>
+        </ul>
+
+        <p><strong>Interaction Testing:</strong></p>
+        <ul>
+          <li>✅ Autoplay functionality (5 second intervals)</li>
+          <li>✅ Manual navigation (arrows, dots, thumbnails)</li>
+          <li>✅ Pause on hover behavior</li>
+          <li>✅ Smooth transitions between slides</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .test-container {
+    padding: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .test-title {
+    font-size: 2.5rem;
+    color: #2E5A87;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .test-description {
+    text-align: center;
+    color: #6b7280;
+    font-size: 1.125rem;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .test-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    color: #4A90E2;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-left: 4px solid #4A90E2;
+  }
+
+  .divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+    margin: 4rem 0;
+  }
+
+  .features-section {
+    margin-top: 4rem;
+    padding: 3rem;
+    background: #f8f9fa;
+    border-radius: 1rem;
+  }
+
+  .features-title {
+    font-size: 2rem;
+    color: #2E5A87;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .feature-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-card h3 {
+    color: #4A90E2;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .feature-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .feature-card li {
+    padding: 0.5rem 0;
+    color: #6b7280;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .feature-card li:last-child {
+    border-bottom: none;
+  }
+
+  .notes-section {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 1rem;
+  }
+
+  .notes-title {
+    font-size: 1.75rem;
+    color: #2E5A87;
+    margin-bottom: 1.5rem;
+  }
+
+  .notes-content {
+    color: #4b5563;
+    line-height: 1.7;
+  }
+
+  .notes-content p {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #374151;
+  }
+
+  .notes-content ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .notes-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .test-container {
+      padding: 1rem;
+    }
+
+    .test-title {
+      font-size: 2rem;
+    }
+
+    .features-section {
+      padding: 1.5rem;
+    }
+
+    .feature-card {
+      padding: 1rem;
+    }
+  }
+</style>

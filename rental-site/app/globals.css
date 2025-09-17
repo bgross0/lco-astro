@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #4A90E2;
+    --primary-dark: #3570B8;
+    --primary-light: #6BA3E9;
+    --accent: #2d5016;
+    --accent-dark: #1F3A0F;
+    --accent-light: #3E6A20;
+    --neutral-dark: #2D3748;
+    --neutral-medium: #4A5568;
+    --neutral-light: #A0AEC0;
+    --neutral-extra-light: #F7FAFC;
+  }
+
+  body {
+    @apply bg-white text-neutral-dark overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-neutral-dark;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-200 inline-block text-center;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary/30;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white hover:bg-accent-dark focus:outline-none focus:ring-4 focus:ring-accent/30;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-4 focus:ring-primary/30;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-primary to-primary-dark;
+  }
+
+  .section-padding {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+}

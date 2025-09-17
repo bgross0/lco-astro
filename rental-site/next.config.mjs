@@ -1,0 +1,22 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  outputFileTracingRoot: '/home/ben/Documents/GitHub/lco-astro/rental-site',
+  images: {
+    domains: ['lakecountyoutdoors.com', 'localhost', 'lco.axsys.app'],
+  },
+  env: {
+    ODOO_API_URL: process.env.ODOO_API_URL || 'https://lco-crm.axsys.app',
+    STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY || '',
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/odoo/:path*',
+        destination: `${process.env.ODOO_API_URL || 'https://lco.axsys.app'}/api/:path*`,
+      },
+    ]
+  },
+}
+
+export default nextConfig

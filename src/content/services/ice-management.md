@@ -2,6 +2,14 @@
 title: "Ice Management"
 description: "Complete ice control solutions with pre-treatment, de-icing, and anti-icing services."
 image: "/images/snow-removal/snow-removal-banner-600x300.jpg"
+images: [
+  "/images/salting.jpg",
+  "/images/snow-removal/cat-299d3-snow.jpg",
+  "/images/snow-removal/snow-removal-banner-600x300.jpg",
+  "/images/loader-pushing-gradient.jpg",
+  "/images/truck-mid-plow.jpg"
+]
+subtitle: "Proactive Ice Control"
 order: 3
 hero:
   subtitle: "Proactive Ice Control Solutions"

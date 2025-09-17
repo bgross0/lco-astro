@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/common/Button.astro';
 import Icon from '../../components/common/Icon.astro';
+import ServiceHeroV2 from '../../components/services/ServiceHeroV2.astro';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -21,28 +22,12 @@ const { Content } = await service.render();
   description={service.data.description}
   image={service.data.image}
 >
-  <section class="service-hero">
-    <div class="service-hero__background" style={`background-image: url(${service.data.image})`}>
-      <div class="service-hero__overlay"></div>
-    </div>
-    
-    <div class="container">
-      <div class="service-hero__content">
-        <h1 class="service-hero__title">{service.data.title}</h1>
-        <p class="service-hero__description">{service.data.description}</p>
-        
-        <div class="service-hero__actions">
-          <Button href="/contact" variant="primary" size="large">
-            Get a Free Quote
-          </Button>
-          <Button href="tel:6126550648" variant="secondary" size="large">
-            <Icon name="phone" size={20} />
-            Call 612-655-0648
-          </Button>
-        </div>
-      </div>
-    </div>
-  </section>
+  <ServiceHeroV2
+    title={service.data.title}
+    subtitle={service.data.subtitle || service.data.hero?.subtitle}
+    description={service.data.description}
+    images={service.data.images || [service.data.image || service.data.hero?.backgroundImage]}
+  />
 
   <section class="service-content">
     <div class="container">
@@ -62,77 +47,11 @@ const { Content } = await service.render();
 </BaseLayout>
 
 <style>
-  .service-hero {
-    position: relative;
-    min-height: 50vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-  
-  .service-hero__background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
-  }
-  
-  .service-hero__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(46, 90, 135, 0.75) 0%,
-      rgba(74, 144, 226, 0.65) 100%
-    );
-    z-index: 1;
-  }
-  
-  .service-hero__content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: var(--white);
-    padding: var(--space-8) 0;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .service-hero__title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: var(--font-extrabold);
-    margin-bottom: var(--space-4);
-    color: var(--white);
-    line-height: 1.1;
-  }
-  
-  .service-hero__description {
-    font-size: var(--text-lg);
-    line-height: 1.6;
-    margin-bottom: var(--space-8);
-    opacity: 0.95;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .service-hero__actions {
-    display: flex;
-    gap: var(--space-4);
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
   .service-content {
-    padding: var(--space-16) 0;
+    padding: var(--space-20) 0 var(--space-16);
+    background: #f8f9fa;
+    position: relative;
+    z-index: 5;
   }
   
   .service-content__wrapper {
@@ -197,22 +116,5 @@ const { Content } = await service.render();
     color: var(--neutral-dark);
     margin-bottom: var(--space-6);
     font-size: var(--text-lg);
-  }
-
-  @media (max-width: 768px) {
-    .service-hero {
-      min-height: 40vh;
-    }
-    
-    .service-hero__actions {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    
-    .service-hero__actions > :global(*) {
-      width: 100%;
-      max-width: 300px;
-    }
   }
 </style>

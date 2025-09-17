@@ -28,6 +28,14 @@ order: 0
 hero:
   subtitle: Professional Service You Can Count On
   backgroundImage: /images/snow-removal/snow-removal-wide-1120x559.jpg
+images: [
+  "/images/snow-removal/snow-removal-wide-1120x559.jpg",
+  "/images/snow-removal/snow-removal-hero-600x300.jpg",
+  "/images/cat-299d3-snow.jpg",
+  "/images/truck-mid-plow.jpg",
+  "/images/loader-snow-bucket.jpg"
+]
+subtitle: "24/7 Emergency Service"
 image: /images/snow-removal/snow-removal-hero-600x300.jpg
 features:
   - icon: snowflake
