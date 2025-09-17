@@ -31,32 +31,17 @@ const {
       {images.map((image, index) => {
         const imageName = image.split('/').pop().replace(/\.(jpg|jpeg|png)$/i, '');
         const imageDir = image.substring(0, image.lastIndexOf('/'));
+        const webpSrc = `${imageDir}/${imageName}.webp`;
 
         return (
           <div class={`gallery-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
             <picture>
+              {/* WebP version */}
               <source
                 type="image/webp"
-                srcset={`
-                  ${imageDir}/${imageName}-400w.webp 400w,
-                  ${imageDir}/${imageName}-800w.webp 800w,
-                  ${imageDir}/${imageName}-1200w.webp 1200w,
-                  ${imageDir}/${imageName}-1600w.webp 1600w,
-                  ${imageDir}/${imageName}.webp 2400w
-                `}
-                sizes="100vw"
+                srcset={webpSrc}
               />
-              <source
-                type="image/jpeg"
-                srcset={`
-                  ${imageDir}/${imageName}-400w.jpg 400w,
-                  ${imageDir}/${imageName}-800w.jpg 800w,
-                  ${imageDir}/${imageName}-1200w.jpg 1200w,
-                  ${imageDir}/${imageName}-1600w.jpg 1600w,
-                  ${image} 2400w
-                `}
-                sizes="100vw"
-              />
+              {/* Original fallback */}
               <img
                 src={image}
                 alt={`${title} - Image ${index + 1}`}
