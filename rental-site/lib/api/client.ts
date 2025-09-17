@@ -1,5 +1,6 @@
 // Base API client for Odoo integration
 
+// Use Odoo API directly - it has CORS enabled for all origins
 const API_BASE_URL = process.env.NEXT_PUBLIC_ODOO_URL || 'https://lco.axsys.app'
 
 export class ApiError extends Error {
@@ -15,13 +16,15 @@ export class ApiError extends Error {
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, any>
+  retries?: number
+  retryDelay?: number
 }
 
 export async function apiClient<T>(
   endpoint: string,
   options?: RequestOptions
 ): Promise<T> {
-  const { params, ...fetchOptions } = options || {}
+  const { params, retries = 3, retryDelay = 1000, ...fetchOptions } = options || {}
 
   // Build URL with query params
   const url = new URL(`${API_BASE_URL}${endpoint}`)
@@ -39,39 +42,66 @@ export async function apiClient<T>(
     ...fetchOptions.headers,
   }
 
-  // Add API key if configured
+  // Add API key if configured (for future use)
   const apiKey = process.env.ODOO_API_KEY
   if (apiKey) {
     headers['X-API-Key'] = apiKey
   }
 
-  try {
-    const response = await fetch(url.toString(), {
-      ...fetchOptions,
-      headers,
-    })
+  // Retry logic with exponential backoff
+  let lastError: Error | null = null
 
-    const data = await response.json()
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const response = await fetch(url.toString(), {
+        ...fetchOptions,
+        headers,
+      })
 
-    if (!response.ok) {
-      throw new ApiError(
-        data.error || `API Error: ${response.statusText}`,
-        response.status,
-        data
-      )
+      const data = await response.json()
+
+      if (!response.ok) {
+        // Don't retry on 4xx errors (client errors)
+        if (response.status >= 400 && response.status < 500) {
+          throw new ApiError(
+            data.error || `API Error: ${response.statusText}`,
+            response.status,
+            data
+          )
+        }
+
+        // Retry on 5xx errors (server errors)
+        if (response.status >= 500) {
+          lastError = new ApiError(
+            data.error || `Server Error: ${response.statusText}`,
+            response.status,
+            data
+          )
+
+          if (attempt < retries - 1) {
+            await new Promise(resolve => setTimeout(resolve, retryDelay * Math.pow(2, attempt)))
+            continue
+          }
+        }
+      }
+
+      return data
+    } catch (error) {
+      if (error instanceof ApiError && error.status && error.status < 500) {
+        throw error // Don't retry client errors
+      }
+
+      lastError = error instanceof Error ? error : new Error('An unknown error occurred')
+
+      if (attempt < retries - 1) {
+        await new Promise(resolve => setTimeout(resolve, retryDelay * Math.pow(2, attempt)))
+        continue
+      }
     }
-
-    return data
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error
-    }
-
-    // Network or parsing errors
-    throw new ApiError(
-      error instanceof Error ? error.message : 'An unknown error occurred'
-    )
   }
+
+  // All retries failed
+  throw lastError || new ApiError('Request failed after multiple retries')
 }
 
 // Helper for GET requests

@@ -6,7 +6,7 @@ export interface Vehicle {
   slug: string
   brand: string
   model: string
-  year: number
+  year: string  // Changed to string to match API docs
   listing_type: 'sale' | 'rental' | 'both'
   sale_price: number
   rental_price_daily: number

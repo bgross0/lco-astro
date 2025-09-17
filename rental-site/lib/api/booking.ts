@@ -14,7 +14,32 @@ import type {
 export async function checkAvailability(
   request: AvailabilityRequest
 ): Promise<AvailabilityResponse> {
-  return apiPost<AvailabilityResponse>('/api/fleet/availability', request)
+  try {
+    const response = await apiPost<any>('/api/fleet/availability', request)
+
+    // Handle the response structure from API
+    if (response.success !== undefined) {
+      return response as AvailabilityResponse
+    }
+
+    // If no success field, assume it's successful if we got a response
+    return {
+      success: true,
+      ...response
+    }
+  } catch (error) {
+    console.error('Availability check failed:', error)
+    // Return unavailable on error
+    return {
+      success: false,
+      available: false,
+      vehicle_id: request.vehicle_id,
+      days: 0,
+      estimated_price: 0,
+      daily_rate: 0,
+      currency: 'USD'
+    }
+  }
 }
 
 /**
@@ -26,12 +51,14 @@ export async function createBooking(
   // Validate dates
   const dateFrom = new Date(request.date_from)
   const dateTo = new Date(request.date_to)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
 
   if (dateFrom >= dateTo) {
     throw new Error('End date must be after start date')
   }
 
-  if (dateFrom < new Date()) {
+  if (dateFrom < today) {
     throw new Error('Start date cannot be in the past')
   }
 
@@ -47,7 +74,26 @@ export async function createBooking(
     throw new Error('Invalid phone number')
   }
 
-  return apiPost<BookingResponse>('/api/fleet/booking', request)
+  try {
+    const response = await apiPost<any>('/api/fleet/booking', request)
+
+    // Handle the response structure from API
+    if (response.success !== undefined) {
+      return response as BookingResponse
+    }
+
+    // If no success field, assume it's successful if we got a response
+    return {
+      success: true,
+      ...response
+    }
+  } catch (error: any) {
+    // Handle 409 conflict (vehicle not available)
+    if (error.status === 409) {
+      throw new Error(error.data?.message || 'This vehicle is not available for the selected dates')
+    }
+    throw error
+  }
 }
 
 /**

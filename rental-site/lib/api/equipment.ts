@@ -15,7 +15,24 @@ import type {
 export async function getEquipment(
   filters?: VehicleFilters
 ): Promise<PaginatedResponse<Vehicle>> {
-  return apiGet<PaginatedResponse<Vehicle>>('/api/fleet/vehicles', filters)
+  const response = await apiGet<any>('/api/fleet/vehicles', filters)
+
+  // Handle the response structure from API documentation
+  if (response.success && response.data) {
+    return response as PaginatedResponse<Vehicle>
+  }
+
+  // Handle empty or error responses
+  return {
+    success: false,
+    data: [],
+    pagination: {
+      total: 0,
+      limit: filters?.limit || 20,
+      offset: filters?.offset || 0,
+      has_more: false
+    }
+  }
 }
 
 /**
@@ -77,12 +94,17 @@ export async function searchEquipment(
  * Get featured equipment for homepage
  */
 export async function getFeaturedEquipment(): Promise<Vehicle[]> {
-  const response = await getEquipment({
-    featured: true,
-    limit: 6,
-  })
+  try {
+    const response = await getEquipment({
+      featured: true,
+      limit: 6,
+    })
 
-  return response.data || []
+    return response.data || []
+  } catch (error) {
+    console.error('Failed to fetch featured equipment:', error)
+    return []
+  }
 }
 
 /**
@@ -91,38 +113,49 @@ export async function getFeaturedEquipment(): Promise<Vehicle[]> {
 export async function getEquipmentByCategory(
   category: string
 ): Promise<Vehicle[]> {
-  // Note: This would need to be implemented in Odoo API
-  // For now, fetch all and filter client-side
-  const response = await getEquipment({ limit: 100 })
+  try {
+    // Note: This would need to be implemented in Odoo API
+    // For now, fetch all and filter client-side
+    const response = await getEquipment({ limit: 100 })
 
-  if (!response.data) {
+    if (!response.data) {
+      return []
+    }
+
+    // Map our categories to Odoo fuel_type or other fields
+    // This mapping would depend on how categories are stored in Odoo
+    const categoryMapping: Record<string, string[]> = {
+      'Snow Removal': ['diesel', 'gas', 'gasoline'],
+      'Lawn Care': ['gas', 'gasoline', 'electric'],
+      'Landscaping': ['diesel', 'gas', 'gasoline'],
+      'Heavy Equipment': ['diesel'],
+      'Power Tools': ['electric', 'battery'],
+    }
+
+    const fuelTypes = categoryMapping[category]
+    if (!fuelTypes) {
+      return response.data
+    }
+
+    return response.data.filter((item) =>
+      fuelTypes.includes(item.fuel_type?.toLowerCase())
+    )
+  } catch (error) {
+    console.error(`Failed to fetch equipment by category ${category}:`, error)
     return []
   }
-
-  // Map our categories to Odoo fuel_type or other fields
-  // This mapping would depend on how categories are stored in Odoo
-  const categoryMapping: Record<string, string[]> = {
-    'Snow Removal': ['diesel', 'gas'],
-    'Lawn Care': ['gas', 'electric'],
-    'Landscaping': ['diesel', 'gas'],
-    'Heavy Equipment': ['diesel'],
-    'Power Tools': ['electric', 'battery'],
-  }
-
-  const fuelTypes = categoryMapping[category]
-  if (!fuelTypes) {
-    return response.data
-  }
-
-  return response.data.filter((item) =>
-    fuelTypes.includes(item.fuel_type?.toLowerCase())
-  )
 }
 
 /**
  * Convert Odoo vehicle to our Equipment interface
  */
 export function vehicleToEquipment(vehicle: Vehicle) {
+  // Handle image URL - prepend base URL if it's a relative path
+  let imageUrl = vehicle.primary_image || undefined
+  if (imageUrl && !imageUrl.startsWith('http')) {
+    imageUrl = `${process.env.NEXT_PUBLIC_ODOO_URL || 'https://lco.axsys.app'}${imageUrl}`
+  }
+
   return {
     id: vehicle.id,
     name: vehicle.name,
@@ -132,7 +165,7 @@ export function vehicleToEquipment(vehicle: Vehicle) {
     daily_rate: vehicle.rental_price_daily,
     weekly_rate: vehicle.rental_price_weekly || vehicle.rental_price_daily * 5,
     available: vehicle.availability_status === 'available',
-    image_url: vehicle.primary_image || undefined,
+    image_url: imageUrl,
   }
 }
 
