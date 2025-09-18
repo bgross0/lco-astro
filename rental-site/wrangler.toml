@@ -1,0 +1,14 @@
+name = "lco-rental"
+compatibility_date = "2024-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ODOO_API_URL = "https://lco.axsys.app"
+
+# Configuration for Next.js with OpenNext adapter
+[build]
+command = "npx @opennextjs/cloudflare build"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "lco-rental-cache"

@@ -5,8 +5,8 @@
   "/api/webhook/booking/route": "app/api/webhook/booking/route.js",
   "/api/webhook/inventory/route": "app/api/webhook/inventory/route.js",
   "/about/page": "app/about/page.js",
-  "/contact/page": "app/contact/page.js",
   "/equipment/[id]/page": "app/equipment/[id]/page.js",
+  "/contact/page": "app/contact/page.js",
   "/equipment/page": "app/equipment/page.js",
   "/page": "app/page.js"
 }

@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  outputFileTracingRoot: '/home/ben/Documents/GitHub/lco-astro/rental-site',
   images: {
     domains: ['lakecountyoutdoors.com', 'localhost', 'lco.axsys.app'],
   },
