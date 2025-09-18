@@ -93,7 +93,9 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   
   .option {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     border-radius: var(--radius-lg);
     border: 2px solid rgba(0, 0, 0, 0.1);
     margin: 0;
@@ -102,9 +104,6 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     transition: all 0.8s cubic-bezier(.23, 1, .32, 1);
     cursor: pointer;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     opacity: 0;
     transform: translateX(-60px);
     text-decoration: none;
@@ -170,7 +169,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    z-index: -1;
+    z-index: 0;
   }
 
   .option:hover:not(.active) {
