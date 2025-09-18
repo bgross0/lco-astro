@@ -1,7 +1,12 @@
 name = "lco-rental"
+main = ".open-next/worker.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
 ODOO_API_URL = "https://lco.axsys.app"
 NODE_ENV = "production"
+
+[[r2_buckets]]
+binding = "NEXT_INC_CACHE_R2_BUCKET"
+bucket_name = "lco-rental-cache"

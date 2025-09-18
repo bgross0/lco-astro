@@ -1,0 +1,30 @@
+{
+  "name": "lco-rental-site",
+  "version": "1.0.0",
+  "description": "Lake County Outdoors Equipment Rental Site",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "preview": "npx opennextjs-cloudflare build && npx opennextjs-cloudflare preview",
+    "deploy": "npx opennextjs-cloudflare build && npx opennextjs-cloudflare deploy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@opennextjs/cloudflare": "^1.8.2",
+    "@types/node": "^24.5.0",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "autoprefixer": "^10.4.21",
+    "next": "^15.5.3",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "swr": "^2.3.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.2"
+  }
+}
