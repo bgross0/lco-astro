@@ -16,12 +16,12 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     <div class="options-container">
       <div class="options">
         {services.map((service, index) => (
-          <a
+          <a 
             href={service.href}
             class={`option ${index === 0 ? 'active' : ''}`}
             data-service-id={service.id}
             data-bg-image={service.image}
-            style={`background-image: url('${service.image}');`}
+            style={index === 0 ? `background-image: url('${service.image}');` : ''}
           >
             <div class="shadow"></div>
             <div class="label">
