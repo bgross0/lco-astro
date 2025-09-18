@@ -16,11 +16,12 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     <div class="options-container">
       <div class="options">
         {services.map((service, index) => (
-          <a
+          <a 
             href={service.href}
             class={`option ${index === 0 ? 'active' : ''}`}
             data-service-id={service.id}
-            style={`background-image: url('${service.image}');`}
+            data-bg-image={service.image}
+            style={index === 0 ? `background-image: url('${service.image}');` : ''}
           >
             <div class="shadow"></div>
             <div class="label">
@@ -88,10 +89,6 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   }
   
   .option {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     border-radius: var(--radius-lg);
     border: 2px solid rgba(0, 0, 0, 0.1);
     margin: 0;
@@ -102,7 +99,11 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     opacity: 0;
     transform: translateX(-60px);
     text-decoration: none;
@@ -147,7 +148,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   
   .option.active .shadow {
     bottom: 0 !important;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3) 50%, transparent);
+    box-shadow: inset 0 -120px 120px -120px #000, inset 0 -120px 120px -80px #000;
   }
   
   .option.active .label .main,
@@ -155,11 +156,11 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     opacity: 1;
     transform: translateX(0);
   }
-
+  
   .option:hover:not(.active) {
     flex-grow: 1.5;
   }
-
+  
   .option .shadow {
     position: absolute;
     bottom: -40px;
@@ -167,8 +168,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     right: 0;
     height: 120px;
     pointer-events: none;
-    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-    z-index: 1;
+    box-shadow: inset 0 -120px 0px -120px #000, inset 0 -120px 0px -80px #000;
   }
   
   .option .label {
@@ -444,15 +444,22 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   let animationId = null;
   const progressFill = document.querySelector('.progress-fill');
   
-  // No longer needed - images are set inline
-  // Keeping empty functions to avoid breaking other code
+  // Lazy load background images
   function loadBackgroundImage(element) {
-    // Images already set via inline styles
+    const bgImage = element.getAttribute('data-bg-image');
+    if (bgImage && !element.style.backgroundImage) {
+      element.style.backgroundImage = `url('${bgImage}')`;
+    }
   }
-
-  // Load images for all options
+  
+  // Load images for visible and adjacent options
   function loadVisibleImages() {
-    // Images already loaded via inline styles
+    options.forEach((option, index) => {
+      // Load current, previous, and next images
+      if (Math.abs(index - currentIndex) <= 1) {
+        loadBackgroundImage(option);
+      }
+    });
   }
   
   // Progress bar animation functions
