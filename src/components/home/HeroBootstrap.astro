@@ -41,21 +41,15 @@ const phoneDisplay = phoneNumber ? `Call ${phoneNumber[1]}-${phoneNumber[2]}-${p
             {heroData.images.map((image, index) => {
               const imageName = image.src.split('/').pop().replace(/\.(jpg|jpeg|png)$/i, '');
               const imageDir = image.src.substring(0, image.src.lastIndexOf('/'));
-              const webpSrc = `${imageDir}/${imageName}.webp`;
               const webp400 = `${imageDir}/${imageName}-400w.webp`;
 
               return (
                 <picture class={`hero__slide ${index === 0 ? 'hero__slide--active' : ''}`}>
-                  {/* Mobile: Use 400w if it exists, otherwise full WebP */}
+                  {/* Mobile: Use 400w webp if available */}
                   <source
                     type="image/webp"
                     media="(max-width: 640px)"
-                    srcset={`${webp400} 400w, ${webpSrc} 600w`}
-                  />
-                  {/* Desktop: Use full WebP */}
-                  <source
-                    type="image/webp"
-                    srcset={webpSrc}
+                    srcset={`${webp400} 400w`}
                   />
                   {/* Fallback to original */}
                   <img
