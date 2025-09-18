@@ -1,14 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import crypto from 'crypto'
-
-// Event store for SSE broadcasting
-export const bookingEvents: Array<{
-  id: string
-  timestamp: number
-  type: string
-  data: any
-}> = []
+import { broadcastBookingEvent } from '@/lib/sse-broadcaster'
 
 // Webhook secret for signature verification (should be in env)
 const WEBHOOK_SECRET = process.env.ODOO_WEBHOOK_SECRET || 'your-webhook-secret'
@@ -32,28 +25,11 @@ function verifyWebhookSignature(payload: string, signature: string): boolean {
   )
 }
 
-// Broadcast event to SSE clients
-export function broadcastBookingEvent(event: any) {
-  const eventData = {
-    id: crypto.randomUUID(),
-    timestamp: Date.now(),
-    type: event.type || 'booking.update',
-    data: event
-  }
-
-  // Keep only last 100 events
-  bookingEvents.push(eventData)
-  if (bookingEvents.length > 100) {
-    bookingEvents.shift()
-  }
-
-  console.log('Broadcasting booking event:', eventData)
-}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text()
-    const headersList = headers()
+    const headersList = await headers()
     const signature = headersList.get('x-webhook-signature') || ''
 
     // Verify signature if provided

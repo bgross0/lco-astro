@@ -1,14 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import crypto from 'crypto'
-
-// Event store for SSE broadcasting
-export const inventoryEvents: Array<{
-  id: string
-  timestamp: number
-  type: string
-  data: any
-}> = []
+import { broadcastInventoryEvent } from '@/lib/sse-broadcaster'
 
 // Webhook secret for signature verification
 const WEBHOOK_SECRET = process.env.ODOO_WEBHOOK_SECRET || 'your-webhook-secret'
@@ -31,23 +24,6 @@ function verifyWebhookSignature(payload: string, signature: string): boolean {
   )
 }
 
-// Broadcast event to SSE clients
-export function broadcastInventoryEvent(event: any) {
-  const eventData = {
-    id: crypto.randomUUID(),
-    timestamp: Date.now(),
-    type: event.type || 'inventory.update',
-    data: event
-  }
-
-  // Keep only last 100 events
-  inventoryEvents.push(eventData)
-  if (inventoryEvents.length > 100) {
-    inventoryEvents.shift()
-  }
-
-  console.log('Broadcasting inventory event:', eventData)
-}
 
 // Cache invalidation helper
 function invalidateCache(vehicleId?: number) {
@@ -59,7 +35,7 @@ function invalidateCache(vehicleId?: number) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text()
-    const headersList = headers()
+    const headersList = await headers()
     const signature = headersList.get('x-webhook-signature') || ''
 
     // Verify signature if provided

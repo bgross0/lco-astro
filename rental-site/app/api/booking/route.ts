@@ -34,7 +34,7 @@ async function sendBookingConfirmationEmail(booking: BookingResponse, request: B
 }
 
 // Log booking for analytics
-async function logBooking(booking: BookingResponse, request: BookingRequest, ip: string) {
+async function logBooking(booking: BookingResponse, request: BookingRequest, ip: string, userAgent: string) {
   const logData = {
     timestamp: new Date().toISOString(),
     booking_ref: booking.booking_ref,
@@ -46,7 +46,7 @@ async function logBooking(booking: BookingResponse, request: BookingRequest, ip:
     estimated_price: booking.estimated_price,
     currency: booking.currency,
     ip_address: ip,
-    user_agent: request.headers?.get('user-agent') || 'unknown'
+    user_agent: userAgent
   }
 
   // TODO: Store in database or external logging service
@@ -111,7 +111,8 @@ export async function POST(request: NextRequest) {
     })
 
     // Log booking asynchronously
-    logBooking(booking, sanitizedRequest, ip).catch(error => {
+    const userAgent = request.headers.get('user-agent') || 'unknown'
+    logBooking(booking, sanitizedRequest, ip, userAgent).catch(error => {
       console.error('Failed to log booking:', error)
     })
 

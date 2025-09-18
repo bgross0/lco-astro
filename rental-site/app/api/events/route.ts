@@ -1,29 +1,5 @@
 import { NextRequest } from 'next/server'
-import { bookingEvents } from '../webhook/booking/route'
-import { inventoryEvents } from '../webhook/inventory/route'
-
-// SSE connections store
-const connections = new Set<ReadableStreamDefaultController>()
-
-// Helper to format SSE message
-function formatSSE(data: any): string {
-  const lines = JSON.stringify(data).split('\n')
-  const message = lines.map(line => `data: ${line}`).join('\n')
-  return `${message}\n\n`
-}
-
-// Broadcast to all connected clients
-export function broadcastToClients(event: any) {
-  const message = formatSSE(event)
-  connections.forEach(controller => {
-    try {
-      controller.enqueue(new TextEncoder().encode(message))
-    } catch (error) {
-      // Connection might be closed
-      connections.delete(controller)
-    }
-  })
-}
+import { connections, formatSSE, broadcastToClients, bookingEvents, inventoryEvents } from '@/lib/sse-broadcaster'
 
 // Polling interval for availability checks (5 minutes)
 const POLLING_INTERVAL = 5 * 60 * 1000
