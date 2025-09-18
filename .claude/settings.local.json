@@ -27,7 +27,8 @@
       "Bash(npm install:*)",
       "Bash(git checkout:*)",
       "Bash(find:*)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(xargs -r kill)"
     ],
     "deny": []
   }

@@ -108,6 +108,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     opacity: 0;
     transform: translateX(-60px);
     text-decoration: none;
+    background-color: #1a1a1a;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
@@ -166,10 +167,10 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     bottom: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    z-index: -1;
   }
 
   .option:hover:not(.active) {
@@ -460,20 +461,15 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   let animationId = null;
   const progressFill = document.querySelector('.progress-fill');
   
-  // Lazy load background images
+  // No longer needed - images are set inline
+  // Keeping empty functions to avoid breaking other code
   function loadBackgroundImage(element) {
-    const bgImage = element.getAttribute('data-bg-image');
-    const bgDiv = element.querySelector('.option-bg');
-    if (bgImage && bgDiv && !bgDiv.style.backgroundImage) {
-      bgDiv.style.backgroundImage = `url('${bgImage}')`;
-    }
+    // Images already set via inline styles
   }
-  
+
   // Load images for all options
   function loadVisibleImages() {
-    options.forEach((option) => {
-      loadBackgroundImage(option);
-    });
+    // Images already loaded via inline styles
   }
   
   // Progress bar animation functions
