@@ -159,7 +159,7 @@ export function vehicleToEquipment(vehicle: Vehicle) {
   return {
     id: vehicle.id,
     name: vehicle.name,
-    category: mapFuelTypeToCategory(vehicle.fuel_type),
+    category: mapFuelTypeToCategory(vehicle.fuel_type, vehicle.name),
     description: vehicle.short_description,
     hourly_rate: Math.round(vehicle.rental_price_daily / 8), // Estimate hourly from daily
     daily_rate: vehicle.rental_price_daily,
@@ -171,8 +171,34 @@ export function vehicleToEquipment(vehicle: Vehicle) {
 
 /**
  * Map Odoo fuel type to our category system
+ * Enhanced mapping based on fuel type and name patterns
  */
-function mapFuelTypeToCategory(fuelType: string): string {
+function mapFuelTypeToCategory(fuelType: string, vehicleName?: string): string {
+  // Check name patterns first for more accurate categorization
+  if (vehicleName) {
+    const nameLower = vehicleName.toLowerCase()
+    if (nameLower.includes('snow') || nameLower.includes('plow') || nameLower.includes('salt')) {
+      return 'Snow Removal'
+    }
+    if (nameLower.includes('mower') || nameLower.includes('trimmer') ||
+        nameLower.includes('aerator') || nameLower.includes('dethatcher')) {
+      return 'Lawn Care'
+    }
+    if (nameLower.includes('blower') || nameLower.includes('chipper') ||
+        nameLower.includes('stump') || nameLower.includes('sod')) {
+      return 'Landscaping'
+    }
+    if (nameLower.includes('excavator') || nameLower.includes('skid') ||
+        nameLower.includes('compactor') || nameLower.includes('mixer')) {
+      return 'Heavy Equipment'
+    }
+    if (nameLower.includes('chainsaw') || nameLower.includes('pressure') ||
+        nameLower.includes('tool')) {
+      return 'Power Tools'
+    }
+  }
+
+  // Fallback to fuel type mapping
   const mapping: Record<string, string> = {
     'diesel': 'Heavy Equipment',
     'gas': 'Lawn Care',

@@ -1,0 +1,1064 @@
+[
+  {
+    "id": 1,
+    "name": "Professional Snow Blower",
+    "slug": "honda-hs1336i-2024",
+    "brand": "Honda",
+    "model": "HS1336i",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 150,
+    "rental_price_weekly": 600,
+    "rental_price_monthly": 1800,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": true,
+    "short_description": "Heavy-duty two-stage snow blower for commercial properties. Features heated grips, LED lights, and e",
+    "full_description": "Heavy-duty two-stage snow blower for commercial properties. Features heated grips, LED lights, and electric start.",
+    "specifications": {
+      "engine": "389cc Honda GX390",
+      "clearing_width": "36 inches",
+      "clearing_height": "21 inches",
+      "throwing_distance": "50 feet",
+      "weight": "265 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Electric Start",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Heated Grips",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "LED Headlight",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Track Drive",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 5,
+        "name": "Hydrostatic Transmission",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-1.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Professional Snow Blower - Main",
+        "url": "/images/equipment/equipment-1.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 95,
+    "inquiry_count": 2,
+    "booking_count": 13
+  },
+  {
+    "id": 2,
+    "name": "CAT 299D3 Skid Steer",
+    "slug": "caterpillar-299d3-2023",
+    "brand": "Caterpillar",
+    "model": "299D3",
+    "year": "2023",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 450,
+    "rental_price_weekly": 1800,
+    "rental_price_monthly": 5400,
+    "currency": "USD",
+    "fuel_type": "diesel",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": true,
+    "short_description": "Compact track loader with snow attachments. Ideal for snow removal, landscaping, and construction.",
+    "full_description": "Compact track loader with snow attachments. Ideal for snow removal, landscaping, and construction.",
+    "specifications": {
+      "engine": "CAT C3.8 Diesel",
+      "operating_capacity": "3,200 lbs",
+      "horsepower": "110 HP",
+      "track_width": "18 inches",
+      "weight": "11,120 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Enclosed Cab",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Heat & AC",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "High Flow Hydraulics",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Backup Camera",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 5,
+        "name": "LED Work Lights",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-2.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "CAT 299D3 Skid Steer - Main",
+        "url": "/images/equipment/equipment-2.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 107,
+    "inquiry_count": 8,
+    "booking_count": 4
+  },
+  {
+    "id": 3,
+    "name": "Commercial Zero-Turn Mower",
+    "slug": "exmark-lazer-z-x-series-2024",
+    "brand": "Exmark",
+    "model": "Lazer Z X-Series",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 120,
+    "rental_price_weekly": 450,
+    "rental_price_monthly": 1350,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": true,
+    "short_description": "60\" deck commercial-grade zero-turn mower. Professional landscaping equipment.",
+    "full_description": "60\" deck commercial-grade zero-turn mower. Professional landscaping equipment.",
+    "specifications": {
+      "engine": "Kohler ECV980 38HP",
+      "cutting_width": "60 inches",
+      "fuel_capacity": "12 gallons",
+      "ground_speed": "13 mph",
+      "weight": "1,430 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Suspension Seat",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "RED Technology",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "UltraCut Deck",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Hour Meter",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 5,
+        "name": "Cup Holder",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-3.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Commercial Zero-Turn Mower - Main",
+        "url": "/images/equipment/equipment-3.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 51,
+    "inquiry_count": 14,
+    "booking_count": 5
+  },
+  {
+    "id": 4,
+    "name": "Professional String Trimmer",
+    "slug": "stihl-fs-131-r-2024",
+    "brand": "Stihl",
+    "model": "FS 131 R",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 45,
+    "rental_price_weekly": 180,
+    "rental_price_monthly": 540,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": true,
+    "short_description": "Professional-grade gas string trimmer for heavy-duty use.",
+    "full_description": "Professional-grade gas string trimmer for heavy-duty use.",
+    "specifications": {
+      "engine": "36.3cc 2-stroke",
+      "weight": "11.9 lbs",
+      "fuel_capacity": "23.7 oz",
+      "cutting_width": "16.5 inches",
+      "shaft_type": "Straight"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Anti-vibration System",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Easy2Start",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Bike Handle",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Shoulder Strap",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-4.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Professional String Trimmer - Main",
+        "url": "/images/equipment/equipment-4.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 17,
+    "inquiry_count": 2,
+    "booking_count": 11
+  },
+  {
+    "id": 5,
+    "name": "Commercial Leaf Blower",
+    "slug": "stihl-br-800-x-magnum-2024",
+    "brand": "Stihl",
+    "model": "BR 800 X MAGNUM",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 80,
+    "rental_price_weekly": 300,
+    "rental_price_monthly": 900,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": true,
+    "short_description": "Professional-grade backpack leaf blower. Most powerful in its class.",
+    "full_description": "Professional-grade backpack leaf blower. Most powerful in its class.",
+    "specifications": {
+      "engine": "79.9cc 4-MIX",
+      "air_velocity": "239 mph",
+      "air_volume": "912 cfm",
+      "weight": "26 lbs",
+      "fuel_capacity": "87.9 oz"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "4-MIX Engine",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Side-Start",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Adjustable Tube",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Hip Belt",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 5,
+        "name": "Anti-vibration System",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-5.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Commercial Leaf Blower - Main",
+        "url": "/images/equipment/equipment-5.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 18,
+    "inquiry_count": 0,
+    "booking_count": 8
+  },
+  {
+    "id": 6,
+    "name": "Bobcat E35 Mini Excavator",
+    "slug": "bobcat-e35-2023",
+    "brand": "Bobcat",
+    "model": "E35",
+    "year": "2023",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 500,
+    "rental_price_weekly": 2000,
+    "rental_price_monthly": 6000,
+    "currency": "USD",
+    "fuel_type": "diesel",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": true,
+    "short_description": "33.5 HP compact excavator for landscaping and utility work.",
+    "full_description": "33.5 HP compact excavator for landscaping and utility work.",
+    "specifications": {
+      "engine": "Kubota D1703 33.5HP",
+      "operating_weight": "7,659 lbs",
+      "dig_depth": "10 ft",
+      "reach": "17.3 ft",
+      "bucket_capacity": "0.12 cubic yards"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Zero Tail Swing",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Enclosed Cab",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Hydraulic Thumb",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Blade",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 5,
+        "name": "LED Lights",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-6.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Bobcat E35 Mini Excavator - Main",
+        "url": "/images/equipment/equipment-6.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 26,
+    "inquiry_count": 18,
+    "booking_count": 7
+  },
+  {
+    "id": 7,
+    "name": "Professional Chainsaw",
+    "slug": "stihl-ms-462-c-m-2024",
+    "brand": "Stihl",
+    "model": "MS 462 C-M",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 90,
+    "rental_price_weekly": 350,
+    "rental_price_monthly": 1050,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "20\" professional chainsaw for tree work and firewood cutting.",
+    "full_description": "20\" professional chainsaw for tree work and firewood cutting.",
+    "specifications": {
+      "engine": "72.2cc 2-stroke",
+      "power": "6.0 HP",
+      "weight": "13.2 lbs",
+      "bar_length": "20 inches",
+      "chain_speed": "78.7 ft/s"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "M-Tronic",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "ElastoStart",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Anti-vibration",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Side Chain Tensioner",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 5,
+        "name": "HD2 Filter",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-7.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Professional Chainsaw - Main",
+        "url": "/images/equipment/equipment-7.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 96,
+    "inquiry_count": 5,
+    "booking_count": 8
+  },
+  {
+    "id": 8,
+    "name": "Core Aerator",
+    "slug": "ryan-lawnaire-v-plus-2024",
+    "brand": "Ryan",
+    "model": "Lawnaire V Plus",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 130,
+    "rental_price_weekly": 500,
+    "rental_price_monthly": 1500,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "Walk-behind core aerator for lawn restoration and maintenance.",
+    "full_description": "Walk-behind core aerator for lawn restoration and maintenance.",
+    "specifications": {
+      "engine": "Briggs & Stratton 205cc",
+      "aerating_width": "28 inches",
+      "tine_depth": "3 inches",
+      "productivity": "29,000 sq ft/hr",
+      "weight": "285 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Self-propelled",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Removable Weights",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Flip-up Hood",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Hour Meter",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-8.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Core Aerator - Main",
+        "url": "/images/equipment/equipment-8.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 16,
+    "inquiry_count": 7,
+    "booking_count": 0
+  },
+  {
+    "id": 9,
+    "name": "Plate Compactor",
+    "slug": "wacker neuson-bpu-3050-2024",
+    "brand": "Wacker Neuson",
+    "model": "BPU 3050",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 110,
+    "rental_price_weekly": 420,
+    "rental_price_monthly": 1260,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "Reversible plate compactor for soil and asphalt compaction.",
+    "full_description": "Reversible plate compactor for soil and asphalt compaction.",
+    "specifications": {
+      "engine": "Honda GX160",
+      "operating_weight": "207 lbs",
+      "plate_width": "19.7 inches",
+      "compaction_force": "11,240 lbs",
+      "travel_speed": "82 ft/min"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Reversible",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Low Vibration Handle",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Transport Wheels",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Hour Meter",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-9.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Plate Compactor - Main",
+        "url": "/images/equipment/equipment-9.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 70,
+    "inquiry_count": 19,
+    "booking_count": 1
+  },
+  {
+    "id": 10,
+    "name": "Wood Chipper",
+    "slug": "bandit-sg-40-2023",
+    "brand": "Bandit",
+    "model": "SG-40",
+    "year": "2023",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 350,
+    "rental_price_weekly": 1400,
+    "rental_price_monthly": 4200,
+    "currency": "USD",
+    "fuel_type": "diesel",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "Stump grinder for tree removal and land clearing.",
+    "full_description": "Stump grinder for tree removal and land clearing.",
+    "specifications": {
+      "engine": "Kohler 38HP Diesel",
+      "cutting_capacity": "4 inches",
+      "rotor_diameter": "19 inches",
+      "weight": "1,100 lbs",
+      "chip_discharge": "360 degrees"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Auto-feed",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Hydraulic Feed",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Reversible Rotor",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Tow Hitch",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-10.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Wood Chipper - Main",
+        "url": "/images/equipment/equipment-10.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 109,
+    "inquiry_count": 3,
+    "booking_count": 9
+  },
+  {
+    "id": 11,
+    "name": "Dethatcher",
+    "slug": "bluebird-pr22-2024",
+    "brand": "Bluebird",
+    "model": "PR22",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 85,
+    "rental_price_weekly": 320,
+    "rental_price_monthly": 960,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "Power rake dethatcher for lawn renovation.",
+    "full_description": "Power rake dethatcher for lawn renovation.",
+    "specifications": {
+      "engine": "Briggs & Stratton 163cc",
+      "working_width": "22 inches",
+      "tine_spacing": "1.5 inches",
+      "weight": "142 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Adjustable Depth",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Folding Handle",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Replaceable Tines",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-11.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Dethatcher - Main",
+        "url": "/images/equipment/equipment-11.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 94,
+    "inquiry_count": 13,
+    "booking_count": 11
+  },
+  {
+    "id": 12,
+    "name": "Concrete Mixer",
+    "slug": "kushlan-350dd-2024",
+    "brand": "Kushlan",
+    "model": "350DD",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 75,
+    "rental_price_weekly": 280,
+    "rental_price_monthly": 840,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "Portable concrete mixer for small to medium projects.",
+    "full_description": "Portable concrete mixer for small to medium projects.",
+    "specifications": {
+      "engine": "Kohler 6HP",
+      "drum_capacity": "3.5 cubic feet",
+      "batch_capacity": "2.5 cubic feet",
+      "weight": "235 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Direct Drive",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Polyethylene Drum",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Wheelbarrow Design",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Easy Dump",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-12.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Concrete Mixer - Main",
+        "url": "/images/equipment/equipment-12.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 40,
+    "inquiry_count": 3,
+    "booking_count": 9
+  },
+  {
+    "id": 13,
+    "name": "Pressure Washer",
+    "slug": "simpson-powershot-4200-2024",
+    "brand": "Simpson",
+    "model": "PowerShot 4200",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 95,
+    "rental_price_weekly": 360,
+    "rental_price_monthly": 1080,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "Commercial-grade pressure washer for heavy cleaning.",
+    "full_description": "Commercial-grade pressure washer for heavy cleaning.",
+    "specifications": {
+      "engine": "Honda GX390",
+      "pressure": "4200 PSI",
+      "flow_rate": "4.0 GPM",
+      "weight": "149 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "AAA Triplex Pump",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "50ft Hose",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Quick Connect Tips",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Pneumatic Tires",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-13.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Pressure Washer - Main",
+        "url": "/images/equipment/equipment-13.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 88,
+    "inquiry_count": 6,
+    "booking_count": 6
+  },
+  {
+    "id": 14,
+    "name": "Sod Cutter",
+    "slug": "ryan-pro-sod-cutter-2024",
+    "brand": "Ryan",
+    "model": "Pro Sod Cutter",
+    "year": "2024",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 140,
+    "rental_price_weekly": 540,
+    "rental_price_monthly": 1620,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "18\" sod cutter for lawn removal and landscaping.",
+    "full_description": "18\" sod cutter for lawn removal and landscaping.",
+    "specifications": {
+      "engine": "Honda GX160",
+      "cutting_width": "18 inches",
+      "cutting_depth": "2.5 inches",
+      "productivity": "9,000 sq ft/hr",
+      "weight": "340 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Self-propelled",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Adjustable Depth",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "Pneumatic Tires",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Blade Guard",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-14.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Sod Cutter - Main",
+        "url": "/images/equipment/equipment-14.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 107,
+    "inquiry_count": 0,
+    "booking_count": 3
+  },
+  {
+    "id": 15,
+    "name": "Stump Grinder",
+    "slug": "vermeer-sc252-2023",
+    "brand": "Vermeer",
+    "model": "SC252",
+    "year": "2023",
+    "listing_type": "rental",
+    "sale_price": 0,
+    "rental_price_daily": 425,
+    "rental_price_weekly": 1700,
+    "rental_price_monthly": 5100,
+    "currency": "USD",
+    "fuel_type": "gasoline",
+    "seats": 0,
+    "doors": 0,
+    "availability_status": "available",
+    "featured": false,
+    "short_description": "Self-propelled stump grinder for tree stump removal.",
+    "full_description": "Self-propelled stump grinder for tree stump removal.",
+    "specifications": {
+      "engine": "Kohler 27HP",
+      "cutting_wheel": "16 teeth",
+      "cutting_depth": "13 inches",
+      "cutting_height": "25 inches",
+      "weight": "1,250 lbs"
+    },
+    "features": [
+      {
+        "id": 1,
+        "name": "Auto-sweep",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 2,
+        "name": "Hydraulic Drive",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 3,
+        "name": "SmartSweep",
+        "category": "Standard",
+        "icon": "check"
+      },
+      {
+        "id": 4,
+        "name": "Yellow Jacket Cutter System",
+        "category": "Standard",
+        "icon": "check"
+      }
+    ],
+    "primary_image": "/images/equipment/equipment-15.jpg",
+    "images": [
+      {
+        "id": 1,
+        "name": "Stump Grinder - Main",
+        "url": "/images/equipment/equipment-15.jpg",
+        "is_primary": true
+      }
+    ],
+    "rental_terms": "Minimum 1 day rental. Valid driver's license required. Security deposit required.",
+    "minimum_rental_days": 1,
+    "maximum_rental_days": 30,
+    "view_count": 50,
+    "inquiry_count": 13,
+    "booking_count": 11
+  }
+]
