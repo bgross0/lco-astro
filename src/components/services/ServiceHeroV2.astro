@@ -31,15 +31,16 @@ const {
       {images.map((image, index) => {
         const imageName = image.split('/').pop().replace(/\.(jpg|jpeg|png)$/i, '');
         const imageDir = image.substring(0, image.lastIndexOf('/'));
-        const webpSrc = `${imageDir}/${imageName}.webp`;
+        const webp400 = `${imageDir}/${imageName}-400w.webp`;
 
         return (
           <div class={`gallery-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
             <picture>
-              {/* WebP version */}
+              {/* Mobile WebP (only for known 400w derivatives) */}
               <source
                 type="image/webp"
-                srcset={webpSrc}
+                media="(max-width: 640px)"
+                srcset={`${webp400} 400w`}
               />
               {/* Original fallback */}
               <img
