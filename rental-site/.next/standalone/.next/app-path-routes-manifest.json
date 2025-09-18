@@ -5,8 +5,8 @@
   "/api/events/route": "/api/events",
   "/api/webhook/inventory/route": "/api/webhook/inventory",
   "/about/page": "/about",
-  "/equipment/[id]/page": "/equipment/[id]",
   "/contact/page": "/contact",
+  "/equipment/[id]/page": "/equipment/[id]",
   "/equipment/page": "/equipment",
   "/page": "/"
 }
