@@ -5,12 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "build:local": "npm run optimize-images && astro build",
-    "build:only": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "optimize-images": "node scripts/optimize-images.js",
-    "optimize-images:smart": "node scripts/optimize-images-v2.js"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.1",
@@ -22,7 +18,6 @@
   },
   "devDependencies": {
     "daisyui": "^5.0.50",
-    "sharp": "^0.34.3",
     "terser": "^5.43.1"
   }
 }
