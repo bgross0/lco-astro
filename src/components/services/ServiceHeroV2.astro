@@ -24,199 +24,167 @@ const {
 } = Astro.props;
 ---
 
-<section class="bg-gray-50 py-12 md:py-16 lg:py-20">
-  <div class="container mx-auto px-4">
-    <!-- Mobile-first: Single column, then grid on larger screens -->
-    <div class="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+<section class="hero">
+  <div class="container">
+    <div class="hero__content">
+      <h1 class="hero__title">{title}</h1>
 
-      <!-- Content - Mobile First -->
-      <div class="mb-8 lg:mb-0">
-        <h1 class="text-3xl font-bold text-gray-900 mb-4 md:text-4xl lg:text-5xl">
-          {title}
-        </h1>
+      {subtitle && (
+        <h2 class="hero__subtitle">{subtitle}</h2>
+      )}
 
-        {subtitle && (
-          <h2 class="text-lg font-semibold text-gray-700 mb-4 md:text-xl">
-            {subtitle}
-          </h2>
-        )}
+      {description && (
+        <p class="hero__description">{description}</p>
+      )}
 
-        {description && (
-          <p class="text-gray-600 mb-6 md:text-lg">
-            {description}
-          </p>
-        )}
-
-        <!-- Buttons stack on mobile, side-by-side on larger -->
-        <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex">
-          <a
-            href={ctaPrimary.href}
-            class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            {ctaPrimary.text}
-            <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </a>
-
-          <a
-            href={ctaSecondary.href}
-            class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-            </svg>
-            {ctaSecondary.text}
-          </a>
-        </div>
+      <div class="hero__actions">
+        <a href={ctaPrimary.href} class="hero__btn hero__btn--primary">
+          {ctaPrimary.text}
+        </a>
+        <a href={ctaSecondary.href} class="hero__btn hero__btn--secondary">
+          {ctaSecondary.text}
+        </a>
       </div>
+    </div>
 
-      <!-- Image - Shows on all screens, better aspect ratio -->
-      <div class="relative h-64 md:h-96 lg:h-full rounded-lg overflow-hidden shadow-xl">
-        {images.map((image, index) => (
-          <div
-            class={`absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
-            data-slide={index}
-          >
-            <img
-              src={image}
-              alt={`${title} - Image ${index + 1}`}
-              class="w-full h-full object-cover"
-              loading={index === 0 ? 'eager' : 'lazy'}
-            />
-          </div>
-        ))}
-
-        {images.length > 1 && (
-          <>
-            <!-- Simple navigation for multiple images -->
-            <button
-              id="prevBtn"
-              class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow hover:bg-white transition"
-              aria-label="Previous"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-              </svg>
-            </button>
-
-            <button
-              id="nextBtn"
-              class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow hover:bg-white transition"
-              aria-label="Next"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-            </button>
-
-            <!-- Simple dots -->
-            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-              {images.map((_, index) => (
-                <button
-                  class={`w-2 h-2 rounded-full transition ${index === 0 ? 'bg-white' : 'bg-white/60'}`}
-                  data-dot={index}
-                  aria-label={`Image ${index + 1}`}
-                ></button>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+    <div class="hero__image">
+      <img
+        src={images[0]}
+        alt={title}
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
   </div>
 </section>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const slides = document.querySelectorAll('[data-slide]');
-    const dots = document.querySelectorAll('[data-dot]');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
+<style>
+  .hero {
+    position: relative;
+    padding: var(--space-16) 0 var(--space-12) 0;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+    overflow: hidden;
+  }
 
-    if (!slides || slides.length <= 1) return;
+  .container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
 
-    let currentSlide = 0;
-    let autoplayInterval;
+  .hero__content {
+    text-align: center;
+  }
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('opacity-100', i === index);
-        slide.classList.toggle('opacity-0', i !== index);
-      });
+  .hero__title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    color: var(--neutral-dark);
+    margin-bottom: var(--space-4);
+    line-height: 1.1;
+  }
 
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('bg-white', i === index);
-        dot.classList.toggle('bg-white/60', i !== index);
-      });
+  .hero__subtitle {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--neutral);
+    margin-bottom: var(--space-3);
+  }
 
-      currentSlide = index;
+  .hero__description {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--neutral);
+    margin-bottom: var(--space-8);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .hero__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-width: 200px;
+  }
+
+  .hero__btn--primary {
+    background: var(--primary);
+    color: white;
+  }
+
+  .hero__btn--primary:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+  }
+
+  .hero__btn--secondary {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+
+  .hero__btn--secondary:hover {
+    background: var(--primary);
+    color: white;
+  }
+
+  .hero__image {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .hero__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
     }
 
-    function nextSlide() {
-      showSlide((currentSlide + 1) % slides.length);
+    .hero__content {
+      text-align: left;
     }
 
-    function prevSlide() {
-      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    .hero__description {
+      margin-left: 0;
+      margin-right: 0;
     }
 
-    function startAutoplay() {
-      autoplayInterval = setInterval(nextSlide, 5000);
+    .hero__actions {
+      flex-direction: row;
+      justify-content: flex-start;
     }
 
-    function stopAutoplay() {
-      clearInterval(autoplayInterval);
+    .hero__btn {
+      min-width: auto;
     }
-
-    // Button navigation
-    prevBtn?.addEventListener('click', () => {
-      stopAutoplay();
-      prevSlide();
-      startAutoplay();
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      stopAutoplay();
-      nextSlide();
-      startAutoplay();
-    });
-
-    // Dot navigation
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        stopAutoplay();
-        showSlide(index);
-        startAutoplay();
-      });
-    });
-
-    // Touch support
-    const gallery = document.querySelector('.relative');
-    if (gallery) {
-      let touchStartX = 0;
-
-      gallery.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-      });
-
-      gallery.addEventListener('touchend', (e) => {
-        const touchEndX = e.changedTouches[0].clientX;
-        const diff = touchStartX - touchEndX;
-
-        if (Math.abs(diff) > 50) {
-          stopAutoplay();
-          if (diff > 0) {
-            nextSlide();
-          } else {
-            prevSlide();
-          }
-          startAutoplay();
-        }
-      });
-    }
-
-    // Start
-    startAutoplay();
-  });
-</script>
+  }
+</style>
