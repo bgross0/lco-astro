@@ -52,18 +52,25 @@ export default function EquipmentPage() {
     }
 
     // Search filter (client-side for better UX)
-    if (searchTerm && !(
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.description?.toLowerCase().includes(searchTerm.toLowerCase())
-    )) {
-      return false
+    if (searchTerm && searchTerm.length > 0) {
+      const search = searchTerm.toLowerCase()
+      const nameMatch = item.name && typeof item.name === 'string' && item.name.toLowerCase().includes(search)
+      const descMatch = item.description && typeof item.description === 'string' && item.description.toLowerCase().includes(search)
+
+      if (!nameMatch && !descMatch) {
+        return false
+      }
     }
 
     return true
   })
 
-  // Get unique categories from actual data
-  const availableCategories = ['All', ...Array.from(new Set(equipment.map(item => item.category)))]
+  // Get unique categories from actual data, filtering out any non-string values
+  const availableCategories = ['All', ...Array.from(new Set(
+    equipment
+      .map(item => item.category)
+      .filter(cat => cat && typeof cat === 'string')
+  ))]
 
   return (
     <div className="min-h-screen bg-gray-50">

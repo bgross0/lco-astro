@@ -1,27 +1,40 @@
 // API Response Types matching Odoo atlas_equipment_rental module
 
 export interface Vehicle {
+  // Core fields we actually use for display
   id: number
   name: string
-  slug: string
-  brand: string
-  model: string
-  year: string  // Changed to string to match API docs
-  listing_type: 'sale' | 'rental' | 'both'
-  sale_price: number
   rental_price_daily: number
   rental_price_weekly?: number
   rental_price_monthly?: number
-  currency: string
-  fuel_type: string
-  seats: number
-  doors: number
-  availability_status: 'available' | 'reserved' | 'rented' | 'maintenance' | 'sold'
-  featured: boolean
-  short_description: string
+  availability_status: string
   primary_image: string | null
-  view_count: number
-  // Detail fields
+
+  // Optional fields that might be false/null from Odoo
+  slug?: string
+  brand?: string | boolean | false
+  model?: string | boolean | false
+  year?: string | boolean | false
+  listing_type?: 'sale' | 'rental' | 'both' | string
+  sale_price?: number
+  currency?: string
+  fuel_type?: string | boolean | false
+  seats?: number
+  doors?: number
+  featured?: boolean
+  short_description?: string | boolean | false
+  view_count?: number
+
+  // Odoo specific fields we receive but don't display
+  asset_type?: string
+  category?: string
+  serial_number?: string | boolean | false
+  hour_meter?: number
+  weight_capacity?: number
+  power_output?: string | boolean | false
+  operating_weight?: number
+
+  // Detail fields for future use
   full_description?: string
   specifications?: Record<string, any>
   features?: VehicleFeature[]

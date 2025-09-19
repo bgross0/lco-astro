@@ -81,13 +81,24 @@ export async function searchEquipment(
 
   // Client-side filtering by search query
   const searchLower = query.toLowerCase()
-  return response.data.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchLower) ||
-      item.brand.toLowerCase().includes(searchLower) ||
-      item.model.toLowerCase().includes(searchLower) ||
-      item.short_description?.toLowerCase().includes(searchLower)
-  )
+  return response.data.filter((item) => {
+    // Check name (always present)
+    if (item.name && item.name.toLowerCase().includes(searchLower)) {
+      return true
+    }
+    // Check optional fields if they exist and are strings
+    if (typeof item.brand === 'string' && item.brand.toLowerCase().includes(searchLower)) {
+      return true
+    }
+    if (typeof item.model === 'string' && item.model.toLowerCase().includes(searchLower)) {
+      return true
+    }
+    if (typeof item.short_description === 'string' &&
+        item.short_description.toLowerCase().includes(searchLower)) {
+      return true
+    }
+    return false
+  })
 }
 
 /**
@@ -137,9 +148,12 @@ export async function getEquipmentByCategory(
       return response.data
     }
 
-    return response.data.filter((item) =>
-      fuelTypes.includes(item.fuel_type?.toLowerCase())
-    )
+    return response.data.filter((item) => {
+      if (typeof item.fuel_type === 'string') {
+        return fuelTypes.includes(item.fuel_type.toLowerCase())
+      }
+      return false
+    })
   } catch (error) {
     console.error(`Failed to fetch equipment by category ${category}:`, error)
     return []
@@ -151,18 +165,43 @@ export async function getEquipmentByCategory(
  */
 export function vehicleToEquipment(vehicle: Vehicle) {
   // Handle image URL - prepend base URL if it's a relative path
-  let imageUrl = vehicle.primary_image || undefined
-  if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = `${process.env.NEXT_PUBLIC_ODOO_URL || 'https://lco.axsys.app'}${imageUrl}`
+  let imageUrl: string | undefined
+  if (vehicle.primary_image) {
+    imageUrl = vehicle.primary_image.startsWith('http')
+      ? vehicle.primary_image
+      : `https://lco.axsys.app${vehicle.primary_image}`
+  } else {
+    // Use an existing equipment image as placeholder
+    imageUrl = '/images/equipment/equipment-hero-600x300.jpg'
+  }
+
+  // Determine category - use Odoo's category field if available, otherwise derive from name
+  let category = 'Equipment' // Default
+  if (vehicle.category) {
+    // Map Odoo categories to our display categories
+    const categoryMap: Record<string, string> = {
+      'skidsteer': 'Heavy Equipment',
+      'excavator': 'Heavy Equipment',
+      'mower': 'Lawn Care',
+      'snowblower': 'Snow Removal',
+      'trimmer': 'Lawn Care'
+    }
+    category = categoryMap[vehicle.category.toLowerCase()] || 'Heavy Equipment'
+  } else if (vehicle.name) {
+    // Simple name-based categorization
+    const nameLower = vehicle.name.toLowerCase()
+    if (nameLower.includes('cat') || nameLower.includes('skid')) {
+      category = 'Heavy Equipment'
+    }
   }
 
   return {
     id: vehicle.id,
-    name: vehicle.name,
-    category: mapFuelTypeToCategory(vehicle.fuel_type, vehicle.name),
-    description: vehicle.short_description,
-    hourly_rate: Math.round(vehicle.rental_price_daily / 8), // Estimate hourly from daily
-    daily_rate: vehicle.rental_price_daily,
+    name: vehicle.name || 'Equipment',
+    category,
+    description: '', // Not needed for basic display
+    hourly_rate: Math.round(vehicle.rental_price_daily / 8), // Estimate if needed
+    daily_rate: vehicle.rental_price_daily || 0,
     weekly_rate: vehicle.rental_price_weekly || vehicle.rental_price_daily * 5,
     available: vehicle.availability_status === 'available',
     image_url: imageUrl,
@@ -173,9 +212,9 @@ export function vehicleToEquipment(vehicle: Vehicle) {
  * Map Odoo fuel type to our category system
  * Enhanced mapping based on fuel type and name patterns
  */
-function mapFuelTypeToCategory(fuelType: string, vehicleName?: string): string {
+function mapFuelTypeToCategory(fuelType: string | boolean | false | undefined, vehicleName?: string): string {
   // Check name patterns first for more accurate categorization
-  if (vehicleName) {
+  if (vehicleName && typeof vehicleName === 'string') {
     const nameLower = vehicleName.toLowerCase()
     if (nameLower.includes('snow') || nameLower.includes('plow') || nameLower.includes('salt')) {
       return 'Snow Removal'
@@ -189,13 +228,19 @@ function mapFuelTypeToCategory(fuelType: string, vehicleName?: string): string {
       return 'Landscaping'
     }
     if (nameLower.includes('excavator') || nameLower.includes('skid') ||
-        nameLower.includes('compactor') || nameLower.includes('mixer')) {
+        nameLower.includes('compactor') || nameLower.includes('mixer') ||
+        nameLower.includes('cat')) {
       return 'Heavy Equipment'
     }
     if (nameLower.includes('chainsaw') || nameLower.includes('pressure') ||
         nameLower.includes('tool')) {
       return 'Power Tools'
     }
+  }
+
+  // Handle false/null/undefined fuel type
+  if (typeof fuelType !== 'string') {
+    return 'Equipment' // Default category
   }
 
   // Fallback to fuel type mapping
@@ -208,5 +253,5 @@ function mapFuelTypeToCategory(fuelType: string, vehicleName?: string): string {
     'manual': 'Power Tools',
   }
 
-  return mapping[fuelType?.toLowerCase()] || 'Landscaping'
+  return mapping[fuelType.toLowerCase()] || 'Landscaping'
 }

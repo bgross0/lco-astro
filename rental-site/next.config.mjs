@@ -2,7 +2,21 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['lakecountyoutdoors.com', 'localhost', 'lco.axsys.app'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lakecountyoutdoors.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lco.axsys.app',
+        pathname: '/web/image/**',
+      },
+    ],
   },
   env: {
     ODOO_API_URL: process.env.ODOO_API_URL || 'https://lco-crm.axsys.app',
