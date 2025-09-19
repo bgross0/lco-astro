@@ -40,9 +40,6 @@ export default function Header() {
             <Link href="/contact" className="text-neutral-dark hover:text-primary transition-colors">
               Contact
             </Link>
-            <Link href="/account" className="btn btn-primary">
-              My Rentals
-            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -75,9 +72,6 @@ export default function Header() {
               </Link>
               <Link href="/contact" className="text-neutral-dark hover:text-primary transition-colors py-2">
                 Contact
-              </Link>
-              <Link href="/account" className="btn btn-primary text-center">
-                My Rentals
               </Link>
             </div>
           </div>
