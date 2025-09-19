@@ -129,10 +129,9 @@ export const FEATURED_EQUIPMENT = MOCK_EQUIPMENT.slice(0, 4)
 // Equipment categories
 export const EQUIPMENT_CATEGORIES = [
   'All',
-  'Snow Removal',
-  'Lawn Care',
-  'Landscaping',
-  'Heavy Equipment',
+  'Skid Steers',
+  'Excavators',
+  'Trailers',
   'Power Tools',
-  'Seasonal'
+  'Loaders'
 ]

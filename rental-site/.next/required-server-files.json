@@ -53,11 +53,7 @@
       "path": "/_next/image",
       "loader": "default",
       "loaderFile": "",
-      "domains": [
-        "lakecountyoutdoors.com",
-        "localhost",
-        "lco.axsys.app"
-      ],
+      "domains": [],
       "disableStaticImages": false,
       "minimumCacheTTL": 60,
       "formats": [
@@ -66,7 +62,21 @@
       "dangerouslyAllowSVG": false,
       "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
       "contentDispositionType": "attachment",
-      "remotePatterns": [],
+      "remotePatterns": [
+        {
+          "protocol": "https",
+          "hostname": "lakecountyoutdoors.com"
+        },
+        {
+          "protocol": "http",
+          "hostname": "localhost"
+        },
+        {
+          "protocol": "https",
+          "hostname": "lco.axsys.app",
+          "pathname": "/web/image/**"
+        }
+      ],
       "unoptimized": false
     },
     "devIndicators": {

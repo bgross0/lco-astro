@@ -180,18 +180,36 @@ export function vehicleToEquipment(vehicle: Vehicle) {
   if (vehicle.category) {
     // Map Odoo categories to our display categories
     const categoryMap: Record<string, string> = {
-      'skidsteer': 'Heavy Equipment',
-      'excavator': 'Heavy Equipment',
-      'mower': 'Lawn Care',
-      'snowblower': 'Snow Removal',
-      'trimmer': 'Lawn Care'
+      'skidsteer': 'Skid Steers',
+      'skid_steer': 'Skid Steers',
+      'excavator': 'Excavators',
+      'mini_excavator': 'Excavators',
+      'trailer': 'Trailers',
+      'dump_trailer': 'Trailers',
+      'equipment_trailer': 'Trailers',
+      'loader': 'Loaders',
+      'wheel_loader': 'Loaders',
+      'backhoe': 'Loaders',
+      'power_tool': 'Power Tools',
+      'chainsaw': 'Power Tools',
+      'generator': 'Power Tools',
+      'compressor': 'Power Tools'
     }
-    category = categoryMap[vehicle.category.toLowerCase()] || 'Heavy Equipment'
+    category = categoryMap[vehicle.category.toLowerCase()] || 'Skid Steers'
   } else if (vehicle.name) {
-    // Simple name-based categorization
+    // Name-based categorization for our new categories
     const nameLower = vehicle.name.toLowerCase()
     if (nameLower.includes('cat') || nameLower.includes('skid')) {
-      category = 'Heavy Equipment'
+      category = 'Skid Steers'
+    } else if (nameLower.includes('excavator') || nameLower.includes('mini ex')) {
+      category = 'Excavators'
+    } else if (nameLower.includes('trailer')) {
+      category = 'Trailers'
+    } else if (nameLower.includes('loader') || nameLower.includes('backhoe')) {
+      category = 'Loaders'
+    } else if (nameLower.includes('chainsaw') || nameLower.includes('generator') ||
+               nameLower.includes('compressor') || nameLower.includes('tool')) {
+      category = 'Power Tools'
     }
   }
 
@@ -216,24 +234,20 @@ function mapFuelTypeToCategory(fuelType: string | boolean | false | undefined, v
   // Check name patterns first for more accurate categorization
   if (vehicleName && typeof vehicleName === 'string') {
     const nameLower = vehicleName.toLowerCase()
-    if (nameLower.includes('snow') || nameLower.includes('plow') || nameLower.includes('salt')) {
-      return 'Snow Removal'
+    if (nameLower.includes('skid') || nameLower.includes('cat')) {
+      return 'Skid Steers'
     }
-    if (nameLower.includes('mower') || nameLower.includes('trimmer') ||
-        nameLower.includes('aerator') || nameLower.includes('dethatcher')) {
-      return 'Lawn Care'
+    if (nameLower.includes('excavator') || nameLower.includes('mini ex')) {
+      return 'Excavators'
     }
-    if (nameLower.includes('blower') || nameLower.includes('chipper') ||
-        nameLower.includes('stump') || nameLower.includes('sod')) {
-      return 'Landscaping'
+    if (nameLower.includes('trailer')) {
+      return 'Trailers'
     }
-    if (nameLower.includes('excavator') || nameLower.includes('skid') ||
-        nameLower.includes('compactor') || nameLower.includes('mixer') ||
-        nameLower.includes('cat')) {
-      return 'Heavy Equipment'
+    if (nameLower.includes('loader') || nameLower.includes('backhoe')) {
+      return 'Loaders'
     }
-    if (nameLower.includes('chainsaw') || nameLower.includes('pressure') ||
-        nameLower.includes('tool')) {
+    if (nameLower.includes('chainsaw') || nameLower.includes('generator') ||
+        nameLower.includes('compressor') || nameLower.includes('tool')) {
       return 'Power Tools'
     }
   }
@@ -243,15 +257,15 @@ function mapFuelTypeToCategory(fuelType: string | boolean | false | undefined, v
     return 'Equipment' // Default category
   }
 
-  // Fallback to fuel type mapping
+  // Fallback to fuel type mapping for our new categories
   const mapping: Record<string, string> = {
-    'diesel': 'Heavy Equipment',
-    'gas': 'Lawn Care',
-    'gasoline': 'Lawn Care',
+    'diesel': 'Skid Steers', // Most diesel equipment is heavy machinery
+    'gas': 'Power Tools',
+    'gasoline': 'Power Tools',
     'electric': 'Power Tools',
     'battery': 'Power Tools',
     'manual': 'Power Tools',
   }
 
-  return mapping[fuelType.toLowerCase()] || 'Landscaping'
+  return mapping[fuelType.toLowerCase()] || 'Equipment'
 }

@@ -44,15 +44,38 @@ const isActive = (href: string) => {
     <!-- Navigation items -->
     <ul class="mobile-menu__list">
       {navItems.map((item) => (
-        <li class="mobile-menu__item">
-          <a 
-            href={item.href} 
-            class={`mobile-menu__link ${isActive(item.href) ? 'mobile-menu__link--active' : ''}`}
-            aria-current={isActive(item.href) ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        </li>
+        item.dropdown ? (
+          <li class="mobile-menu__item mobile-menu__item--dropdown">
+            <button class="mobile-menu__link mobile-menu__dropdown-trigger">
+              {item.label}
+              <svg class="mobile-menu__dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <ul class="mobile-menu__dropdown">
+              {item.dropdown.map((subItem) => (
+                <li>
+                  <a
+                    href={subItem.href}
+                    class={`mobile-menu__dropdown-link ${isActive(subItem.href) ? 'mobile-menu__dropdown-link--active' : ''}`}
+                  >
+                    {subItem.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li class="mobile-menu__item">
+            <a
+              href={item.href}
+              class={`mobile-menu__link ${isActive(item.href) ? 'mobile-menu__link--active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        )
       ))}
     </ul>
     
@@ -118,7 +141,29 @@ const isActive = (href: string) => {
     // Close menu on overlay click
     overlay.addEventListener('click', closeMenu);
     
-    // Close menu when clicking on links
+    // Handle dropdown toggles
+    const dropdownTriggers = nav.querySelectorAll('.mobile-menu__dropdown-trigger');
+    dropdownTriggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dropdown = trigger.nextElementSibling;
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close all other dropdowns
+        dropdownTriggers.forEach(otherTrigger => {
+          if (otherTrigger !== trigger) {
+            otherTrigger.setAttribute('aria-expanded', 'false');
+            otherTrigger.nextElementSibling?.classList.remove('mobile-menu__dropdown--open');
+          }
+        });
+
+        // Toggle current dropdown
+        trigger.setAttribute('aria-expanded', (!isOpen).toString());
+        dropdown?.classList.toggle('mobile-menu__dropdown--open', !isOpen);
+      });
+    });
+
+    // Close menu when clicking on links (but not dropdown triggers)
     const links = nav.querySelectorAll('a');
     links.forEach(link => {
       link.addEventListener('click', () => {
@@ -272,6 +317,63 @@ const isActive = (href: string) => {
     color: var(--primary);
     font-weight: 600;
     background-color: rgba(74, 144, 226, 0.1);
+  }
+
+  /* Dropdown styles */
+  .mobile-menu__item--dropdown {
+    position: relative;
+  }
+
+  .mobile-menu__dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mobile-menu__dropdown-icon {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .mobile-menu__dropdown-trigger[aria-expanded="true"] .mobile-menu__dropdown-icon {
+    transform: rotate(180deg);
+  }
+
+  .mobile-menu__dropdown {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .mobile-menu__dropdown--open {
+    max-height: 300px;
+  }
+
+  .mobile-menu__dropdown-link {
+    display: block;
+    padding: var(--space-2) var(--space-6);
+    font-size: var(--text-sm);
+    color: var(--neutral);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .mobile-menu__dropdown-link:hover {
+    background-color: var(--neutral-light);
+    color: var(--primary);
+  }
+
+  .mobile-menu__dropdown-link--active {
+    color: var(--primary);
+    font-weight: 500;
   }
   
   /* Footer with CTA */
