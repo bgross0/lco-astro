@@ -28,7 +28,9 @@
       "Bash(git checkout:*)",
       "Bash(find:*)",
       "Bash(awk:*)",
-      "Bash(xargs -r kill)"
+      "Bash(xargs -r kill)",
+      "WebFetch(domain:ui.full.dev)",
+      "WebFetch(domain:flowbite.com)"
     ],
     "deny": []
   }
