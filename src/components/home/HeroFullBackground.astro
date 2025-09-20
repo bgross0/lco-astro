@@ -51,11 +51,6 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
         <img src={settings.logo} alt="Lake County Outdoors Logo" class="hero-logo" fetchpriority="high" />
       </div>
 
-      <!-- Description -->
-      <p class="hero-description">
-        {heroData.description}
-      </p>
-
       <!-- CTA Buttons -->
       <div class="hero-actions">
         <Button href={heroData.ctaLink} variant="primary" size="large">
@@ -184,8 +179,9 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   }
 
   .hero-logo {
-    height: 200px;
-    width: auto;
+    height: 200px !important;
+    width: 200px !important;
+    max-width: none !important;
     display: block;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
   }
@@ -301,7 +297,8 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     }
 
     .hero-logo {
-      height: 220px;
+      height: 220px !important;
+      width: 220px !important;
     }
   }
 
@@ -318,7 +315,8 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     }
 
     .hero-logo {
-      height: 240px;
+      height: 240px !important;
+      width: 240px !important;
     }
 
     .hero-description {
@@ -337,7 +335,8 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     }
 
     .hero-logo {
-      height: 160px;
+      height: 160px !important;
+      width: 160px !important;
     }
 
     .hero-description {
@@ -375,7 +374,8 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   /* Small mobile */
   @media (max-width: 480px) {
     .hero-logo {
-      height: 140px;
+      height: 140px !important;
+      width: 140px !important;
     }
 
     .hero-description {

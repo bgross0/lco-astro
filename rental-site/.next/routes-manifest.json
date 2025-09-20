@@ -31,20 +31,12 @@
   },
   "dynamicRoutes": [
     {
-      "page": "/equipment/[category]",
+      "page": "/equipment/[slug]",
       "regex": "^/equipment/([^/]+?)(?:/)?$",
       "routeKeys": {
-        "nxtPcategory": "nxtPcategory"
+        "nxtPslug": "nxtPslug"
       },
-      "namedRegex": "^/equipment/(?<nxtPcategory>[^/]+?)(?:/)?$"
-    },
-    {
-      "page": "/equipment/[id]",
-      "regex": "^/equipment/([^/]+?)(?:/)?$",
-      "routeKeys": {
-        "nxtPid": "nxtPid"
-      },
-      "namedRegex": "^/equipment/(?<nxtPid>[^/]+?)(?:/)?$"
+      "namedRegex": "^/equipment/(?<nxtPslug>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [

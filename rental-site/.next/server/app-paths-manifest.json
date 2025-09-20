@@ -1,15 +1,14 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/events/route": "app/api/events/route.js",
   "/api/booking/route": "app/api/booking/route.js",
-  "/api/webhook/inventory/route": "app/api/webhook/inventory/route.js",
+  "/api/events/route": "app/api/events/route.js",
   "/api/webhook/booking/route": "app/api/webhook/booking/route.js",
+  "/api/webhook/inventory/route": "app/api/webhook/inventory/route.js",
   "/about/page": "app/about/page.js",
-  "/contact/page": "app/contact/page.js",
   "/account/page": "app/account/page.js",
-  "/equipment/[category]/page": "app/equipment/[category]/page.js",
+  "/equipment/[slug]/page": "app/equipment/[slug]/page.js",
+  "/contact/page": "app/contact/page.js",
   "/equipment/page": "app/equipment/page.js",
-  "/equipment/[id]/page": "app/equipment/[id]/page.js",
   "/page": "app/page.js",
   "/thank-you/page": "app/thank-you/page.js"
 }

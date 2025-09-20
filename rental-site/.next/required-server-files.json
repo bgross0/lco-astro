@@ -107,7 +107,6 @@
     "compiler": {},
     "expireTime": 31536000,
     "staticPageGenerationTimeout": 60,
-    "output": "standalone",
     "modularizeImports": {
       "@mui/icons-material": {
         "transform": "@mui/icons-material/{{member}}"
@@ -116,7 +115,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/home/ben/Documents/GitHub/lco-astro/rental-site",
+    "outputFileTracingRoot": "/home/ben/Documents/GitHub/lco-astro",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
@@ -305,7 +304,7 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
     "turbopack": {
-      "root": "/home/ben/Documents/GitHub/lco-astro/rental-site"
+      "root": "/home/ben/Documents/GitHub/lco-astro"
     },
     "_originalRewrites": {
       "beforeFiles": [],
@@ -323,7 +322,7 @@
     }
   },
   "appDir": "/home/ben/Documents/GitHub/lco-astro/rental-site",
-  "relativeAppDir": "",
+  "relativeAppDir": "rental-site",
   "files": [
     ".next/routes-manifest.json",
     ".next/server/pages-manifest.json",
