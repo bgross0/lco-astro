@@ -30,7 +30,8 @@
       "Bash(awk:*)",
       "Bash(xargs -r kill)",
       "WebFetch(domain:ui.full.dev)",
-      "WebFetch(domain:flowbite.com)"
+      "WebFetch(domain:flowbite.com)",
+      "WebFetch(domain:www.pivotgrouppm.com)"
     ],
     "deny": []
   }

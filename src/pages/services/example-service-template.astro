@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ServiceHero from '../../components/services/ServiceHero.astro';
+import ServiceHeroV3 from '../../components/services/ServiceHeroV3.astro';
 import ServiceFeatures from '../../components/services/ServiceFeatures.astro';
 import ServicePricing from '../../components/services/ServicePricing.astro';
 import ServiceEquipment from '../../components/services/ServiceEquipment.astro';
@@ -164,7 +164,11 @@ const serviceData = {
   description={serviceData.description}
 >
   <!-- Hero Section -->
-  <ServiceHero hero={serviceData.hero} />
+  <ServiceHeroV3
+    title={serviceData.hero.title}
+    subtitle="Keep your business accessible with reliable 24/7 snow removal and ice management services."
+    backgroundImage={serviceData.hero.backgroundImage}
+  />
 
   <!-- Main Content Container -->
   <div class="service-template">

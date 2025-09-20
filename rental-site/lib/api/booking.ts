@@ -1,6 +1,6 @@
 // Booking API service layer
 
-import { apiPost } from './client'
+import { apiPost, apiClient } from './client'
 import type {
   BookingRequest,
   BookingResponse,
@@ -75,7 +75,12 @@ export async function createBooking(
   }
 
   try {
-    const response = await apiPost<any>('/api/fleet/booking', request)
+    // IMPORTANT: No retries for booking creation to prevent duplicates!
+    const response = await apiClient<any>('/api/fleet/booking', {
+      method: 'POST',
+      body: JSON.stringify(request),
+      retries: 1  // Only try once - no automatic retries for bookings
+    })
 
     // Handle the response structure from API
     if (response.success !== undefined) {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -14,6 +14,10 @@ import type { Vehicle } from '@/lib/types/api'
 export default function EquipmentDetailPage() {
   const params = useParams()
   const id = params.id as string
+
+  // Refs to prevent duplicate submissions
+  const isSubmittingRef = useRef(false)
+  const lastSubmissionRef = useRef<string>('')
 
   // State
   const [equipment, setEquipment] = useState<any>(null)
@@ -65,7 +69,7 @@ export default function EquipmentDetailPage() {
     if (startDate && endDate && vehicle) {
       handleCheckAvailability()
     }
-  }, [startDate, endDate])
+  }, [startDate, endDate, vehicle])
 
   const handleCheckAvailability = async () => {
     if (!startDate || !endDate || !vehicle) return
@@ -99,11 +103,29 @@ export default function EquipmentDetailPage() {
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Prevent duplicate submissions
+    if (isSubmittingRef.current) {
+      console.log('Booking already in progress, ignoring duplicate submission')
+      return
+    }
+
     if (!vehicle || !startDate || !endDate) {
       setBookingError('Please select dates first')
       return
     }
 
+    // Create a unique key for this submission
+    const submissionKey = `${vehicle.id}-${startDate}-${endDate}-${bookingForm.email}`
+
+    // Check if this exact booking was just submitted (within last 5 seconds)
+    if (lastSubmissionRef.current === submissionKey) {
+      console.log('Duplicate booking detected, ignoring')
+      return
+    }
+
+    // Mark as submitting
+    isSubmittingRef.current = true
+    lastSubmissionRef.current = submissionKey
     setBookingStatus('submitting')
     setBookingError('')
 
@@ -125,10 +147,19 @@ export default function EquipmentDetailPage() {
         setBookingStatus('idle')
         // Reset form
         setBookingForm({ name: '', email: '', phone: '', message: '' })
+        // Clear submission tracking after success
+        lastSubmissionRef.current = ''
       }, 3000)
     } catch (error: any) {
       setBookingStatus('error')
       setBookingError(error.message || 'Failed to create booking')
+      // Clear submission key on error to allow retry
+      setTimeout(() => {
+        lastSubmissionRef.current = ''
+      }, 2000)
+    } finally {
+      // Always clear the submitting flag
+      isSubmittingRef.current = false
     }
   }
 

@@ -1,0 +1,258 @@
+---
+import Button from '../common/Button.astro';
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  backgroundImage: string;
+}
+
+const {
+  title,
+  subtitle,
+  backgroundImage
+} = Astro.props;
+---
+
+<section class="service-hero" style={`background-image: url(${backgroundImage});`}>
+  <div class="hero-overlay"></div>
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">{title}</h1>
+
+      {subtitle && (
+        <p class="hero-subtitle">{subtitle}</p>
+      )}
+
+      <div class="hero-cta">
+        <Button href="/contact" variant="primary" size="large">
+          Get Free Quote
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-hero {
+    position: relative;
+    min-height: 600px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-top: -80px;
+    padding-top: 80px;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .hero-content {
+    max-width: 600px;
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+
+  .hero-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      #4A90E2 0%,
+      #6BB6FF 50%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
+    border-radius: 2px;
+    animation: fadeInSlide 0.6s ease-out;
+  }
+
+  @keyframes fadeInSlide {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: white;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    opacity: 0.95;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+  }
+
+  .hero-cta {
+    margin-top: 0;
+    display: block;
+  }
+
+  .hero-cta :global(.btn) {
+    background: var(--primary);
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-cta :global(.btn:hover) {
+    background: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Tablet styles */
+  @media (min-width: 768px) {
+    .service-hero {
+      min-height: 500px;
+    }
+
+    .hero-content {
+      padding: 5rem 0;
+    }
+  }
+
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    .service-hero {
+      min-height: 600px;
+      margin-top: -100px;
+      padding-top: 100px;
+    }
+
+    .hero-container {
+      padding: 0 3rem;
+    }
+
+    .hero-content {
+      padding: 6rem 0;
+    }
+
+    .hero-title {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+    }
+
+    .hero-title::after {
+      width: 120px;
+      height: 4px;
+    }
+
+    .hero-subtitle {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  /* Large desktop */
+  @media (min-width: 1440px) {
+    .hero-container {
+      padding: 0 4rem;
+    }
+
+    .hero-content {
+      max-width: 700px;
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 767px) {
+    .service-hero {
+      min-height: 450px;
+    }
+
+    .hero-container {
+      padding: 0 1.5rem;
+    }
+
+    .hero-content {
+      padding: 3rem 0;
+      max-width: 100%;
+    }
+
+    .hero-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.6) 50%,
+        rgba(0, 0, 0, 0.7) 100%
+      );
+    }
+
+    .hero-title {
+      margin-bottom: 0.875rem;
+      padding-bottom: 0.625rem;
+    }
+
+    .hero-title::after {
+      width: 80px;
+      height: 3px;
+    }
+
+    .hero-subtitle {
+      margin-bottom: 1.25rem;
+      max-width: 100%;
+    }
+
+    .hero-cta {
+      margin-top: 0;
+    }
+
+    .hero-cta :global(.btn) {
+      padding: 0.875rem 2rem;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>

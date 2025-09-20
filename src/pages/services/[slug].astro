@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/common/Button.astro';
 import Icon from '../../components/common/Icon.astro';
-import ServiceHeroV2 from '../../components/services/ServiceHeroV2.astro';
+import ServiceHeroV3 from '../../components/services/ServiceHeroV3.astro';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -22,11 +22,16 @@ const { Content } = await service.render();
   description={service.data.description}
   image={service.data.image}
 >
-  <ServiceHeroV2
+  <ServiceHeroV3
     title={service.data.title}
-    subtitle={service.data.subtitle || service.data.hero?.subtitle}
-    description={service.data.description}
-    images={service.data.images || [service.data.image || service.data.hero?.backgroundImage]}
+    subtitle={
+      service.data.title === 'Commercial Snow Removal' ? 'Keep your business accessible with reliable 24/7 snow removal and ice management services.' :
+      service.data.title === 'Ice Management' ? 'Prevent slips and falls with professional ice control and de-icing solutions.' :
+      service.data.title === 'Professional Landscaping' ? 'Transform your property with expert design, installation, and maintenance services.' :
+      service.data.title === 'Municipal Contracting' ? 'Trusted partner for government snow removal, landscaping, and maintenance contracts.' :
+      'Professional service you can count on.'
+    }
+    backgroundImage={service.data.hero?.backgroundImage || service.data.images?.[0] || service.data.image}
   />
 
   <section class="service-content">

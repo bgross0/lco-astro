@@ -20,11 +20,24 @@
         "source": "/api/odoo/:path*",
         "destination": "https://lco.axsys.app/api/:path*",
         "regex": "^/api/odoo(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+      },
+      {
+        "source": "/web/image/:path*",
+        "destination": "https://lco.axsys.app/web/image/:path*",
+        "regex": "^/web/image(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
       }
     ],
     "fallback": []
   },
   "dynamicRoutes": [
+    {
+      "page": "/equipment/[category]",
+      "regex": "^/equipment/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory"
+      },
+      "namedRegex": "^/equipment/(?<nxtPcategory>[^/]+?)(?:/)?$"
+    },
     {
       "page": "/equipment/[id]",
       "regex": "^/equipment/([^/]+?)(?:/)?$",
@@ -54,6 +67,12 @@
       "namedRegex": "^/about(?:/)?$"
     },
     {
+      "page": "/account",
+      "regex": "^/account(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/account(?:/)?$"
+    },
+    {
       "page": "/contact",
       "regex": "^/contact(?:/)?$",
       "routeKeys": {},
@@ -64,6 +83,12 @@
       "regex": "^/equipment(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/equipment(?:/)?$"
+    },
+    {
+      "page": "/thank-you",
+      "regex": "^/thank\\-you(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/thank\\-you(?:/)?$"
     }
   ],
   "dataRoutes": [],

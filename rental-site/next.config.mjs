@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -27,6 +28,10 @@ const nextConfig = {
       {
         source: '/api/odoo/:path*',
         destination: `${process.env.ODOO_API_URL || 'https://lco.axsys.app'}/api/:path*`,
+      },
+      {
+        source: '/web/image/:path*',
+        destination: `${process.env.ODOO_API_URL || 'https://lco.axsys.app'}/web/image/:path*`,
       },
     ]
   },

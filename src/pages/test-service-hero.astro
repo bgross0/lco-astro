@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceHeroV2 from '../components/services/ServiceHeroV2.astro';
+import ServiceHeroV3 from '../components/services/ServiceHeroV3.astro';
 
 // Test data for landscaping service
 const landscapingHeroData = {
@@ -69,17 +70,61 @@ const equipmentHeroData = {
 };
 ---
 
-<BaseLayout title="Service Hero V2 Test Page | Lake County Outdoors" description="Testing new service hero component">
+<BaseLayout title="Service Hero Test Page | Lake County Outdoors" description="Testing service hero components">
   <div class="test-container">
-    <h1 class="test-title">Service Hero V2 Component Test Page</h1>
+    <h1 class="test-title">Service Hero Components Test Page</h1>
     <p class="test-description">
-      This page showcases the new Service Hero V2 component with different service configurations.
-      Each hero section demonstrates the gallery slideshow, responsive layout, and interactive features.
+      This page showcases both Service Hero V2 and the new Service Hero V3 components with different service configurations.
     </p>
+
+    <!-- Service Hero V3 Examples (Pivot Group Style) -->
+    <h2 class="version-title">Service Hero V3 - Pivot Group Style</h2>
+
+    <!-- Landscaping Hero V3 Example -->
+    <section class="test-section">
+      <h2 class="section-title">V3 Example 1: Landscaping Service</h2>
+      <ServiceHeroV3
+        title="Professional Landscaping Services"
+        subtitle="Transform your property with expert design, installation, and maintenance services."
+        backgroundImage="/images/landscaping/landscaping-square-1-600x600.jpg"
+      />
+    </section>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Snow Removal Hero V3 Example -->
+    <section class="test-section">
+      <h2 class="section-title">V3 Example 2: Commercial Snow Removal</h2>
+      <ServiceHeroV3
+        title="Commercial Snow Removal"
+        subtitle="Keep your business accessible with reliable 24/7 snow removal and ice management services."
+        backgroundImage="/images/snow-removal/snow-removal-wide-1120x559.jpg"
+      />
+    </section>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Equipment Rental Hero V3 Example -->
+    <section class="test-section">
+      <h2 class="section-title">V3 Example 3: Equipment Rental</h2>
+      <ServiceHeroV3
+        title="Professional Equipment Rental"
+        subtitle="High-quality landscaping and construction equipment available for flexible rental terms."
+        backgroundImage="/images/equipment/main-equipment-pic.png"
+      />
+    </section>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Service Hero V2 Examples (Original) -->
+    <h2 class="version-title">Service Hero V2 - Original Design</h2>
 
     <!-- Landscaping Hero Example -->
     <section class="test-section">
-      <h2 class="section-title">Example 1: Landscaping Service</h2>
+      <h2 class="section-title">V2 Example 1: Landscaping Service</h2>
       <ServiceHeroV2 {...landscapingHeroData} />
     </section>
 
@@ -204,6 +249,16 @@ const equipmentHeroData = {
 
   .test-section {
     margin-bottom: 2rem;
+  }
+
+  .version-title {
+    font-size: 2rem;
+    color: #2E5A87;
+    margin: 3rem 0 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(to right, #f0f9ff, #ffffff);
+    border-left: 6px solid #2E5A87;
+    font-weight: 600;
   }
 
   .section-title {

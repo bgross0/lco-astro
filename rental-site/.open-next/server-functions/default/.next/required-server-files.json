@@ -77,7 +77,7 @@
           "pathname": "/web/image/**"
         }
       ],
-      "unoptimized": false
+      "unoptimized": true
     },
     "devIndicators": {
       "position": "bottom-left"
@@ -313,6 +313,10 @@
         {
           "source": "/api/odoo/:path*",
           "destination": "https://lco.axsys.app/api/:path*"
+        },
+        {
+          "source": "/web/image/:path*",
+          "destination": "https://lco.axsys.app/web/image/:path*"
         }
       ],
       "fallback": []
