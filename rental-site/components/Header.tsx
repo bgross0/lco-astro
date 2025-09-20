@@ -31,9 +31,6 @@ export default function Header() {
             <Link href="/equipment" className="text-neutral-dark hover:text-primary transition-colors">
               Browse Equipment
             </Link>
-            <Link href="/categories" className="text-neutral-dark hover:text-primary transition-colors">
-              Categories
-            </Link>
             <Link href="/about" className="text-neutral-dark hover:text-primary transition-colors">
               About
             </Link>
@@ -63,9 +60,6 @@ export default function Header() {
             <div className="flex flex-col space-y-3">
               <Link href="/equipment" className="text-neutral-dark hover:text-primary transition-colors py-2">
                 Browse Equipment
-              </Link>
-              <Link href="/categories" className="text-neutral-dark hover:text-primary transition-colors py-2">
-                Categories
               </Link>
               <Link href="/about" className="text-neutral-dark hover:text-primary transition-colors py-2">
                 About

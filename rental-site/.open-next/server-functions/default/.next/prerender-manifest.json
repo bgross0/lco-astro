@@ -1,7 +1,8 @@
 {
   "version": 4,
   "routes": {
-    "/thank-you": {
+    "/_not-found": {
+      "initialStatus": 404,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -14,8 +15,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/thank-you",
-      "dataRoute": "/thank-you.rsc",
+      "srcRoute": "/_not-found",
+      "dataRoute": "/_not-found.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -97,8 +98,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/_not-found": {
-      "initialStatus": 404,
+    "/about": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -111,8 +111,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/_not-found",
-      "dataRoute": "/_not-found.rsc",
+      "srcRoute": "/about",
+      "dataRoute": "/about.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -146,7 +146,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/about": {
+    "/thank-you": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -159,8 +159,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/about",
-      "dataRoute": "/about.rsc",
+      "srcRoute": "/thank-you",
+      "dataRoute": "/thank-you.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -174,8 +174,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "c74234e6dbd86ac7aa638eae04281a66",
-    "previewModeSigningKey": "4ae14941504feb4e96f04106b50588138e6738efb3284e0a12bf4555574e91b4",
-    "previewModeEncryptionKey": "fb4fcc6cea11f4094b0e6471181a0708fd530f5ffb98004b7f085d9adb66dd67"
+    "previewModeId": "953ba8529848036ba4b35171a3109fa0",
+    "previewModeSigningKey": "0783427846f28a8671730460a38ceae33170dad11ebb5e0e64fe119f139598e8",
+    "previewModeEncryptionKey": "7f5bba6894347182bb007fdeb5313b87fa75f7ea8a1ad68ea80a1bedd327d23e"
   }
 }

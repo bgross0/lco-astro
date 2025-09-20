@@ -51,6 +51,9 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
         <img src={settings.logo} alt="Lake County Outdoors Logo" class="hero-logo" fetchpriority="high" />
       </div>
 
+      <!-- Title -->
+      <h1 class="hero-title">Minnesota's Outdoor Service Experts</h1>
+
       <!-- CTA Buttons -->
       <div class="hero-actions">
         <Button href={heroData.ctaLink} variant="primary" size="large">
@@ -62,38 +65,40 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
         </Button>
       </div>
 
-      <!-- Dots navigation -->
-      <div class="hero-dots">
-        {heroData.images.map((_, index) => (
-          <button
-            class={`hero-dot ${index === 0 ? 'hero-dot--active' : ''}`}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
-        ))}
-      </div>
     </div>
   </div>
 
-  <!-- Bottom Services Section -->
-  <div class="hero-services">
-    <div class="hero-services-container">
-      {heroData.bottomServices && heroData.bottomServices.map((service) => (
-        <div class="hero-service-item">
-          <div class="hero-service-icon">
-            <Icon name={service.icon} size={48} color="var(--primary)" />
-          </div>
-          <h4 class="hero-service-title">{service.title}</h4>
-          <p class="hero-service-text">{service.description}</p>
-        </div>
-      ))}
-    </div>
+  <!-- Dots navigation -->
+  <div class="hero-dots">
+    {heroData.images.map((_, index) => (
+      <button
+        class={`hero-dot ${index === 0 ? 'hero-dot--active' : ''}`}
+        aria-label={`Go to slide ${index + 1}`}
+      ></button>
+    ))}
   </div>
+
 </section>
+
+<!-- Bottom Services Section -->
+<div class="hero-services">
+  <div class="hero-services-container">
+    {heroData.bottomServices && heroData.bottomServices.map((service) => (
+      <div class="hero-service-item">
+        <div class="hero-service-icon">
+          <Icon name={service.icon} size={48} color="var(--primary)" />
+        </div>
+        <h4 class="hero-service-title">{service.title}</h4>
+        <p class="hero-service-text">{service.description}</p>
+      </div>
+    ))}
+  </div>
+</div>
 
 <style>
   .hero-full {
     position: relative;
-    min-height: 700px;
+    min-height: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -168,22 +173,52 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     text-align: center;
     max-width: 800px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3rem;
   }
 
   /* Logo */
   .hero-logo-wrapper {
-    margin-bottom: 2rem;
+    margin: 0 auto 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 240px;
+    height: 240px;
+    min-width: 240px;
+    min-height: 240px;
+    max-width: 240px;
+    max-height: 240px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
   }
 
   .hero-logo {
-    height: 200px !important;
-    width: 200px !important;
+    height: 180px !important;
+    width: 180px !important;
     max-width: none !important;
     display: block;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+  }
+
+  /* Title */
+  .hero-title {
+    font-size: clamp(1.25rem, 4vw, 2.5rem);
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    line-height: 1.3;
+    white-space: nowrap;
+    width: 100%;
+    margin: 0 0 2rem 0;
   }
 
   /* Description */
@@ -223,10 +258,14 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
 
   /* Dots Navigation */
   .hero-dots {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 0.75rem;
     justify-content: center;
-    margin-top: 2rem;
+    z-index: 3;
   }
 
   .hero-dot {
@@ -253,12 +292,10 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   /* Bottom Services Section */
   .hero-services {
     position: relative;
-    z-index: 3;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     padding: 2rem 0;
-    margin-top: auto;
   }
 
   .hero-services-container {
@@ -293,19 +330,24 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   /* Tablet styles */
   @media (min-width: 768px) {
     .hero-full {
-      min-height: 650px;
+      min-height: 750px;
+    }
+
+    .hero-logo-wrapper {
+      width: 260px;
+      height: 260px;
     }
 
     .hero-logo {
-      height: 220px !important;
-      width: 220px !important;
+      height: 200px !important;
+      width: 200px !important;
     }
   }
 
   /* Desktop styles */
   @media (min-width: 1024px) {
     .hero-full {
-      min-height: 750px;
+      min-height: 850px;
       margin-top: -100px;
       padding-top: 100px;
     }
@@ -314,9 +356,22 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
       padding: 0 3rem;
     }
 
+    .hero-content {
+      padding-top: 4rem;
+    }
+
+    .hero-logo-wrapper {
+      width: 280px;
+      height: 280px;
+    }
+
     .hero-logo {
-      height: 240px !important;
-      width: 240px !important;
+      height: 220px !important;
+      width: 220px !important;
+    }
+
+    .hero-title {
+      margin-bottom: 2.5rem;
     }
 
     .hero-description {
@@ -327,16 +382,31 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   /* Mobile optimizations */
   @media (max-width: 767px) {
     .hero-full {
-      min-height: 600px;
+      min-height: 700px;
     }
 
     .hero-container {
       padding: 0 1.5rem;
     }
 
+    .hero-content {
+      padding-top: 2rem;
+    }
+
+    .hero-logo-wrapper {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 1rem;
+    }
+
     .hero-logo {
-      height: 160px !important;
-      width: 160px !important;
+      height: 150px !important;
+      width: 150px !important;
+    }
+
+    .hero-title {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
     .hero-description {
@@ -345,18 +415,19 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     }
 
     .hero-actions {
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.75rem;
     }
 
     .hero-actions :global(.btn) {
-      width: 100%;
-      max-width: 300px;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.9rem;
+      min-width: auto;
     }
 
     .hero-dots {
-      margin-top: 1.5rem;
+      bottom: 1rem;
     }
 
     .hero-services-container {
@@ -373,9 +444,23 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
 
   /* Small mobile */
   @media (max-width: 480px) {
+    .hero-logo-wrapper {
+      width: 180px;
+      height: 180px;
+    }
+
     .hero-logo {
-      height: 140px !important;
-      width: 140px !important;
+      height: 130px !important;
+      width: 130px !important;
+    }
+
+    .hero-title {
+      font-size: 1.125rem;
+    }
+
+    .hero-actions :global(.btn) {
+      padding: 0.625rem 1rem;
+      font-size: 0.85rem;
     }
 
     .hero-description {

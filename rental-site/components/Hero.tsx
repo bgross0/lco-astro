@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function Hero() {
   return (
     <section className="relative text-white" style={{
-      backgroundImage: 'url(/images/equipment/main-equipment-pic.png)',
+      backgroundImage: 'url(/images/equipment/main-equipment-pic.webp)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat'

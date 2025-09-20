@@ -28,12 +28,12 @@ custom_domain = true
 enabled = true
 
 # Build configuration
-[build]
-command = "npx @opennextjs/cloudflare build"
+# [build]
+# command = "npx @opennextjs/cloudflare build"
 
-# Limits and performance
-[limits]
-cpu_ms = 50
+# Limits and performance (CPU limits require paid plan)
+# [limits]
+# cpu_ms = 50
 
 # Placement (optional - for performance)
 [placement]
