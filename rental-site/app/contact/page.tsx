@@ -147,8 +147,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-xl font-semibold mb-3 text-primary">Call Us</h3>
                     <p className="text-lg">
-                      <a href="tel:952-555-0100" className="text-neutral-medium hover:text-primary">
-                        (952) 555-0100
+                      <a href="tel:763-291-4105" className="text-neutral-medium hover:text-primary">
+                        (763) 291-4105
                       </a>
                     </p>
                     <p className="text-sm text-neutral-medium mt-1">
@@ -173,7 +173,8 @@ export default function ContactPage() {
                     <h3 className="text-xl font-semibold mb-3 text-primary">Visit Our Yard</h3>
                     <p className="text-neutral-medium">
                       Lake County Outdoors<br />
-                      Edina, MN 55436<br />
+                      7777 Washington Ave S, Suite 4<br />
+                      Edina, MN 55439<br />
                       <span className="text-sm">(Equipment pickup by appointment)</span>
                     </p>
                   </div>

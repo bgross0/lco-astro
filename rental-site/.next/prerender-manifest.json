@@ -50,7 +50,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/contact": {
+    "/": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -63,8 +63,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/contact",
-      "dataRoute": "/contact.rsc",
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -98,6 +98,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/thank-you": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/thank-you",
+      "dataRoute": "/thank-you.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/about": {
       "experimentalBypassFor": [
         {
@@ -122,7 +146,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/": {
+    "/contact": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -135,32 +159,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/",
-      "dataRoute": "/index.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/thank-you": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/thank-you",
-      "dataRoute": "/thank-you.rsc",
+      "srcRoute": "/contact",
+      "dataRoute": "/contact.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
