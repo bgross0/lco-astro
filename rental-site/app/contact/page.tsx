@@ -1,33 +1,7 @@
-'use client'
-
-import { useState } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    equipment: '',
-    rentalDates: '',
-    message: ''
-  })
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
-    // TODO: Implement actual form submission
-    alert('Thank you for your inquiry! We\'ll contact you within 24 hours.')
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
 
   return (
     <>
@@ -54,7 +28,21 @@ export default function ContactPage() {
                   Fill out the form below and we'll get back to you within 24 hours with availability and pricing.
                 </p>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form action="https://formsubmit.co/cadenf@lakecountyoutdoor.com" method="POST" className="space-y-6">
+                  {/* FormSubmit Configuration */}
+                  <input type="hidden" name="_subject" value="[RENTAL] New Equipment Inquiry" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_template" value="table" />
+                  {/* Form Source Identifier */}
+                  <input type="hidden" name="form_source" value="rental-site" />
+                  <input type="hidden" name="form_type" value="equipment-rental-inquiry" />
+                  <input type="hidden" name="website" value="rental.lakecountyoutdoor.com" />
+                  {/* Redirect to thank you page after submission */}
+                  <input type="hidden" name="_next" value="https://rental.lakecountyoutdoor.com/thank-you" />
+                  {/* Webhook URL for Odoo CRM integration */}
+                  <input type="hidden" name="_webhook" value="https://lco.axsyslabs.com/submitform/webhook/6fVTQR-DHvK0K9IrKe10faFLYiu_mco5z5ibXrlMeac" />
+                  {/* Honeypot spam protection */}
+                  <input type="text" name="_honey" style={{ display: 'none' }} />
                   <div>
                     <label htmlFor="name" className="block text-sm font-semibold mb-2">
                       Full Name *
@@ -64,8 +52,6 @@ export default function ContactPage() {
                       id="name"
                       name="name"
                       required
-                      value={formData.name}
-                      onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
@@ -80,8 +66,6 @@ export default function ContactPage() {
                         id="email"
                         name="email"
                         required
-                        value={formData.email}
-                        onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
@@ -94,8 +78,6 @@ export default function ContactPage() {
                         id="phone"
                         name="phone"
                         required
-                        value={formData.phone}
-                        onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
@@ -108,8 +90,6 @@ export default function ContactPage() {
                     <select
                       id="equipment"
                       name="equipment"
-                      value={formData.equipment}
-                      onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     >
                       <option value="">Select equipment category</option>
@@ -132,8 +112,6 @@ export default function ContactPage() {
                       id="rentalDates"
                       name="rentalDates"
                       placeholder="e.g., March 15-17 or Next Week"
-                      value={formData.rentalDates}
-                      onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
@@ -146,8 +124,6 @@ export default function ContactPage() {
                       id="message"
                       name="message"
                       rows={4}
-                      value={formData.message}
-                      onChange={handleChange}
                       placeholder="Tell us more about your project or specific equipment needs..."
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
@@ -266,9 +242,7 @@ export default function ContactPage() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Lake County Outdoors Equipment Rental Service Area - Hennepin County and Surrounding Areas"
-                className="transition-all duration-300 hover:filter-none"
-                onMouseEnter={(e) => e.currentTarget.style.filter = 'grayscale(0%)'}
-                onMouseLeave={(e) => e.currentTarget.style.filter = 'grayscale(20%)'}
+                className="transition-all duration-300 hover:grayscale-0"
               />
             </div>
           </div>

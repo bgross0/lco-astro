@@ -164,15 +164,17 @@ export async function getEquipmentByCategory(
  * Convert Odoo vehicle to our Equipment interface
  */
 export function vehicleToEquipment(vehicle: Vehicle) {
-  // Handle image URL - prepend base URL if it's a relative path
-  let imageUrl: string | undefined
+  // Use the primary_image URL from API if available (with attachment=True fix)
+  // Otherwise construct URL as fallback
+  let imageUrl: string
   if (vehicle.primary_image) {
+    // Use the URL provided by the API (may be full URL or relative)
     imageUrl = vehicle.primary_image.startsWith('http')
       ? vehicle.primary_image
-      : `https://lco.axsys.app${vehicle.primary_image}`
+      : `/web/image/fleet.vehicle/${vehicle.id}/image_1920`
   } else {
-    // Use an existing equipment image as placeholder
-    imageUrl = '/images/equipment/equipment-hero-600x300.jpg'
+    // Fallback: construct relative path that gets proxied to Odoo
+    imageUrl = `/web/image/fleet.vehicle/${vehicle.id}/image_1920`
   }
 
   // Determine category - use Odoo's category field if available, otherwise derive from name
@@ -180,22 +182,52 @@ export function vehicleToEquipment(vehicle: Vehicle) {
   if (vehicle.category) {
     // Map Odoo categories to our display categories
     const categoryMap: Record<string, string> = {
+      // Skid Steer variations
       'skidsteer': 'Skid Steers',
       'skid_steer': 'Skid Steers',
+      'skid steer': 'Skid Steers',
+      'skid steers': 'Skid Steers',
+      // Excavator variations
       'excavator': 'Excavators',
+      'excavators': 'Excavators',
       'mini_excavator': 'Excavators',
+      'mini excavator': 'Excavators',
+      // Trailer variations
       'trailer': 'Trailers',
+      'trailers': 'Trailers',
       'dump_trailer': 'Trailers',
+      'dump trailer': 'Trailers',
       'equipment_trailer': 'Trailers',
+      'equipment trailer': 'Trailers',
+      // Loader variations
       'loader': 'Loaders',
+      'loaders': 'Loaders',
       'wheel_loader': 'Loaders',
+      'wheel loader': 'Loaders',
       'backhoe': 'Loaders',
+      // Power Tools variations
       'power_tool': 'Power Tools',
+      'power tool': 'Power Tools',
+      'power tools': 'Power Tools',
       'chainsaw': 'Power Tools',
       'generator': 'Power Tools',
-      'compressor': 'Power Tools'
+      'compressor': 'Power Tools',
+      // Attachments variations
+      'attachment': 'Attachments',
+      'attachments': 'Attachments'
     }
-    category = categoryMap[vehicle.category.toLowerCase()] || 'Skid Steers'
+
+    // Debug logging to see what Odoo is actually sending
+    console.log('Odoo category value:', vehicle.category, 'for vehicle:', vehicle.name)
+
+    // Map the category, keeping the default if no match found
+    const mappedCategory = categoryMap[vehicle.category.toLowerCase()]
+    if (mappedCategory) {
+      category = mappedCategory
+    } else {
+      // Keep the default 'Equipment' instead of forcing 'Skid Steers'
+      console.warn(`Unknown category '${vehicle.category}' for vehicle '${vehicle.name}', using default 'Equipment'`)
+    }
   } else if (vehicle.name) {
     // Name-based categorization for our new categories
     const nameLower = vehicle.name.toLowerCase()
