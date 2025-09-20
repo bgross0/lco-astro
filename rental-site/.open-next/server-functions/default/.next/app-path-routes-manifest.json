@@ -1,14 +1,15 @@
 {
   "/_not-found/page": "/_not-found",
+  "/api/events/route": "/api/events",
   "/api/booking/route": "/api/booking",
   "/api/webhook/inventory/route": "/api/webhook/inventory",
   "/api/webhook/booking/route": "/api/webhook/booking",
-  "/api/events/route": "/api/events",
-  "/account/page": "/account",
-  "/equipment/[id]/page": "/equipment/[id]",
   "/about/page": "/about",
   "/contact/page": "/contact",
+  "/account/page": "/account",
+  "/equipment/[category]/page": "/equipment/[category]",
+  "/equipment/page": "/equipment",
+  "/equipment/[id]/page": "/equipment/[id]",
   "/page": "/",
-  "/thank-you/page": "/thank-you",
-  "/equipment/page": "/equipment"
+  "/thank-you/page": "/thank-you"
 }

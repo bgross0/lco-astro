@@ -1,0 +1,467 @@
+---
+import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
+import heroData from '../../content/homepage/hero.json';
+import settings from '../../data/settings.json';
+
+// Extract phone number from cellphone string
+const phoneNumber = settings.cellphone.match(/\((\d{3})\)\s*(\d{3})-(\d{4})/);
+const phoneHref = phoneNumber ? `tel:${phoneNumber[1]}${phoneNumber[2]}${phoneNumber[3]}` : 'tel:6126550648';
+const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneNumber[3]}` : settings.cellphone.replace('Operations ', '');
+---
+
+<section class="hero-full">
+  <!-- Background Slideshow -->
+  <div class="hero-slideshow-bg">
+    {heroData.images.map((image, index) => {
+      const imageName = image.src.split('/').pop().replace(/\.(jpg|jpeg|png)$/i, '');
+      const imageDir = image.src.substring(0, image.src.lastIndexOf('/'));
+      const webp400 = `${imageDir}/${imageName}-400w.webp`;
+
+      return (
+        <picture class={`hero-slide ${index === 0 ? 'hero-slide--active' : ''}`}>
+          {/* Mobile: Use 400w webp if available */}
+          <source
+            type="image/webp"
+            media="(max-width: 640px)"
+            srcset={`${webp400} 400w`}
+          />
+          {/* Fallback to original */}
+          <img
+            src={image.src}
+            alt={image.alt}
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchpriority={index === 0 ? 'high' : 'auto'}
+            decoding={index === 0 ? 'sync' : 'async'}
+            class="hero-slide-img"
+          />
+        </picture>
+      );
+    })}
+  </div>
+
+  <!-- Dark overlay for text readability -->
+  <div class="hero-overlay"></div>
+
+  <!-- Main Content Container -->
+  <div class="hero-container">
+    <div class="hero-content">
+      <!-- Logo -->
+      <div class="hero-logo-wrapper">
+        <img src={settings.logo} alt="Lake County Outdoors Logo" class="hero-logo" fetchpriority="high" />
+      </div>
+
+      <!-- Description -->
+      <p class="hero-description">
+        {heroData.description}
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="hero-actions">
+        <Button href={heroData.ctaLink} variant="primary" size="large">
+          {heroData.ctaText}
+        </Button>
+        <Button href={phoneHref} variant="secondary" size="large">
+          <Icon name="phone" size={20} />
+          Call {phoneDisplay}
+        </Button>
+      </div>
+
+      <!-- Dots navigation -->
+      <div class="hero-dots">
+        {heroData.images.map((_, index) => (
+          <button
+            class={`hero-dot ${index === 0 ? 'hero-dot--active' : ''}`}
+            aria-label={`Go to slide ${index + 1}`}
+          ></button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Services Section -->
+  <div class="hero-services">
+    <div class="hero-services-container">
+      {heroData.bottomServices && heroData.bottomServices.map((service) => (
+        <div class="hero-service-item">
+          <div class="hero-service-icon">
+            <Icon name={service.icon} size={48} color="var(--primary)" />
+          </div>
+          <h4 class="hero-service-title">{service.title}</h4>
+          <p class="hero-service-text">{service.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-full {
+    position: relative;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: -80px;
+    padding-top: 80px;
+  }
+
+  /* Background Slideshow */
+  .hero-slideshow-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .hero-slide--active {
+    opacity: 1;
+  }
+
+  .hero-slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Overlay */
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: 1;
+  }
+
+  /* Content Container */
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  /* Logo */
+  .hero-logo-wrapper {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-logo {
+    height: 200px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+  }
+
+  /* Description */
+  .hero-description {
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Actions */
+  .hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .hero-actions :global(.btn) {
+    min-width: 200px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-actions :global(.btn-secondary) {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary);
+  }
+
+  .hero-actions :global(.btn-secondary:hover) {
+    background: white;
+  }
+
+  /* Dots Navigation */
+  .hero-dots {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .hero-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .hero-dot--active {
+    background-color: white;
+    width: 30px;
+    border-radius: 5px;
+  }
+
+  .hero-dot:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* Bottom Services Section */
+  .hero-services {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 2rem 0;
+    margin-top: auto;
+  }
+
+  .hero-services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .hero-service-item {
+    text-align: center;
+  }
+
+  .hero-service-icon {
+    margin-bottom: 1rem;
+  }
+
+  .hero-service-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--secondary);
+  }
+
+  .hero-service-text {
+    font-size: 1rem;
+    color: var(--neutral-dark);
+  }
+
+  /* Tablet styles */
+  @media (min-width: 768px) {
+    .hero-full {
+      min-height: 650px;
+    }
+
+    .hero-logo {
+      height: 220px;
+    }
+  }
+
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    .hero-full {
+      min-height: 750px;
+      margin-top: -100px;
+      padding-top: 100px;
+    }
+
+    .hero-container {
+      padding: 0 3rem;
+    }
+
+    .hero-logo {
+      height: 240px;
+    }
+
+    .hero-description {
+      margin-bottom: 3rem;
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 767px) {
+    .hero-full {
+      min-height: 600px;
+    }
+
+    .hero-container {
+      padding: 0 1.5rem;
+    }
+
+    .hero-logo {
+      height: 160px;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-actions :global(.btn) {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .hero-dots {
+      margin-top: 1.5rem;
+    }
+
+    .hero-services-container {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .hero-service-item {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    .hero-logo {
+      height: 140px;
+    }
+
+    .hero-description {
+      font-size: 0.95rem;
+      padding: 0 1rem;
+    }
+  }
+</style>
+
+<script>
+  // Slideshow functionality
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  let currentSlide = 0;
+  let slideInterval;
+
+  function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('hero-slide--active'));
+    dots.forEach(dot => dot.classList.remove('hero-dot--active'));
+
+    // Add active class to current slide and dot
+    slides[index].classList.add('hero-slide--active');
+    dots[index].classList.add('hero-dot--active');
+
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    const next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }
+
+  function startSlideshow() {
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+
+  function stopSlideshow() {
+    clearInterval(slideInterval);
+  }
+
+  // Add click handlers to dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      stopSlideshow();
+      showSlide(index);
+      startSlideshow();
+    });
+  });
+
+  // Start automatic slideshow
+  startSlideshow();
+
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const heroSection = document.querySelector('.hero-full');
+
+  if (heroSection) {
+    heroSection.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    heroSection.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+  }
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      stopSlideshow();
+      if (diff > 0) {
+        // Swipe left - next slide
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+      } else {
+        // Swipe right - previous slide
+        const prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev);
+      }
+      startSlideshow();
+    }
+  }
+</script>
