@@ -4,10 +4,16 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 assets = { directory = ".open-next/assets", binding = "NEXT_ASSETS" }
 
+# Worker configuration
+workers_dev = false
+minify = true
+
+# Environment variables
 [vars]
 ODOO_API_URL = "https://lco.axsys.app"
 NODE_ENV = "production"
 
+# R2 Storage for caching
 [[r2_buckets]]
 binding = "NEXT_INC_CACHE_R2_BUCKET"
 bucket_name = "lco-rental-cache"
@@ -16,3 +22,19 @@ bucket_name = "lco-rental-cache"
 [[routes]]
 pattern = "rent.lakecountyoutdoor.com"
 custom_domain = true
+
+# Observability settings
+[observability.logs]
+enabled = true
+
+# Build configuration
+[build]
+command = "npx @opennextjs/cloudflare build"
+
+# Limits and performance
+[limits]
+cpu_ms = 50
+
+# Placement (optional - for performance)
+[placement]
+mode = "smart"
