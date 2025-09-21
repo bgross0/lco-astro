@@ -3241,13 +3241,13 @@
       "imports": [],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js": {
-      "bytes": 8558,
+    ".open-next/server-functions/default/.next/server/app/contact/page_client-reference-manifest.js": {
+      "bytes": 8306,
       "imports": [],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/contact/page_client-reference-manifest.js": {
-      "bytes": 8306,
+    ".open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js": {
+      "bytes": 8558,
       "imports": [],
       "format": "cjs"
     },
@@ -3266,8 +3266,8 @@
       "imports": [],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page_client-reference-manifest.js": {
-      "bytes": 8944,
+    ".open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js": {
+      "bytes": 8274,
       "imports": [],
       "format": "cjs"
     },
@@ -3276,18 +3276,18 @@
       "imports": [],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js": {
-      "bytes": 8274,
-      "imports": [],
-      "format": "cjs"
-    },
-    ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route_client-reference-manifest.js": {
-      "bytes": 8296,
+    ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page_client-reference-manifest.js": {
+      "bytes": 8944,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route_client-reference-manifest.js": {
       "bytes": 8292,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route_client-reference-manifest.js": {
+      "bytes": 8296,
       "imports": [],
       "format": "cjs"
     },
@@ -3325,14 +3325,14 @@
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/thank-you/page_client-reference-manifest.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js",
-          "kind": "require-call",
-          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js"
-        },
-        {
           "path": ".open-next/server-functions/default/.next/server/app/contact/page_client-reference-manifest.js",
           "kind": "require-call",
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/contact/page_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/account/page_client-reference-manifest.js",
@@ -3350,9 +3350,9 @@
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/_not-found/page_client-reference-manifest.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page_client-reference-manifest.js",
+          "path": ".open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js",
           "kind": "require-call",
-          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/equipment/[slug]/page_client-reference-manifest.js"
+          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/api/booking/route_client-reference-manifest.js",
@@ -3360,19 +3360,19 @@
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/booking/route_client-reference-manifest.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js",
+          "path": ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page_client-reference-manifest.js",
           "kind": "require-call",
-          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js"
-        },
-        {
-          "path": ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route_client-reference-manifest.js",
-          "kind": "require-call",
-          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/webhook/inventory/route_client-reference-manifest.js"
+          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/equipment/[slug]/page_client-reference-manifest.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route_client-reference-manifest.js",
           "kind": "require-call",
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/webhook/booking/route_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/webhook/inventory/route_client-reference-manifest.js"
         }
       ],
       "format": "cjs"
@@ -3394,7 +3394,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/chunks/147.js": {
-      "bytes": 9394,
+      "bytes": 9446,
       "imports": [],
       "format": "cjs"
     },
@@ -3404,7 +3404,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/chunks/287.js": {
-      "bytes": 9902,
+      "bytes": 9954,
       "imports": [],
       "format": "cjs"
     },
@@ -4513,8 +4513,8 @@
       ],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js": {
-      "bytes": 10062,
+    ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route.js": {
+      "bytes": 9471,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -4569,8 +4569,8 @@
       ],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route.js": {
-      "bytes": 9471,
+    ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js": {
+      "bytes": 10062,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -4757,8 +4757,8 @@
       ],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/equipment/page.js": {
-      "bytes": 22064,
+    ".open-next/server-functions/default/.next/server/app/contact/page.js": {
+      "bytes": 25244,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -4824,7 +4824,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page.js": {
-      "bytes": 34832,
+      "bytes": 34724,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -4955,8 +4955,8 @@
       ],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/contact/page.js": {
-      "bytes": 25192,
+    ".open-next/server-functions/default/.next/server/app/thank-you/page.js": {
+      "bytes": 19308,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -5021,8 +5021,8 @@
       ],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/thank-you/page.js": {
-      "bytes": 19308,
+    ".open-next/server-functions/default/.next/server/app/equipment/page.js": {
+      "bytes": 21956,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -5166,14 +5166,14 @@
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/events/route.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js",
-          "kind": "require-call",
-          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js"
-        },
-        {
           "path": ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route.js",
           "kind": "require-call",
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/webhook/booking/route.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js",
+          "kind": "require-call",
+          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/about/page.js",
@@ -5186,9 +5186,9 @@
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/account/page.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/equipment/page.js",
+          "path": ".open-next/server-functions/default/.next/server/app/contact/page.js",
           "kind": "require-call",
-          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/equipment/page.js"
+          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/contact/page.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page.js",
@@ -5201,14 +5201,14 @@
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/page.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/contact/page.js",
-          "kind": "require-call",
-          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/contact/page.js"
-        },
-        {
           "path": ".open-next/server-functions/default/.next/server/app/thank-you/page.js",
           "kind": "require-call",
           "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/thank-you/page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/equipment/page.js",
+          "kind": "require-call",
+          "original": "/home/ben/Documents/GitHub/lco-astro/rental-site/.open-next/server-functions/default/.next/server/app/equipment/page.js"
         }
       ],
       "format": "cjs"
@@ -8517,11 +8517,11 @@
         ".open-next/server-functions/default/.next/server/app/thank-you/page_client-reference-manifest.js": {
           "bytesInOutput": 7703
         },
-        ".open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js": {
-          "bytesInOutput": 7941
-        },
         ".open-next/server-functions/default/.next/server/app/contact/page_client-reference-manifest.js": {
           "bytesInOutput": 7687
+        },
+        ".open-next/server-functions/default/.next/server/app/equipment/page_client-reference-manifest.js": {
+          "bytesInOutput": 7941
         },
         ".open-next/server-functions/default/.next/server/app/account/page_client-reference-manifest.js": {
           "bytesInOutput": 7571
@@ -8532,20 +8532,20 @@
         ".open-next/server-functions/default/.next/server/app/_not-found/page_client-reference-manifest.js": {
           "bytesInOutput": 7656
         },
+        ".open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js": {
+          "bytesInOutput": 7659
+        },
+        ".open-next/server-functions/default/.next/server/app/api/booking/route_client-reference-manifest.js": {
+          "bytesInOutput": 7663
+        },
         ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page_client-reference-manifest.js": {
           "bytesInOutput": 8334
         },
-        ".open-next/server-functions/default/.next/server/app/api/booking/route_client-reference-manifest.js": {
-          "bytesInOutput": 7662
-        },
-        ".open-next/server-functions/default/.next/server/app/api/events/route_client-reference-manifest.js": {
-          "bytesInOutput": 7660
+        ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route_client-reference-manifest.js": {
+          "bytesInOutput": 7687
         },
         ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route_client-reference-manifest.js": {
           "bytesInOutput": 7693
-        },
-        ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route_client-reference-manifest.js": {
-          "bytesInOutput": 7687
         },
         ".open-next/server-functions/default/node_modules/next/dist/server/load-manifest.external.js": {
           "bytesInOutput": 22159
@@ -8557,13 +8557,13 @@
           "bytesInOutput": 194
         },
         ".open-next/server-functions/default/.next/server/chunks/147.js": {
-          "bytesInOutput": 9529
+          "bytesInOutput": 9581
         },
         ".open-next/server-functions/default/.next/server/chunks/152.js": {
           "bytesInOutput": 5982
         },
         ".open-next/server-functions/default/.next/server/chunks/287.js": {
-          "bytesInOutput": 10036
+          "bytesInOutput": 10088
         },
         ".open-next/server-functions/default/.next/server/chunks/428.js": {
           "bytesInOutput": 7796
@@ -8715,11 +8715,11 @@
         ".open-next/server-functions/default/.next/server/app/api/events/route.js": {
           "bytesInOutput": 9377
         },
-        ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js": {
-          "bytesInOutput": 10255
-        },
         ".open-next/server-functions/default/.next/server/app/api/webhook/booking/route.js": {
           "bytesInOutput": 9642
+        },
+        ".open-next/server-functions/default/.next/server/app/api/webhook/inventory/route.js": {
+          "bytesInOutput": 10255
         },
         ".open-next/server-functions/default/.next/server/app/about/page.js": {
           "bytesInOutput": 23888
@@ -8727,20 +8727,20 @@
         ".open-next/server-functions/default/.next/server/app/account/page.js": {
           "bytesInOutput": 22840
         },
-        ".open-next/server-functions/default/.next/server/app/equipment/page.js": {
-          "bytesInOutput": 22290
+        ".open-next/server-functions/default/.next/server/app/contact/page.js": {
+          "bytesInOutput": 25395
         },
         ".open-next/server-functions/default/.next/server/app/equipment/[slug]/page.js": {
-          "bytesInOutput": 35159
+          "bytesInOutput": 35048
         },
         ".open-next/server-functions/default/.next/server/app/page.js": {
           "bytesInOutput": 28661
         },
-        ".open-next/server-functions/default/.next/server/app/contact/page.js": {
-          "bytesInOutput": 25343
-        },
         ".open-next/server-functions/default/.next/server/app/thank-you/page.js": {
           "bytesInOutput": 19463
+        },
+        ".open-next/server-functions/default/.next/server/app/equipment/page.js": {
+          "bytesInOutput": 22179
         },
         ".open-next/server-functions/default/node_modules/next/dist/server/require.js": {
           "bytesInOutput": 14302
@@ -9031,7 +9031,7 @@
           "bytesInOutput": 53274
         }
       },
-      "bytes": 3577834
+      "bytes": 3577768
     }
   }
 }
