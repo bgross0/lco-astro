@@ -136,11 +136,6 @@ function CategoryPage({ slug }: { slug: string }) {
             <p className="text-xl opacity-90">
               {description}
             </p>
-            {connected && (
-              <div className="mt-4 text-sm text-green-200">
-                ✓ Live inventory updates enabled
-              </div>
-            )}
           </div>
         </div>
 
