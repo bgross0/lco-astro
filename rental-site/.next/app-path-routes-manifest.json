@@ -4,11 +4,11 @@
   "/api/events/route": "/api/events",
   "/api/webhook/booking/route": "/api/webhook/booking",
   "/api/webhook/inventory/route": "/api/webhook/inventory",
-  "/about/page": "/about",
   "/account/page": "/account",
+  "/equipment/page": "/equipment",
   "/contact/page": "/contact",
   "/equipment/[slug]/page": "/equipment/[slug]",
-  "/equipment/page": "/equipment",
   "/page": "/",
+  "/about/page": "/about",
   "/thank-you/page": "/thank-you"
 }

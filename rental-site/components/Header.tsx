@@ -16,8 +16,8 @@ export default function Header() {
             <Image
               src="/lco-2025.png"
               alt="Lake County Outdoors Logo"
-              width={60}
-              height={60}
+              width={80}
+              height={80}
               className="transition-transform group-hover:scale-105"
             />
             <div>
