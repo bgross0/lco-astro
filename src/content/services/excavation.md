@@ -1,7 +1,7 @@
 ---
 title: "Excavation Services"
 description: "Professional excavation and earthmoving services for residential and commercial projects. Site preparation, grading, and utility installation."
-image: "/images/excavation/excavation-square-1-600x600.jpg"
+image: "/images/services/excavation/excavation-hero.jpg"
 images: [
   "/images/excavation/excavation-square-1-600x600.jpg",
   "/images/excavation/excavation-square-2-600x600.jpg",

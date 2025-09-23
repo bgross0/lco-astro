@@ -36,7 +36,7 @@ images: [
   "/images/loader-snow-bucket.jpg"
 ]
 subtitle: "24/7 Emergency Service"
-image: /images/snow-removal/snow-removal-hero-600x300.jpg
+image: /images/services/snow-removal/snow-removal-hero.jpg
 features:
   - icon: snowflake
     title: Snow Plowing

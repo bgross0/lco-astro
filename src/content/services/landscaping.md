@@ -1,7 +1,7 @@
 ---
 title: "Professional Landscaping"
 description: "Transform your outdoor space with our comprehensive landscaping services including design, installation, and maintenance."
-image: "/images/landscaping/landscaping-square-1-600x600.jpg"
+image: "/images/services/landscaping/landscaping-hero-new.jpg"
 images: [
   "/images/landscaping/landscaping-square-1-600x600.jpg",
   "/images/landscaping/landscaping-square-2-600x600.jpg",
