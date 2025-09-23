@@ -60,6 +60,14 @@ features:
 
 Lake County Outdoors provides comprehensive commercial snow removal services to keep your business accessible and safe throughout winter. Our experienced team and professional equipment ensure your property is cleared quickly and efficiently.
 
+<div style="display: flex; align-items: center; margin: 3rem 0; gap: 2rem;">
+  <img src="/images/services/snow-removal/mpca-smart-salter-badge.png" alt="MPCA Certified Smart Salter" style="width: 300px; height: auto; flex-shrink: 0;" />
+  <div style="flex: 1;">
+    <h3 style="margin-top: 0;">We are MPCA Certified Smart Salters</h3>
+    <p>Committed to protecting Minnesota's lakes and streams through responsible salt application and environmentally conscious ice management practices. Our certification demonstrates our dedication to environmental stewardship while maintaining the highest standards of winter safety for your property.</p>
+  </div>
+</div>
+
 ### Our Commercial Snow Services Include:
 
 - **24/7 Emergency Response**
