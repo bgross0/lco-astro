@@ -29,6 +29,10 @@ const { Content } = await service.render();
       service.data.title === 'Ice Management' ? 'Prevent slips and falls with professional ice control and de-icing solutions.' :
       service.data.title === 'Professional Landscaping' ? 'Transform your property with expert design, installation, and maintenance services.' :
       service.data.title === 'Municipal Contracting' ? 'Trusted partner for government snow removal, landscaping, and maintenance contracts.' :
+      service.data.title === 'Tree Removal' ? 'Safe and efficient tree removal services by certified professionals.' :
+      service.data.title === 'Excavation Services' ? 'Precision earthwork solutions for construction and landscaping projects.' :
+      service.data.title === 'Concrete and Paving' ? 'Quality concrete work and asphalt paving for lasting results.' :
+      service.data.title === 'Property Maintenance' ? 'Complete year-round care to keep your property pristine.' :
       'Professional service you can count on.'
     }
     backgroundImage={service.data.hero?.backgroundImage || service.data.images?.[0] || service.data.image}

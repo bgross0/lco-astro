@@ -140,8 +140,8 @@ const pageDescription = contactData.seo.description;
               </div>
               <div class="contact__info-content">
                 <h4>Phone</h4>
-                <a href={`tel:${settings.phone.replace(/-/g, '')}`} class="contact__info-link">
-                  {settings.phone}
+                <a href={`tel:${settings.cellphone.replace(/-/g, '')}`} class="contact__info-link">
+                  {settings.cellphone}
                 </a>
                 <p class="contact__info-note">{settings.hours}</p>
               </div>
@@ -165,9 +165,8 @@ const pageDescription = contactData.seo.description;
                 <Icon name="map-pin" size={24} color="var(--primary)" />
               </div>
               <div class="contact__info-content">
-                <h4>Service Area</h4>
+                <h4>Office</h4>
                 <p>{settings.address}</p>
-                <p class="contact__info-note">{contactData.info.serviceAreaNote || "Commercial properties throughout the metro"}</p>
               </div>
             </div>
           </div>

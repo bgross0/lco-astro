@@ -5,51 +5,88 @@
   "primaryCities": [
     {
       "name": "Edina",
-      "responseTime": "20-minute response",
+      "responseTime": "15-minute response",
       "note": "Headquarters location"
     },
     {
       "name": "Minneapolis",
-      "responseTime": "30-minute response",
+      "responseTime": "15-minute response",
       "note": "Downtown & commercial districts"
     },
     {
       "name": "Bloomington",
-      "responseTime": "25-minute response",
+      "responseTime": "15-minute response",
       "note": "Including Mall of America area"
     },
     {
       "name": "St. Louis Park",
-      "responseTime": "20-minute response",
+      "responseTime": "15-minute response",
       "note": null
     },
     {
       "name": "Minnetonka",
-      "responseTime": "25-minute response",
+      "responseTime": "15-minute response",
       "note": null
     },
     {
       "name": "Eden Prairie",
-      "responseTime": "30-minute response",
+      "responseTime": "15-minute response",
       "note": null
     }
   ],
   "additionalCities": [
-    "Richfield",
-    "Hopkins",
-    "Golden Valley",
-    "Plymouth",
-    "Wayzata",
-    "Excelsior",
-    "Chanhassen",
-    "St. Paul",
-    "Roseville",
-    "Burnsville",
-    "Savage",
-    "Prior Lake",
-    "Shakopee",
+    "Andover",
+    "Anoka",
     "Apple Valley",
-    "Eagan"
+    "Blaine",
+    "Brooklyn Center",
+    "Brooklyn Park",
+    "Burnsville",
+    "Champlin",
+    "Chanhassen",
+    "Chaska",
+    "Columbia Heights",
+    "Coon Rapids",
+    "Cottage Grove",
+    "Crystal",
+    "Eagan",
+    "Excelsior",
+    "Farmington",
+    "Forest Lake",
+    "Fridley",
+    "Golden Valley",
+    "Ham Lake",
+    "Hastings",
+    "Hopkins",
+    "Hugo",
+    "Inver Grove Heights",
+    "Lake Elmo",
+    "Lakeville",
+    "Long Lake",
+    "Maple Grove",
+    "Maplewood",
+    "Medina",
+    "Mendota Heights",
+    "New Hope",
+    "Oakdale",
+    "Orono",
+    "Plymouth",
+    "Prior Lake",
+    "Richfield",
+    "Robbinsdale",
+    "Rosemount",
+    "Roseville",
+    "Savage",
+    "Shakopee",
+    "Shoreview",
+    "St. Paul",
+    "Stillwater",
+    "Victoria",
+    "Waconia",
+    "Wayzata",
+    "West St. Paul",
+    "White Bear Lake",
+    "Woodbury"
   ],
   "serviceMap": {
     "lat": 44.8697,
@@ -58,14 +95,17 @@
   },
   "seo": {
     "metaTitle": "Service Areas - Twin Cities Snow Removal & Landscaping",
-    "metaDescription": "Lake County Outdoors serves Edina, Minneapolis, Bloomington, and the entire Twin Cities metro area with commercial snow removal, landscaping, and excavation services.",
+    "metaDescription": "Lake County Outdoors serves Edina, Minneapolis, Bloomington, and the entire Twin Cities metro area with commercial snow removal, landscaping, tree removal, excavation, concrete paving, and property maintenance services.",
     "keywords": [
       "twin cities snow removal",
       "minneapolis landscaping",
       "edina commercial plowing",
       "bloomington excavation",
       "minnesota snow management",
-      "metro area landscaping services"
+      "metro area landscaping services",
+      "twin cities tree removal",
+      "concrete paving minneapolis",
+      "property maintenance edina"
     ]
   }
 }

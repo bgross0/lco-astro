@@ -25,6 +25,22 @@
         {
           "label": "Ice Management",
           "href": "/services/ice-management"
+        },
+        {
+          "label": "Tree Removal",
+          "href": "/services/tree-removal"
+        },
+        {
+          "label": "Excavation",
+          "href": "/services/excavation"
+        },
+        {
+          "label": "Concrete and Paving",
+          "href": "/services/concrete-and-paving"
+        },
+        {
+          "label": "Property Maintenance",
+          "href": "/services/property-maintenance"
         }
       ]
     },
@@ -60,6 +76,22 @@
     {
       "label": "Ice Management",
       "href": "/services/ice-management"
+    },
+    {
+      "label": "Tree Removal",
+      "href": "/services/tree-removal"
+    },
+    {
+      "label": "Excavation Services",
+      "href": "/services/excavation"
+    },
+    {
+      "label": "Concrete & Paving",
+      "href": "/services/concrete-and-paving"
+    },
+    {
+      "label": "Property Maintenance",
+      "href": "/services/property-maintenance"
     }
   ]
 }
