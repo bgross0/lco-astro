@@ -1,7 +1,7 @@
 ---
 title: "Concrete and Paving"
 description: "Quality concrete work and asphalt paving services for driveways, walkways, patios, and parking lots. New installation and repairs."
-image: "/images/services/concrete/concrete-paving-hero.jpg"
+image: "/images/services/concrete/concrete-paving-hero-final.jpg"
 images: [
   "/images/gallery/img-1449-1920w.jpg",
   "/images/gallery/img-1485-1920w.jpg",

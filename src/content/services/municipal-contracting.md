@@ -2,7 +2,7 @@
 title: Municipal Contracting
 description: Reliable municipal services including road maintenance, snow
   removal, and infrastructure work.
-image: "/images/services/municipal/municipal-hero.jpg"
+image: "/images/services/municipal/municipal-hero-final.jpg"
 images: [
   "/images/equipment/equipment-1-600x287.jpg",
   "/images/equipment/equipment-2-600x616.jpg",

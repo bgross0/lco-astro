@@ -36,7 +36,11 @@
       "Bash(sudo apt-get:*)",
       "Bash(sudo apt-get install:*)",
       "Bash(python3:*)",
-      "Read(//home/ben/Documents/GitHub/**)"
+      "Read(//home/ben/Documents/GitHub/**)",
+      "Bash(shuf:*)",
+      "Bash(while read f)",
+      "Bash(do echo \"$f\")",
+      "Bash(done)"
     ],
     "deny": []
   }
