@@ -1,7 +1,7 @@
 ---
 title: "Property Maintenance"
 description: "Complete property maintenance services for residential and commercial properties. Year-round care to keep your property pristine."
-image: "/images/gallery/img-2346-1920w.jpg"
+image: "/images/services/property-maintenance/property-maintenance-hero.jpg"
 images: [
   "/images/gallery/img-2346-1920w.jpg",
   "/images/gallery/img-7116-1920w.jpg",

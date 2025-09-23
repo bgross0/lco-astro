@@ -1,7 +1,7 @@
 ---
 title: "Ice Management"
 description: "Complete ice control solutions with pre-treatment, de-icing, and anti-icing services."
-image: "/images/snow-removal/snow-removal-banner-600x300.jpg"
+image: "/images/services/ice-management/ice-management-hero.jpg"
 images: [
   "/images/salting.jpg",
   "/images/snow-removal/cat-299d3-snow.jpg",
