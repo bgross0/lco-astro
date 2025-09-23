@@ -31,12 +31,37 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
             <article class="blog-card">
               {post.data.image && (
                 <div class="blog-card__image">
-                  {(() => { const webp = post.data.image?.replace(/\.(jpe?g|png)$/i, '.webp'); return (
-                    <picture>
-                      <source srcset={webp} type="image/webp" />
-                      <img src={post.data.image} alt={post.data.imageAlt || post.data.title} loading="lazy" decoding="async" />
-                    </picture>
-                  ); })()}
+                  {(() => {
+                    const imageName = post.data.image.split('/').pop().replace(/\.(jpe?g|png)$/i, '');
+                    const imageDir = post.data.image.substring(0, post.data.image.lastIndexOf('/'));
+                    const webp400 = `${imageDir}/${imageName}-400w.webp`;
+                    const webpOptimized = `${imageDir}/${imageName}-optimized.webp`;
+                    const jpg400 = `${imageDir}/${imageName}-400w.jpg`;
+                    const jpgOptimized = `${imageDir}/${imageName}-1920w.jpg`;
+
+                    return (
+                      <picture>
+                        <source
+                          type="image/webp"
+                          srcset={`${webp400} 400w, ${webpOptimized} 800w`}
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
+                        <source
+                          type="image/jpeg"
+                          srcset={`${jpg400} 400w, ${jpgOptimized} 800w`}
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
+                        <img
+                          src={jpgOptimized}
+                          alt={post.data.imageAlt || post.data.title}
+                          loading="lazy"
+                          decoding="async"
+                          width="400"
+                          height="225"
+                        />
+                      </picture>
+                    );
+                  })()}
                 </div>
               )}
               <div class="blog-card__content">

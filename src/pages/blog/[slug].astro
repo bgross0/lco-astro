@@ -21,19 +21,40 @@ const { Content } = await post.render();
 >
   <article class="blog-post">
     <div class="blog-post__hero">
-      {post.data.image && (
-        <picture>
-          <source srcset={post.data.image.replace(/\.(jpe?g|png)$/i, '.webp')} type="image/webp" />
-          <img 
-            src={post.data.image} 
-            alt={post.data.imageAlt || post.data.title}
-            class="blog-post__hero-image"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </picture>
-      )}
+      {post.data.image && (() => {
+        const imageName = post.data.image.split('/').pop().replace(/\.(jpe?g|png)$/i, '');
+        const imageDir = post.data.image.substring(0, post.data.image.lastIndexOf('/'));
+        const webp800 = `${imageDir}/${imageName}-800w.webp`;
+        const webp1200 = `${imageDir}/${imageName}-1200w.webp`;
+        const webpOptimized = `${imageDir}/${imageName}-optimized.webp`;
+        const jpg800 = `${imageDir}/${imageName}-800w.jpg`;
+        const jpgOptimized = `${imageDir}/${imageName}-1920w.jpg`;
+
+        return (
+          <picture>
+            <source
+              type="image/webp"
+              srcset={`${webp800} 800w, ${webp1200} 1200w, ${webpOptimized} 1920w`}
+              sizes="100vw"
+            />
+            <source
+              type="image/jpeg"
+              srcset={`${jpg800} 800w, ${jpgOptimized} 1200w`}
+              sizes="100vw"
+            />
+            <img
+              src={jpgOptimized}
+              alt={post.data.imageAlt || post.data.title}
+              class="blog-post__hero-image"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="1200"
+              height="675"
+            />
+          </picture>
+        );
+      })()}
       <div class="container">
         <div class="blog-post__header">
           <a href="/blog" class="blog-post__back">← Back to Blog</a>

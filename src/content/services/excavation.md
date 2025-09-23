@@ -3,9 +3,9 @@ title: "Excavation Services"
 description: "Professional excavation and earthmoving services for residential and commercial projects. Site preparation, grading, and utility installation."
 image: "/images/services/excavation/excavation-hero.jpg"
 images: [
-  "/images/excavation/excavation-square-1-600x600.jpg",
-  "/images/excavation/excavation-square-2-600x600.jpg",
-  "/images/excavation/excavation-square-3-600x600.jpg"
+  "/images/gallery/img-0815",
+  "/images/gallery/img-0816",
+  "/images/gallery/img-0817"
 ]
 subtitle: "Precision Earthwork Solutions"
 order: 6

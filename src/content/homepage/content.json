@@ -12,19 +12,19 @@
     },
     "images": [
       {
-        "src": "/images/snow-removal-full-914x726.jpg",
+        "src": "/images/gallery/img-2479",
         "alt": "Professional landscaping services"
       },
       {
-        "src": "/images/equipment/equipment-2-600x616.jpg",
+        "src": "/images/gallery/img-0814",
         "alt": "Equipment and machinery"
       },
       {
-        "src": "/images/snow-removal/snow-removal-hero-600x300.jpg",
+        "src": "/images/gallery/img-2481",
         "alt": "Snow removal services"
       },
       {
-        "src": "/images/landscaping/bobcat-excavator.jpg",
+        "src": "/images/gallery/img-0815",
         "alt": "Excavation equipment"
       }
     ]
@@ -38,11 +38,11 @@
     ],
     "images": [
       {
-        "src": "/images/equipment-4-600x389.jpg",
+        "src": "/images/gallery/img-1449-1920w.jpg",
         "alt": "Professional equipment fleet"
       },
       {
-        "src": "/images/landscaping/landscaping-square-1-600x600.jpg",
+        "src": "/images/gallery/img-2346-1920w.jpg",
         "alt": "Landscaping project showcase"
       }
     ],
@@ -103,7 +103,7 @@
   "cta": {
     "title": "Call 612-655-0648 TODAY!",
     "description": "We stay in constant communication with our customers until the job is done. To get a free quote, or if you have questions or special requests, just drop us a line.",
-    "backgroundImage": "/images/snow-removal/snow-removal-full-914x726.jpg",
+    "backgroundImage": "/images/gallery/img-2482-1920w.jpg",
     "primaryButton": {
       "text": "Get Your Free Quote",
       "link": "/contact"
@@ -117,7 +117,7 @@
     "title": "What Our Customers Say",
     "subtitle": "Real reviews from satisfied customers",
     "rating": 5,
-    "reviewCount": 32,
+    "reviewCount": 34,
     "googleBusinessUrl": "https://maps.app.goo.gl/hoFQbvFjQv1oz1Hr9",
     "shapoWidgetId": "shapo-widget-5e08326267aa05c21435"
   }

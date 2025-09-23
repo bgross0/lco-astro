@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# backup and temp files
+*.backup
+*.tmp.*
+*.swp
+*.swo
+*~
