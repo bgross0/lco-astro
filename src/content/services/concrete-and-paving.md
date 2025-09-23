@@ -1,11 +1,11 @@
 ---
 title: "Concrete and Paving"
 description: "Quality concrete work and asphalt paving services for driveways, walkways, patios, and parking lots. New installation and repairs."
-image: "/images/gallery/img-1449"
+image: "/images/gallery/img-1449-1920w.jpg"
 images: [
-  "/images/gallery/img-1449",
-  "/images/gallery/img-1485",
-  "/images/gallery/img-1486"
+  "/images/gallery/img-1449-1920w.jpg",
+  "/images/gallery/img-1485-1920w.jpg",
+  "/images/gallery/img-1486-1920w.jpg"
 ]
 subtitle: "Durable Surfaces Built to Last"
 order: 7

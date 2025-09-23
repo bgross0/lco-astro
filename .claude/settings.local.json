@@ -35,7 +35,8 @@
       "Bash(sort:*)",
       "Bash(sudo apt-get:*)",
       "Bash(sudo apt-get install:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Read(//home/ben/Documents/GitHub/**)"
     ],
     "deny": []
   }

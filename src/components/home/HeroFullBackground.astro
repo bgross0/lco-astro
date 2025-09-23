@@ -14,18 +14,22 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   <!-- Background Slideshow -->
   <div class="hero-slideshow-bg">
     {heroData.images.map((image, index) => {
-      // Build optimized image paths
+      // Build optimized image paths - properly handle file extensions
       const basePath = image.src;
-      const webp400 = `${basePath}-400w.webp`;
-      const webp800 = `${basePath}-800w.webp`;
-      const webp1200 = `${basePath}-1200w.webp`;
-      const webp1920 = `${basePath}-1920w.webp`;
-      const webpOptimized = `${basePath}-optimized.webp`;
-      const jpg400 = `${basePath}-400w.jpg`;
-      const jpg800 = `${basePath}-800w.jpg`;
-      const jpg1200 = `${basePath}-1200w.jpg`;
-      const jpg1920 = `${basePath}-1920w.jpg`;
-      const jpgOptimized = `${basePath}-1920w.jpg`;
+      const lastDot = basePath.lastIndexOf('.');
+      const nameWithoutExt = lastDot > -1 ? basePath.slice(0, lastDot) : basePath;
+      const ext = lastDot > -1 ? basePath.slice(lastDot) : '';
+
+      const webp400 = `${nameWithoutExt}-400w.webp`;
+      const webp800 = `${nameWithoutExt}-800w.webp`;
+      const webp1200 = `${nameWithoutExt}-1200w.webp`;
+      const webp1920 = `${nameWithoutExt}-1920w.webp`;
+      const webpOptimized = `${nameWithoutExt}-optimized.webp`;
+      const jpg400 = `${nameWithoutExt}-400w.jpg`;
+      const jpg800 = `${nameWithoutExt}-800w.jpg`;
+      const jpg1200 = `${nameWithoutExt}-1200w.jpg`;
+      const jpg1920 = `${nameWithoutExt}-1920w.jpg`;
+      const jpgOptimized = `${nameWithoutExt}-1920w.jpg`;
 
       return (
         <picture class={`hero-slide ${index === 0 ? 'hero-slide--active' : ''}`}>
@@ -65,15 +69,19 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     <div class="hero-content">
       <!-- Logo -->
       <div class="hero-logo-wrapper">
-        <img
-          src={settings.logo}
-          alt="Lake County Outdoors Logo"
-          class="hero-logo"
-          fetchpriority="high"
-          width="180"
-          height="180"
-          loading="eager"
-        />
+        <picture>
+          <source srcset="/lco-final.webp" type="image/webp" />
+          <source srcset="/lco-final.png" type="image/png" />
+          <img
+            src={settings.logo}
+            alt="Lake County Outdoors Logo"
+            class="hero-logo"
+            fetchpriority="high"
+            width="240"
+            height="240"
+            loading="eager"
+          />
+        </picture>
       </div>
 
       <!-- Title -->
@@ -210,25 +218,25 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 240px;
-    height: 240px;
-    min-width: 240px;
-    min-height: 240px;
-    max-width: 240px;
-    max-height: 240px;
+    width: 280px;
+    height: 280px;
+    min-width: 280px;
+    min-height: 280px;
+    max-width: 280px;
+    max-height: 280px;
     border-radius: 50%;
-    background: rgba(200, 200, 200, 0.3);
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     flex-shrink: 0;
     aspect-ratio: 1 / 1;
   }
 
   .hero-logo {
-    height: 180px !important;
-    width: 180px !important;
+    height: 240px !important;
+    width: 240px !important;
     max-width: none !important;
     display: block;
   }

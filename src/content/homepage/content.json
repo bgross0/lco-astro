@@ -38,11 +38,11 @@
     ],
     "images": [
       {
-        "src": "/images/gallery/img-1449",
+        "src": "/images/gallery/img-1449-1920w.jpg",
         "alt": "Professional equipment fleet"
       },
       {
-        "src": "/images/gallery/img-2346",
+        "src": "/images/gallery/img-2346-1920w.jpg",
         "alt": "Landscaping project showcase"
       }
     ],
@@ -103,7 +103,7 @@
   "cta": {
     "title": "Call 612-655-0648 TODAY!",
     "description": "We stay in constant communication with our customers until the job is done. To get a free quote, or if you have questions or special requests, just drop us a line.",
-    "backgroundImage": "/images/gallery/img-2482",
+    "backgroundImage": "/images/gallery/img-2482-1920w.jpg",
     "primaryButton": {
       "text": "Get Your Free Quote",
       "link": "/contact"
@@ -117,7 +117,7 @@
     "title": "What Our Customers Say",
     "subtitle": "Real reviews from satisfied customers",
     "rating": 5,
-    "reviewCount": 32,
+    "reviewCount": 34,
     "googleBusinessUrl": "https://maps.app.goo.gl/hoFQbvFjQv1oz1Hr9",
     "shapoWidgetId": "shapo-widget-5e08326267aa05c21435"
   }

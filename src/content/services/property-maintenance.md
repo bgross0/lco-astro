@@ -1,11 +1,11 @@
 ---
 title: "Property Maintenance"
 description: "Complete property maintenance services for residential and commercial properties. Year-round care to keep your property pristine."
-image: "/images/gallery/img-2346"
+image: "/images/gallery/img-2346-1920w.jpg"
 images: [
-  "/images/gallery/img-2346",
-  "/images/gallery/img-7116",
-  "/images/gallery/img-7114"
+  "/images/gallery/img-2346-1920w.jpg",
+  "/images/gallery/img-7116-1920w.jpg",
+  "/images/gallery/img-7114-1920w.jpg"
 ]
 subtitle: "Year-Round Property Care"
 order: 8
