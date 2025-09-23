@@ -34,8 +34,41 @@ const blog = defineCollection({
   }),
 });
 
+const homepage = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string().optional(),
+    subtitle: z.string().optional(),
+    description: z.string().optional(),
+    ctaText: z.string().optional(),
+    ctaLink: z.string().optional(),
+    images: z.array(z.object({
+      src: z.string(),
+      alt: z.string(),
+    })).optional(),
+    bottomServices: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })).optional(),
+    sections: z.array(z.any()).optional(),
+    features: z.array(z.any()).optional(),
+    showcase: z.any().optional(),
+  }),
+});
+
+const pages = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+  }),
+});
+
 export const collections = {
   services,
   testimonials,
   blog,
+  homepage,
+  pages,
 };
