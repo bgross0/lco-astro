@@ -1,19 +1,19 @@
 ---
 title: "Ice Management"
 description: "Complete ice control solutions with pre-treatment, de-icing, and anti-icing services."
-image: "/images/snow-removal/snow-removal-banner-600x300.jpg"
+image: "/images/gallery/img-8046"
 images: [
-  "/images/salting.jpg",
-  "/images/snow-removal/cat-299d3-snow.jpg",
-  "/images/snow-removal/snow-removal-banner-600x300.jpg",
-  "/images/loader-pushing-gradient.jpg",
-  "/images/truck-mid-plow.jpg"
+  "/images/gallery/img-8046",
+  "/images/gallery/img-7576",
+  "/images/gallery/img-7577",
+  "/images/gallery/img-0427",
+  "/images/gallery/img-7575"
 ]
 subtitle: "Proactive Ice Control"
 order: 3
 hero:
   subtitle: "Proactive Ice Control Solutions"
-  backgroundImage: "/images/snow-removal/cat-299d3-snow.jpg"
+  backgroundImage: "/images/gallery/img-8046"
 features:
   - icon: "droplet"
     title: "Pre-Treatment Services"

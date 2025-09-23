@@ -6,20 +6,20 @@
   "ctaLink": "/contact",
   "images": [
     {
-      "src": "/images/equipment-3-600x409.jpg",
-      "alt": "Snow removal services"
+      "src": "/images/gallery/image0",
+      "alt": "Professional outdoor services"
     },
     {
-      "src": "/images/equipment/equipment-2-600x616.jpg",
+      "src": "/images/gallery/image0-1-",
       "alt": "Equipment and machinery"
     },
     {
-      "src": "/images/equipment-5-600x451.jpg",
-      "alt": "Professional landscaping services "
+      "src": "/images/gallery/image0-2-",
+      "alt": "Professional landscaping services"
     },
     {
-      "src": "/images/landscaping/bobcat-excavator.jpg",
-      "alt": "Excavation equipment"
+      "src": "/images/gallery/image0-3-",
+      "alt": "Excavation and earthwork"
     }
   ],
   "bottomServices": [

@@ -1,11 +1,11 @@
 ---
 title: "Tree Removal"
 description: "Professional tree removal services for residential and commercial properties. Safe, efficient removal of hazardous or unwanted trees."
-image: "/images/tree-removal/tree-removal-square-1-600x600.jpg"
+image: "/images/gallery/img-7680"
 images: [
-  "/images/tree-removal/tree-removal-square-1-600x600.jpg",
-  "/images/tree-removal/tree-removal-square-2-600x600.jpg",
-  "/images/tree-removal/tree-removal-square-3-600x600.jpg"
+  "/images/gallery/img-7680",
+  "/images/gallery/img-2345",
+  "/images/gallery/img-7116"
 ]
 subtitle: "Safe & Efficient Tree Services"
 order: 5

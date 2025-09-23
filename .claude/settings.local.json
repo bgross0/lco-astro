@@ -31,7 +31,11 @@
       "Bash(xargs -r kill)",
       "WebFetch(domain:ui.full.dev)",
       "WebFetch(domain:flowbite.com)",
-      "WebFetch(domain:www.pivotgrouppm.com)"
+      "WebFetch(domain:www.pivotgrouppm.com)",
+      "Bash(sort:*)",
+      "Bash(sudo apt-get:*)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(python3:*)"
     ],
     "deny": []
   }

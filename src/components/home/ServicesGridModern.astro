@@ -46,15 +46,35 @@ const getIcon = (title: string) => {
         >
           <!-- Service image -->
           <div class="aspect-video overflow-hidden bg-gradient-to-br from-primary-500 to-secondary-600">
-            {(() => { const webp = service.data.image.replace(/\.(jpe?g|png)$/i, '.webp'); return (
+            {(() => {
+              const imageName = service.data.image.split('/').pop().replace(/\.(jpe?g|png)$/i, '');
+              const imageDir = service.data.image.substring(0, service.data.image.lastIndexOf('/'));
+              const webp400 = `${imageDir}/${imageName}-400w.webp`;
+              const webp800 = `${imageDir}/${imageName}-800w.webp`;
+              const webpOptimized = `${imageDir}/${imageName}-optimized.webp`;
+              const jpg400 = `${imageDir}/${imageName}-400w.jpg`;
+              const jpgOptimized = `${imageDir}/${imageName}-optimized.jpg`;
+
+              return (
               <picture>
-                <source srcset={webp} type="image/webp" />
-                <img 
-                  src={service.data.image} 
+                <source
+                  type="image/webp"
+                  srcset={`${webp400} 400w, ${webp800} 800w, ${webpOptimized} 1200w`}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <source
+                  type="image/jpeg"
+                  srcset={`${jpg400} 400w, ${jpgOptimized} 800w`}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <img
+                  src={jpgOptimized}
                   alt={service.data.title}
                   class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                   decoding="async"
+                  width="400"
+                  height="225"
                 />
               </picture>
             ); })()}

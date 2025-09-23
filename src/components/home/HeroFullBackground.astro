@@ -14,26 +14,43 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   <!-- Background Slideshow -->
   <div class="hero-slideshow-bg">
     {heroData.images.map((image, index) => {
-      const imageName = image.src.split('/').pop().replace(/\.(jpg|jpeg|png)$/i, '');
-      const imageDir = image.src.substring(0, image.src.lastIndexOf('/'));
-      const webp400 = `${imageDir}/${imageName}-400w.webp`;
+      // Build optimized image paths
+      const basePath = image.src;
+      const webp400 = `${basePath}-400w.webp`;
+      const webp800 = `${basePath}-800w.webp`;
+      const webp1200 = `${basePath}-1200w.webp`;
+      const webp1920 = `${basePath}-1920w.webp`;
+      const webpOptimized = `${basePath}-optimized.webp`;
+      const jpg400 = `${basePath}-400w.jpg`;
+      const jpg800 = `${basePath}-800w.jpg`;
+      const jpg1200 = `${basePath}-1200w.jpg`;
+      const jpg1920 = `${basePath}-1920w.jpg`;
+      const jpgOptimized = `${basePath}-optimized.jpg`;
 
       return (
         <picture class={`hero-slide ${index === 0 ? 'hero-slide--active' : ''}`}>
-          {/* Mobile: Use 400w webp if available */}
+          {/* WebP versions for modern browsers */}
           <source
             type="image/webp"
-            media="(max-width: 640px)"
-            srcset={`${webp400} 400w`}
+            srcset={`${webp400} 400w, ${webp800} 800w, ${webp1200} 1200w, ${webp1920} 1920w, ${webpOptimized} 4032w`}
+            sizes="100vw"
           />
-          {/* Fallback to original */}
+          {/* JPEG fallback */}
+          <source
+            type="image/jpeg"
+            srcset={`${jpg400} 400w, ${jpg800} 800w, ${jpg1200} 1200w, ${jpg1920} 1920w, ${jpgOptimized} 4032w`}
+            sizes="100vw"
+          />
+          {/* Default image */}
           <img
-            src={image.src}
+            src={jpg1920}
             alt={image.alt}
             loading={index === 0 ? "eager" : "lazy"}
             fetchpriority={index === 0 ? 'high' : 'auto'}
             decoding={index === 0 ? 'sync' : 'async'}
             class="hero-slide-img"
+            width="4032"
+            height="3024"
           />
         </picture>
       );
@@ -48,7 +65,15 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     <div class="hero-content">
       <!-- Logo -->
       <div class="hero-logo-wrapper">
-        <img src={settings.logo} alt="Lake County Outdoors Logo" class="hero-logo" fetchpriority="high" />
+        <img
+          src={settings.logo}
+          alt="Lake County Outdoors Logo"
+          class="hero-logo"
+          fetchpriority="high"
+          width="180"
+          height="180"
+          loading="eager"
+        />
       </div>
 
       <!-- Title -->

@@ -70,12 +70,21 @@ const iconPaths = {
         <div class="absolute inset-0 grid grid-cols-2 gap-4">
           <div class="space-y-4">
             <div class="h-48 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl overflow-hidden shadow-xl">
-              <img 
-                src="/images/equipment/equipment-1-600x287.jpg" 
-                alt="Equipment"
-                class="w-full h-full object-cover mix-blend-overlay opacity-70"
-                loading="lazy"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="/images/gallery/img-7114-400w.webp 400w, /images/gallery/img-7114-800w.webp 800w, /images/gallery/img-7114-optimized.webp 1200w"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+                <img
+                  src="/images/gallery/img-7114-optimized.jpg"
+                  alt="Equipment"
+                  class="w-full h-full object-cover mix-blend-overlay opacity-70"
+                  loading="lazy"
+                  width="600"
+                  height="287"
+                />
+              </picture>
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-white text-center">
                   <div class="text-4xl font-bold">32+</div>
@@ -84,22 +93,40 @@ const iconPaths = {
               </div>
             </div>
             <div class="h-64 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-2xl overflow-hidden shadow-xl">
-              <img 
-                src="/images/landscaping/landscaping-square-3-600x600.jpg" 
-                alt="Landscaping"
-                class="w-full h-full object-cover mix-blend-overlay opacity-70"
-                loading="lazy"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="/images/gallery/img-7116-400w.webp 400w, /images/gallery/img-7116-800w.webp 800w, /images/gallery/img-7116-optimized.webp 1200w"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+                <img
+                  src="/images/gallery/img-7116-optimized.jpg"
+                  alt="Landscaping"
+                  class="w-full h-full object-cover mix-blend-overlay opacity-70"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                />
+              </picture>
             </div>
           </div>
           <div class="space-y-4 pt-8">
             <div class="h-64 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl overflow-hidden shadow-xl">
-              <img 
-                src="/images/snow-removal/snow-removal-hero-600x300.jpg" 
-                alt="Snow removal"
-                class="w-full h-full object-cover mix-blend-overlay opacity-70"
-                loading="lazy"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="/images/gallery/img-7680-400w.webp 400w, /images/gallery/img-7680-800w.webp 800w, /images/gallery/img-7680-optimized.webp 1200w"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+                <img
+                  src="/images/gallery/img-7680-optimized.jpg"
+                  alt="Snow removal"
+                  class="w-full h-full object-cover mix-blend-overlay opacity-70"
+                  width="600"
+                  height="300"
+                  loading="lazy"
+                />
+              </picture>
             </div>
             <div class="h-48 bg-gradient-to-br from-gray-600 to-gray-800 rounded-2xl flex items-center justify-center shadow-xl">
               <div class="text-white text-center">

@@ -27,16 +27,16 @@ description: Professional snow and Ice Management for commercial properties.
 order: 0
 hero:
   subtitle: Professional Service You Can Count On
-  backgroundImage: /images/snow-removal/snow-removal-wide-1120x559.jpg
+  backgroundImage: /images/gallery/img-0427
 images: [
-  "/images/snow-removal/snow-removal-wide-1120x559.jpg",
-  "/images/snow-removal/snow-removal-hero-600x300.jpg",
-  "/images/cat-299d3-snow.jpg",
-  "/images/truck-mid-plow.jpg",
-  "/images/loader-snow-bucket.jpg"
+  "/images/gallery/img-0427",
+  "/images/gallery/img-7575",
+  "/images/gallery/img-7576",
+  "/images/gallery/img-7577",
+  "/images/gallery/img-8046"
 ]
 subtitle: "24/7 Emergency Service"
-image: /images/snow-removal/snow-removal-hero-600x300.jpg
+image: /images/gallery/img-7575
 features:
   - icon: snowflake
     title: Snow Plowing

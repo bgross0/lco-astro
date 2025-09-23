@@ -1,13 +1,13 @@
 ---
 title: "Professional Landscaping"
 description: "Transform your outdoor space with our comprehensive landscaping services including design, installation, and maintenance."
-image: "/images/landscaping/landscaping-square-1-600x600.jpg"
+image: "/images/gallery/img-2345"
 images: [
-  "/images/landscaping/landscaping-square-1-600x600.jpg",
-  "/images/landscaping/landscaping-square-2-600x600.jpg",
-  "/images/landscaping/landscaping-square-3-600x600.jpg",
-  "/images/landscaping/landscaping-square-4-600x600.jpg",
-  "/images/landscaping/landscaping-square-5-600x600.jpg"
+  "/images/gallery/img-2345",
+  "/images/gallery/img-2346",
+  "/images/gallery/img-7116",
+  "/images/gallery/img-7114",
+  "/images/gallery/img-7680"
 ]
 subtitle: "Expert Design & Installation"
 order: 1
