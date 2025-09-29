@@ -1,0 +1,304 @@
+---
+export interface Props {
+  services?: Array<{
+    icon: string;
+    title: string;
+    items: string[];
+  }>;
+  benefits?: Array<{
+    title: string;
+    description: string;
+  }>;
+  ctaTitle?: string;
+  ctaDescription?: string;
+  ctaButtonText?: string;
+  ctaButtonLink?: string;
+}
+
+const {
+  services = [],
+  benefits = [],
+  ctaTitle = "Ready to Get Started?",
+  ctaDescription = "Contact us today for professional service you can trust.",
+  ctaButtonText = "Get Your Free Quote",
+  ctaButtonLink = "/contact"
+} = Astro.props;
+
+const iconPaths = {
+  'clock': 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+  'building': 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+  'shield': 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+  'default': 'M5 13l4 4L19 7'
+};
+---
+
+{services.length > 0 && (
+  <section class="services-section">
+    <h2 class="section-title">Our Services Include</h2>
+    <div class="services-grid">
+      {services.map((service) => (
+        <div class="service-card">
+          <div class="service-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPaths[service.icon] || iconPaths.default}></path>
+            </svg>
+          </div>
+          <h3 class="service-title">{service.title}</h3>
+          <ul class="service-list">
+            {service.items.map((item) => (
+              <li>
+                <span class="check">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
+
+{benefits.length > 0 && (
+  <section class="benefits-section">
+    <h2 class="section-title">Why Choose Lake County Outdoors?</h2>
+    <div class="benefits-container">
+      <div class="benefits-grid">
+        {benefits.map((benefit) => (
+          <div class="benefit-item">
+            <svg class="benefit-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <div class="benefit-content">
+              <h4 class="benefit-title">{benefit.title}</h4>
+              <p class="benefit-description">{benefit.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<div class="cta-section">
+  <h2 class="cta-title">{ctaTitle}</h2>
+  <p class="cta-description">{ctaDescription}</p>
+  <a href={ctaButtonLink} class="cta-button">
+    {ctaButtonText}
+    <svg class="cta-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+    </svg>
+  </a>
+</div>
+
+<style>
+  /* Services Section */
+  .services-section {
+    padding: 2rem 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 2rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #4A90E2, #2E5A87);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .service-icon svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+  }
+
+  .service-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .service-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    color: var(--neutral-dark);
+    font-size: 0.95rem;
+  }
+
+  .check {
+    color: var(--primary);
+    margin-right: 0.5rem;
+    font-weight: bold;
+  }
+
+  /* Benefits Section */
+  .benefits-section {
+    padding: 2rem 0;
+  }
+
+  .benefits-container {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .benefit-check {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .benefit-title {
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.25rem;
+  }
+
+  .benefit-description {
+    font-size: 0.875rem;
+    color: var(--neutral-dark);
+    line-height: 1.4;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(135deg, #4A90E2, #2E5A87);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-top: 3rem;
+  }
+
+  .cta-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .cta-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: white;
+    color: var(--primary);
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+  }
+
+  .cta-button:hover {
+    transform: scale(1.05);
+    background: #f8f9fa;
+  }
+
+  .cta-arrow {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Animations */
+  .service-card {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+
+    .cta-section {
+      padding: 2rem;
+    }
+
+    .cta-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

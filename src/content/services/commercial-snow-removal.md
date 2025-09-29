@@ -54,46 +54,47 @@ features:
     title: 24/7 Emergency Service
     description: Round-the-clock emergency response when you need it most. We're
       here when other contractors can't keep up.
+services:
+  - icon: clock
+    title: 24/7 Emergency Response
+    items:
+      - Round-the-clock monitoring
+      - Priority contracted clients
+      - Emergency call-outs
+      - Real-time weather tracking
+  - icon: building
+    title: Complete Property Management
+    items:
+      - Parking lot clearing
+      - Sidewalk maintenance
+      - Loading dock access
+      - Fire lane clearing
+  - icon: shield
+    title: Professional Equipment
+    items:
+      - Heavy-duty plows
+      - Salt spreaders
+      - Detail snow blowers
+      - Backup equipment ready
+benefits:
+  - title: Fully Licensed & Insured
+    description: Complete protection for your property
+  - title: Experienced Crews
+    description: Professional teams you can trust
+  - title: Seasonal Contracts
+    description: Guaranteed service levels all winter
+  - title: Detailed Documentation
+    description: Complete service logs & reporting
+  - title: Competitive Pricing
+    description: Transparent, fair rates
+  - title: MPCA Certified
+    description: Environmentally responsible practices
 ---
 
 ## Reliable Commercial Snow Removal Services
 
 Lake County Outdoors provides comprehensive commercial snow removal services to keep your business accessible and safe throughout winter. Our experienced team and professional equipment ensure your property is cleared quickly and efficiently.
 
-<div style="display: flex; align-items: center; margin: 3rem 0; gap: 2rem;">
-  <img src="/images/services/snow-removal/mpca-smart-salter-badge.png" alt="MPCA Certified Smart Salter" style="width: 300px; height: auto; flex-shrink: 0;" />
-  <div style="flex: 1;">
-    <h3 style="margin-top: 0;">We are MPCA Certified Smart Salters</h3>
-    <p>Committed to protecting Minnesota's lakes and streams through responsible salt application and environmentally conscious ice management practices. Our certification demonstrates our dedication to environmental stewardship while maintaining the highest standards of winter safety for your property.</p>
-  </div>
-</div>
+With over 20 years of experience serving Lake County businesses, we understand the critical importance of maintaining safe, accessible properties during winter weather events. Our fleet of modern equipment and trained crews are ready to respond 24/7, ensuring your business operations continue without interruption.
 
-### Our Commercial Snow Services Include:
-
-- **24/7 Emergency Response**
-  - Round-the-clock monitoring and service
-  - Priority response for contracted clients
-  - Emergency call-out services available
-  - Real-time weather tracking
-
-- **Complete Property Management**
-  - Parking lot clearing and plowing
-  - Sidewalk and walkway clearing
-  - Loading dock maintenance
-  - Fire lane and emergency access clearing
-
-- **Professional Equipment**
-  - Heavy-duty plows and loaders
-  - Salt spreaders and de-icing equipment
-  - Snow blowers for detailed work
-  - Backup equipment for reliability
-
-### Why Choose Our Commercial Services?
-
-- Fully licensed and insured operations
-- Experienced, professional crews
-- Seasonal contracts with guaranteed service levels
-- Detailed service logs and documentation
-- Competitive, transparent pricing
-
-Contact us today to secure your winter snow removal contract!
+We offer flexible contract options to meet your specific needs and budget, from per-push pricing to seasonal flat rates. Every service includes detailed documentation and real-time updates, giving you complete visibility and peace of mind throughout the winter season.

@@ -33,6 +33,14 @@ features:
 
 Lake County Outdoors specializes in proactive ice management to prevent hazardous conditions before they occur. Our strategic approach combines pre-treatment, de-icing, and anti-icing techniques for maximum safety and efficiency.
 
+<div style="display: flex; align-items: center; margin: 3rem 0; gap: 2rem;">
+  <img src="/images/services/ice-management/mpca-smart-salter-badge.png" alt="MPCA Certified Smart Salter" style="width: 300px; height: auto; flex-shrink: 0;" />
+  <div style="flex: 1;">
+    <h3 style="margin-top: 0;">We are MPCA Certified Smart Salters</h3>
+    <p>Committed to protecting Minnesota's lakes and streams through responsible salt application and environmentally conscious ice management practices. Our certification demonstrates our dedication to environmental stewardship while maintaining the highest standards of winter safety for your property.</p>
+  </div>
+</div>
+
 ### Our Ice Management Services:
 
 - **Pre-Treatment Services**

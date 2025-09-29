@@ -13,52 +13,20 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
 <section class="hero-full">
   <!-- Background Slideshow -->
   <div class="hero-slideshow-bg">
-    {heroData.images.map((image, index) => {
-      // Build optimized image paths - properly handle file extensions
-      const basePath = image.src;
-      const lastDot = basePath.lastIndexOf('.');
-      const nameWithoutExt = lastDot > -1 ? basePath.slice(0, lastDot) : basePath;
-      const ext = lastDot > -1 ? basePath.slice(lastDot) : '';
-
-      const webp400 = `${nameWithoutExt}-400w.webp`;
-      const webp800 = `${nameWithoutExt}-800w.webp`;
-      const webp1200 = `${nameWithoutExt}-1200w.webp`;
-      const webp1920 = `${nameWithoutExt}-1920w.webp`;
-      const webpOptimized = `${nameWithoutExt}-optimized.webp`;
-      const jpg400 = `${nameWithoutExt}-400w.jpg`;
-      const jpg800 = `${nameWithoutExt}-800w.jpg`;
-      const jpg1200 = `${nameWithoutExt}-1200w.jpg`;
-      const jpg1920 = `${nameWithoutExt}-1920w.jpg`;
-      const jpgOptimized = `${nameWithoutExt}-1920w.jpg`;
-
-      return (
-        <picture class={`hero-slide ${index === 0 ? 'hero-slide--active' : ''}`}>
-          {/* WebP versions for modern browsers */}
-          <source
-            type="image/webp"
-            srcset={`${webp400} 400w, ${webp800} 800w, ${webp1200} 1200w, ${webp1920} 1920w, ${webpOptimized} 4032w`}
-            sizes="100vw"
-          />
-          {/* JPEG fallback */}
-          <source
-            type="image/jpeg"
-            srcset={`${jpg400} 400w, ${jpg800} 800w, ${jpg1200} 1200w, ${jpg1920} 1920w, ${jpgOptimized} 4032w`}
-            sizes="100vw"
-          />
-          {/* Default image */}
-          <img
-            src={jpg1920}
-            alt={image.alt}
-            loading={index === 0 ? "eager" : "lazy"}
-            fetchpriority={index === 0 ? 'high' : 'auto'}
-            decoding={index === 0 ? 'sync' : 'async'}
-            class="hero-slide-img"
-            width="4032"
-            height="3024"
-          />
-        </picture>
-      );
-    })}
+    {heroData.images.map((image, index) => (
+      <div class={`hero-slide ${index === 0 ? 'hero-slide--active' : ''}`}>
+        <img
+          src={image.src}
+          alt={image.alt}
+          loading={index === 0 ? "eager" : "lazy"}
+          fetchpriority={index === 0 ? 'high' : 'auto'}
+          decoding={index === 0 ? 'sync' : 'async'}
+          class="hero-slide-img"
+          width="1920"
+          height="1080"
+        />
+      </div>
+    ))}
   </div>
 
   <!-- Dark overlay for text readability -->

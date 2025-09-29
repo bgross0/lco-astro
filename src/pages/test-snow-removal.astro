@@ -1,0 +1,426 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Commercial Snow Removal - Test Design | Lake County Outdoors"
+  description="Professional commercial snow removal services test page"
+>
+  <!-- Section 1: Hero Statement -->
+  <section class="hero-statement">
+    <div class="container">
+      <h1 class="hero-title">Protecting Lake County Businesses Since 2004</h1>
+      <p class="hero-subtitle">
+        We ensure your customers always have safe access to your business,
+        no matter what winter brings.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 2: Service Excellence Grid -->
+  <section class="service-excellence">
+    <div class="container">
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h3>Pre-Dawn Clearing</h3>
+          <p>Your first customer arrives to perfection - cleared, salted, and safe before you open.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+          <h3>Continuous Monitoring</h3>
+          <p>We track conditions and respond instantly - your property never gets behind.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3>Detailed Finishing</h3>
+          <p>Edges, entrances, and mats pristine - the details that show you care.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Feature-to-Benefit Bridge -->
+  <section class="feature-benefit">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-image">
+          <img src="/images/gallery/img-7114-1920w.jpg" alt="24/7 Snow Monitoring" />
+        </div>
+        <div class="feature-content">
+          <h2>24/7 Weather Monitoring</h2>
+          <p class="feature-tagline">"You sleep soundly knowing we're watching every storm"</p>
+          <ul class="feature-list">
+            <li>3AM alerts to our crews</li>
+            <li>Pre-treatment decisions made for you</li>
+            <li>Real-time service adjustments</li>
+          </ul>
+          <div class="quote-card">
+            <p>"I used to wake up at 4AM to check the weather. Now I sleep until my alarm."</p>
+            <cite>- Mike Jensen, Restaurant Owner</cite>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-row reverse">
+        <div class="feature-image">
+          <img src="/images/gallery/img-7188-1920w.jpg" alt="Professional Equipment" />
+        </div>
+        <div class="feature-content">
+          <h2>Dedicated Equipment & Crew</h2>
+          <p class="feature-tagline">"Your property has assigned resources - no sharing, no delays"</p>
+          <ul class="feature-list">
+            <li>Same crew who knows your property</li>
+            <li>Equipment reserved for your storms</li>
+            <li>Priority routing every time</li>
+          </ul>
+          <div class="quote-card">
+            <p>"They know exactly where our trouble spots are. No learning curve each storm."</p>
+            <cite>- Sarah Mills, Property Manager</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Social Proof Band -->
+  <section class="social-proof">
+    <div class="container">
+      <p class="social-title">Trusted by Lake County's leading businesses</p>
+      <div class="logo-strip">
+        <span class="client-logo">WELLS FARGO</span>
+        <span class="client-logo">WALGREENS</span>
+        <span class="client-logo">COUNTY MEDICAL</span>
+        <span class="client-logo">FIRST NATIONAL</span>
+        <span class="client-logo">LAKE MALL</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Section 6: Final CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="cta-wrapper">
+        <h2>Ready to protect your customers and reputation this winter?</h2>
+        <p>Let's discuss your property's specific needs and how we can ensure uninterrupted business.</p>
+        <button class="cta-button">Schedule Consultation</button>
+        <p class="cta-phone">Or call: (218) 555-SNOW</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Base Styles */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+
+  /* Section 1: Hero Statement */
+  .hero-statement {
+    padding: 4rem 0;
+    background: white;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2E5A87;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--neutral-dark);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* Section 2: Service Excellence Grid */
+  .service-excellence {
+    padding: 5rem 0;
+    background: #f8f9fa;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-out;
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .service-card:nth-child(1) { animation-delay: 0.1s; }
+  .service-card:nth-child(2) { animation-delay: 0.2s; }
+  .service-card:nth-child(3) { animation-delay: 0.3s; }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #4A90E2, #2E5A87);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-icon svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+  }
+
+  .service-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .service-card p {
+    color: var(--neutral-dark);
+    line-height: 1.5;
+  }
+
+  /* Section 3: Feature-to-Benefit Bridge */
+  .feature-benefit {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .feature-row {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+
+  .feature-row.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .feature-image {
+    flex: 1;
+  }
+
+  .feature-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-content {
+    flex: 1;
+  }
+
+  .feature-content h2 {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-tagline {
+    font-size: 1.125rem;
+    color: var(--neutral-dark);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  .feature-list li {
+    padding: 0.5rem 0;
+    color: var(--neutral-dark);
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .feature-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+  }
+
+  .quote-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+  }
+
+  .quote-card p {
+    margin-bottom: 0.5rem;
+    font-style: italic;
+    color: var(--neutral-dark);
+  }
+
+  .quote-card cite {
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+
+  /* Section 4: Social Proof Band */
+  .social-proof {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #4A90E2, #2E5A87);
+  }
+
+  .social-title {
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+    opacity: 0.9;
+  }
+
+  .logo-strip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .client-logo {
+    color: white;
+    opacity: 0.9;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+  }
+
+
+  /* Section 6: Final CTA */
+  .final-cta {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .cta-wrapper {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cta-wrapper h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .cta-wrapper p {
+    color: var(--neutral-dark);
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+  }
+
+  .cta-button {
+    background: var(--primary);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: #3570B8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+  }
+
+  .cta-phone {
+    margin-top: 1rem;
+    color: var(--neutral-dark);
+    font-size: 0.875rem;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 1.75rem;
+    }
+
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-row,
+    .feature-row.reverse {
+      flex-direction: column;
+    }
+
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .logo-strip {
+      gap: 1.5rem;
+    }
+  }
+</style>
