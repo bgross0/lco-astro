@@ -32,78 +32,22 @@
 <body>
   <!-- Root element for Decap CMS to render into -->
   <div id="nc-root"></div>
-  
+
   <!-- Include the script that builds the page and powers Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  
-  <script>
-    // Initialize Decap CMS with error handling
-    window.addEventListener('error', function(e) {
-      console.error('Global error:', e.error || e.message);
-      if (e.message && e.message.includes('auth') || e.message && e.message.includes('token')) {
-        console.error('Auth-related error detected');
-      }
-    });
-    
-    // Monitor CMS initialization
-    console.log('Waiting for CMS to initialize...');
-    
-    // Check if CMS object exists
-    setTimeout(() => {
-      if (window.CMS) {
-        console.log('CMS object found:', window.CMS);
-        
-        // Try to manually init if needed
-        if (window.CMS.init && typeof window.CMS.init === 'function') {
-          console.log('CMS.init function available');
-        }
-        
-        // Check for any CMS errors
-        if (window.CMS.getBackend) {
-          try {
-            const backend = window.CMS.getBackend();
-            console.log('CMS Backend:', backend);
-          } catch (e) {
-            console.error('Error getting backend:', e);
-          }
-        }
-      } else {
-        console.error('CMS object not found - Decap CMS may have failed to load');
-      }
-      
-      // Check if there's a root element where CMS should render
-      const root = document.getElementById('nc-root') || document.getElementById('root');
-      if (root) {
-        console.log('Root element found:', root);
-        console.log('Root element children:', root.children.length);
-        if (root.children.length === 0) {
-          console.error('Root element is empty - CMS failed to render');
-        }
-      } else {
-        console.error('No root element found for CMS');
-      }
-    }, 1000);
-  </script>
-  
+
   <script>
     // Listen for OAuth callback message from popup window
     window.addEventListener('message', function(event) {
-      console.log('Received message:', event.data);
-      
       // Check if this is the OAuth success message in the exact format Decap expects
       if (typeof event.data === 'string' && event.data.startsWith('authorization:github:success:')) {
-        console.log('OAuth success message received');
-        
         try {
           // Extract the JSON part after the prefix
           const jsonStr = event.data.replace('authorization:github:success:', '');
           const data = JSON.parse(jsonStr);
-          
+
           if (data.token) {
-            console.log('Token received from OAuth:', data.token.substring(0, 10) + '...');
-            
             // Store the token in the format Decap expects
-            // Based on Decap CMS source, it expects this exact structure
             const authData = {
               backendName: 'github',
               token: data.token,
@@ -114,15 +58,11 @@
                 hasWriteAccess: () => true
               }
             };
-            
-            // Store in the key that Decap CMS checks
+
+            // Store in both key formats for compatibility
             localStorage.setItem('netlify-cms-user', JSON.stringify(authData));
-            
-            // Also try the newer key name
             localStorage.setItem('decap-cms-user', JSON.stringify(authData));
-            
-            console.log('Token stored, reloading page...');
-            
+
             // Reload the page to let Decap pick up the auth
             setTimeout(() => {
               window.location.reload();
@@ -133,24 +73,19 @@
         }
       }
     });
-    
+
     // Handle token in URL hash (fallback for redirect flow)
     if (window.location.hash && window.location.hash.includes('access_token')) {
-      console.log('Token found in URL (fallback):', window.location.hash);
-      
-      // Parse the token from the hash (handle both #access_token and #/access_token)
+      // Parse the token from the hash
       let hash = window.location.hash.substring(1);
-      // Remove leading slash if present
       if (hash.startsWith('/')) {
         hash = hash.substring(1);
       }
-      
+
       const params = new URLSearchParams(hash);
       const token = params.get('access_token');
-      
+
       if (token) {
-        console.log('Token extracted from URL:', token.substring(0, 10) + '...');
-        
         // Create the auth data object in the format Decap expects
         const authData = {
           backendName: 'github',
@@ -162,13 +97,11 @@
             hasWriteAccess: () => true
           }
         };
-        
-        // Store in the keys that Decap CMS checks
+
+        // Store in both key formats for compatibility
         localStorage.setItem('netlify-cms-user', JSON.stringify(authData));
         localStorage.setItem('decap-cms-user', JSON.stringify(authData));
-        
-        console.log('Auth data stored, cleaning URL...');
-        
+
         // Clean URL and reload
         window.history.replaceState(null, '', window.location.pathname);
         setTimeout(() => {
@@ -176,174 +109,6 @@
         }, 100);
       }
     }
-    
-    console.log('Decap CMS loaded');
-    
-    // Check what's in localStorage
-    console.log('Current localStorage keys:', Object.keys(localStorage));
-    
-    // Debug: Check the stored auth data
-    const storedAuth = localStorage.getItem('decap-cms-user');
-    if (storedAuth) {
-      try {
-        const authData = JSON.parse(storedAuth);
-        console.log('Stored auth data:', {
-          hasToken: !!authData.token,
-          tokenPrefix: authData.token ? authData.token.substring(0, 10) : 'none',
-          backendName: authData.backendName,
-          hasApi: !!authData.api
-        });
-        
-        // Test if the token can access the repo
-        if (authData.token) {
-          // First check what scopes the token has
-          fetch('https://api.github.com/user', {
-            headers: {
-              'Authorization': `token ${authData.token}`,
-              'Accept': 'application/vnd.github.v3+json'
-            }
-          }).then(response => {
-            const scopes = response.headers.get('x-oauth-scopes');
-            console.log('Token scopes:', scopes || 'none');
-            if (!scopes || !scopes.includes('repo')) {
-              console.error('❌ Token missing "repo" scope needed for private repositories');
-              console.log('You need to reauthorize with the correct scopes');
-            }
-            return response.json();
-          }).then(user => {
-            console.log('Authenticated as:', user.login);
-          }).catch(err => {
-            console.error('Error checking token:', err);
-          });
-          
-          // Then test repo access
-          fetch('https://api.github.com/repos/lakecountyoutdoor/lco-astro', {
-            headers: {
-              'Authorization': `token ${authData.token}`,
-              'Accept': 'application/vnd.github.v3+json'
-            }
-          }).then(response => {
-            if (response.ok) {
-              console.log('✅ Token can access the repository');
-              return response.json();
-            } else if (response.status === 404) {
-              console.error('❌ Repository not found or token lacks access');
-              console.log('Solutions:');
-              console.log('1. Grant the OAuth app access to the organization at:');
-              console.log('   https://github.com/settings/applications');
-              console.log('2. Or reauthorize by running clearAuth() and logging in again');
-              throw new Error('No repo access');
-            } else {
-              console.error('❌ Token test failed with status:', response.status);
-              throw new Error(`Status ${response.status}`);
-            }
-          }).then(repo => {
-            if (repo) {
-              console.log('Repository details:', {
-                name: repo.name,
-                private: repo.private,
-                permissions: repo.permissions
-              });
-            }
-          }).catch(err => {
-            // Error already logged above
-          });
-        }
-        
-        // Check if Decap recognizes the auth
-        setTimeout(() => {
-          // Try multiple selectors for login/logout detection
-          const loginButton = document.querySelector('[data-testid="login-button"]') || 
-                             document.querySelector('.nc-githubAuthenticationPage-button') ||
-                             document.querySelector('button[class*="login"]');
-          
-          const logoutButton = document.querySelector('[aria-label="Log out"]') ||
-                              document.querySelector('[title="Log out"]') ||
-                              document.querySelector('button[class*="logout"]');
-          
-          // Check for CMS content that indicates successful auth
-          const cmsContent = document.querySelector('.nc-app-header') || 
-                            document.querySelector('[class*="AppHeader"]') ||
-                            document.querySelector('.nc-collectionPage-sidebar');
-          
-          // Log the entire auth data for debugging
-          console.log('Full stored auth:', authData);
-          
-          if (loginButton) {
-            console.warn('❌ Login button still visible - Decap not recognizing auth');
-            console.log('Login button found:', loginButton);
-            
-            // Check if the token might be expired or invalid
-            if (authData.access_token) {
-              console.log('Token exists but not recognized. Token starts with:', authData.access_token.substring(0, 20));
-              console.log('Try running clearAuth() and logging in again');
-            }
-          } else if (logoutButton) {
-            console.log('✅ User is authenticated - logout button found');
-          } else if (cmsContent) {
-            console.log('✅ CMS content visible - user appears to be authenticated');
-          } else {
-            console.log('⚠️ Cannot determine auth state - page might still be loading');
-            console.log('Current page title:', document.title);
-            console.log('Body classes:', document.body.className);
-            
-            // Log any error messages
-            const errorElement = document.querySelector('.nc-errorBoundary') || 
-                               document.querySelector('[class*="error"]');
-            if (errorElement) {
-              console.error('Error element found:', errorElement.textContent);
-            }
-          }
-        }, 3000);
-      } catch (e) {
-        console.error('Error parsing stored auth:', e);
-      }
-    } else {
-      console.log('No auth data stored');
-    }
-    
-    // Add a helper to clear auth for testing
-    window.clearAuth = function() {
-      localStorage.removeItem('decap-cms-user');
-      localStorage.removeItem('netlify-cms-user');
-      localStorage.removeItem('gotrue.user');
-      console.log('Auth cleared - reloading...');
-      window.location.reload();
-    };
-    
-    // Helper to fix existing token format
-    window.fixAuth = function() {
-      const stored = localStorage.getItem('decap-cms-user') || localStorage.getItem('netlify-cms-user');
-      if (stored) {
-        try {
-          const data = JSON.parse(stored);
-          const token = data.access_token || data.token;
-          if (token) {
-            console.log('Fixing auth format with token:', token.substring(0, 10) + '...');
-            
-            const fixedAuth = {
-              backendName: 'github',
-              token: token,
-              api: {
-                apiRoot: 'https://api.github.com',
-                token: token,
-                requestFunction: (...args) => fetch(...args),
-                hasWriteAccess: () => true
-              }
-            };
-            
-            localStorage.setItem('netlify-cms-user', JSON.stringify(fixedAuth));
-            localStorage.setItem('decap-cms-user', JSON.stringify(fixedAuth));
-            console.log('Auth fixed - reloading...');
-            window.location.reload();
-          }
-        } catch (e) {
-          console.error('Error fixing auth:', e);
-        }
-      }
-    };
-    
-    console.log('💡 Tip: Run clearAuth() to clear authentication or fixAuth() to fix token format');
   </script>
 </body>
 </html>
