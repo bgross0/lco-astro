@@ -8,7 +8,7 @@
       "title": "Commercial Snow Removal",
       "subtitle": "24/7 reliable winter services",
       "icon": "ph ph-snowflake",
-      "image": "/images/gallery/img-7575-1920w.jpg",
+      "image": "/images/gallery/img-7575-1920w.webp",
       "href": "/services/commercial-snow-removal",
       "order": 1
     },
@@ -26,7 +26,7 @@
       "title": "Municipal Contracting",
       "subtitle": "Large-scale public works",
       "icon": "ph ph-buildings",
-      "image": "/images/gallery/img-2322-1920w.jpg",
+      "image": "/images/gallery/img-2322-1920w.webp",
       "href": "/services/municipal-contracting",
       "order": 3
     },
@@ -35,7 +35,7 @@
       "title": "Ice Management",
       "subtitle": "Safe surfaces all winter",
       "icon": "ph ph-shield-check",
-      "image": "/images/gallery/img-8046-1920w.jpg",
+      "image": "/images/gallery/img-8046-1920w.webp",
       "href": "/services/ice-management",
       "order": 4
     }

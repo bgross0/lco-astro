@@ -17,7 +17,7 @@ site_url: https://lakecountyoutdoor.com
 display_url: https://lakecountyoutdoor.com
 
 # CMS configuration
-# publish_mode: editorial_workflow  # Disabled to enable image uploads
+publish_mode: editorial_workflow
 logo_url: /lco-final.png
 
 # Collections
@@ -35,7 +35,7 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Description", name: "description", widget: "text", required: true }
-      - { label: "Featured Image", name: "image", widget: "image", required: true }
+      - { label: "Featured Image", name: "image", widget: "image", required: true, hint: "Please keep images under 5MB. Use JPG or WebP format for best performance." }
       - { label: "Display Order", name: "order", widget: "number", required: false, default: 0, hint: "Lower numbers appear first" }
       - label: "SEO Settings"
         name: "seo"
@@ -87,7 +87,7 @@ collections:
       - { label: "Description", name: "description", widget: "text", required: true }
       - { label: "Publish Date", name: "pubDate", widget: "datetime", required: true }
       - { label: "Author", name: "author", widget: "string", default: "Lake County Outdoors", required: true }
-      - { label: "Featured Image", name: "image", widget: "image", required: false }
+      - { label: "Featured Image", name: "image", widget: "image", required: false, hint: "Keep under 5MB. Use JPG or WebP format." }
       - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
       - { label: "Tags", name: "tags", widget: "list", required: false }
       - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
@@ -308,8 +308,8 @@ collections:
         fields:
           - { label: "Site Title", name: "site_title", widget: "string" }
           - { label: "Site Description", name: "site_description", widget: "text" }
-          - { label: "Logo", name: "logo", widget: "image", required: true }
-          - { label: "OG Image (Social Share)", name: "og_image", widget: "image", required: false }
+          - { label: "Logo", name: "logo", widget: "image", required: true, hint: "PNG or SVG recommended. Keep under 1MB." }
+          - { label: "OG Image (Social Share)", name: "og_image", widget: "image", required: false, hint: "1200x630px recommended. Keep under 5MB." }
           - { label: "Operations Phone", name: "cellphone", widget: "string" }
           - { label: "Office Phone", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
