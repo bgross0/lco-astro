@@ -180,8 +180,8 @@ const pages = defineCollection({
     heroSubtitle: z.string().optional(),
     primaryCities: z.array(z.object({
       name: z.string(),
-      responseTime: z.string().optional(),
-      note: z.string().optional(),
+      responseTime: z.string().optional().nullable(),
+      note: z.string().optional().nullable(),
     })).optional(),
     additionalCities: z.array(z.string()).optional(),
     serviceMap: z.object({
