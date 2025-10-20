@@ -18,7 +18,11 @@ export default defineConfig({
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp'
-    }
+    },
+    // High quality output - let Cloudflare Polish handle compression
+    // Output as JPG so Cloudflare Polish can convert to WebP/AVIF
+    domains: [],
+    remotePatterns: []
   },
   vite: {
     build: {

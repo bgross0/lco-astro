@@ -7,9 +7,9 @@ import settings from '../../data/settings.json';
 
 // Import hero images from assets (Astro will optimize these)
 import heroImage1 from '../../assets/images/hero/snow-removal-wide-1120x559.jpg';
-import heroImage2 from '../../assets/images/hero/img_2472.webp';
+import heroImage2 from '../../assets/images/hero/img_2472.jpg';
 import heroImage3 from '../../assets/images/hero/truck-mid-plow.jpg';
-import heroImage4 from '../../assets/images/hero/municipal-hero-final.webp';
+import heroImage4 from '../../assets/images/hero/municipal-hero-final.jpg';
 
 const heroImages = [
   { src: heroImage1, alt: heroData.images[0]?.alt || "Professional outdoor services" },
@@ -38,6 +38,7 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
           widths={[800, 1200, 1920, 2400]}
           sizes="100vw"
           quality={90}
+          format="jpg"
         />
       </div>
     ))}

@@ -5,7 +5,7 @@ import Icon from '../common/Icon.astro';
 import contentData from '../../content/homepage/content.json';
 
 // Import about images from assets
-import aboutImage1 from '../../assets/images/img_2486.webp';
+import aboutImage1 from '../../assets/images/img_2486.jpg';
 import aboutImage2 from '../../assets/images/loader-dumping-into-truck.jpg';
 
 const { about } = contentData;
@@ -56,7 +56,8 @@ const aboutImages = [
               loading="lazy"
               widths={[400, 600, 800]}
               sizes="(max-width: 768px) 100vw, 50vw"
-              quality={85}
+              quality={90}
+              format="jpg"
             />
           ))}
         </div>

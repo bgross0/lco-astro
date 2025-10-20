@@ -32,6 +32,13 @@
 /images/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Astro optimized assets - aggressive caching for Cloudflare Polish
+/_assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_media/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Default: let HTML be revalidated
 /*
   Cache-Control: no-cache
