@@ -43,7 +43,8 @@
       "Bash(done)",
       "Bash(cp:*)",
       "Bash(test:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git log -1 --format=\"%ai - %s\" src/pages/thank-you.astro)"
     ],
     "deny": []
   }
