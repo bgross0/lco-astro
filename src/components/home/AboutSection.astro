@@ -1,19 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import Button from '../common/Button.astro';
 import Icon from '../common/Icon.astro';
 import contentData from '../../content/homepage/content.json';
 
-// Import about images from assets
-import aboutImage1 from '../../assets/images/img_2486.jpg';
-import aboutImage2 from '../../assets/images/loader-dumping-into-truck.jpg';
-
 const { about } = contentData;
-
-const aboutImages = [
-  { src: aboutImage1, alt: about.images[0]?.alt || "Professional equipment fleet" },
-  { src: aboutImage2, alt: about.images[1]?.alt || "Landscaping project showcase" }
-];
 ---
 
 <section class="about">
@@ -48,16 +38,14 @@ const aboutImages = [
 
       <div class="about__images">
         <div class="about__image-grid">
-          {aboutImages.map((image, index) => (
-            <Image
+          {about.images && about.images.map((image, index) => (
+            <img
               src={image.src}
               alt={image.alt}
               class={`about__image about__image--${index + 1}`}
               loading="lazy"
-              widths={[400, 600, 800]}
-              sizes="(max-width: 768px) 100vw, 50vw"
-              quality={90}
-              format="jpg"
+              width="400"
+              height="300"
             />
           ))}
         </div>
@@ -68,14 +56,7 @@ const aboutImages = [
 
 <style>
   .about {
-    padding: var(--space-16) 0;
-    background: var(--neutral-light);
-  }
-
-  .container {
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 0 var(--space-4);
+    padding: var(--space-12) 0;
   }
 
   .about__grid {
@@ -85,23 +66,15 @@ const aboutImages = [
     align-items: center;
   }
 
-  .about__content {
-    max-width: 600px;
-  }
-
   .about__title {
-    font-size: clamp(2rem, 5vw, 2.5rem);
-    font-weight: 700;
     color: var(--secondary);
     margin-bottom: var(--space-6);
-    line-height: 1.2;
   }
 
   .about__text {
-    font-size: 1.125rem;
-    line-height: 1.8;
+    font-size: var(--text-lg);
     color: var(--neutral-dark);
-    margin-bottom: var(--space-4);
+    line-height: 1.7;
   }
 
   .about__features {
@@ -114,77 +87,74 @@ const aboutImages = [
   .about__feature {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    font-weight: 500;
-    color: var(--secondary);
+    gap: var(--space-3);
+    font-weight: var(--font-medium);
+    color: var(--neutral-dark);
   }
 
-  .about__feature :global(.about__feature-icon) {
-    color: var(--primary);
+  .about__feature-icon {
     flex-shrink: 0;
+    color: var(--accent);
   }
 
   .about__actions {
-    margin-top: var(--space-6);
+    margin-top: var(--space-8);
   }
 
   .about__images {
-    position: relative;
+    display: none;
   }
 
   .about__image-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
+    align-items: center;
   }
 
   .about__image {
-    border-radius: 8px;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
   }
 
   .about__image--1 {
-    grid-column: 1 / -1;
-    max-height: 400px;
+    transform: translateY(-20px);
   }
 
   .about__image--2 {
-    grid-column: 1 / -1;
-    max-height: 300px;
+    transform: translateY(20px);
+  }
+
+  @media (max-width: 768px) {
+    .about__text {
+      font-size: var(--text-base);
+    }
+
+    .about__feature {
+      padding: var(--space-2);
+    }
   }
 
   @media (min-width: 768px) {
-    .about__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-16);
-    }
-
-    .about__image-grid {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 200px);
-    }
-
-    .about__image--1 {
-      grid-column: 1 / -1;
-      grid-row: 1;
-      max-height: none;
-      height: 100%;
-    }
-
-    .about__image--2 {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      max-height: none;
-      height: 100%;
+    .about {
+      padding: var(--space-16) 0;
     }
   }
 
   @media (min-width: 1024px) {
-    .about__image-grid {
-      grid-template-rows: repeat(2, 240px);
+    .about {
+      padding: var(--space-20) 0;
+    }
+
+    .about__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .about__images {
+      display: block;
     }
   }
 </style>
