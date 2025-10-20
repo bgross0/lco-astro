@@ -77,19 +77,19 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
     <link rel="manifest" href="/site.webmanifest?v=3" />
     
-    <!-- Fonts: preconnect + non-blocking stylesheet load -->
+    <!-- Fonts: preconnect + optimized loading (reduced to 1 family) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
       />
     </noscript>
     
@@ -102,6 +102,9 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     {settings.logo && (
       <link rel="preload" as="image" href={settings.logo} fetchpriority="high" />
     )}
+
+    <!-- Preload first hero image (LCP element) -->
+    <link rel="preload" as="image" href="/images/gallery/img-2479-1920w.jpg" fetchpriority="high" />
 
     <!-- Google Tag Manager -->
     {settings.analytics?.enableTracking && settings.analytics?.gtmId && (
@@ -169,7 +172,7 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     })}></script>
     
     <!-- Flowbite JavaScript for interactive components -->
-    <script is:inline src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script is:inline defer src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
     <!-- Tawk.to chat: load on user intent (when footer appears or on first interaction) -->
     <script type="text/javascript">
