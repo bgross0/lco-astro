@@ -29,3 +29,4 @@ pnpm-debug.log*
 *.swp
 *.swo
 *~
+public/images/_archive_unused/
