@@ -72,9 +72,9 @@ const ogImage = new URL(image, Astro.site).href;
       />
     </noscript>
     
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
-    
+    <!-- Phosphor Icons - Self-hosted for performance -->
+    <link rel="stylesheet" href="/assets/phosphor-icons.css" />
+
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
     

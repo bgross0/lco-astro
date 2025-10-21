@@ -14,18 +14,8 @@ const weightClass = weight !== 'regular' ? `-${weight}` : '';
 const iconClass = `ph-${name}${weightClass}`;
 ---
 
-<i 
-  class={`ph ${iconClass} ${className}`} 
+<i
+  class={`ph ${iconClass} ${className}`}
   style={`font-size: ${size}px; color: ${color};`}
   aria-hidden="true"
 ></i>
-
-<style is:global>
-  /* Self-hosted Phosphor Icons for faster load */
-  @import url('/assets/phosphor-icons.css');
-</style>
-
-<script>
-  // Phosphor Icons CSS is now self-hosted - no external JS needed
-  // Icons render via CSS @font-face in /assets/phosphor-icons.css
-</script>
