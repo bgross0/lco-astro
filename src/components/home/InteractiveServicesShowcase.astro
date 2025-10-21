@@ -1,5 +1,6 @@
 ---
 import servicesShowcase from '../../content/homepage/services-showcase.json';
+import Icon from '../common/Icon.astro';
 
 // Sort services by order
 const services = servicesShowcase.services.sort((a, b) => a.order - b.order);
@@ -26,7 +27,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
             <div class="shadow"></div>
             <div class="label">
               <div class="icon">
-                <i class={service.icon}></i>
+                <Icon name={service.icon} size={24} />
               </div>
               <div class="info">
                 <div class="main">{service.title}</div>
