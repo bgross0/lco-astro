@@ -21,18 +21,11 @@ const iconClass = `ph-${name}${weightClass}`;
 ></i>
 
 <style is:global>
-  /* Load only the regular weight by default to reduce load */
-  @import url('https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css');
+  /* Self-hosted Phosphor Icons for faster load */
+  @import url('/assets/phosphor-icons.css');
 </style>
 
 <script>
-  // Load Phosphor Icons script only once
-  if (typeof window !== 'undefined' && !window.PhosphorIconsLoaded) {
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-    window.PhosphorIconsLoaded = true;
-  }
+  // Phosphor Icons CSS is now self-hosted - no external JS needed
+  // Icons render via CSS @font-face in /assets/phosphor-icons.css
 </script>
