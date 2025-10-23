@@ -7,17 +7,19 @@ backend:
   auth_endpoint: api/auth
 
 # Media files storage
-# Note: Decap CMS doesn't scan subdirectories. New uploads go to /images root
-# Existing images are in /equipment, /landscaping, /snow-removal subfolders
-media_folder: "public/images" # Media library folder
-public_folder: "/images" # Public URL path
+# All new CMS uploads go to /images/uploads/ for organized management
+# Existing images remain in their current subdirectories
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
 
 # Site URL for preview
 site_url: https://lakecountyoutdoor.com
 display_url: https://lakecountyoutdoor.com
 
 # CMS configuration
-publish_mode: editorial_workflow
+# Using simple mode for faster content updates (no PR approval needed)
+# For critical changes, use GitHub branch protection + required reviews
+publish_mode: simple
 logo_url: /lco-final.png
 
 # Collections
@@ -85,7 +87,7 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Description", name: "description", widget: "text", required: true }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime", required: true }
+      - { label: "Publish Date", name: "pubDate", widget: "date", format: "YYYY-MM-DD", required: true }
       - { label: "Author", name: "author", widget: "string", default: "Lake County Outdoors", required: true }
       - { label: "Featured Image", name: "image", widget: "image", required: false, hint: "Keep under 5MB. Use JPG or WebP format." }
       - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
@@ -193,24 +195,13 @@ collections:
               - { label: "Link", name: "href", widget: "string", required: true }
               - { label: "Order", name: "order", widget: "number", required: true, hint: "Display order (lower numbers appear first)" }
       
-      - label: "All Content Sections"
+      - label: "About & Other Sections"
         name: "content"
         file: "src/content/homepage/content.json"
         extension: "json"
         format: "json"
+        hint: "Note: Hero section is managed separately in 'Hero Section' above"
         fields:
-          - label: "Hero Section"
-            name: "hero"
-            widget: "object"
-            collapsed: true
-            fields:
-              - label: "Images"
-                name: "images"
-                widget: "list"
-                fields:
-                  - { label: "Image", name: "src", widget: "image" }
-                  - { label: "Alt Text", name: "alt", widget: "string" }
-          
           - label: "About Section"
             name: "about"
             widget: "object"
