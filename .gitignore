@@ -33,3 +33,6 @@ public/images/_archive_unused/
 
 # Tina CMS
 .tina/__generated__/
+
+node_modules
+.env
