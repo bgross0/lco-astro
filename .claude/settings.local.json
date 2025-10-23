@@ -50,7 +50,12 @@
       "WebFetch(domain:phosphoricons.com)",
       "WebFetch(domain:www.npmjs.com)",
       "Bash(npm view:*)",
-      "WebFetch(domain:cdn.jsdelivr.net)"
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "Bash(cat:*)",
+      "Bash(npx @tinacms/cli@latest init)",
+      "Bash(npx @tinacms/cli build:*)",
+      "Bash(gh pr create:*)",
+      "Bash(git remote set-url:*)"
     ],
     "deny": []
   }
