@@ -8,12 +8,12 @@ import settings from '../../data/settings.json';
   <div class="hero-content flex-col lg:flex-row-reverse max-w-7xl">
     <!-- Carousel -->
     <div class="carousel w-full max-w-md rounded-box shadow-2xl overflow-hidden h-64 md:h-80">
-      {contentData.hero.images.map((image, index) => (
+      {heroData.images.map((image, index) => (
         <div id={`slide${index + 1}`} class="carousel-item relative w-full h-full">
           <img src={image.src} alt={image.alt} class="w-full h-full object-cover" />
           <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-            <a href={`#slide${index === 0 ? contentData.hero.images.length : index}`} class="btn btn-circle btn-sm">❮</a> 
-            <a href={`#slide${index === contentData.hero.images.length - 1 ? 1 : index + 2}`} class="btn btn-circle btn-sm">❯</a>
+            <a href={`#slide${index === 0 ? heroData.images.length : index}`} class="btn btn-circle btn-sm">❮</a>
+            <a href={`#slide${index === heroData.images.length - 1 ? 1 : index + 2}`} class="btn btn-circle btn-sm">❯</a>
           </div>
         </div>
       ))}
