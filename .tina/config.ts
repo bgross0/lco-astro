@@ -2,6 +2,7 @@ import { defineConfig } from "tinacms";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
+  process.env.CF_PAGES_BRANCH ||
   process.env.GITHUB_BRANCH ||
   process.env.VERCEL_GIT_COMMIT_REF ||
   process.env.HEAD ||
@@ -10,7 +11,7 @@ const branch =
 export default defineConfig({
   branch,
 
-  // Using local test credentials for now - replace with real Tina Cloud values later
+  // Tina Cloud credentials
   clientId: process.env.TINA_CLIENT_ID,
   token: process.env.TINA_TOKEN,
 
