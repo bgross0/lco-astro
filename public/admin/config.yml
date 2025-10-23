@@ -1,7 +1,7 @@
 # Decap CMS Configuration for Lake County Outdoors
 backend:
   name: github
-  repo: lakecountyoutdoor/lco-astro
+  repo: lakecountyoutodoor/lco-astro
   branch: main
   base_url: https://lakecountyoutdoor.com
   auth_endpoint: api/auth
