@@ -1,31 +1,90 @@
 ---
+import {
+  PhArrowLeft,
+  PhArrowRight,
+  PhBulldozer,
+  PhCheck,
+  PhCheckCircle,
+  PhClock,
+  PhEnvelope,
+  PhFileText,
+  PhGoogleLogo,
+  PhHouse,
+  PhMapPin,
+  PhPhone,
+  PhShieldCheck,
+  PhSnowflake,
+  PhStar,
+  PhTree,
+  PhUserCheck,
+  PhBuildings,
+  PhTruck,
+  PhChartLine,
+  PhDrop,
+  PhShield,
+  PhBuilding,
+  PhClipboard,
+  PhCube,
+  PhLightning,
+  PhRoadHorizon,
+} from 'phosphor-icons-astro';
+
 export interface Props {
   name: string;
   size?: number;
-  weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill';
+  weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
   color?: string;
   class?: string;
 }
 
 const { name, size = 24, weight = 'regular', color = 'currentColor', class: className = '' } = Astro.props;
 
-// Phosphor icons use specific class names
-const weightClass = weight !== 'regular' ? `-${weight}` : '';
-const iconClass = `ph-${name}${weightClass}`;
+// Map icon names to components
+const iconMap: Record<string, any> = {
+  'arrow-left': PhArrowLeft,
+  'arrow-right': PhArrowRight,
+  'bulldozer': PhBulldozer,
+  'check': PhCheck,
+  'check-circle': PhCheckCircle,
+  'clock': PhClock,
+  'envelope': PhEnvelope,
+  'file-text': PhFileText,
+  'google': PhGoogleLogo,
+  'home': PhHouse,
+  'house': PhHouse,
+  'map-pin': PhMapPin,
+  'phone': PhPhone,
+  'shield-check': PhShieldCheck,
+  'snowflake': PhSnowflake,
+  'star': PhStar,
+  'tree': PhTree,
+  'user-check': PhUserCheck,
+  'buildings': PhBuildings,
+  'building': PhBuilding,
+  'truck': PhTruck,
+  'chart': PhChartLine,
+  'droplet': PhDrop,
+  'salt': PhDrop, // Using drop for salt
+  'shield': PhShield,
+  'clipboard': PhClipboard,
+  'cube': PhCube,
+  'lightning': PhLightning,
+  'road': PhRoadHorizon,
+};
+
+const IconComponent = iconMap[name];
+
+if (!IconComponent) {
+  console.error(`Icon "${name}" not found in icon map`);
+}
 ---
 
-<i 
-  class={`ph ${iconClass} ${className}`} 
-  style={`font-size: ${size}px; color: ${color};`}
-  aria-hidden="true"
-></i>
-
-<style is:global>
-  /* Self-hosted Phosphor Icons for faster load */
-  @import url('/assets/phosphor-icons.css');
-</style>
-
-<script>
-  // Phosphor Icons CSS is now self-hosted - no external JS needed
-  // Icons render via CSS @font-face in /assets/phosphor-icons.css
-</script>
+{IconComponent && (
+  <IconComponent
+    size={size}
+    weight={weight}
+    color={color}
+    class={className}
+    aria-hidden="true"
+  />
+)}

@@ -44,7 +44,13 @@
       "Bash(cp:*)",
       "Bash(test:*)",
       "Bash(mkdir:*)",
-      "Bash(git log -1 --format=\"%ai - %s\" src/pages/thank-you.astro)"
+      "Bash(git log -1 --format=\"%ai - %s\" src/pages/thank-you.astro)",
+      "Bash(git config user.name)",
+      "Bash(git config user.email)",
+      "WebFetch(domain:phosphoricons.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(npm view:*)",
+      "WebFetch(domain:cdn.jsdelivr.net)"
     ],
     "deny": []
   }
