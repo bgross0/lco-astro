@@ -12,8 +12,8 @@ export default defineConfig({
   branch,
 
   // Tina Cloud credentials
-  clientId: process.env.TINA_CLIENT_ID,
-  token: process.env.TINA_TOKEN,
+  clientId: process.env.TINA_CLIENT_ID || "6c5e5398-9ff1-4e04-b841-bb14fd89c038",
+  token: process.env.TINA_TOKEN || "e2c8280c4ee2bcdb59683036d57d0a612bf300ec",
 
   build: {
     outputFolder: "admin",
