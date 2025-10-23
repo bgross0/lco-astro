@@ -6,7 +6,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://lakecountyoutdoor.com',
+  site: 'https://staging.lakecountyoutdoor.com',
   integrations: [
     sitemap(),
     tailwind(),
