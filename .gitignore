@@ -30,3 +30,6 @@ pnpm-debug.log*
 *.swo
 *~
 public/images/_archive_unused/
+
+# Tina CMS
+.tina/__generated__/
