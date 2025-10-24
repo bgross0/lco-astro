@@ -66,7 +66,8 @@
       "Bash(npx astro build:*)",
       "Bash(exiftool:*)",
       "Bash(chmod:*)",
-      "Bash(npm run optimize-images:*)"
+      "Bash(npm run optimize-images:*)",
+      "Bash(xargs -I {} sh -c 'identify -format \"\"\"\"%f: %wx%h %b\\n\"\"\"\" \"\"\"\"{}\"\"\"\"')"
     ],
     "deny": []
   }
