@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "astro dev --host",
     "dev:tina": "tinacms dev -c \"astro dev --host\"",
-    "build": "tinacms build && astro build",
+    "build": "node scripts/optimize-images.js && tinacms build && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.3",
