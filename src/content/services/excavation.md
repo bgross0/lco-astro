@@ -1,13 +1,15 @@
 ---
-title: "Excavation Services"
-description: "Professional excavation and earthmoving services for residential and commercial projects. Site preparation, grading, and utility installation."
-image: "/images/services/excavation/excavation-hero-final.jpg"
-images: [
-  "/images/gallery/img-0815",
-  "/images/gallery/img-0816",
-  "/images/gallery/img-0817"
-]
-subtitle: "Precision Earthwork Solutions"
+image: /images/services/excavation/excavation-hero-final.jpg
+images:
+  - /images/gallery/img-0815
+  - /images/gallery/img-0816
+  - /images/gallery/img-0817
+subtitle: Precision Earthwork Solutions
+title: Excavation Services
+description: >-
+  Professional excavation and earthmoving services for residential and
+  commercial projects. Site preparation, grading, and utility installation.
+heroImage: /images/excavation.jpg
 order: 6
 ---
 
@@ -17,47 +19,46 @@ Lake County Outdoors provides comprehensive excavation services for projects of 
 
 ### Our Excavation Services Include:
 
-- **Site Preparation**
-  - Land clearing and grubbing
-  - Topsoil stripping and stockpiling
-  - Rough and finish grading
-  - Compaction and soil stabilization
-
-- **Foundation & Utility Work**
-  - Foundation excavation
-  - Basement and crawl space digging
-  - Utility trenching (water, sewer, electric)
-  - French drain and drainage system installation
-
-- **Specialty Excavation**
-  - Pool and pond excavation
-  - Retaining wall preparation
-  - Driveway and parking lot grading
-  - Septic system installation
+* **Site Preparation**
+  * Land clearing and grubbing
+  * Topsoil stripping and stockpiling
+  * Rough and finish grading
+  * Compaction and soil stabilization
+* **Foundation & Utility Work**
+  * Foundation excavation
+  * Basement and crawl space digging
+  * Utility trenching (water, sewer, electric)
+  * French drain and drainage system installation
+* **Specialty Excavation**
+  * Pool and pond excavation
+  * Retaining wall preparation
+  * Driveway and parking lot grading
+  * Septic system installation
 
 ### Equipment & Capabilities
 
-- Modern excavators and backhoes
-- Bulldozers and graders
-- Dump trucks for material hauling
-- Compaction equipment
-- GPS-guided precision grading
+* Modern excavators and backhoes
+* Bulldozers and graders
+* Dump trucks for material hauling
+* Compaction equipment
+* GPS-guided precision grading
 
 ### Project Management
 
 Our excavation services include:
-- Site evaluation and planning
-- Permit assistance
-- Utility location and protection
-- Erosion control measures
-- Complete site restoration
+
+* Site evaluation and planning
+* Permit assistance
+* Utility location and protection
+* Erosion control measures
+* Complete site restoration
 
 ### Why Choose Our Excavation Services?
 
-- Licensed and insured operators
-- Safety-first approach
-- Accurate estimates and timelines
-- Minimal site disturbance
-- Environmental compliance
+* Licensed and insured operators
+* Safety-first approach
+* Accurate estimates and timelines
+* Minimal site disturbance
+* Environmental compliance
 
 Contact us for your excavation needs and receive a detailed project estimate!
