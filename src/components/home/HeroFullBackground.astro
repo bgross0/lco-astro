@@ -1,22 +1,14 @@
 ---
-import { Image } from 'astro:assets';
 import Button from '../common/Button.astro';
 import Icon from '../common/Icon.astro';
 import heroData from '../../content/homepage/hero.json';
 import settings from '../../data/settings.json';
 
-// Import hero images from assets (Astro will optimize these)
-import heroImage1 from '../../assets/images/hero/snow-removal-wide-1120x559.jpg';
-import heroImage2 from '../../assets/images/hero/img_2472.jpg';
-import heroImage3 from '../../assets/images/hero/truck-mid-plow.jpg';
-import heroImage4 from '../../assets/images/hero/municipal-hero-final.jpg';
-
-const heroImages = [
-  { src: heroImage1, alt: heroData.images[0]?.alt || "Professional outdoor services" },
-  { src: heroImage2, alt: heroData.images[1]?.alt || "Equipment and machinery" },
-  { src: heroImage3, alt: heroData.images[2]?.alt || "Professional excavation services" },
-  { src: heroImage4, alt: heroData.images[3]?.alt || "Municipal contracting services" }
-];
+// Use hero images from TinaCMS (public folder - optimized by Cloudflare Polish)
+const heroImages = heroData.images.map((image, index) => ({
+  src: image.src,
+  alt: image.alt || `Hero image ${index + 1}`
+}));
 
 // Extract phone number from cellphone string
 const phoneNumber = settings.cellphone.match(/\((\d{3})\)\s*(\d{3})-(\d{4})/);
@@ -29,16 +21,14 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   <div class="hero-slideshow-bg">
     {heroImages.map((image, index) => (
       <div class={`hero-slide ${index === 0 ? 'hero-slide--active' : ''}`}>
-        <Image
+        <img
           src={image.src}
           alt={image.alt}
           loading={index === 0 ? "eager" : "lazy"}
           fetchpriority={index === 0 ? 'high' : 'auto'}
           class="hero-slide-img"
-          widths={[800, 1200, 1920, 2400]}
-          sizes="100vw"
-          quality={90}
-          format="jpg"
+          width="1920"
+          height="1080"
         />
       </div>
     ))}
