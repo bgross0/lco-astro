@@ -82,6 +82,10 @@ export default defineConfig({
                 type: "image",
                 name: "src",
                 label: "Image",
+                ui: {
+                  parse: (value) => value?.startsWith("/") ? value.slice(1) : value,
+                  format: (value) => value?.startsWith("/") ? value : `/${value}`,
+                }
               },
               {
                 type: "string",

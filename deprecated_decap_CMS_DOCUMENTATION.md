@@ -1,5 +1,7 @@
 # Decap CMS Documentation
+***DECAP CMS HAS BEEN OFFICIALLY DEPRECATED IN THIS CODEBASE - THIS DEPLOYMENT NOW USES TINACMS***
 
+***REFER TO TINACMS DOCUMENTATION *ONLY*!!!!!!!**
 ## Overview
 
 This project uses Decap CMS (formerly Netlify CMS) to manage content. The CMS is accessible at `/admin/` and allows non-technical users to edit website content through a user-friendly interface.

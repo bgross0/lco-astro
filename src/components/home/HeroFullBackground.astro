@@ -5,8 +5,11 @@ import heroData from '../../content/homepage/hero.json';
 import settings from '../../data/settings.json';
 
 // Use hero images from TinaCMS (public folder - optimized by Cloudflare Polish)
+// Ensure paths have leading slash for browser rendering
+const normalizeImagePath = (path) => path?.startsWith('/') ? path : `/${path}`;
+
 const heroImages = heroData.images.map((image, index) => ({
-  src: image.src,
+  src: normalizeImagePath(image.src),
   alt: image.alt || `Hero image ${index + 1}`
 }));
 

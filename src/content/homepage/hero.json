@@ -6,19 +6,19 @@
   "ctaLink": "/contact",
   "images": [
     {
-      "src": "/images/snow-removal-wide-1120x559.jpg",
+      "src": "images/snow-removal-wide-1120x559.jpg",
       "alt": "Professional outdoor services"
     },
     {
-      "src": "/images/img_2472.jpg",
+      "src": "images/img_2472.jpg",
       "alt": "Equipment and machinery"
     },
     {
-      "src": "/images/truck-mid-plow.jpg",
+      "src": "images/truck-mid-plow.jpg",
       "alt": "Professional excavation services"
     },
     {
-      "src": "/images/municipal-hero-final.jpg",
+      "src": "images/municipal-hero-final.jpg",
       "alt": "Municipal contracting services"
     }
   ],
