@@ -1,16 +1,19 @@
 ---
 pricing:
   - title: Per Push
-    description: Pay only when it snows. Perfect for mild winters with flexible
-      trigger levels (zero tolerance, 1", or 2").
+    description: >-
+      Pay only when it snows. Perfect for mild winters with flexible trigger
+      levels (zero tolerance, 1", or 2").
     featured: false
   - title: Monthly Flat Rate
-    description: Predictable budgeting with unlimited snow events. Includes priority
+    description: >-
+      Predictable budgeting with unlimited snow events. Includes priority
       service and Ice Management.
     featured: true
   - title: Per Snowfall
-    description: One price per snow event regardless of accumulation. Includes
-      return visits as needed.
+    description: >-
+      One price per snow event regardless of accumulation. Includes return
+      visits as needed.
     featured: false
 equipment:
   - number: 10
@@ -21,39 +24,38 @@ equipment:
     label: Wheel Loaders
   - number: 2
     label: Tri-Axle Dumps
-title: Commercial Snow Removal
-description: Professional snow and Ice Management for commercial properties.
-  24/7 emergency service available.
-order: 0
 hero:
   subtitle: Professional Service You Can Count On
   backgroundImage: /images/snow-removal/snow-removal-wide-1120x559.jpg
-images: [
-  "/images/snow-removal/snow-removal-wide-1120x559.jpg",
-  "/images/snow-removal/snow-removal-hero-600x300.jpg",
-  "/images/cat-299d3-snow.jpg",
-  "/images/truck-mid-plow.jpg",
-  "/images/loader-snow-bucket.jpg"
-]
-subtitle: "24/7 Emergency Service"
+images:
+  - /images/snow-removal/snow-removal-wide-1120x559.jpg
+  - /images/snow-removal/snow-removal-hero-600x300.jpg
+  - /images/cat-299d3-snow.jpg
+  - /images/truck-mid-plow.jpg
+  - /images/loader-snow-bucket.jpg
+subtitle: 24/7 Emergency Service
 image: /images/services/snow-removal/snow-removal-hero-new.jpg
 features:
   - icon: snowflake
     title: Snow Plowing
-    description: Professional plowing services for parking lots, driveways, and
-      access roads. Multiple trigger level options available.
+    description: >-
+      Professional plowing services for parking lots, driveways, and access
+      roads. Multiple trigger level options available.
   - icon: cube
     title: Ice Management
-    description: Complete ice control with traditional salt or eco-friendly liquid
-      brine solutions. Pre-treatment and de-icing services available.
+    description: >-
+      Complete ice control with traditional salt or eco-friendly liquid brine
+      solutions. Pre-treatment and de-icing services available.
   - icon: truck
     title: Snow Hauling
-    description: When snow piles up, we haul it away. Rates starting at $115/hour
-      for smaller equipment, $125/hour for standard equipment.
+    description: >-
+      When snow piles up, we haul it away. Rates starting at $115/hour for
+      smaller equipment, $125/hour for standard equipment.
   - icon: lightning
     title: 24/7 Emergency Service
-    description: Round-the-clock emergency response when you need it most. We're
-      here when other contractors can't keep up.
+    description: >-
+      Round-the-clock emergency response when you need it most. We're here when
+      other contractors can't keep up.
 services:
   - icon: clock
     title: 24/7 Emergency Response
@@ -86,9 +88,15 @@ benefits:
   - title: Detailed Documentation
     description: Complete service logs & reporting
   - title: Competitive Pricing
-    description: Transparent, fair rates
+    description: 'Transparent, fair rates'
   - title: MPCA Certified
     description: Environmentally responsible practices
+title: Commercial Snow Removal
+description: >-
+  Professional snow and Ice Management for commercial properties. 24/7 emergency
+  service available.
+heroImage: /images/images/loader-dumping-into-truck.jpg
+order: 0
 ---
 
 ## Reliable Commercial Snow Removal Services
