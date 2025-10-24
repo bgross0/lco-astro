@@ -63,7 +63,10 @@
       "WebFetch(domain:developers.cloudflare.com)",
       "WebFetch(domain:tina.io)",
       "WebFetch(domain:joschua.io)",
-      "Bash(npx astro build:*)"
+      "Bash(npx astro build:*)",
+      "Bash(exiftool:*)",
+      "Bash(chmod:*)",
+      "Bash(npm run optimize-images:*)"
     ],
     "deny": []
   }
