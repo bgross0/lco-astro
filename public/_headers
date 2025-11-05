@@ -4,6 +4,27 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
 
+# Cloudflare Polish - Enable image optimization
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+  cf-cache-status: HIT
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+  cf-cache-status: HIT
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+  cf-cache-status: HIT
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+  cf-cache-status: HIT
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+  cf-cache-status: HIT
+
 # Cache static assets aggressively
 /*.css
   Cache-Control: public, max-age=31536000, immutable
@@ -15,21 +36,6 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /*.svg
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.png
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.jpg
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.jpeg
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/images/*
   Cache-Control: public, max-age=31536000, immutable
 
 # Astro optimized assets - aggressive caching for Cloudflare Polish

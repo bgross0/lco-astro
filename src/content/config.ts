@@ -36,6 +36,22 @@ const services = defineCollection({
       title: z.string(),
       description: z.string(),
     })).optional(),
+    imageSections: z.array(z.object({
+      title: z.string(),
+      content: z.string(),
+      image: z.string().optional(),
+      images: z.array(z.string()).optional(),
+      imagePosition: z.enum(['left', 'right']).optional(),
+      features: z.array(z.object({
+        icon: z.string(),
+        text: z.string(),
+      })).optional(),
+    })).optional(),
+    contentSections: z.array(z.object({
+      title: z.string(),
+      content: z.string(),
+      image: z.string(),
+    })).optional(),
     seo: z.object({
       metaTitle: z.string().optional(),
       metaDescription: z.string().optional(),

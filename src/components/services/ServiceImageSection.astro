@@ -1,0 +1,190 @@
+---
+import Icon from '../common/Icon.astro';
+
+export interface Props {
+  title?: string;
+  content: string;
+  image?: string;
+  images?: string[];
+  imagePosition?: 'left' | 'right';
+  features?: Array<{
+    icon: string;
+    text: string;
+  }>;
+}
+
+const {
+  title,
+  content,
+  image,
+  images = [],
+  imagePosition = 'right',
+  features = []
+} = Astro.props;
+
+const displayImages = image ? [image] : images;
+---
+
+<section class="service-image-section">
+  <div class="container">
+    <div class={`section-grid section-grid--${imagePosition}`}>
+      <div class="section-content">
+        {title && (
+          <h2 class="section-title">{title}</h2>
+        )}
+
+        <div class="section-text" set:html={content} />
+
+        {features.length > 0 && (
+          <div class="section-features">
+            {features.map((feature) => (
+              <div class="section-feature">
+                <Icon name={feature.icon} size={24} class="feature-icon" />
+                <span>{feature.text}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {displayImages.length > 0 && (
+        <div class="section-images">
+          <div class={`image-grid image-grid--${displayImages.length}`}>
+            {displayImages.map((imgSrc, index) => (
+              <img
+                src={imgSrc}
+                alt={title || 'Service image'}
+                class={`section-image section-image--${index + 1}`}
+                width="600"
+                height="400"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-image-section {
+    padding: var(--space-16) 0;
+    background: var(--white);
+  }
+
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .section-title {
+    color: var(--secondary);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: var(--space-6);
+    line-height: 1.2;
+  }
+
+  .section-text {
+    font-size: var(--text-lg);
+    color: var(--neutral-dark);
+    line-height: 1.7;
+  }
+
+  .section-text :global(p) {
+    margin-bottom: var(--space-4);
+  }
+
+  .section-text :global(strong) {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .section-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .section-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: var(--font-medium);
+    color: var(--neutral-dark);
+  }
+
+  .feature-icon {
+    flex-shrink: 0;
+    color: var(--primary);
+  }
+
+  .section-images {
+    display: none;
+  }
+
+  .image-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .image-grid--1 {
+    grid-template-columns: 1fr;
+  }
+
+  .image-grid--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .image-grid--3,
+  .image-grid--4 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .image-grid--2 .section-image--1 {
+    transform: translateY(-20px);
+  }
+
+  .image-grid--2 .section-image--2 {
+    transform: translateY(20px);
+  }
+
+  @media (min-width: 1024px) {
+    .service-image-section {
+      padding: var(--space-20) 0;
+    }
+
+    .section-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+    }
+
+    .section-grid--left {
+      direction: rtl;
+    }
+
+    .section-grid--left > * {
+      direction: ltr;
+    }
+
+    .section-images {
+      display: block;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-text {
+      font-size: var(--text-base);
+    }
+  }
+</style>

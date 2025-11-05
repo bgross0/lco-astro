@@ -31,36 +31,32 @@ const currentPath = Astro.url.pathname;
 <style>
   .header {
     position: fixed;
-    top: var(--space-4);
+    top: var(--header-top, var(--space-4));
     left: 0;
     right: 0;
     z-index: var(--z-sticky);
-    padding: 0 var(--space-4);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 0 var(--header-padding-x, var(--space-4));
   }
 
   /* Main Header */
   .header__main {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--header-bg, rgba(255, 255, 255, 0.95));
     backdrop-filter: blur(10px);
-    border-radius: var(--radius-full);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: fit-content;
+    border-radius: var(--header-radius, var(--radius-full));
+    box-shadow: var(--header-shadow, 0 4px 20px rgba(0, 0, 0, 0.1));
+    max-width: var(--header-max-width, fit-content);
     margin: 0 auto;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2) var(--header-padding-y, var(--space-3));
     border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: max-width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                border-radius 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                padding 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                box-shadow 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                background-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-top: var(--header-border-top, 1px solid rgba(0, 0, 0, 0.05));
+    border-left: var(--header-border-left, 1px solid rgba(0, 0, 0, 0.05));
+    border-right: var(--header-border-right, 1px solid rgba(0, 0, 0, 0.05));
   }
 
   .container {
     width: 100%;
     margin: 0 auto;
-    padding: 0;
-    transition: padding 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 0 var(--container-padding, 0);
   }
 
   .header__content {
@@ -73,21 +69,7 @@ const currentPath = Astro.url.pathname;
 
   /* Desktop */
   @media (min-width: 1024px) {
-    /* Scrolled: expanded state */
-    .header--scrolled .header__main {
-      max-width: 100%;
-      border-radius: 0;
-      border-left: none;
-      border-right: none;
-      border-top: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      background-color: rgba(255, 255, 255, 0.98);
-      padding: var(--space-3) 0;
-    }
-
-    .header--scrolled .container {
-      padding: 0 var(--space-6);
-    }
+    /* Scroll-driven animation handled by JavaScript */
   }
 
   .header__logo {
@@ -166,23 +148,86 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
-  const header = document.querySelector('.header');
+  const header = document.querySelector('.header') as HTMLElement;
+  const headerMain = document.querySelector('.header__main') as HTMLElement;
   let isMobile = window.innerWidth < 1024;
   let ticking = false;
+
+  // Scroll range for the animation (in pixels)
+  const SCROLL_START = 0;
+  const SCROLL_END = 200;
+
+  // Measure initial width at fit-content
+  let initialWidth = 0;
+  if (!isMobile && headerMain) {
+    initialWidth = headerMain.offsetWidth;
+  }
+
+  // Easing function for smooth interpolation
+  function easeOutCubic(t: number): number {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  // Linear interpolation
+  function lerp(start: number, end: number, progress: number): number {
+    return start + (end - start) * progress;
+  }
 
   function updateHeader() {
     const scrollY = window.scrollY;
 
-    if (scrollY > 50) {
-      if (isMobile) {
+    if (isMobile) {
+      // Mobile: simple toggle behavior
+      if (scrollY > 50) {
         header?.classList.add('header--scrolled-mobile');
       } else {
-        header?.classList.add('header--scrolled');
+        header?.classList.remove('header--scrolled-mobile');
       }
     } else {
-      header?.classList.remove('header--scrolled');
-      header?.classList.remove('header--scrolled-mobile');
+      // Desktop: smooth scroll-driven animation
+      const rawProgress = Math.min(Math.max((scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START), 0), 1);
+      const progress = easeOutCubic(rawProgress);
+
+      // Interpolate values
+      const topValue = lerp(16, 0, progress); // 16px (space-4) to 0
+      const paddingX = lerp(16, 0, progress); // 16px to 0
+      const paddingY = lerp(12, 0, progress); // 12px (space-3) to 0
+      const borderRadius = lerp(9999, 0, progress); // full to 0
+      const containerPadding = lerp(0, 24, progress); // 0 to 24px (space-6)
+
+      // Calculate target width (full viewport minus padding at edges)
+      const targetWidth = window.innerWidth;
+      const currentWidth = lerp(initialWidth, targetWidth, progress);
+
+      // Shadow interpolation
+      const shadowBlur = lerp(20, 10, progress);
+      const shadowOpacity = lerp(0.1, 0.1, progress);
+
+      // Background opacity
+      const bgOpacity = lerp(0.95, 0.98, progress);
+
+      // Apply CSS custom properties
+      header.style.setProperty('--header-top', `${topValue}px`);
+      header.style.setProperty('--header-padding-x', `${paddingX}px`);
+      header.style.setProperty('--header-padding-y', `${paddingY}px`);
+      header.style.setProperty('--header-radius', `${borderRadius}px`);
+      header.style.setProperty('--header-max-width', `${currentWidth}px`);
+      header.style.setProperty('--header-shadow', `0 2px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity})`);
+      header.style.setProperty('--header-bg', `rgba(255, 255, 255, ${bgOpacity})`);
+      header.style.setProperty('--container-padding', `${containerPadding}px`);
+
+      // Handle borders
+      if (progress > 0.99) {
+        header.style.setProperty('--header-border-top', 'none');
+        header.style.setProperty('--header-border-left', 'none');
+        header.style.setProperty('--header-border-right', 'none');
+      } else {
+        header.style.setProperty('--header-border-top', '1px solid rgba(0, 0, 0, 0.05)');
+        header.style.setProperty('--header-border-left', '1px solid rgba(0, 0, 0, 0.05)');
+        header.style.setProperty('--header-border-right', '1px solid rgba(0, 0, 0, 0.05)');
+      }
     }
+
     ticking = false;
   }
 
@@ -198,8 +243,14 @@ const currentPath = Astro.url.pathname;
     isMobile = window.innerWidth < 1024;
 
     if (wasMobile !== isMobile) {
-      header?.classList.remove('header--scrolled');
       header?.classList.remove('header--scrolled-mobile');
+      // Reset custom properties on resize
+      if (!isMobile) {
+        requestAnimationFrame(updateHeader);
+      }
     }
   });
+
+  // Initial call
+  requestAnimationFrame(updateHeader);
 </script>

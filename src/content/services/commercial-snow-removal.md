@@ -1,4 +1,22 @@
 ---
+imageSections:
+  - title: Professional Winter Services You Can Trust
+    content: >-
+      <p>Lake County Outdoors provides comprehensive commercial snow removal services to keep your business accessible and safe throughout winter. Our experienced team and professional equipment ensure your property is cleared quickly and efficiently.</p>
+      <p>With over 20 years of experience serving Lake County businesses, we understand the critical importance of maintaining safe, accessible properties during winter weather events. Our fleet of modern equipment and trained crews are ready to respond 24/7, ensuring your business operations continue without interruption.</p>
+    images:
+      - /images/cat-299d3-snow.jpg
+      - /images/truck-mid-plow.jpg
+    imagePosition: right
+    features:
+      - icon: check-circle
+        text: 24/7 Emergency Response
+      - icon: check-circle
+        text: Modern Equipment Fleet
+      - icon: check-circle
+        text: Licensed & Insured
+      - icon: check-circle
+        text: Detailed Service Logs
 pricing:
   - title: Per Push
     description: >-
@@ -97,12 +115,30 @@ description: >-
   service available.
 heroImage: /images/images/loader-dumping-into-truck.jpg
 order: 0
+contentSections:
+  - title: Reliable Commercial Snow Removal Services
+    content: >-
+      <p>Lake County Outdoors provides comprehensive commercial snow removal services to keep your business accessible and safe throughout winter. Our experienced team and professional equipment ensure your property is cleared quickly and efficiently.</p>
+      <p>With over 20 years of experience serving Lake County businesses, we understand the critical importance of maintaining safe, accessible properties during winter weather events. Our fleet of modern equipment and trained crews are ready to respond 24/7, ensuring your business operations continue without interruption.</p>
+    image: /images/snow-removal/snow-removal-hero-600x300.jpg
+  - title: Flexible Contract Options
+    content: >-
+      <p>We offer flexible contract options to meet your specific needs and budget, from per-push pricing to seasonal flat rates. Every service includes detailed documentation and real-time updates, giving you complete visibility and peace of mind throughout the winter season.</p>
+      <ul>
+        <li>Per Push Pricing - Pay only when it snows with flexible trigger levels</li>
+        <li>Monthly Flat Rate - Predictable budgeting with unlimited snow events</li>
+        <li>Per Snowfall - One price per snow event regardless of accumulation</li>
+        <li>Complete documentation and real-time service updates</li>
+      </ul>
+    image: /images/loader-snow-bucket.jpg
+  - title: Professional Equipment Fleet
+    content: >-
+      <p>Our extensive fleet of modern snow removal equipment ensures fast, efficient clearing of your property. From compact Bobcats for tight areas to heavy-duty loaders and tri-axle dumps for major snow events, we have the right equipment for every situation.</p>
+      <ul>
+        <li>10 Plow Trucks for parking lots and access roads</li>
+        <li>14 Bobcats for sidewalks and detail work</li>
+        <li>6 Wheel Loaders for heavy snow and stacking</li>
+        <li>2 Tri-Axle Dumps for snow hauling</li>
+      </ul>
+    image: /images/cat-299d3-snow.jpg
 ---
-
-## Reliable Commercial Snow Removal Services
-
-Lake County Outdoors provides comprehensive commercial snow removal services to keep your business accessible and safe throughout winter. Our experienced team and professional equipment ensure your property is cleared quickly and efficiently.
-
-With over 20 years of experience serving Lake County businesses, we understand the critical importance of maintaining safe, accessible properties during winter weather events. Our fleet of modern equipment and trained crews are ready to respond 24/7, ensuring your business operations continue without interruption.
-
-We offer flexible contract options to meet your specific needs and budget, from per-push pricing to seasonal flat rates. Every service includes detailed documentation and real-time updates, giving you complete visibility and peace of mind throughout the winter season.
