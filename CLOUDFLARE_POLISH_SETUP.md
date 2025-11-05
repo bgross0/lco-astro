@@ -98,14 +98,76 @@ Look for:
 - `cf-polished: origSize=1234, status=success` = Working!
 - `cf-polished: input=webp` = Not optimizing (shouldn't see this now)
 
+## Image Strategy (Hybrid Approach)
+
+We use a **hybrid optimization strategy** that leverages both Astro Image and Cloudflare Polish:
+
+### Critical Images (Astro Image + Polish)
+**Use for:** Hero images, site logo, above-the-fold content
+**Location:** `src/assets/images/`
+**Method:** Astro `<Image>` component with static imports
+
+**Example:**
+```astro
+import heroImage from '../../assets/images/hero/hero.jpg';
+
+<Image
+  src={heroImage}
+  alt="Hero"
+  widths={[800, 1200, 1920]}
+  sizes="100vw"
+  quality={90}
+  format="jpg"
+  loading="eager"
+  fetchpriority="high"
+/>
+```
+
+**Why:** Double optimization (Astro at build + Polish at edge) = Maximum performance for critical content
+
+---
+
+### CMS-Managed Images (Polish Only)
+**Use for:** Service images, gallery, blog content, about section
+**Location:** `public/images/`
+**Method:** Plain `<img>` tags with paths from TinaCMS
+
+**Example:**
+```astro
+<img
+  src={service.data.image}
+  alt={service.data.title}
+  loading="lazy"
+  decoding="async"
+/>
+```
+
+**Why:** TinaCMS requires public folder. Polish handles all optimization automatically.
+
+---
+
 ## Maintenance
 
 ### Adding New Images
-When adding new images to the project:
-1. Use JPG format (not WebP)
-2. Compress to reasonable size (< 1MB recommended)
-3. Use `format="jpg"` in Image component
-4. Set `quality={90}`
+
+**For CMS Content:**
+1. Upload high-quality JPG (quality 85-90) via TinaCMS
+2. Store in `public/images/` subdirectories
+3. **DO NOT create WebP versions** - Polish does this automatically
+4. Use simple `<img>` tag with the JPG path
+
+**For Critical/Static Images:**
+1. Place JPG in `src/assets/images/`
+2. Import and use Astro `<Image>` component
+3. Set `format="jpg"` and `quality={90}`
+4. Polish will still convert to WebP at edge
+
+### What NOT to Do
+
+❌ **Don't serve WebP from origin** - Polish can't optimize WebP files
+❌ **Don't create manual responsive variants** (-400w.webp, etc.) - Polish handles this
+❌ **Don't use `<picture>` with WebP sources** - Let Polish do the conversion
+❌ **Don't use Astro Image for CMS paths** - Won't work with public folder
 
 ### If You Need to Revert
 If Polish causes issues, you can disable it per-image:
@@ -114,13 +176,28 @@ If Polish causes issues, you can disable it per-image:
 
 ## Performance Tips
 
-1. **Keep source images under 1MB** - faster builds
-2. **Use lazy loading** - already configured
-3. **Monitor Cloudflare Analytics** - check bandwidth savings
+1. **Keep source images under 1MB** - faster builds and uploads
+2. **Use lazy loading** for below-fold images
+3. **Monitor Cloudflare Analytics** - check bandwidth savings and Polish usage
 4. **Purge cache after changes** - Cloudflare dashboard → Caching → Purge Everything
+5. **Check Polish headers** - `cf-polished: status=success` means it's working
+
+## Verification
+
+After deployment, verify Polish is working:
+
+```bash
+# Check response headers
+curl -I https://lakecountyoutdoor.com/images/gallery/img-7114-1920w.jpg
+
+# Look for these headers:
+# cf-polished: origSize=443520, status=success
+# content-type: image/webp  (in modern browsers)
+```
 
 ## Notes
 
-- Old WebP source files are still in repo (can delete after confirming everything works)
 - Polish only works on cached assets (first request may be slower)
-- Polish has daily quota on free plans - check your usage in Cloudflare dashboard
+- Polish has daily quota on free plans - monitor usage in Cloudflare dashboard
+- WebP files are served automatically to browsers that support them
+- Older browsers receive optimized JPG fallback
