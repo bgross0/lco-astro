@@ -43,23 +43,6 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
   <!-- Main Content Container -->
   <div class="hero-container">
     <div class="hero-content">
-      <!-- Logo -->
-      <div class="hero-logo-wrapper">
-        <picture>
-          <source srcset="/lco-final.webp" type="image/webp" />
-          <source srcset="/lco-final.png" type="image/png" />
-          <img
-            src={settings.logo}
-            alt="Lake County Outdoors Logo"
-            class="hero-logo"
-            fetchpriority="high"
-            width="240"
-            height="240"
-            loading="eager"
-          />
-        </picture>
-      </div>
-
       <!-- Title -->
       <h1 class="hero-title">Minnesota's Outdoor Service Experts</h1>
 
@@ -186,35 +169,6 @@ const phoneDisplay = phoneNumber ? `${phoneNumber[1]}-${phoneNumber[2]}-${phoneN
     flex-direction: column;
     align-items: center;
     padding-top: 3rem;
-  }
-
-  /* Logo */
-  .hero-logo-wrapper {
-    margin: 0 auto 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 280px;
-    height: 280px;
-    min-width: 280px;
-    min-height: 280px;
-    max-width: 280px;
-    max-height: 280px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    flex-shrink: 0;
-    aspect-ratio: 1 / 1;
-  }
-
-  .hero-logo {
-    height: 240px !important;
-    width: 240px !important;
-    max-width: none !important;
-    display: block;
   }
 
   /* Title */
