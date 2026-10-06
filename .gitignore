@@ -35,3 +35,6 @@ pnpm-debug.log*
 public/_media/
 public/images/_archive_unused/
 lighthouse-*.report.*
+
+# local tooling
+.claude/settings.local.json
