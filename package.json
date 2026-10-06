@@ -4,33 +4,20 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev --host",
-    "dev:tina": "tinacms dev -c \"astro dev --host\"",
-    "build": "tinacms build && astro build",
+    "build": "astro build",
     "preview": "astro preview",
+    "cms": "decap-server",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^3.6.3",
     "@astrojs/sitemap": "^3.4.1",
-    "@tinacms/cli": "^1.11.0",
     "astro": "^5.11.1",
-    "astro-imagetools": "^0.9.0",
-    "fs-extra": "^11.3.2",
-    "heic-convert": "^2.1.0",
-    "phosphor-icons": "^1.4.2",
     "phosphor-icons-astro": "^2.1.1-17042025",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "sharp": "^0.34.4",
-    "slate": "^0.118.1",
-    "slate-dom": "^0.118.1",
-    "slate-hyperscript": "^0.100.0",
-    "slate-react": "^0.117.4",
-    "tinacms": "^2.9.0"
+    "sharp": "^0.34.4"
   },
   "devDependencies": {
-    "@tinacms/datalayer": "^1.4.1",
     "@types/node": "^24.9.1",
+    "decap-server": "^3.11.3",
     "sharp": "^0.34.4",
     "terser": "^5.43.1"
   }
