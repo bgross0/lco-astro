@@ -5,8 +5,8 @@ imageSections:
       <p>Lake County Outdoors provides comprehensive excavation services for projects of all sizes. Our experienced operators and modern equipment ensure precise, efficient earthwork for your construction or landscaping needs.</p>
       <p>From site preparation and foundation work to utility installation and specialty excavation, we handle every aspect of your earthmoving project with professional expertise. Our GPS-guided equipment and skilled operators deliver accurate results on time and on budget.</p>
     images:
-      - /images/gallery/img-0815
-      - /images/gallery/img-0816
+      - /images/gallery/img-0815-1920w.jpg
+      - /images/gallery/img-0816-1920w.jpg
     imagePosition: right
     features:
       - icon: check-circle
@@ -19,9 +19,9 @@ imageSections:
         text: Safety First
 image: /images/services/excavation/excavation-hero-final.jpg
 images:
-  - /images/gallery/img-0815
-  - /images/gallery/img-0816
-  - /images/gallery/img-0817
+  - /images/gallery/img-0815-1920w.jpg
+  - /images/gallery/img-0816-1920w.jpg
+  - /images/gallery/img-0817-1920w.jpg
 subtitle: Precision Earthwork Solutions
 title: Excavation Services
 description: >-

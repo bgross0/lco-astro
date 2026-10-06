@@ -6,7 +6,6 @@ imageSections:
       <p>Our experienced crews use premium materials and proven installation techniques to ensure your concrete or paving project exceeds expectations. We handle everything from site preparation through final finishing, delivering professional results you can count on.</p>
     images:
       - /images/gallery/img-1449-1920w.jpg
-      - /images/gallery/img-1485-1920w.jpg
     imagePosition: left
     features:
       - icon: check-circle
@@ -21,9 +20,7 @@ title: "Concrete and Paving"
 description: "Quality concrete work and asphalt paving services for driveways, walkways, patios, and parking lots. New installation and repairs."
 image: "/images/services/concrete/concrete-paving-hero-final.jpg"
 images: [
-  "/images/gallery/img-1449-1920w.jpg",
-  "/images/gallery/img-1485-1920w.jpg",
-  "/images/gallery/img-1486-1920w.jpg"
+  "/images/gallery/img-1449-1920w.jpg"
 ]
 subtitle: "Durable Surfaces Built to Last"
 order: 7

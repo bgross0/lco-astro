@@ -53,7 +53,7 @@ const postalAddress = addressMatch
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={currentUrl} />
+    {!noindex && <meta property="og:url" content={currentUrl} />}
     <meta property="og:site_name" content="Lake County Outdoors, LLC" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
