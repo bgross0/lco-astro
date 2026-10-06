@@ -4,6 +4,7 @@ import Button from '../components/common/Button.astro';
 import Icon from '../components/common/Icon.astro';
 import contactData from '../content/pages/contact.json';
 import settings from '../data/settings.json';
+import { officePhone } from '../lib/phone';
 
 const pageTitle = contactData.seo.title;
 const pageDescription = contactData.seo.description;
@@ -140,7 +141,7 @@ const pageDescription = contactData.seo.description;
               </div>
               <div class="contact__info-content">
                 <h4>Phone</h4>
-                <a href={`tel:${settings.cellphone.replace(/-/g, '')}`} class="contact__info-link">
+                <a href={officePhone.href} class="contact__info-link">
                   {settings.cellphone}
                 </a>
                 <p class="contact__info-note">{settings.hours}</p>
@@ -230,9 +231,9 @@ const pageDescription = contactData.seo.description;
           Contact us today for a free consultation and quote
         </p>
         <div class="cta__actions">
-          <Button href="tel:6126550648" variant="secondary" size="large">
+          <Button href={officePhone.href} variant="secondary" size="large">
             <Icon name="phone" size={20} />
-            Call (612) 655-0648
+            Call {officePhone.display}
           </Button>
         </div>
       </div>

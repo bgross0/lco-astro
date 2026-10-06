@@ -2,6 +2,7 @@
 import Icon from '../common/Icon.astro';
 import settings from '../../data/settings.json';
 import navigation from '../../content/homepage/navigation.json';
+import { officePhone, fieldPhone } from '../../lib/phone';
 
 const currentYear = new Date().getFullYear();
 
@@ -51,11 +52,11 @@ const contact = {
       <div class="footer__section">
         <h4 class="footer__heading">Contact Us</h4>
         <div class="footer__contact">
-          <a href={`tel:${contact.cellphone.replace(/[^0-9]/g, '')}`} class="footer__contact-link">
+          <a href={officePhone.href} class="footer__contact-link">
             <Icon name="phone" size={16} />
             {contact.cellphone}
           </a>
-          <a href={`tel:${contact.phone.replace(/[^0-9]/g, '')}`} class="footer__contact-link">
+          <a href={fieldPhone.href} class="footer__contact-link">
             <Icon name="phone" size={16} />
             {contact.phone}
           </a>

@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/common/Button.astro';
 import Icon from '../components/common/Icon.astro';
 import serviceAreaData from '../content/pages/service-areas.json';
+import { officePhone } from '../lib/phone';
 
 const { title, heroTitle, heroSubtitle, primaryCities, additionalCities, serviceMap, seo } = serviceAreaData;
 ---
@@ -82,9 +83,9 @@ const { title, heroTitle, heroSubtitle, primaryCities, additionalCities, service
         <Button href="/contact" variant="primary" size="large">
           Get a Free Quote for Your Area
         </Button>
-        <Button href="tel:6126550648" variant="secondary" size="large">
+        <Button href={officePhone.href} variant="secondary" size="large">
           <Icon name="phone" size={20} />
-          Call Now: 612-655-0648
+          Call Now: {officePhone.display}
         </Button>
       </div>
     </div>
@@ -277,7 +278,7 @@ const { title, heroTitle, heroSubtitle, primaryCities, additionalCities, service
     "@type": "ServiceChannel",
     "servicePhone": {
       "@type": "ContactPoint",
-      "telephone": "+1-612-655-0648",
+      "telephone": officePhone.href.slice(4),
       "contactType": "sales",
       "availableLanguage": "English",
       "areaServed": "US-MN"

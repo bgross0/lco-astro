@@ -4,34 +4,38 @@ import '../styles/utilities.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import settings from '../data/settings.json';
+import { officePhone } from '../lib/phone';
 
 export interface Props {
   title: string;
   description?: string;
   image?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
 const { 
   title = settings.site_title, 
   description = settings.site_description,
   image = settings.og_image || settings.logo,
-  canonical
+  canonical,
+  noindex = false
 } = Astro.props;
 
 const currentUrl = Astro.url.href;
 const ogImage = image.startsWith('http') ? image : new URL(image, Astro.site || 'https://lakecountyoutdoor.com').href;
 
-// Extract phone number from cellphone string
-const phoneMatch = settings.cellphone.match(/\((\d{3})\)\s*(\d{3})-(\d{4})/);
-const phoneNumber = phoneMatch ? `${phoneMatch[1]}-${phoneMatch[2]}-${phoneMatch[3]}` : '612-655-0648';
-
-// Parse address
-const addressParts = settings.address.split(',').map(part => part.trim());
-const streetAddress = addressParts[0] || '7777 Washington Ave S, Suite 4';
-const addressLocality = addressParts[1] || 'Edina';
-const addressRegion = addressParts[2]?.split(' ')[0] || 'MN';
-const postalCode = addressParts[2]?.split(' ')[1] || '55439';
+// settings.address is "<street>, <city> <ST> <zip>"; the street may itself
+// contain commas ("Suite 4"), so parse from the end.
+const addressMatch = settings.address.match(/^(.+),\s*([^,]+?)\s+([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$/);
+const postalAddress = addressMatch
+  ? {
+      streetAddress: addressMatch[1],
+      addressLocality: addressMatch[2],
+      addressRegion: addressMatch[3],
+      postalCode: addressMatch[4],
+    }
+  : { streetAddress: settings.address };
 ---
 
 <!DOCTYPE html>
@@ -39,13 +43,14 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Lake County Outdoors, LLC" />
-    <link rel="canonical" href={canonical || currentUrl} />
+    {noindex
+      ? <meta name="robots" content="noindex, follow" />
+      : <link rel="canonical" href={canonical || currentUrl} />}
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -54,9 +59,7 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1080" />
-    <meta property="og:image:height" content="1080" />
-    <meta property="og:image:alt" content="Lake County Outdoors Logo" />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:locale" content="en_US" />
     
     <!-- Twitter Card -->
@@ -96,14 +99,6 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
     
-    <!-- Preload critical brand image to improve LCP -->
-    {settings.logo && (
-      <link rel="preload" as="image" href={settings.logo} fetchpriority="high" />
-    )}
-
-    <!-- Preload first hero image (LCP element) -->
-    <link rel="preload" as="image" href="/images/gallery/img-2479-1920w.jpg" fetchpriority="high" />
-
     <!-- Google Tag Manager -->
     {settings.analytics?.enableTracking && settings.analytics?.gtmId && (
       <script set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -113,9 +108,7 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
       })(window,document,'script','dataLayer','${settings.analytics.gtmId}');`}></script>
     )}
     <!-- End Google Tag Manager -->
-    
-    <!-- Shapo Reviews Widget is now loaded contextually in ReviewsSection -->
-    <script type="application/ld+json" id="shapo-ratingschema-c301e81c93"></script>
+
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -147,20 +140,17 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
       "@type": "LocalBusiness",
       "name": settings.site_title,
       "description": settings.site_description,
-      "telephone": phoneNumber,
+      "telephone": officePhone.href.slice(4),
       "email": settings.email,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": streetAddress,
-        "addressLocality": addressLocality,
-        "addressRegion": addressRegion,
-        "postalCode": postalCode,
+        ...postalAddress,
         "addressCountry": "US"
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": settings.geo.latitude.toString(),
-        "longitude": settings.geo.longitude.toString()
+        "latitude": settings.geo.latitude,
+        "longitude": settings.geo.longitude
       },
       "url": "https://lakecountyoutdoor.com",
       "image": `https://lakecountyoutdoor.com${settings.logo}`,
@@ -168,8 +158,5 @@ const postalCode = addressParts[2]?.split(' ')[1] || '55439';
       "openingHours": settings.openingHours,
       "sameAs": Object.values(settings.social).filter(url => url)
     })}></script>
-    
-    <!-- Flowbite JavaScript for interactive components -->
-    <script is:inline defer src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
   </body>
 </html>

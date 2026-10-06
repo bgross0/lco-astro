@@ -3,12 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/common/Button.astro';
 import Icon from '../components/common/Icon.astro';
 import settings from '../data/settings.json';
+import { officePhone, fieldPhone } from '../lib/phone';
 
 const pageTitle = "Thank You - Lake County Outdoors";
 const pageDescription = "Thank you for contacting Lake County Outdoors. We've received your message and will get back to you soon.";
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} noindex>
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero__overlay"></div>
@@ -75,11 +76,11 @@ const pageDescription = "Thank you for contacting Lake County Outdoors. We've re
             For urgent matters or emergency services, please call us directly
           </p>
           <div class="urgent__actions">
-            <Button href={`tel:${settings.cellphone.replace(/\D/g, '')}`} variant="primary" size="large">
+            <Button href={officePhone.href} variant="primary" size="large">
               <Icon name="phone" size={20} />
               {settings.cellphone}
             </Button>
-            <Button href={`tel:${settings.phone.replace(/\D/g, '')}`} variant="outline" size="large">
+            <Button href={fieldPhone.href} variant="outline" size="large">
               <Icon name="phone" size={20} />
               {settings.phone}
             </Button>
@@ -94,7 +95,7 @@ const pageDescription = "Thank you for contacting Lake County Outdoors. We've re
             Feel free to explore our services and learn more about what we offer
           </p>
           <div class="additional__links">
-            <Button href="/services" variant="secondary">
+            <Button href="/#services" variant="secondary">
               View Our Services
               <Icon name="arrow-right" size={20} />
             </Button>

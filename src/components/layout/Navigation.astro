@@ -1,7 +1,7 @@
 ---
 import Icon from '../common/Icon.astro';
 import navigation from '../../content/homepage/navigation.json';
-import settings from '../../data/settings.json';
+import { officePhone } from '../../lib/phone';
 
 export interface Props {
   currentPath: string;
@@ -19,9 +19,6 @@ const isActive = (href: string) => {
   return currentPath.startsWith(href);
 };
 
-// Use operations number for the navbar, just the number without label
-const phoneNumber = "612-655-0648";
-const phoneLink = `tel:${phoneNumber.replace(/-/g, '')}`;
 ---
 
 <nav class="nav" aria-label="Main navigation">
@@ -61,9 +58,9 @@ const phoneLink = `tel:${phoneNumber.replace(/-/g, '')}`;
       )
     ))}
     <li class="nav__item nav__item--phone">
-      <a href={phoneLink} class="nav__phone-btn">
+      <a href={officePhone.href} class="nav__phone-btn">
         <Icon name="phone" size={18} />
-        <span>{phoneNumber}</span>
+        <span>{officePhone.display}</span>
       </a>
     </li>
   </ul>
