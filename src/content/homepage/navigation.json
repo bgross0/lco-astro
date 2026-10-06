@@ -1,0 +1,97 @@
+{
+  "mainMenu": [
+    {
+      "label": "Home",
+      "href": "/",
+      "order": 1
+    },
+    {
+      "label": "Services",
+      "href": "#",
+      "order": 2,
+      "dropdown": [
+        {
+          "label": "Commercial Snow Removal",
+          "href": "/services/commercial-snow-removal"
+        },
+        {
+          "label": "Landscaping",
+          "href": "/services/landscaping"
+        },
+        {
+          "label": "Municipal Contracting",
+          "href": "/services/municipal-contracting"
+        },
+        {
+          "label": "Ice Management",
+          "href": "/services/ice-management"
+        },
+        {
+          "label": "Tree Removal",
+          "href": "/services/tree-removal"
+        },
+        {
+          "label": "Excavation",
+          "href": "/services/excavation"
+        },
+        {
+          "label": "Concrete and Paving",
+          "href": "/services/concrete-and-paving"
+        },
+        {
+          "label": "Property Maintenance",
+          "href": "/services/property-maintenance"
+        }
+      ]
+    },
+    {
+      "label": "Service Areas",
+      "href": "/service-areas",
+      "order": 3
+    },
+    {
+      "label": "Blog",
+      "href": "/blog",
+      "order": 4
+    },
+    {
+      "label": "Contact",
+      "href": "/contact",
+      "order": 5
+    }
+  ],
+  "footerLinks": [
+    {
+      "label": "Commercial Snow Removal",
+      "href": "/services/commercial-snow-removal"
+    },
+    {
+      "label": "Landscaping Services",
+      "href": "/services/landscaping"
+    },
+    {
+      "label": "Municipal Contracting",
+      "href": "/services/municipal-contracting"
+    },
+    {
+      "label": "Ice Management",
+      "href": "/services/ice-management"
+    },
+    {
+      "label": "Tree Removal",
+      "href": "/services/tree-removal"
+    },
+    {
+      "label": "Excavation Services",
+      "href": "/services/excavation"
+    },
+    {
+      "label": "Concrete & Paving",
+      "href": "/services/concrete-and-paving"
+    },
+    {
+      "label": "Property Maintenance",
+      "href": "/services/property-maintenance"
+    }
+  ]
+}

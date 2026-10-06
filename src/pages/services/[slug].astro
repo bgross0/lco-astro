@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/common/Icon.astro';
+import ServiceHeroV3 from '../../components/services/ServiceHeroV3.astro';
+import ServiceImageSection from '../../components/services/ServiceImageSection.astro';
+import ServiceContent from '../../components/services/ServiceContent.astro';
+import TestimonialsSection from '../../components/testimonials/TestimonialsSection.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({
+    params: { slug: service.id },
+    props: service,
+  }));
+}
+
+const service = Astro.props;
+---
+
+<BaseLayout
+  title={`${service.data.title} | Lake County Outdoors`}
+  description={service.data.description}
+  image={service.data.image}
+>
+  <ServiceHeroV3
+    title={service.data.title}
+    subtitle={
+      service.data.title === 'Commercial Snow Removal' ? 'Keep your business accessible with reliable 24/7 snow removal and ice management services.' :
+      service.data.title === 'Ice Management' ? 'Prevent slips and falls with professional ice control and de-icing solutions.' :
+      service.data.title === 'Professional Landscaping' ? 'Transform your property with expert design, installation, and maintenance services.' :
+      service.data.title === 'Municipal Contracting' ? 'Trusted partner for government snow removal, landscaping, and maintenance contracts.' :
+      service.data.title === 'Tree Removal' ? 'Safe and efficient tree removal services by certified professionals.' :
+      service.data.title === 'Excavation Services' ? 'Precision earthwork solutions for construction and landscaping projects.' :
+      service.data.title === 'Concrete and Paving' ? 'Quality concrete work and asphalt paving for lasting results.' :
+      service.data.title === 'Property Maintenance' ? 'Complete year-round care to keep your property pristine.' :
+      'Professional service you can count on.'
+    }
+    backgroundImage={service.data.hero?.backgroundImage || service.data.images?.[0] || service.data.image}
+  />
+
+  <!-- Image Sections -->
+  {service.data.imageSections && service.data.imageSections.length > 0 && (
+    service.data.imageSections.map((section) => (
+      <ServiceImageSection
+        title={section.title}
+        content={section.content}
+        image={section.image}
+        images={section.images}
+        imagePosition={section.imagePosition || 'right'}
+        features={section.features}
+      />
+    ))
+  )}
+
+  <!-- Service Content - Service offerings grid -->
+  {service.data.services && service.data.services.length > 0 && (
+    <ServiceContent
+      services={service.data.services}
+      benefits={service.data.benefits}
+      ctaTitle="Ready to Get Started?"
+      ctaDescription={`Contact us today for professional ${service.data.title.toLowerCase()} services.`}
+      ctaButtonText="Get Your Free Quote"
+      ctaButtonLink="/contact"
+    />
+  )}
+
+  <!-- Testimonials Section -->
+  <TestimonialsSection service={service.data.title} />
+</BaseLayout>
+

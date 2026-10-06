@@ -1,18 +1,16 @@
 ---
+import Icon from '../common/Icon.astro';
+import navigation from '../../content/homepage/navigation.json';
+import { officePhone } from '../../lib/phone';
+
 export interface Props {
   currentPath: string;
 }
 
 const { currentPath } = Astro.props;
 
-const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Commercial Snow Removal', href: '/commercial-snow-removal' },
-  { label: 'Landscaping', href: '/landscaping' },
-  { label: 'Municipal Contracting', href: '/municipal-contracting' },
-  { label: 'ICE Management', href: '/ice-management' },
-  { label: 'Contact', href: '/contact' }
-];
+// Use navigation items from JSON, sorted by order
+const navItems = navigation.mainMenu.sort((a, b) => a.order - b.order);
 
 const isActive = (href: string) => {
   if (href === '/') {
@@ -20,21 +18,56 @@ const isActive = (href: string) => {
   }
   return currentPath.startsWith(href);
 };
+
 ---
 
 <nav class="nav" aria-label="Main navigation">
   <ul class="nav__list">
-    {navItems.map((item) => (
-      <li class="nav__item">
-        <a 
-          href={item.href} 
-          class={`nav__link ${isActive(item.href) ? 'nav__link--active' : ''}`}
-          aria-current={isActive(item.href) ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
-      </li>
+    {navItems.map((item, index) => (
+      item.dropdown ? (
+        <li class="nav__item nav__item--dropdown">
+          <button
+            type="button"
+            class="nav__link nav__dropdown-trigger"
+            aria-expanded="false"
+            aria-controls={`nav-dropdown-${index}`}
+          >
+            {item.label}
+            <svg class="nav__dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <ul class="nav__dropdown" id={`nav-dropdown-${index}`}>
+            {item.dropdown.map((subItem) => (
+              <li>
+                <a 
+                  href={subItem.href} 
+                  class={`nav__dropdown-link ${isActive(subItem.href) ? 'nav__dropdown-link--active' : ''}`}
+                >
+                  {subItem.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ) : (
+        <li class="nav__item">
+          <a 
+            href={item.href} 
+            class={`nav__link ${isActive(item.href) ? 'nav__link--active' : ''}`}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      )
     ))}
+    <li class="nav__item nav__item--phone">
+      <a href={officePhone.href} class="nav__phone-btn">
+        <Icon name="phone" size={18} />
+        <span>{officePhone.display}</span>
+      </a>
+    </li>
   </ul>
 </nav>
 
@@ -46,14 +79,13 @@ const isActive = (href: string) => {
   @media (min-width: 1024px) {
     .nav {
       display: block;
-      flex-grow: 1;
     }
     
     .nav__list {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: var(--space-1);
+      justify-content: center;
+      gap: 0;
       list-style: none;
       margin: 0;
       padding: 0;
@@ -65,15 +97,16 @@ const isActive = (href: string) => {
     
     .nav__link {
       display: block;
-      padding: var(--space-2) var(--space-4);
+      padding: var(--space-2) var(--space-3);
       font-family: var(--font-body);
-      font-size: var(--text-base);
+      font-size: var(--text-sm);
       font-weight: 500;
       color: var(--neutral-dark);
       text-decoration: none;
       border-radius: var(--radius-md);
       transition: all var(--transition-fast);
       position: relative;
+      white-space: nowrap;
     }
     
     .nav__link:hover {
@@ -97,5 +130,155 @@ const isActive = (href: string) => {
       background-color: var(--primary);
       border-radius: var(--radius-sm);
     }
+    
+    /* Dropdown styles */
+    .nav__item--dropdown {
+      position: relative;
+    }
+    
+    .nav__dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    
+    .nav__dropdown-icon {
+      transition: transform var(--transition-fast);
+    }
+    
+    .nav__item--dropdown:hover .nav__dropdown-icon,
+    .nav__item--open .nav__dropdown-icon {
+      transform: rotate(180deg);
+    }
+    
+    .nav__dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 240px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-2) 0;
+      margin-top: var(--space-2);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all var(--transition-fast);
+      list-style: none;
+      z-index: 100;
+    }
+    
+    .nav__item--dropdown:hover .nav__dropdown,
+    .nav__item--open .nav__dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .nav__dropdown-link {
+      display: block;
+      padding: var(--space-2) var(--space-4);
+      color: var(--neutral-dark);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+    
+    .nav__dropdown-link:hover {
+      background-color: rgba(74, 144, 226, 0.1);
+      color: var(--primary);
+    }
+    
+    .nav__dropdown-link--active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    /* Phone button */
+    .nav__item--phone {
+      margin-left: var(--space-4);
+    }
+    
+    .nav__phone-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background-color: var(--primary);
+      color: var(--white);
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: var(--radius-full);
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    
+    .nav__phone-btn:hover {
+      background-color: var(--primary-dark);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      text-decoration: none;
+    }
+    
+    .nav__phone-btn span {
+      font-size: var(--text-sm);
+      white-space: nowrap;
+      display: inline-block;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .nav__link {
+      font-size: var(--text-base);
+      padding: var(--space-2) var(--space-4);
+    }
+    
+    .nav__phone-btn {
+      padding: var(--space-2) var(--space-4);
+    }
+    
+    .nav__phone-btn span {
+      font-size: var(--text-base);
+    }
   }
 </style>
+
+<script>
+  // Disclosure pattern: hover still opens the menu, but keyboard and touch
+  // users need an explicit toggle with aria-expanded kept in sync.
+  for (const item of document.querySelectorAll<HTMLElement>('.nav__item--dropdown')) {
+    const trigger = item.querySelector<HTMLButtonElement>('.nav__dropdown-trigger');
+    if (!trigger) continue;
+
+    const setOpen = (open: boolean) => {
+      item.classList.toggle('nav__item--open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+    };
+
+    trigger.addEventListener('click', () => setOpen(trigger.getAttribute('aria-expanded') !== 'true'));
+
+    item.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+
+    item.addEventListener('focusout', (event) => {
+      if (!item.contains(event.relatedTarget as Node | null)) setOpen(false);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!item.contains(event.target as Node)) setOpen(false);
+    });
+  }
+</script>

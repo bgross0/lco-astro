@@ -1,8 +1,7 @@
 /* Import Variables */
 @import './variables.css';
 
-/* Import Font Files */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+/* Fonts are loaded via non-blocking <link> in BaseLayout */
 
 /* Reset & Base Styles */
 *,
@@ -17,6 +16,7 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -27,6 +27,8 @@ body {
   background-color: var(--white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* Typography */
@@ -101,11 +103,15 @@ li {
   margin-bottom: var(--space-2);
 }
 
-/* Images */
-img {
+/* Media */
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  vertical-align: middle;
+}
+
+img, video {
   max-width: 100%;
   height: auto;
-  display: block;
 }
 
 /* Forms */
@@ -185,7 +191,7 @@ button {
 /* Container */
 .container {
   width: 100%;
-  max-width: var(--container-max-width);
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--container-padding);
 }
@@ -193,6 +199,17 @@ button {
 /* Section Spacing */
 section {
   padding: var(--space-16) 0;
+}
+
+/* Main content spacing for fixed header */
+.main-content {
+  padding-top: 80px;
+}
+
+@media (max-width: 1023px) {
+  .main-content {
+    padding-top: 100px;
+  }
 }
 
 @media (min-width: 768px) {

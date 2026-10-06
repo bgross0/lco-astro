@@ -1,148 +1,543 @@
+# Decap CMS configuration
+# Docs: https://decapcms.org/docs/configuration-options/
+#
+# Field definitions mirror the Astro content schema in src/content.config.ts.
+# Any key present in a content file MUST have a field here, otherwise Decap
+# drops it on save. Number fields always set value_type explicitly: Decap's
+# number widget parses with parseInt unless value_type is "float".
+
 backend:
   name: github
-  repo: bgross0/lco-astro # Replace with your GitHub username/repo
+  repo: bgross0/lco-astro
   branch: main
-  base_url: https://decap-oauth.pages.dev # Your OAuth app URL - will be created later
+  base_url: https://lakecountyoutdoor.com
   auth_endpoint: api/auth
-
-# Publish mode
+  auth_scope: public_repo
+  squash_merges: true
+  commit_messages:
+    create: "content: create {{collection}} \"{{slug}}\""
+    update: "content: update {{collection}} \"{{slug}}\""
+    delete: "content: delete {{collection}} \"{{slug}}\""
+    uploadMedia: "content: upload \"{{path}}\""
+    deleteMedia: "content: delete \"{{path}}\""
 publish_mode: editorial_workflow
+media_folder: public/images/uploads
+public_folder: /images/uploads
+site_url: https://lakecountyoutdoor.com
+display_url: https://lakecountyoutdoor.com
+logo_url: /lco-final.png
+local_backend: true
 
-# Media files storage
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
-
-# Collections
 collections:
-  # Hero Section
-  - name: "hero"
-    label: "Hero Section"
-    folder: "src/content/hero"
-    create: false
-    slug: "{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Subtitle", name: "subtitle", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Background Image", name: "backgroundImage", widget: "image"}
-      - label: "Services"
-        name: "services"
-        widget: "list"
+  # ---------------------------------------------------------------------------
+  # Homepage (src/content/homepage/*.json, Astro "homepage" data collection)
+  # ---------------------------------------------------------------------------
+  - name: homepage
+    label: Homepage
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: hero
+        label: Homepage - Hero
+        file: src/content/homepage/hero.json
+        format: json
         fields:
-          - {label: "Service Name", name: "name", widget: "string"}
-      - label: "CTA Button"
-        name: "ctaButton"
-        widget: "object"
-        fields:
-          - {label: "Text", name: "text", widget: "string"}
-          - {label: "Phone", name: "phone", widget: "string"}
-      - label: "Trust Indicators"
-        name: "trustIndicators"
-        widget: "list"
-        fields:
-          - {label: "Number", name: "number", widget: "string"}
-          - {label: "Text", name: "text", widget: "string"}
+          - { label: Title, name: title, widget: string }
+          - { label: Subtitle, name: subtitle, widget: string, required: false }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: CTA Button Text, name: ctaText, widget: string, required: false }
+          - { label: CTA Button Link, name: ctaLink, widget: string, required: false }
+          - label: Hero Images
+            name: images
+            widget: list
+            required: false
+            summary: "{{fields.alt}}"
+            fields:
+              - { label: Image, name: src, widget: image }
+              - { label: Alt Text, name: alt, widget: string }
+          - label: Bottom Services
+            name: bottomServices
+            widget: list
+            required: false
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Icon Name, name: icon, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: string }
 
-  # Services
-  - name: "services"
-    label: "Services"
-    folder: "src/content/services"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Short Description", name: "shortDescription", widget: "string"}
-      - {label: "Featured Image", name: "image", widget: "image"}
-      - {label: "Icon", name: "icon", widget: "string", hint: "Icon name from your icon set"}
-      - {label: "Order", name: "order", widget: "number", default: 0}
-      - {label: "Body", name: "body", widget: "markdown"}
-      - label: "Features"
-        name: "features"
-        widget: "list"
+      - name: content
+        label: Homepage - Content
+        file: src/content/homepage/content.json
+        format: json
         fields:
-          - {label: "Feature", name: "feature", widget: "string"}
-      - label: "Gallery"
-        name: "gallery"
-        widget: "list"
-        field: {label: "Image", name: "image", widget: "image"}
+          - label: About Section
+            name: about
+            widget: object
+            required: false
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - label: Paragraphs
+                name: paragraphs
+                widget: list
+                required: false
+                field: { label: Paragraph, name: paragraph, widget: text }
+              - label: Images
+                name: images
+                widget: list
+                required: false
+                summary: "{{fields.alt}}"
+                fields:
+                  - { label: Image, name: src, widget: image }
+                  - { label: Alt Text, name: alt, widget: string }
+              - label: Features
+                name: features
+                widget: list
+                required: false
+                summary: "{{fields.text}}"
+                fields:
+                  - { label: Icon, name: icon, widget: string }
+                  - { label: Text, name: text, widget: string }
+              - { label: Button Text, name: buttonText, widget: string, required: false }
+              - { label: Button Link, name: buttonLink, widget: string, required: false }
+          - label: Client Satisfaction Section
+            name: clientSatisfaction
+            widget: object
+            required: false
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - label: Paragraphs
+                name: paragraphs
+                widget: list
+                required: false
+                field: { label: Paragraph, name: paragraph, widget: text }
+              - { label: Experience Title, name: experienceTitle, widget: string, required: false }
+              - { label: Experience Text, name: experienceText, widget: text, required: false }
+              - { label: Highlight, name: highlight, widget: string, required: false }
+          - label: Equipment Section
+            name: equipment
+            widget: object
+            required: false
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - { label: Subtitle, name: subtitle, widget: string, required: false }
+              - label: Stats
+                name: stats
+                widget: list
+                required: false
+                summary: "{{fields.number}} {{fields.label}}"
+                fields:
+                  - { label: Number, name: number, widget: number, value_type: int }
+                  - { label: Label, name: label, widget: string }
+          - label: CTA Section
+            name: cta
+            widget: object
+            required: false
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - { label: Description, name: description, widget: text, required: false }
+              - { label: Background Image, name: backgroundImage, widget: image, required: false }
+              - label: Primary Button
+                name: primaryButton
+                widget: object
+                required: false
+                fields:
+                  - { label: Text, name: text, widget: string }
+                  - { label: Link, name: link, widget: string }
+              - label: Secondary Button
+                name: secondaryButton
+                widget: object
+                required: false
+                fields:
+                  - { label: Text, name: text, widget: string }
+                  - { label: Link, name: link, widget: string }
+          - label: Reviews Section
+            name: reviews
+            widget: object
+            required: false
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - { label: Subtitle, name: subtitle, widget: string, required: false }
+              # Required: a cleared optional number is saved as "" which fails z.number().optional().
+              - { label: Rating, name: rating, widget: number, value_type: float, min: 0, max: 5, step: 0.1 }
+              - { label: Review Count, name: reviewCount, widget: number, value_type: int, min: 0 }
+              - { label: Google Business URL, name: googleBusinessUrl, widget: string, required: false }
+              - { label: Shapo Widget ID, name: shapoWidgetId, widget: string, required: false }
 
-  # Testimonials
-  - name: "testimonials"
-    label: "Testimonials"
-    folder: "src/content/testimonials"
+      - name: services-showcase
+        label: Homepage - Services Showcase
+        file: src/content/homepage/services-showcase.json
+        format: json
+        fields:
+          - { label: Section Title, name: title, widget: string, required: false }
+          - { label: Section Subtitle, name: subtitle, widget: string, required: false }
+          - { label: Auto Scroll Interval (ms), name: autoScrollInterval, widget: number, value_type: int, min: 0, required: false }
+          - label: Services
+            name: services
+            widget: list
+            required: false
+            summary: "{{fields.order}}. {{fields.title}}"
+            fields:
+              - { label: Service ID, name: id, widget: string, required: false }
+              - { label: Service Title, name: title, widget: string, required: false }
+              - { label: Service Subtitle, name: subtitle, widget: string, required: false }
+              - { label: Icon Name, name: icon, widget: string, required: false }
+              - { label: Service Image, name: image, widget: image, required: false }
+              - { label: Service Link, name: href, widget: string, required: false }
+              - { label: Display Order, name: order, widget: number, value_type: int, required: false }
+
+  # ---------------------------------------------------------------------------
+  # Services (src/content/services/*.md, Astro "services" content collection)
+  # ---------------------------------------------------------------------------
+  - name: services
+    label: Services
+    label_singular: Service
+    folder: src/content/services
     create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    preview_path: "services/{{slug}}"
+    sortable_fields: [order, title]
+    summary: "{{order}}. {{title}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Subtitle, name: subtitle, widget: string, required: false }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: image, widget: image }
+      - label: Gallery Images
+        name: images
+        widget: list
+        required: false
+        field: { label: Image, name: image, widget: image }
+      - label: Hero Image (legacy)
+        name: heroImage
+        widget: image
+        required: false
+        hint: Not read by the site; the hero uses Hero > Background Image, then the first Gallery Image, then Image.
+      # Required: a cleared optional number is saved as "" which fails z.number().optional().
+      - { label: Display Order, name: order, widget: number, value_type: int }
+      - label: Hero
+        name: hero
+        widget: object
+        required: false
+        fields:
+          - { label: Subtitle, name: subtitle, widget: string, required: false }
+          - { label: Background Image, name: backgroundImage, widget: image, required: false }
+      - label: Image Sections
+        name: imageSections
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Content (HTML), name: content, widget: text }
+          - label: Images
+            name: images
+            widget: list
+            required: false
+            field: { label: Image, name: image, widget: image }
+          # Required with a default: clearing an optional select saves null, which fails z.enum().optional().
+          - { label: Image Position, name: imagePosition, widget: select, options: [left, right], default: right }
+          - label: Features
+            name: features
+            widget: list
+            required: false
+            summary: "{{fields.text}}"
+            fields:
+              - { label: Icon, name: icon, widget: string }
+              - { label: Text, name: text, widget: string }
+      - label: Service Offerings
+        name: services
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: Icon, name: icon, widget: string }
+          - { label: Title, name: title, widget: string }
+          - label: Items
+            name: items
+            widget: list
+            field: { label: Item, name: item, widget: string }
+      - label: Benefits
+        name: benefits
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+      - label: Features
+        name: features
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: Icon, name: icon, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+      - label: Content Sections
+        name: contentSections
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Content (HTML), name: content, widget: text }
+          - { label: Image, name: image, widget: image }
+      - label: Pricing
+        name: pricing
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          - { label: Featured, name: featured, widget: boolean, required: false }
+      - label: Equipment
+        name: equipment
+        widget: list
+        required: false
+        summary: "{{fields.number}} {{fields.label}}"
+        fields:
+          - { label: Number, name: number, widget: number, value_type: int }
+          - { label: Label, name: label, widget: string }
+      - { label: Body, name: body, widget: markdown, required: false }
+
+  # ---------------------------------------------------------------------------
+  # Blog (src/content/blog/*.md, Astro "blog" content collection)
+  # ---------------------------------------------------------------------------
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: src/content/blog
+    create: true
+    extension: md
+    format: frontmatter
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "blog/{{slug}}"
+    sortable_fields: [pubDate, title]
+    summary: "{{pubDate}} - {{title}}"
     fields:
-      - {label: "Author", name: "author", widget: "string"}
-      - {label: "Company", name: "company", widget: "string", required: false}
-      - {label: "Service", name: "service", widget: "string"}
-      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5, default: 5}
-      - {label: "Body", name: "body", widget: "text"}
-      - {label: "Date", name: "date", widget: "datetime"}
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Publication Date
+        name: pubDate
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: YYYY-MM-DD
+        time_format: false
+      - { label: Author, name: author, widget: string, required: false, default: Lake County Outdoors }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Image Alt Text, name: imageAlt, widget: string, required: false }
+      - { label: Tags, name: tags, widget: list, required: false, hint: Comma-separated }
+      - { label: Draft, name: draft, widget: boolean, required: false, default: false }
+      - { label: Body, name: body, widget: markdown }
 
-  # About Section
-  - name: "about"
-    label: "About Section"
-    folder: "src/content/about"
-    create: false
-    slug: "{{slug}}"
+  # ---------------------------------------------------------------------------
+  # Testimonials (src/content/testimonials/*.md, Astro "testimonials" collection)
+  # ---------------------------------------------------------------------------
+  - name: testimonials
+    label: Testimonials
+    label_singular: Testimonial
+    folder: src/content/testimonials
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: author
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{author}} ({{company}})"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Subtitle", name: "subtitle", widget: "string"}
-      - {label: "Description", name: "description", widget: "markdown"}
-      - {label: "Years of Experience", name: "yearsExperience", widget: "number"}
-      - {label: "Image", name: "image", widget: "image"}
-      - label: "Highlights"
-        name: "highlights"
-        widget: "list"
-        fields:
-          - {label: "Highlight", name: "highlight", widget: "string"}
+      - { label: Client Name, name: author, widget: string }
+      - { label: Company/Organization, name: company, widget: string, required: false }
+      - { label: Service Used, name: service, widget: string }
+      - { label: Rating (1-5), name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5 }
+      - { label: Body, name: body, widget: markdown }
 
-  # Company Info
-  - name: "settings"
-    label: "Company Settings"
+  # ---------------------------------------------------------------------------
+  # Pages (src/content/pages/*.json, Astro "pages" data collection)
+  # ---------------------------------------------------------------------------
+  - name: pages
+    label: Pages
+    delete: false
+    editor:
+      preview: false
     files:
-      - label: "General Settings"
-        name: "general"
-        file: "src/content/settings/general.yml"
+      - name: contact
+        label: Contact Page
+        file: src/content/pages/contact.json
+        format: json
         fields:
-          - {label: "Company Name", name: "companyName", widget: "string"}
-          - {label: "Phone", name: "phone", widget: "string"}
-          - {label: "Email", name: "email", widget: "string"}
-          - {label: "Address", name: "address", widget: "text"}
-          - label: "Hours"
-            name: "hours"
-            widget: "object"
+          - label: Hero Section
+            name: hero
+            widget: object
             fields:
-              - {label: "Weekdays", name: "weekdays", widget: "string"}
-              - {label: "Saturday", name: "saturday", widget: "string"}
-              - {label: "Sunday", name: "sunday", widget: "string"}
-          - label: "Social Media"
-            name: "social"
-            widget: "object"
+              - { label: Hero Title, name: title, widget: string, required: false }
+              - { label: Hero Subtitle, name: subtitle, widget: string, required: false }
+          - label: Form
+            name: form
+            widget: object
             fields:
-              - {label: "Facebook", name: "facebook", widget: "string", required: false}
-              - {label: "Twitter", name: "twitter", widget: "string", required: false}
-              - {label: "Instagram", name: "instagram", widget: "string", required: false}
-              - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
+              - { label: Title, name: title, widget: string, required: false }
+              - { label: Subtitle, name: subtitle, widget: string, required: false }
+              - { label: Submit Button Text, name: submitButtonText, widget: string, required: false }
+              - label: Form Fields
+                name: fields
+                widget: list
+                required: false
+                hint: Not currently rendered; the contact form markup is hardcoded in src/pages/contact.astro.
+                summary: "{{fields.label}} ({{fields.type}})"
+                fields:
+                  - { label: Field Name, name: name, widget: string }
+                  - { label: Label, name: label, widget: string }
+                  - { label: Type, name: type, widget: select, options: [text, email, tel, select, textarea], default: text }
+                  - { label: Required, name: required, widget: boolean, required: false, default: false }
+                  - { label: Width, name: width, widget: select, options: [half, full], default: full }
+                  - label: Options
+                    name: options
+                    widget: list
+                    required: false
+                    hint: Only used when Type is select.
+                    field: { label: Option, name: option, widget: string }
+                  - { label: Placeholder, name: placeholder, widget: string, required: false }
+          - label: Contact Info
+            name: info
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - { label: Description, name: description, widget: text, required: false }
+              - { label: Emergency Text, name: emergencyText, widget: text, required: false }
+              - { label: Email Response Time, name: emailResponseTime, widget: string, required: false }
+              - { label: Service Area Note, name: serviceAreaNote, widget: string, required: false }
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Meta Title, name: title, widget: string, required: false }
+              - { label: Meta Description, name: description, widget: text, required: false }
 
-  # Pages
-  - name: "pages"
-    label: "Pages"
-    files:
-      - label: "Home Page"
-        name: "home"
-        file: "src/content/pages/home.yml"
+      - name: service-areas
+        label: Service Areas Page
+        file: src/content/pages/service-areas.json
+        format: json
         fields:
-          - {label: "Page Title", name: "title", widget: "string"}
-          - {label: "Meta Description", name: "metaDescription", widget: "text"}
-          - label: "Sections"
-            name: "sections"
-            widget: "object"
+          - { label: Page Title, name: title, widget: string, required: false }
+          - { label: Hero Title, name: heroTitle, widget: string, required: false }
+          - { label: Hero Subtitle, name: heroSubtitle, widget: text, required: false }
+          - label: Primary Cities
+            name: primaryCities
+            widget: list
+            required: false
+            summary: "{{fields.name}}"
             fields:
-              - {label: "Show Hero", name: "showHero", widget: "boolean", default: true}
-              - {label: "Show Services", name: "showServices", widget: "boolean", default: true}
-              - {label: "Show About", name: "showAbout", widget: "boolean", default: true}
-              - {label: "Show Testimonials", name: "showTestimonials", widget: "boolean", default: true}
-              - {label: "Show CTA", name: "showCTA", widget: "boolean", default: true}
+              - { label: City, name: name, widget: string }
+              - { label: Response Time, name: responseTime, widget: string, required: false }
+              - { label: Note, name: note, widget: string, required: false }
+          - { label: Additional Cities, name: additionalCities, widget: list, required: false, hint: Comma-separated }
+          - label: Service Map
+            name: serviceMap
+            widget: object
+            required: false
+            fields:
+              # Required: a cleared optional number is saved as "" which fails z.number().optional().
+              - { label: Latitude, name: lat, widget: number, value_type: float, step: 0.0001 }
+              - { label: Longitude, name: lng, widget: number, value_type: float, step: 0.0001 }
+              - { label: Radius (miles), name: radius, widget: number, value_type: int, min: 0 }
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Meta Title, name: metaTitle, widget: string, required: false }
+              - { label: Meta Description, name: metaDescription, widget: text, required: false }
+              - { label: Keywords, name: keywords, widget: list, required: false, hint: Comma-separated }
+
+  # ---------------------------------------------------------------------------
+  # Site settings (src/data/settings.json, imported directly; no zod schema)
+  # ---------------------------------------------------------------------------
+  - name: settings
+    label: Settings
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: site
+        label: Site Settings
+        file: src/data/settings.json
+        format: json
+        fields:
+          - { label: Site Title, name: site_title, widget: string, required: false }
+          - { label: Site Description, name: site_description, widget: text, required: false }
+          - { label: Logo, name: logo, widget: image, required: false }
+          - label: Social Media
+            name: social
+            widget: object
+            required: false
+            fields:
+              - { label: Facebook URL, name: facebook, widget: string, required: false }
+              - { label: Instagram URL, name: instagram, widget: string, required: false }
+              - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+          - { label: Office Phone, name: cellphone, widget: string, required: false }
+          - { label: Field Phone, name: phone, widget: string, required: false }
+          - { label: Email Address, name: email, widget: string, required: false }
+          - { label: Physical Address, name: address, widget: string, required: false }
+          - { label: Hours Description, name: hours, widget: string, required: false }
+          - { label: OG Image, name: og_image, widget: image, required: false }
+          - label: Geographic Location
+            name: geo
+            widget: object
+            fields:
+              # Required: BaseLayout calls settings.geo.latitude.toString() unconditionally.
+              - { label: Latitude, name: latitude, widget: number, value_type: float, step: 0.0001 }
+              - { label: Longitude, name: longitude, widget: number, value_type: float, step: 0.0001 }
+          - { label: Price Range, name: priceRange, widget: string, required: false }
+          - { label: Opening Hours (Schema.org format), name: openingHours, widget: string, required: false }
+          - label: Business Hours
+            name: businessHours
+            widget: object
+            required: false
+            fields:
+              - { label: Weekdays, name: weekdays, widget: string, required: false }
+              - { label: Saturday, name: saturday, widget: string, required: false }
+              - { label: Sunday, name: sunday, widget: string, required: false }
+              - { label: Emergency Service, name: emergency, widget: string, required: false }
+          - label: Analytics
+            name: analytics
+            widget: object
+            required: false
+            fields:
+              - { label: Google Tag Manager ID, name: gtmId, widget: string, required: false }
+              - { label: Google Analytics ID, name: gaId, widget: string, required: false }
+              - { label: Enable Tracking, name: enableTracking, widget: boolean, required: false }
+          - label: A/B Tests
+            name: abTests
+            widget: object
+            required: false
+            fields:
+              - label: Homepage CTA Test
+                name: homepageCTA
+                widget: object
+                required: false
+                fields:
+                  - { label: Enabled, name: enabled, widget: boolean, required: false }
+                  - label: Variants
+                    name: variants
+                    widget: list
+                    required: false
+                    summary: "{{fields.text}} ({{fields.trackingLabel}})"
+                    fields:
+                      - { label: Text, name: text, widget: string, required: false }
+                      - { label: Tracking Label, name: trackingLabel, widget: string, required: false }
+              - label: Contact Button Test
+                name: contactButton
+                widget: object
+                required: false
+                fields:
+                  - { label: Enabled, name: enabled, widget: boolean, required: false }
+                  - label: Variants
+                    name: variants
+                    widget: list
+                    required: false
+                    summary: "{{fields.text}} ({{fields.trackingLabel}})"
+                    fields:
+                      - { label: Text, name: text, widget: string, required: false }
+                      - { label: Tracking Label, name: trackingLabel, widget: string, required: false }

@@ -1,0 +1,43 @@
+{
+  "title": "Our Services",
+  "subtitle": "Professional outdoor solutions for every season",
+  "autoScrollInterval": 5000,
+  "services": [
+    {
+      "id": "snow-removal",
+      "title": "Commercial Snow Removal",
+      "subtitle": "24/7 reliable winter services",
+      "icon": "snowflake",
+      "image": "/images/gallery/img-7575-1600w.jpg",
+      "href": "/services/commercial-snow-removal",
+      "order": 1
+    },
+    {
+      "id": "landscaping",
+      "title": "Professional Landscaping",
+      "subtitle": "Transform your outdoor space",
+      "icon": "tree",
+      "image": "/images/paving-1600w.jpg",
+      "href": "/services/landscaping",
+      "order": 2
+    },
+    {
+      "id": "municipal",
+      "title": "Municipal Contracting",
+      "subtitle": "Large-scale public works",
+      "icon": "buildings",
+      "image": "/images/shoreline-restoration2-1600w.jpg",
+      "href": "/services/municipal-contracting",
+      "order": 3
+    },
+    {
+      "id": "ice-management",
+      "title": "Ice Management",
+      "subtitle": "Safe surfaces all winter",
+      "icon": "shield-check",
+      "image": "/images/gallery/img-8046-1600w.jpg",
+      "href": "/services/ice-management",
+      "order": 4
+    }
+  ]
+}

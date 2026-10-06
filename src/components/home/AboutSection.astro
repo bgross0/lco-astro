@@ -1,5 +1,9 @@
 ---
 import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
+import contentData from '../../content/homepage/content.json';
+
+const { about } = contentData;
 ---
 
 <section class="about">
@@ -7,77 +11,44 @@ import Button from '../common/Button.astro';
     <div class="about__grid">
       <div class="about__content">
         <h2 class="about__title">
-          Our Commitment to Quality
+          {about.title}
         </h2>
-        
-        <p class="about__text">
-          At Lake County Outdoors, LLC, we deliver high-quality snow removal and landscaping 
-          services using top-tier materials and equipment. Our team stays current with the 
-          latest techniques and industry standards.
-        </p>
-        
-        <p class="about__text">
-          With a comprehensive fleet of 10 trucks, 14 Bobcats, 6 wheel loaders, and 2 tri-axle 
-          dump trucks with salters, we efficiently handle any snow removal challenge or land 
-          renovation project. Our dedicated team ensures reliability and constantly strives to 
-          deliver the best to our customers.
-        </p>
-        
+
+        {about.paragraphs.map((paragraph) => (
+          <p class="about__text">
+            {paragraph}
+          </p>
+        ))}
+
         <div class="about__features">
-          <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>24/7 Emergency Service</span>
-          </div>
-          
-          <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>Licensed & Insured</span>
-          </div>
-          
-          <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>Free Estimates</span>
-          </div>
-          
-          <div class="about__feature">
-            <svg class="about__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>60+ Years Combined Experience</span>
-          </div>
+          {about.features.map((feature) => (
+            <div class="about__feature">
+              <Icon name={feature.icon} size={24} class="about__feature-icon" />
+              <span>{feature.text}</span>
+            </div>
+          ))}
         </div>
-        
+
         <div class="about__actions">
-          <Button href="/contact" variant="primary">
-            Get Started Today
+          <Button href={about.buttonLink || "/contact"} variant="primary">
+            {about.buttonText || "Get Started Today"}
           </Button>
         </div>
       </div>
-      
+
       <div class="about__images">
         <div class="about__image-grid">
-          <img 
-            src="/images/equipment/equipment-1-600x287.jpg" 
-            alt="CAT 299D3 Skid Steer"
-            class="about__image about__image--1"
-            loading="lazy"
-            width="400"
-            height="300"
-          />
-          <img 
-            src="/images/landscaping/landscaping-square-1-600x600.jpg" 
-            alt="Professional retaining wall installation"
-            class="about__image about__image--2"
-            loading="lazy"
-            width="400"
-            height="300"
-          />
+          {about.images && about.images.map((image, index) => (
+            <img
+              src={image.src}
+              alt={image.alt}
+              class={`about__image about__image--${index + 1}`}
+              width="400"
+              height="300"
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
         </div>
       </div>
     </div>
@@ -85,31 +56,35 @@ import Button from '../common/Button.astro';
 </section>
 
 <style>
+  .about {
+    padding: var(--space-12) 0;
+  }
+
   .about__grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-12);
     align-items: center;
   }
-  
+
   .about__title {
     color: var(--secondary);
     margin-bottom: var(--space-6);
   }
-  
+
   .about__text {
     font-size: var(--text-lg);
     color: var(--neutral-dark);
     line-height: 1.7;
   }
-  
+
   .about__features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--space-4);
     margin: var(--space-8) 0;
   }
-  
+
   .about__feature {
     display: flex;
     align-items: center;
@@ -117,27 +92,27 @@ import Button from '../common/Button.astro';
     font-weight: var(--font-medium);
     color: var(--neutral-dark);
   }
-  
+
   .about__feature-icon {
     flex-shrink: 0;
     color: var(--accent);
   }
-  
+
   .about__actions {
     margin-top: var(--space-8);
   }
-  
+
   .about__images {
     display: none;
   }
-  
+
   .about__image-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
     align-items: center;
   }
-  
+
   .about__image {
     width: 100%;
     height: 100%;
@@ -145,20 +120,40 @@ import Button from '../common/Button.astro';
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
   }
-  
+
   .about__image--1 {
     transform: translateY(-20px);
   }
-  
+
   .about__image--2 {
     transform: translateY(20px);
   }
-  
+
+  @media (max-width: 768px) {
+    .about__text {
+      font-size: var(--text-base);
+    }
+
+    .about__feature {
+      padding: var(--space-2);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .about {
+      padding: var(--space-16) 0;
+    }
+  }
+
   @media (min-width: 1024px) {
+    .about {
+      padding: var(--space-20) 0;
+    }
+
     .about__grid {
       grid-template-columns: 1fr 1fr;
     }
-    
+
     .about__images {
       display: block;
     }

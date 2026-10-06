@@ -1,47 +1,79 @@
-# Astro Starter Kit: Minimal
+# Lake County Outdoors website
+
+Marketing site for Lake County Outdoors, LLC (Edina, MN), served at
+https://lakecountyoutdoor.com.
+
+- **Astro 7**, static output, no client framework
+- **Decap CMS** at `/admin` for content editing (see [docs/CMS.md](docs/CMS.md))
+- **Cloudflare Pages** for hosting, plus two Pages Functions for CMS login
+
+## Development
+
+Requires Node 22.12 or newer (`.nvmrc` pins 24).
 
 ```sh
-npm create astro@latest -- --template minimal
+npm ci
+npm run dev       # http://localhost:4321
+npm run build     # static output in dist/
+npm run preview   # serve dist/
+npm run cms       # local Decap backend, see docs/CMS.md
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+`npm run dev` and `preview` do not run the Pages Functions. To test CMS login
+locally, build and run `npx wrangler pages dev dist` with `GITHUB_CLIENT_ID`
+and `GITHUB_CLIENT_SECRET` in an untracked `.dev.vars` file.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Layout
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+  content/            Markdown and JSON edited through the CMS
+  content.config.ts   Collection schemas (keep in sync with public/admin/config.yml)
+  data/settings.json  Business details: phones, address, hours, social links
+  components/         Astro components, styled with scoped CSS
+  layouts/            BaseLayout: meta tags, LocalBusiness JSON-LD
+  lib/phone.ts        Display text and tel: links derived from settings.json
+  pages/              Routes
+  styles/             Global reset, typography, and design tokens
+public/
+  _headers            Cloudflare Pages response headers
+  _redirects          Legacy URL redirects
+  admin/              Decap CMS app and collection config
+  images/             Site images; CMS uploads go to images/uploads/
+functions/api/        GitHub OAuth for Decap (Cloudflare Pages Functions)
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Styling is plain CSS. Design tokens (colors, spacing, type scale) live in
+`src/styles/variables.css`; components use BEM class names in scoped
+`<style>` blocks.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Deployment (Cloudflare Pages)
 
-Any static assets, like images, can be placed in the `public/` directory.
+| Setting | Value |
+| --- | --- |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Node version | from `.nvmrc` |
+| Secrets | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (CMS login) |
 
-## 🧞 Commands
+Pushes to `main` deploy production; other branches and CMS pull requests get
+preview deployments.
 
-All commands are run from the root of the project, from a terminal:
+Notes:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- Pointing the apex domain `lakecountyoutdoor.com` at Pages requires its DNS
+  zone to be on Cloudflare (nameservers are currently at GoDaddy). Add `www` as
+  a second custom domain and redirect it to the apex; CMS login only works on
+  the apex origin.
+- `public/_headers` rules are additive and Cloudflare joins duplicate headers
+  with a comma. Never set the same header in overlapping rules.
+- Only `/_assets/*` (fingerprinted build output) is cached as immutable. Files
+  under `public/` keep their URL when replaced, so they get a short cache.
+- Astro does not optimize images referenced by path from `public/`. Resize
+  photos before adding them; anything over ~400 KB is almost certainly too big.
 
-## 👀 Want to learn more?
+## Contact form
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+`/contact` posts to FormSubmit, which emails submissions and forwards them to
+the CRM webhook. Everything in the form, including the webhook URL, is public
+HTML.

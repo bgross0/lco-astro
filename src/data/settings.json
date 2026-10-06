@@ -1,0 +1,50 @@
+{
+  "site_title": "Lake County Outdoors, LLC",
+  "site_description": "Municipal Contracting, Commercial Snow Removal, Heavy Equipment Rental. Professional outdoor services in Edina, Minnesota.",
+  "logo": "/lco-final.png",
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "linkedin": ""
+  },
+  "cellphone": "Office - (612) 655-0648",
+  "phone": "Field - (763) 291-4105",
+  "hours": "24/7 Emergency Service Available",
+  "og_image": "/images/gallery/img-7575-1920w.jpg",
+  "address": "7777 Washington Ave S, Suite 4, Edina MN 55439",
+  "email": "cadenf@lakecountyoutdoor.com",
+  "geo": {
+    "latitude": 44.8697,
+    "longitude": -93.3503
+  },
+  "priceRange": "$$",
+  "openingHours": "Mo-Su 00:00-24:00",
+  "businessHours": {
+    "weekdays": "7:00 AM - 6:00 PM",
+    "saturday": "8:00 AM - 4:00 PM",
+    "sunday": "Closed",
+    "emergency": "24/7 Available"
+  },
+  "analytics": {
+    "gtmId": "",
+    "gaId": "",
+    "enableTracking": false
+  },
+  "abTests": {
+    "homepageCTA": {
+      "enabled": false,
+      "variants": [
+        {"text": "Get a Free Quote", "trackingLabel": "control"},
+        {"text": "Get Your Free Estimate", "trackingLabel": "variant_a"},
+        {"text": "Request Quote Now", "trackingLabel": "variant_b"}
+      ]
+    },
+    "contactButton": {
+      "enabled": false,
+      "variants": [
+        {"text": "Send Message", "trackingLabel": "control"},
+        {"text": "Get Started", "trackingLabel": "variant_a"}
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 ---
 export interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'accent' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'accent' | 'outline';
   size?: 'small' | 'medium' | 'large';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
@@ -20,7 +20,6 @@ const {
 } = Astro.props;
 
 const classes = [
-  'button',
   'btn',
   `btn--${variant}`,
   `btn--${size}`,
@@ -63,16 +62,34 @@ const Component = href ? 'a' : 'button';
   .btn--small {
     padding: var(--space-2) var(--space-4);
     font-size: var(--text-sm);
+    min-height: 36px;
   }
   
   .btn--medium {
     padding: var(--space-3) var(--space-6);
     font-size: var(--text-base);
+    min-height: 44px;
   }
   
   .btn--large {
     padding: var(--space-4) var(--space-8);
     font-size: var(--text-lg);
+    min-height: 52px;
+  }
+  
+  @media (max-width: 768px) {
+    .btn--small {
+      min-height: 44px;
+      padding: var(--space-3) var(--space-4);
+    }
+    
+    .btn--medium {
+      min-height: 48px;
+    }
+    
+    .btn--large {
+      min-height: 52px;
+    }
   }
   
   /* Variants */
@@ -118,8 +135,8 @@ const Component = href ? 'a' : 'button';
   }
   
   .btn--accent:hover:not(.btn--disabled) {
-    background-color: var(--warning-light);
-    border-color: var(--warning-light);
+    background-color: var(--warning-dark);
+    border-color: var(--warning-dark);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
   }
@@ -145,21 +162,6 @@ const Component = href ? 'a' : 'button';
   .btn--outline:active:not(.btn--disabled) {
     transform: translateY(0);
     box-shadow: var(--shadow-md);
-  }
-  
-  .btn--ghost {
-    background-color: transparent;
-    color: var(--neutral-dark);
-    border-color: transparent;
-  }
-  
-  .btn--ghost:hover:not(.btn--disabled) {
-    background-color: rgba(0, 0, 0, 0.05);
-    transform: translateY(-2px);
-  }
-  
-  .btn--ghost:active:not(.btn--disabled) {
-    transform: translateY(0);
   }
   
   /* Disabled State */

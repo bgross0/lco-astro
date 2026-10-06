@@ -3,15 +3,22 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
+    "cms": "BIND_HOST=127.0.0.1 decap-server",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.4.1",
-    "astro": "^5.11.1",
-    "astro-imagetools": "^0.9.0",
-    "decap-cms-app": "^3.7.2"
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.6",
+    "phosphor-icons-astro": "^2.1.1-17042025"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "decap-server": "^3.11.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

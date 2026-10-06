@@ -1,25 +1,40 @@
 ---
 import '../styles/global.css';
-import '../styles/utilities.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import settings from '../data/settings.json';
+import { officePhone } from '../lib/phone';
 
 export interface Props {
   title: string;
   description?: string;
   image?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
 const { 
-  title = 'Lake County Outdoors, LLC', 
-  description = 'Municipal Contracting, Commercial Snow Removal, Heavy Equipment Rental. Professional outdoor services in Lake County.',
-  image = '/og-image.jpg',
-  canonical
+  title = settings.site_title, 
+  description = settings.site_description,
+  image = settings.og_image || settings.logo,
+  canonical,
+  noindex = false
 } = Astro.props;
 
 const currentUrl = Astro.url.href;
-const ogImage = new URL(image, Astro.site).href;
+const ogImage = image.startsWith('http') ? image : new URL(image, Astro.site || 'https://lakecountyoutdoor.com').href;
+
+// settings.address is "<street>, <city> <ST> <zip>"; the street may itself
+// contain commas ("Suite 4"), so parse from the end.
+const addressMatch = settings.address.match(/^(.+),\s*([^,]+?)\s+([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$/);
+const postalAddress = addressMatch
+  ? {
+      streetAddress: addressMatch[1],
+      addressLocality: addressMatch[2],
+      addressRegion: addressMatch[3],
+      postalCode: addressMatch[4],
+    }
+  : { streetAddress: settings.address };
 ---
 
 <!DOCTYPE html>
@@ -27,21 +42,23 @@ const ogImage = new URL(image, Astro.site).href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Lake County Outdoors, LLC" />
-    <link rel="canonical" href={canonical || currentUrl} />
+    {noindex
+      ? <meta name="robots" content="noindex, follow" />
+      : <link rel="canonical" href={canonical || currentUrl} />}
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={currentUrl} />
+    {!noindex && <meta property="og:url" content={currentUrl} />}
     <meta property="og:site_name" content="Lake County Outdoors, LLC" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:locale" content="en_US" />
     
     <!-- Twitter Card -->
@@ -53,55 +70,92 @@ const ogImage = new URL(image, Astro.site).href;
     <!-- Theme Color -->
     <meta name="theme-color" content="#4A90E2" />
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <!-- Favicon - Multiple sizes for better support -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=3" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=3" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png?v=3" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
+    <link rel="manifest" href="/site.webmanifest?v=3" />
     
-    <!-- Fonts Preconnect -->
+    <!-- Fonts: preconnect + optimized loading (reduced to 1 family) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
+      />
+    </noscript>
     
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
+    
+    <!-- Google Tag Manager -->
+    {settings.analytics?.enableTracking && settings.analytics?.gtmId && (
+      <script set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','${settings.analytics.gtmId}');`}></script>
+    )}
+    <!-- End Google Tag Manager -->
+
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    {settings.analytics?.enableTracking && settings.analytics?.gtmId && (
+      <noscript>
+        <iframe 
+          src={`https://www.googletagmanager.com/ns.html?id=${settings.analytics.gtmId}`}
+          height="0" 
+          width="0" 
+          style="display:none;visibility:hidden">
+        </iframe>
+      </noscript>
+    )}
+    <!-- End Google Tag Manager (noscript) -->
+    
     <a href="#main" class="skip-to-content">Skip to content</a>
     
     <Header />
     
-    <main id="main">
+    <main id="main" class="main-content">
       <slot />
     </main>
     
     <Footer />
     
     <!-- Local Business Schema -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Lake County Outdoors, LLC",
-        "description": "Professional outdoor services including commercial snow removal, landscaping, and municipal contracting in Lake County.",
-        "telephone": "612-655-0648",
-        "email": "info@lakecountyoutdoor.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Lake County",
-          "addressRegion": "MN",
-          "addressCountry": "US"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "",
-          "longitude": ""
-        },
-        "url": "https://lakecountyoutdoor.com",
-        "image": "https://lakecountyoutdoor.com/og-image.jpg",
-        "priceRange": "$$",
-        "openingHours": "Mo-Fr 07:00-18:00",
-        "sameAs": []
-      }
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": settings.site_title,
+      "description": settings.site_description,
+      "telephone": officePhone.href.slice(4),
+      "email": settings.email,
+      "address": {
+        "@type": "PostalAddress",
+        ...postalAddress,
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": settings.geo.latitude,
+        "longitude": settings.geo.longitude
+      },
+      "url": "https://lakecountyoutdoor.com",
+      "image": `https://lakecountyoutdoor.com${settings.logo}`,
+      "priceRange": settings.priceRange,
+      "openingHours": settings.openingHours,
+      "sameAs": Object.values(settings.social).filter(url => url)
+    })}></script>
   </body>
 </html>

@@ -1,16 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroCMS from '../components/home/HeroCMS.astro';
-import ServicesGrid from '../components/home/ServicesGrid.astro';
+import Hero from '../components/home/HeroFullBackground.astro';
+import InteractiveServicesShowcase from '../components/home/InteractiveServicesShowcase.astro';
 import AboutSection from '../components/home/AboutSection.astro';
-import ClientSatisfaction from '../components/home/ClientSatisfaction.astro';
+import ReviewsSection from '../components/home/ReviewsSection.astro';
 import CTABanner from '../components/home/CTABanner.astro';
+
+const title = 'Lake County Outdoors | Commercial Snow Removal & Landscaping Services | Edina, MN';
+const description = 'Professional commercial snow removal, landscaping, and municipal contracting services in Edina, Minnesota. 24/7 emergency service, fully insured, serving the Twin Cities metro area.';
 ---
 
-<BaseLayout>
-  <HeroCMS />
-  <ServicesGrid />
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <InteractiveServicesShowcase />
   <AboutSection />
-  <ClientSatisfaction />
+  <ReviewsSection />
   <CTABanner />
 </BaseLayout>

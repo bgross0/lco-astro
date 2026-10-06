@@ -1,15 +1,26 @@
 :root {
   /* Color Palette */
   --primary: #4A90E2;        /* Lighter Blue - Trust & professionalism */
-  --primary-dark: #2E5A87;   /* Darker Blue - Depth & reliability */
+  --primary-dark: #3570B8;   /* Darker primary for hover states */
+  --primary-light: #6BA3E9;  /* Lighter primary for backgrounds */
   --secondary: #2E5A87;      /* Darker Blue - Depth & reliability */
+  --secondary-dark: #1E3D5C; /* Darker secondary for hover states */
+  --secondary-light: #4A7DAB; /* Lighter secondary for backgrounds */
   --accent: #2d5016;         /* Forest Green - Nature/landscaping */
+  --accent-dark: #1F3A0F;    /* Darker accent for hover states */
+  --accent-light: #3E6A20;   /* Lighter accent for backgrounds */
   --warning: #ff6b35;        /* Orange - CTAs & emergency services */
-  --warning-light: #ff8659;  /* Lighter Orange - Hover state */
+  --warning-dark: #E55420;   /* Darker warning for hover states */
+  --warning-light: #FF8A5C;  /* Lighter warning for backgrounds */
   --neutral-dark: #565c60;   /* Cool Gray - Text */
   --neutral-light: #f5f5f5;  /* Light Gray - Backgrounds */
   --white: #ffffff;          /* Snow White - Clean sections */
   --black: #1a1a1a;          /* Near Black - High contrast text */
+  
+  /* Additional color variables for better contrast */
+  --color-primary-dark: #3570B8; /* Alias for consistency */
+  --primary-600: #3570B8;    /* Tailwind-style naming for ModernHeader */
+  --primary-700: #2C5A94;    /* Even darker primary for stronger hover */
   
   /* Typography */
   --font-heading: 'Montserrat', sans-serif;
@@ -26,14 +37,6 @@
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
   --text-5xl: 3rem;
-  --text-6xl: 3.75rem;
-  
-  /* Font Weights */
-  --font-normal: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-  --font-extrabold: 800;
   
   /* Spacing */
   --space-1: 0.25rem;
@@ -78,7 +81,7 @@
   --z-tooltip: 1050;
   
   /* Container */
-  --container-max: 1200px;
+  --container-max: 1280px;
   --container-padding: var(--space-4);
   
   /* Header */

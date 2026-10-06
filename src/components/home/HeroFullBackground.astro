@@ -1,0 +1,343 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
+import heroData from '../../content/homepage/hero.json';
+import { officePhone } from '../../lib/phone';
+
+// Import hero image from assets (Astro will optimize it)
+import heroImage from '../../assets/images/hero/commercial-landscaping.jpg';
+
+---
+
+<section class="hero-full">
+  <!-- Background Image -->
+  <div class="hero-background">
+    <Image
+      src={heroImage}
+      alt="Landscaped commercial property maintained by Lake County Outdoors"
+      loading="eager"
+      fetchpriority="high"
+      class="hero-bg-img"
+      widths={[640, 960, 1206]}
+      sizes="100vw"
+      quality={75}
+      format="webp"
+    />
+    <!-- Light overlay for subtle darkening -->
+    <div class="hero-overlay-light"></div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="hero-container">
+    <div class="hero-content">
+      <!-- Title -->
+      <h1 class="hero-title">Your Outdoor Services Partner</h1>
+      <p class="hero-subtitle">Serving Communities across the Twin Cities</p>
+
+      <!-- CTA Buttons -->
+      <div class="hero-actions">
+        <Button href={heroData.ctaLink} variant="primary" size="large">
+          {heroData.ctaText}
+        </Button>
+        <Button href={officePhone.href} variant="secondary" size="large">
+          <Icon name="phone" size={20} />
+          Call {officePhone.display}
+        </Button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Bottom Services Section -->
+<div class="hero-services">
+  <div class="hero-services-container">
+    {heroData.bottomServices && heroData.bottomServices.map((service) => (
+      <div class="hero-service-item">
+        <div class="hero-service-icon">
+          <Icon name={service.icon} size={48} color="var(--primary)" />
+        </div>
+        <h4 class="hero-service-title">{service.title}</h4>
+        <p class="hero-service-text">{service.description}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .hero-full {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: -80px;
+    padding-top: 80px;
+  }
+
+  /* Background Image */
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-background :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  /* Light overlay - subtle tint for readability */
+  .hero-overlay-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  /* Content Container */
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Title */
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    text-shadow:
+      3px 3px 10px rgba(0, 0, 0, 0.9),
+      0 0 30px rgba(0, 0, 0, 0.7);
+    line-height: 1 !important;
+    letter-spacing: -0.02em;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap;
+  }
+
+  /* Subtitle */
+  .hero-subtitle {
+    font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    text-shadow:
+      2px 2px 8px rgba(0, 0, 0, 0.9),
+      0 0 20px rgba(0, 0, 0, 0.7);
+    line-height: 1.2 !important;
+    letter-spacing: 0.01em;
+    width: 100%;
+    margin: 0 0 1rem 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Actions */
+  .hero-actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-actions :global(.btn) {
+    padding: 1.125rem 2rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .hero-actions :global(.btn:hover) {
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 25px rgba(0, 0, 0, 0.5),
+      0 3px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-actions :global(.btn-secondary) {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--primary);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .hero-actions :global(.btn-secondary:hover) {
+    background: white;
+    border-color: white;
+  }
+
+  /* Bottom Services Section */
+  .hero-services {
+    position: relative;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 6rem 0 2rem 0;
+    margin-top: -5rem;
+  }
+
+  .hero-services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .hero-service-item {
+    text-align: center;
+  }
+
+  .hero-service-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: -3rem auto 1rem auto;
+  }
+
+  .hero-service-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--secondary);
+  }
+
+  .hero-service-text {
+    font-size: 1rem;
+    color: var(--neutral-dark);
+  }
+
+  /* Tablet styles */
+  @media (min-width: 768px) {
+    .hero-full {
+      min-height: 80vh;
+    }
+
+    .hero-title {
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    .hero-full {
+      min-height: 85vh;
+      margin-top: -100px;
+      padding-top: 100px;
+    }
+
+    .hero-container {
+      padding: 0 3rem;
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 767px) {
+    .hero-full {
+      min-height: 75vh;
+    }
+
+    .hero-container {
+      padding: 0 1.5rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.75rem, 7vw, 2.5rem);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .hero-actions :global(.btn) {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      min-width: auto;
+    }
+
+    .hero-services-container {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .hero-service-item {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    .hero-full {
+      min-height: 70vh;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-actions :global(.btn) {
+      padding: 0.875rem 1.25rem;
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
