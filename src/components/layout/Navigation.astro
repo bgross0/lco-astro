@@ -23,16 +23,21 @@ const isActive = (href: string) => {
 
 <nav class="nav" aria-label="Main navigation">
   <ul class="nav__list">
-    {navItems.map((item) => (
+    {navItems.map((item, index) => (
       item.dropdown ? (
         <li class="nav__item nav__item--dropdown">
-          <button class="nav__link nav__dropdown-trigger">
+          <button
+            type="button"
+            class="nav__link nav__dropdown-trigger"
+            aria-expanded="false"
+            aria-controls={`nav-dropdown-${index}`}
+          >
             {item.label}
             <svg class="nav__dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
-          <ul class="nav__dropdown">
+          <ul class="nav__dropdown" id={`nav-dropdown-${index}`}>
             {item.dropdown.map((subItem) => (
               <li>
                 <a 
@@ -145,7 +150,8 @@ const isActive = (href: string) => {
       transition: transform var(--transition-fast);
     }
     
-    .nav__item--dropdown:hover .nav__dropdown-icon {
+    .nav__item--dropdown:hover .nav__dropdown-icon,
+    .nav__item--open .nav__dropdown-icon {
       transform: rotate(180deg);
     }
     
@@ -167,7 +173,8 @@ const isActive = (href: string) => {
       z-index: 100;
     }
     
-    .nav__item--dropdown:hover .nav__dropdown {
+    .nav__item--dropdown:hover .nav__dropdown,
+    .nav__item--open .nav__dropdown {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
@@ -244,3 +251,34 @@ const isActive = (href: string) => {
     }
   }
 </style>
+
+<script>
+  // Disclosure pattern: hover still opens the menu, but keyboard and touch
+  // users need an explicit toggle with aria-expanded kept in sync.
+  for (const item of document.querySelectorAll<HTMLElement>('.nav__item--dropdown')) {
+    const trigger = item.querySelector<HTMLButtonElement>('.nav__dropdown-trigger');
+    if (!trigger) continue;
+
+    const setOpen = (open: boolean) => {
+      item.classList.toggle('nav__item--open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+    };
+
+    trigger.addEventListener('click', () => setOpen(trigger.getAttribute('aria-expanded') !== 'true'));
+
+    item.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+
+    item.addEventListener('focusout', (event) => {
+      if (!item.contains(event.relatedTarget as Node | null)) setOpen(false);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!item.contains(event.target as Node)) setOpen(false);
+    });
+  }
+</script>
