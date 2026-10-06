@@ -1,51 +1,22 @@
+# Cloudflare Pages response headers.
+# Rules are additive: a request matching several patterns receives every
+# matching header, and a header set twice is joined with a comma. Never set
+# the same header in overlapping rules.
+
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
 
-# Cloudflare Polish - Enable image optimization
-/*.png
-  Cache-Control: public, max-age=31536000, immutable
-  cf-cache-status: HIT
-
-/*.jpg
-  Cache-Control: public, max-age=31536000, immutable
-  cf-cache-status: HIT
-
-/*.jpeg
-  Cache-Control: public, max-age=31536000, immutable
-  cf-cache-status: HIT
-
-/*.webp
-  Cache-Control: public, max-age=31536000, immutable
-  cf-cache-status: HIT
-
-/images/*
-  Cache-Control: public, max-age=31536000, immutable
-  cf-cache-status: HIT
-
-# Cache static assets aggressively
-/*.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.svg
-  Cache-Control: public, max-age=31536000, immutable
-
-# Astro optimized assets - aggressive caching for Cloudflare Polish
+# Fingerprinted build output (build.assets = '_assets'): safe to cache forever.
 /_assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-/_media/*
-  Cache-Control: public, max-age=31536000, immutable
+# Unhashed files from public/: cache, but let replacements propagate.
+/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
-# Default: let HTML be revalidated
-/*
+/admin/*
   Cache-Control: no-cache
-
+  X-Robots-Tag: noindex
