@@ -14,7 +14,9 @@ const {
 } = Astro.props;
 ---
 
-<section class="service-hero" style={`background-image: url(${backgroundImage});`}>
+<section class="service-hero">
+  <!-- Real <img> (not a CSS background) so the preload scanner finds the LCP image early. -->
+  <img class="hero-image" src={backgroundImage} alt="" fetchpriority="high" />
   <div class="hero-overlay"></div>
   <div class="hero-container">
     <div class="hero-content">
@@ -37,14 +39,22 @@ const {
   .service-hero {
     position: relative;
     min-height: 700px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     overflow: hidden;
     margin-top: -80px;
     padding-top: 80px;
+  }
+
+  /* Fills the section exactly like the former background-size: cover / center. */
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
   }
 
   .hero-overlay {

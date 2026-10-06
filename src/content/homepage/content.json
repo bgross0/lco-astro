@@ -8,7 +8,7 @@
     ],
     "images": [
       {
-        "src": "/images/img_2486.jpg",
+        "src": "/images/img_2486-600w.jpg",
         "alt": "Professional equipment fleet"
       },
       {
@@ -73,7 +73,7 @@
   "cta": {
     "title": "Call 612-655-0648 TODAY!",
     "description": "We stay in constant communication with our customers until the job is done. To get a free quote, or if you have questions or special requests, just drop us a line.",
-    "backgroundImage": "/images/gallery/img-2482-1920w.jpg",
+    "backgroundImage": "/images/gallery/img-2482-1440w.jpg",
     "primaryButton": {
       "text": "Get Your Free Quote",
       "link": "/contact"

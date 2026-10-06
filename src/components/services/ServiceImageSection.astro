@@ -57,6 +57,8 @@ const displayImages = image ? [image] : images;
                 class={`section-image section-image--${index + 1}`}
                 width="600"
                 height="400"
+                loading="lazy"
+                decoding="async"
               />
             ))}
           </div>

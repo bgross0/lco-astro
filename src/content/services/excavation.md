@@ -6,7 +6,7 @@ imageSections:
       <p>From site preparation and foundation work to utility installation and specialty excavation, we handle every aspect of your earthmoving project with professional expertise. Our GPS-guided equipment and skilled operators deliver accurate results on time and on budget.</p>
     images:
       - /images/gallery/img-0815-1920w.jpg
-      - /images/gallery/img-0816-1920w.jpg
+      - /images/gallery/img-0816-900w.jpg
     imagePosition: right
     features:
       - icon: check-circle

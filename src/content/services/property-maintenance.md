@@ -6,7 +6,7 @@ imageSections:
       <p>From regular grounds maintenance to seasonal care and emergency services, we handle all aspects of property upkeep. Our customized maintenance programs ensure your property always looks professional while staying within your budget.</p>
     images:
       - /images/gallery/img-2346-1920w.jpg
-      - /images/gallery/img-7116-1920w.jpg
+      - /images/gallery/img-7116-1200w.jpg
     imagePosition: right
     features:
       - icon: check-circle

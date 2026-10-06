@@ -6,7 +6,7 @@ imageSections:
       <p>From hazardous tree removal to precision pruning and complete stump grinding, our team has the expertise and equipment to handle any tree service need. We prioritize safety, property protection, and customer satisfaction on every job.</p>
     images:
       - /images/gallery/img-7680-1920w.jpg
-      - /images/gallery/img-2345-1920w.jpg
+      - /images/gallery/img-2345-1200w.jpg
     imagePosition: left
     features:
       - icon: check-circle

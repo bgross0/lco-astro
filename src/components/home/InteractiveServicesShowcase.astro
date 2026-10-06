@@ -22,7 +22,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
             class={`option ${index === 0 ? 'active' : ''}`}
             data-service-id={service.id}
             data-bg-image={service.image}
-            style={`background-image: url('${service.image}');`}
+            style={index === 0 ? `background-image: url('${service.image}');` : undefined}
           >
             <div class="shadow"></div>
             <div class="label">
@@ -105,14 +105,19 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    opacity: 0;
-    transform: translateX(-60px);
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
 
-  .option.animated {
+  /* Cards are visible by default; the script opts into the entrance animation
+     by adding .js-entrance, so a failed or disabled script never hides them. */
+  .options.js-entrance .option {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  .options.js-entrance .option.animated {
     animation: slideFadeIn 0.7s cubic-bezier(.23, 1, .32, 1) forwards;
   }
 
@@ -433,19 +438,25 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
 <script>
   // Get the interval from data attribute
   const showcaseElement = document.querySelector('.services-showcase');
+  const optionsContainer = showcaseElement?.querySelector('.options');
+  const options = showcaseElement ? showcaseElement.querySelectorAll('.option') : [];
+  const progressFill = showcaseElement?.querySelector('.progress-fill');
   const intervalTime = parseInt(showcaseElement?.dataset.interval || '5000');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  // Card interaction
-  const options = document.querySelectorAll('.option');
   let currentIndex = 0;
   let autoScrollTimer;
+  let resumeTimer;
+  let inView = false;
+  let hovering = false;
 
   // Progress bar animation variables
   let animationStartTime = 0;
   let animationId = null;
-  const progressFill = document.querySelector('.progress-fill');
 
-  // Lazy load background images
+  // Only the initially active card ships with an inline background-image.
+  // The others are applied from data-bg-image once the cards approach the
+  // viewport; every card is visible as a strip, so they all load together.
   function loadBackgroundImage(element) {
     const bgImage = element.getAttribute('data-bg-image');
     if (bgImage && !element.style.backgroundImage) {
@@ -453,14 +464,8 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     }
   }
 
-  // Load images for visible and adjacent options
-  function loadVisibleImages() {
-    options.forEach((option, index) => {
-      // Load current, previous, and next images
-      if (Math.abs(index - currentIndex) <= 1) {
-        loadBackgroundImage(option);
-      }
-    });
+  function loadAllImages() {
+    options.forEach(loadBackgroundImage);
   }
 
   // Progress bar animation functions
@@ -498,7 +503,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   }
 
   function setActiveOption(index) {
-    const currentActive = document.querySelector('.option.active');
+    const currentActive = showcaseElement?.querySelector('.option.active');
     if (currentActive) {
       currentActive.classList.remove('active');
     }
@@ -506,17 +511,22 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
     if (options[index]) {
       options[index].classList.add('active');
       currentIndex = index;
-      loadVisibleImages(); // Load images when changing active option
-
-      // Start the progress animation
-      startProgress();
+      // Safety net in case activation happens before the observer fired.
+      loadBackgroundImage(options[index]);
     }
+  }
+
+  // Rotate only while the cards are on screen, not hovered, the tab is
+  // visible, and the user has not asked for reduced motion.
+  function canAutoRotate() {
+    return inView && !hovering && !document.hidden && !reducedMotion.matches;
   }
 
   // Auto-scroll function with synchronized progress
   function startAutoScroll() {
     // Clear any existing interval first
     stopAutoScroll();
+    if (!canAutoRotate()) return;
 
     // Start progress animation immediately
     startProgress();
@@ -531,11 +541,16 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
   }
 
   function stopAutoScroll() {
-    if (autoScrollTimer) {
-      clearTimeout(autoScrollTimer);
-      autoScrollTimer = null;
-    }
+    clearTimeout(resumeTimer);
+    clearTimeout(autoScrollTimer);
+    autoScrollTimer = null;
     stopProgress();
+  }
+
+  // Resume rotation after a pause (user interaction, tab switch).
+  function scheduleResume(delay) {
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(startAutoScroll, delay);
   }
 
   // Manual click handling
@@ -550,36 +565,60 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
         stopAutoScroll();
         setActiveOption(index);
         // Restart auto-scroll after user interaction
-        setTimeout(() => {
-          startAutoScroll();
-        }, 10000);
+        scheduleResume(10000);
         return;
       }
       // If active (or meta/aux click), allow default navigation behavior
     });
   });
 
-  // Entrance animation
-  window.addEventListener('DOMContentLoaded', () => {
-    // Load initial images
-    loadVisibleImages();
-
+  // Entrance animation. Skipped entirely for reduced motion, in which case the
+  // cards simply stay in their default visible state.
+  if (optionsContainer && !reducedMotion.matches) {
+    optionsContainer.classList.add('js-entrance');
     options.forEach((el, i) => {
       setTimeout(() => {
         el.classList.add('animated');
       }, 150 * i);
     });
+  }
 
-    // Start auto-scroll after animations complete
-    setTimeout(() => {
-      startAutoScroll();
-    }, 1000);
+  if (optionsContainer && 'IntersectionObserver' in window) {
+    // Fetch the deferred card images shortly before the cards scroll into view.
+    const imageObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        loadAllImages();
+        imageObserver.disconnect();
+      }
+    }, { rootMargin: '150px 0px' });
+    imageObserver.observe(optionsContainer);
+
+    // Start rotating when the cards are actually visible; pause when they are not.
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      inView = entries.some((entry) => entry.isIntersecting);
+      if (inView) {
+        startAutoScroll();
+      } else {
+        stopAutoScroll();
+      }
+    });
+    visibilityObserver.observe(optionsContainer);
+  } else {
+    loadAllImages();
+    inView = true;
+    startAutoScroll();
+  }
+
+  // Pause auto-scroll while a mouse pointer hovers the cards (not on touch,
+  // where there is no matching "leave" to resume from).
+  optionsContainer?.addEventListener('pointerenter', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    hovering = true;
+    stopAutoScroll();
   });
-
-  // Pause auto-scroll when hovering
-  const optionsContainer = document.querySelector('.options');
-  optionsContainer?.addEventListener('mouseenter', stopAutoScroll);
-  optionsContainer?.addEventListener('mouseleave', () => {
+  optionsContainer?.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    hovering = false;
     startAutoScroll();
   });
 
@@ -605,9 +644,7 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
       }
 
       // Restart auto-scroll after swipe
-      setTimeout(() => {
-        startAutoScroll();
-      }, 10000);
+      scheduleResume(10000);
     }
   }
 
@@ -632,9 +669,10 @@ const { title, subtitle, autoScrollInterval } = servicesShowcase;
       stopAutoScroll();
     } else {
       // Resume when page becomes visible again
-      setTimeout(() => {
-        startAutoScroll();
-      }, 500);
+      scheduleResume(500);
     }
   });
+
+  // Honour a reduced-motion preference changed while the page is open.
+  reducedMotion.addEventListener('change', startAutoScroll);
 </script>
