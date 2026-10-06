@@ -1,7 +1,7 @@
 # Decap CMS configuration
 # Docs: https://decapcms.org/docs/configuration-options/
 #
-# Field definitions mirror the Astro content schema in src/content/config.ts.
+# Field definitions mirror the Astro content schema in src/content.config.ts.
 # Any key present in a content file MUST have a field here, otherwise Decap
 # drops it on save. Number fields always set value_type explicitly: Decap's
 # number widget parses with parseInt unless value_type is "float".

@@ -102,10 +102,7 @@ const isActive = (href: string) => {
     const overlay = document.querySelector('.mobile-menu__overlay');
     const body = document.body;
     
-    if (!toggle || !nav || !overlay) {
-      console.warn('Mobile menu elements not found');
-      return;
-    }
+    if (!toggle || !nav || !overlay) return;
     
     let isOpen = false;
     

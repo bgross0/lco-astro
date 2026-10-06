@@ -72,12 +72,12 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
                   })}
                 </time>
                 <h2 class="blog-card__title">
-                  <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
                 </h2>
                 <p class="blog-card__description">{post.data.description}</p>
                 <div class="blog-card__footer">
                   <span class="blog-card__author">By {post.data.author}</span>
-                  <a href={`/blog/${post.slug}`} class="blog-card__link">
+                  <a href={`/blog/${post.id}`} class="blog-card__link">
                     Read More →
                   </a>
                 </div>

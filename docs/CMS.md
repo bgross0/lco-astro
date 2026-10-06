@@ -37,18 +37,21 @@ preview or on `www.` cannot sign in; redirect `www` to the apex domain.
 ## Editing locally
 
 ```sh
-npm run cms   # decap-server: local Git backend on :8081
+npm run cms   # decap-server: local Git backend on 127.0.0.1:8081
 npm run dev   # http://localhost:4321/admin/
 ```
 
 With `local_backend: true`, Decap on localhost writes straight to your working
 tree instead of GitHub.
 
+decap-server has no authentication and, without `BIND_HOST`, listens on every
+interface; the `cms` script pins it to loopback. Stop it when you are done.
+
 ## Changing the content model
 
 Every key in a content file needs a matching field in `config.yml`; Decap
 silently drops unknown keys when it saves an entry. When you add or rename a
-field in `src/content/config.ts`, make the same change in `config.yml`.
+field in `src/content.config.ts`, make the same change in `config.yml`.
 
 - Number fields must set `value_type` (`int` or `float`); Decap otherwise
   parses with `parseInt`.
