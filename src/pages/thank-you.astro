@@ -78,11 +78,13 @@ const pageDescription = "Thank you for contacting Lake County Outdoors. We've re
           <div class="urgent__actions">
             <Button href={officePhone.href} variant="primary" size="large">
               <Icon name="phone" size={20} />
-              {settings.cellphone}
+              <span>{officePhone.label}</span>
+              <span>{officePhone.display}</span>
             </Button>
             <Button href={fieldPhone.href} variant="outline" size="large">
               <Icon name="phone" size={20} />
-              {settings.phone}
+              <span>{fieldPhone.label}</span>
+              <span>{fieldPhone.display}</span>
             </Button>
           </div>
         </div>
@@ -99,7 +101,7 @@ const pageDescription = "Thank you for contacting Lake County Outdoors. We've re
               View Our Services
               <Icon name="arrow-right" size={20} />
             </Button>
-            <Button href="/" variant="ghost">
+            <Button href="/" variant="outline">
               Return to Homepage
               <Icon name="home" size={20} />
             </Button>
@@ -390,6 +392,12 @@ const pageDescription = "Thank you for contacting Lake County Outdoors. We've re
 
     .urgent__actions {
       flex-direction: column;
+    }
+
+    /* Let the label and number stack instead of overflowing the card */
+    .urgent__actions :global(.btn) {
+      flex-wrap: wrap;
+      width: 100%;
     }
 
     .additional__links {

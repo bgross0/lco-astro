@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/common/Button.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -90,7 +91,7 @@ const { Content } = await post.render();
         <div class="blog-post__cta">
           <h3>Ready to Get Started?</h3>
           <p>Contact Lake County Outdoors today for professional outdoor services.</p>
-          <a href="/contact" class="btn btn--primary">Get a Free Quote</a>
+          <Button href="/contact" variant="primary">Get a Free Quote</Button>
         </div>
       </div>
     </div>

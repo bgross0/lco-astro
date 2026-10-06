@@ -103,11 +103,15 @@ li {
   margin-bottom: var(--space-2);
 }
 
-/* Images */
-img {
+/* Media */
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  vertical-align: middle;
+}
+
+img, video {
   max-width: 100%;
   height: auto;
-  display: block;
 }
 
 /* Forms */

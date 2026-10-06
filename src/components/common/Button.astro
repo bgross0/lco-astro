@@ -6,7 +6,6 @@ export interface Props {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   class?: string;
-  useDaisy?: boolean; // Optional flag to use DaisyUI classes
   [key: string]: any;
 }
 
@@ -17,28 +16,16 @@ const {
   type = 'button',
   disabled = false,
   class: className = '',
-  useDaisy = false,
   ...rest
 } = Astro.props;
 
-// Use original classes by default, optionally use DaisyUI
-const classes = useDaisy 
-  ? [
-      'btn',
-      variant && `btn-${variant}`,
-      size === 'small' && 'btn-sm',
-      size === 'medium' && 'btn-md',
-      size === 'large' && 'btn-lg',
-      disabled && 'btn-disabled',
-      className
-    ].filter(Boolean).join(' ')
-  : [
-      'btn',
-      `btn--${variant}`,
-      `btn--${size}`,
-      className,
-      disabled && 'btn--disabled'
-    ].filter(Boolean).join(' ');
+const classes = [
+  'btn',
+  `btn--${variant}`,
+  `btn--${size}`,
+  className,
+  disabled && 'btn--disabled'
+].filter(Boolean).join(' ');
 
 const Component = href ? 'a' : 'button';
 ---
@@ -54,7 +41,6 @@ const Component = href ? 'a' : 'button';
 </Component>
 
 <style>
-  /* Original button styles - preserved */
   .btn {
     display: inline-flex;
     align-items: center;

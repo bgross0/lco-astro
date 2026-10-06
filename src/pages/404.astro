@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/common/Button.astro';
 import Icon from '../components/common/Icon.astro';
 
 const title = '404 - Page Not Found | Lake County Outdoors';
@@ -17,14 +18,14 @@ const description = 'The page you are looking for could not be found. Return to 
         </p>
         
         <div class="error-actions">
-          <a href="/" class="btn btn--primary">
+          <Button href="/" variant="primary">
             <Icon name="house" size={20} />
             Return Home
-          </a>
-          <a href="/contact" class="btn btn--secondary">
+          </Button>
+          <Button href="/contact" variant="outline">
             <Icon name="envelope" size={20} />
             Contact Us
-          </a>
+          </Button>
         </div>
         
         <div class="error-suggestions">
