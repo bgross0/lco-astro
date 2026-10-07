@@ -5,60 +5,8 @@
   },
   "form": {
     "title": "Request a Quote",
-    "subtitle": "Fill out the form below and we'll get back to you within 24 hours",
-    "submitButtonText": "Send Message",
-    "fields": [
-      {
-        "name": "firstName",
-        "label": "First Name",
-        "type": "text",
-        "required": true,
-        "width": "half"
-      },
-      {
-        "name": "lastName",
-        "label": "Last Name",
-        "type": "text",
-        "required": true,
-        "width": "half"
-      },
-      {
-        "name": "email",
-        "label": "Email Address",
-        "type": "email",
-        "required": true,
-        "width": "full"
-      },
-      {
-        "name": "phone",
-        "label": "Phone Number",
-        "type": "tel",
-        "required": false,
-        "width": "full"
-      },
-      {
-        "name": "service",
-        "label": "Service Needed",
-        "type": "select",
-        "required": true,
-        "width": "full",
-        "options": [
-          "Commercial Snow Removal",
-          "Landscaping Services",
-          "Municipal Contracting",
-          "Ice Management",
-          "Other"
-        ]
-      },
-      {
-        "name": "message",
-        "label": "Project Details",
-        "type": "textarea",
-        "required": true,
-        "width": "full",
-        "placeholder": "Please describe your project or service needs..."
-      }
-    ]
+    "subtitle": "Tell us about your property and we'll get back to you within one business day.",
+    "submitButtonText": "Send Message"
   },
   "info": {
     "title": "Get in Touch",
