@@ -40,7 +40,7 @@ public/
   _redirects          Legacy URL redirects
   admin/              Decap CMS app and collection config
   images/             Site images; CMS uploads go to images/uploads/
-functions/api/        GitHub OAuth for Decap (Cloudflare Pages Functions)
+functions/api/        Pages Functions: contact form handler, GitHub OAuth for Decap
 ```
 
 Styling is plain CSS. Design tokens (colors, spacing, type scale) live in
@@ -54,7 +54,8 @@ Styling is plain CSS. Design tokens (colors, spacing, type scale) live in
 | Build command | `npm run build` |
 | Output directory | `dist` |
 | Node version | from `.nvmrc` |
-| Secrets | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (CMS login) |
+| Secrets | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (CMS login); `CRM_WEBHOOK_URL`, `TURNSTILE_SECRET_KEY` (contact form) |
+| Build variable | `PUBLIC_TURNSTILE_SITE_KEY` (contact form) |
 
 Pushes to `main` deploy production; other branches and CMS pull requests get
 preview deployments.
@@ -74,6 +75,28 @@ Notes:
 
 ## Contact form
 
-`/contact` posts to FormSubmit, which emails submissions and forwards them to
-the CRM webhook. Everything in the form, including the webhook URL, is public
-HTML.
+The quote form on `/contact` posts to `functions/api/contact.js`, which:
+
+1. rejects bots via a hidden honeypot field and Cloudflare Turnstile,
+2. validates the fields, and
+3. forwards the lead as JSON to the CRM webhook (`CRM_WEBHOOK_URL`, the full
+   `https://lco.axsys.app/submitform/webhook/v2/<token>` URL), where the
+   `atlas_submitform` module turns it into a CRM lead.
+
+The visitor lands on `/thank-you/` only after the CRM confirms the lead. If the
+CRM is unreachable or rejects it, the form shows an error with the office
+number and keeps what was typed; the failure is in the Pages Function logs.
+
+The webhook token must never appear in page HTML. To rotate it, change the
+`submitform.webhook_secret` system parameter in Odoo and update
+`CRM_WEBHOOK_URL` in Cloudflare.
+
+Turnstile needs both `PUBLIC_TURNSTILE_SITE_KEY` (build variable) and
+`TURNSTILE_SECRET_KEY` (secret). If neither is set, the form still works,
+protected by the honeypot only. Setting the secret without the site key
+rejects every submission.
+
+To test locally, put `CRM_WEBHOOK_URL` in an untracked `.dev.vars`, then
+`npm run build && npx wrangler pages dev dist`. Turnstile's documented test
+keys (`1x00000000000000000000AA` / `1x0000000000000000000000000000000AA`)
+always pass.

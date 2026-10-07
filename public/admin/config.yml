@@ -381,25 +381,6 @@ collections:
               - { label: Title, name: title, widget: string, required: false }
               - { label: Subtitle, name: subtitle, widget: string, required: false }
               - { label: Submit Button Text, name: submitButtonText, widget: string, required: false }
-              - label: Form Fields
-                name: fields
-                widget: list
-                required: false
-                hint: Not currently rendered; the contact form markup is hardcoded in src/pages/contact.astro.
-                summary: "{{fields.label}} ({{fields.type}})"
-                fields:
-                  - { label: Field Name, name: name, widget: string }
-                  - { label: Label, name: label, widget: string }
-                  - { label: Type, name: type, widget: select, options: [text, email, tel, select, textarea], default: text }
-                  - { label: Required, name: required, widget: boolean, required: false, default: false }
-                  - { label: Width, name: width, widget: select, options: [half, full], default: full }
-                  - label: Options
-                    name: options
-                    widget: list
-                    required: false
-                    hint: Only used when Type is select.
-                    field: { label: Option, name: option, widget: string }
-                  - { label: Placeholder, name: placeholder, widget: string, required: false }
           - label: Contact Info
             name: info
             widget: object

@@ -1,13 +1,22 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/common/Button.astro';
 import Icon from '../components/common/Icon.astro';
 import contactData from '../content/pages/contact.json';
 import settings from '../data/settings.json';
-import { officePhone } from '../lib/phone';
+import { officePhone, fieldPhone } from '../lib/phone';
 
 const pageTitle = contactData.seo.title;
 const pageDescription = contactData.seo.description;
+
+const services = (await getCollection('services'))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+  .map((service) => service.data.title);
+
+// Set at build time in Cloudflare Pages; without it the form still works,
+// protected by the honeypot only (see functions/api/contact.js).
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -28,112 +37,102 @@ const pageDescription = contactData.seo.description;
   <section class="contact">
     <div class="container">
       <div class="contact__grid">
-        <!-- Contact Form -->
-        <div class="contact__form-section">
-          <div class="contact__form-card">
-            <h2 class="contact__form-title">{contactData.form.title}</h2>
-            <p class="contact__form-subtitle">
-              {contactData.form.subtitle}
-            </p>
-            
-            <form class="form" action="https://formsubmit.co/lco-forms@zohomail.com" method="POST">
-              <!-- FormSubmit Configuration -->
-              <input type="hidden" name="_subject" value="New Contact Form Submission" />
-              <input type="hidden" name="_captcha" value="true" />
-              <input type="hidden" name="_template" value="table" />
-              <!-- Redirect to thank you page after submission -->
-              <input type="hidden" name="_next" value="https://lakecountyoutdoor.com/thank-you" />
-              <!-- Webhook URL V2 for proper JSON handling -->
-              <input type="hidden" name="_webhook" value="https://lco.axsys.app/submitform/webhook/DLkffmzBkmmczoVvgPL47H9NouXTK5xpk27SwJcPucg" />
-              
-              <!-- Honeypot spam protection -->
-              <input type="text" name="_honey" style="display:none" />
-              <div class="form__row">
-                <div class="form__group">
-                  <label for="firstName" class="form__label">First Name</label>
-                  <input 
-                    type="text" 
-                    id="firstName" 
-                    name="firstName" 
-                    class="form__input" 
-                    required
-                    aria-required="true"
-                  />
-                </div>
-                <div class="form__group">
-                  <label for="lastName" class="form__label">Last Name</label>
-                  <input 
-                    type="text" 
-                    id="lastName" 
-                    name="lastName" 
-                    class="form__input" 
-                    required
-                    aria-required="true"
-                  />
-                </div>
-              </div>
-              
-              <div class="form__row">
-                <div class="form__group">
-                  <label for="email" class="form__label">Email</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    class="form__input" 
-                    required
-                    aria-required="true"
-                  />
-                </div>
-                <div class="form__group">
-                  <label for="phone" class="form__label">Phone</label>
-                  <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    class="form__input"
-                    placeholder="(xxx) xxx-xxxx"
-                  />
-                </div>
-              </div>
-              
+        <div class="contact__form-card">
+          <h2 class="contact__form-title">{contactData.form?.title || 'Request a Quote'}</h2>
+          {contactData.form?.subtitle && (
+            <p class="contact__form-subtitle">{contactData.form.subtitle}</p>
+          )}
+
+          <form
+            id="quote-form"
+            class="form"
+            action="/api/contact"
+            method="POST"
+            data-msg-invalid="Please fill in the required fields and check your email address."
+            data-msg-verification="We couldn't confirm you're not a bot. Please try again."
+            data-msg-unavailable={`We couldn't send your request just now. Please call us at ${officePhone.display}.`}
+          >
+            <p class="form__status" role="alert" hidden></p>
+
+            <!-- Honeypot: hidden from people, filled in by bots -->
+            <div class="form__hp" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="form__row">
               <div class="form__group">
-                <label for="service" class="form__label">Service Needed</label>
-                <select id="service" name="service" class="form__select" required aria-required="true">
-                  <option value="">Select a service</option>
-                  <option value="commercial-snow-removal">Commercial Snow Removal</option>
-                  <option value="landscaping">Landscaping</option>
-                  <option value="municipal-contracting">Municipal Contracting</option>
-                  <option value="ice-management">Ice Management</option>
-                  <option value="other">Other</option>
-                </select>
+                <label for="firstName" class="form__label">First name</label>
+                <input type="text" id="firstName" name="firstName" class="form__input" autocomplete="given-name" maxlength="100" required />
               </div>
-              
               <div class="form__group">
-                <label for="message" class="form__label">Message</label>
-                <textarea 
-                  id="message" 
-                  name="message" 
-                  rows="5" 
-                  class="form__textarea" 
-                  placeholder="Tell us about your project or service needs..."
-                  required
-                  aria-required="true"
-                ></textarea>
+                <label for="lastName" class="form__label">Last name</label>
+                <input type="text" id="lastName" name="lastName" class="form__input" autocomplete="family-name" maxlength="100" required />
               </div>
-              
-              <button type="submit" class="form__submit">
-                {contactData.form.submitButtonText || "Send Message"}
-                <Icon name="arrow-right" size={20} />
-              </button>
-            </form>
-          </div>
+            </div>
+
+            <div class="form__row">
+              <div class="form__group">
+                <label for="email" class="form__label">Email</label>
+                <input type="email" id="email" name="email" class="form__input" autocomplete="email" maxlength="254" required />
+              </div>
+              <div class="form__group">
+                <label for="phone" class="form__label">Phone <span class="form__optional">(optional)</span></label>
+                <input type="tel" id="phone" name="phone" class="form__input" autocomplete="tel" maxlength="40" />
+              </div>
+            </div>
+
+            <div class="form__group">
+              <label for="company" class="form__label">Company or property <span class="form__optional">(optional)</span></label>
+              <input type="text" id="company" name="company" class="form__input" autocomplete="organization" maxlength="200" />
+            </div>
+
+            <div class="form__group">
+              <label for="service" class="form__label">Service needed</label>
+              <select id="service" name="service" class="form__select" required>
+                <option value="">Select a service</option>
+                {services.map((title) => <option value={title}>{title}</option>)}
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form__group">
+              <label for="message" class="form__label">Project details</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                class="form__textarea"
+                maxlength="5000"
+                placeholder="Property location, size, and what you need done"
+                required
+              ></textarea>
+            </div>
+
+            {turnstileSiteKey && (
+              <>
+                <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+                <noscript>
+                  <p class="form__noscript">
+                    Our spam check needs JavaScript. If it's turned off, call us at {officePhone.display}.
+                  </p>
+                </noscript>
+              </>
+            )}
+
+            <button type="submit" class="form__submit">
+              <span class="form__submit-label">{contactData.form?.submitButtonText || 'Send Message'}</span>
+              <Icon name="arrow-right" size={20} />
+            </button>
+          </form>
         </div>
-        
-        <!-- Contact Info -->
+
         <div class="contact__info-section">
           <div class="contact__info-card">
-            <h3 class="contact__info-title">{contactData.info.title}</h3>
+            <h2 class="contact__info-title">{contactData.info.title}</h2>
+            {contactData.info.description && (
+              <p class="contact__info-intro">{contactData.info.description}</p>
+            )}
             
             <div class="contact__info-item">
               <div class="contact__info-icon">
@@ -143,6 +142,9 @@ const pageDescription = contactData.seo.description;
                 <h4>Phone</h4>
                 <a href={officePhone.href} class="contact__info-link">
                   {settings.cellphone}
+                </a>
+                <a href={fieldPhone.href} class="contact__info-link">
+                  {settings.phone}
                 </a>
                 <p class="contact__info-note">{settings.hours}</p>
               </div>
@@ -173,7 +175,7 @@ const pageDescription = contactData.seo.description;
           </div>
           
           <div class="contact__hours-card">
-            <h3 class="contact__info-title">Business Hours</h3>
+            <h2 class="contact__info-title">Business Hours</h2>
             <div class="contact__hours">
               <div class="contact__hours-row">
                 <span>Monday - Friday</span>
@@ -239,6 +241,58 @@ const pageDescription = contactData.seo.description;
       </div>
     </div>
   </section>
+  {turnstileSiteKey && (
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  )}
+
+  <script>
+    // Submit with fetch so a failed send keeps what the visitor typed. Without
+    // JavaScript the form posts normally and the server redirects instead.
+    const form = document.querySelector<HTMLFormElement>('#quote-form');
+    const status = form?.querySelector<HTMLElement>('.form__status');
+    const submit = form?.querySelector<HTMLButtonElement>('.form__submit');
+    const label = submit?.querySelector<HTMLElement>('.form__submit-label');
+
+    const showError = (code: string) => {
+      if (!form || !status) return;
+      status.textContent = form.dataset[`msg${code.charAt(0).toUpperCase()}${code.slice(1)}`] ?? form.dataset.msgUnavailable ?? '';
+      status.hidden = false;
+      status.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    };
+
+    const initialError = new URLSearchParams(location.search).get('error');
+    if (initialError) showError(initialError);
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!submit || !label || !status) return;
+      const idleLabel = label.textContent;
+      submit.disabled = true;
+      label.textContent = 'Sending…';
+      status.hidden = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const result = await response.json();
+        if (result.ok) {
+          location.assign(result.redirect);
+          return;
+        }
+        showError(result.error);
+      } catch {
+        showError('unavailable');
+      }
+
+      // Turnstile tokens are single-use; get a fresh one for the retry.
+      (window as { turnstile?: { reset: () => void } }).turnstile?.reset();
+      submit.disabled = false;
+      label.textContent = idleLabel;
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -287,39 +341,56 @@ const pageDescription = contactData.seo.description;
   .contact__grid {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
-    gap: var(--space-12);
+    gap: var(--space-8);
     align-items: start;
   }
 
-  /* Form Section */
+  /* Form */
   .contact__form-card {
     background: var(--white);
     padding: var(--space-12);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-lg);
   }
-  
+
   .contact__form-title {
     font-size: var(--text-3xl);
     color: var(--primary);
     margin-bottom: var(--space-3);
   }
-  
+
   .contact__form-subtitle {
     color: var(--neutral-dark);
     margin-bottom: var(--space-8);
   }
-  
+
+  .form__status {
+    padding: var(--space-4);
+    margin-bottom: var(--space-6);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #b42318;
+    background: #fef3f2;
+    color: #7a271a;
+  }
+
+  .form__hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   .form__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-6);
   }
-  
+
   .form__group {
     margin-bottom: var(--space-6);
   }
-  
+
   .form__label {
     display: block;
     font-weight: var(--font-medium);
@@ -327,7 +398,12 @@ const pageDescription = contactData.seo.description;
     margin-bottom: var(--space-2);
     font-size: var(--text-sm);
   }
-  
+
+  .form__optional {
+    font-weight: normal;
+    opacity: 0.8;
+  }
+
   .form__input,
   .form__select,
   .form__textarea {
@@ -337,23 +413,29 @@ const pageDescription = contactData.seo.description;
     border-radius: var(--radius-md);
     font-size: var(--text-base);
     font-family: inherit;
-    transition: all var(--transition-fast);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
     background-color: var(--white);
   }
-  
+
   .form__input:focus,
   .form__select:focus,
   .form__textarea:focus {
-    outline: none;
+    outline: 2px solid transparent;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.4);
   }
-  
+
   .form__textarea {
     resize: vertical;
     min-height: 120px;
   }
-  
+
+  .form__noscript {
+    font-size: var(--text-sm);
+    color: var(--neutral-dark);
+    margin-top: var(--space-2);
+  }
+
   .form__submit {
     display: inline-flex;
     align-items: center;
@@ -369,28 +451,38 @@ const pageDescription = contactData.seo.description;
     transition: all var(--transition-base);
     margin-top: var(--space-4);
   }
-  
-  .form__submit:hover {
+
+  .form__submit:hover:not(:disabled) {
     background-color: var(--primary-dark);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
   }
-  
-  .form__submit svg {
-    transition: transform var(--transition-fast);
+
+  .form__submit:disabled {
+    opacity: 0.7;
+    cursor: progress;
   }
-  
-  .form__submit:hover svg {
-    transform: translateX(4px);
+
+  .cf-turnstile {
+    margin-top: var(--space-2);
   }
 
   /* Info Section */
+  .contact__info-section {
+    display: grid;
+    gap: var(--space-6);
+  }
+
   .contact__info-card,
   .contact__hours-card {
     background: var(--white);
     padding: var(--space-8);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
+  }
+
+  .contact__info-intro {
+    color: var(--neutral-dark);
     margin-bottom: var(--space-6);
   }
   
@@ -429,6 +521,7 @@ const pageDescription = contactData.seo.description;
   }
   
   .contact__info-link {
+    display: block;
     color: var(--primary);
     text-decoration: none;
     font-size: var(--text-lg);
@@ -542,9 +635,9 @@ const pageDescription = contactData.seo.description;
   @media (max-width: 1024px) {
     .contact__grid {
       grid-template-columns: 1fr;
-      gap: var(--space-8);
+      gap: var(--space-6);
     }
-    
+
     .contact__form-card {
       padding: var(--space-8);
     }
@@ -559,23 +652,20 @@ const pageDescription = contactData.seo.description;
       padding: var(--space-12) 0;
     }
     
-    .contact__form-card {
+    .contact__form-card,
+    .contact__info-card,
+    .contact__hours-card {
       padding: var(--space-6);
     }
-    
+
     .form__row {
       grid-template-columns: 1fr;
       gap: 0;
     }
-    
+
     .form__submit {
       width: 100%;
       justify-content: center;
-    }
-    
-    .contact__info-card,
-    .contact__hours-card {
-      padding: var(--space-6);
     }
     
     .map__container iframe {

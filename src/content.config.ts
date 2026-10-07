@@ -180,7 +180,6 @@ const pages = defineCollection({
       title: z.string().optional(),
       subtitle: z.string().optional(),
       submitButtonText: z.string().optional(),
-      fields: z.array(z.record(z.string(), z.unknown())).optional(),
     }).optional(),
     info: z.object({
       title: z.string().optional(),
