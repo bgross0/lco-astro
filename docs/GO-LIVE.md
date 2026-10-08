@@ -1,5 +1,10 @@
 # Go-live: Cloudflare Pages + DNS cutover
 
+> **Not ready to run.** The live lakecountyoutdoor.com is a separate, larger
+> Next.js site (about 25 services, 30 service-area pages, gallery, projects,
+> reviews). Cutting over before this repo reaches content parity would replace
+> it with a smaller site. Finish parity first.
+
 Moves https://lakecountyoutdoor.com from Vercel to Cloudflare Pages and the
 DNS zone from GoDaddy to Cloudflare. Email (Microsoft 365 via GoDaddy, filtered
 by Proofpoint) depends on the same zone, so the DNS steps are the risky part.
@@ -10,9 +15,11 @@ cannot list every record, so step 3 starts with GoDaddy's zone export.
 
 ## 0. Prerequisites
 
-- [ ] **Rotate the CRM webhook token.** The old one is public in git history.
-      In Odoo on lco.axsys.app: Settings > Technical > System Parameters >
-      `submitform.webhook_secret`.
+- [ ] **Set the freeform webhook secret on the CRM.** lco.axsys.app is the
+      Cobuild tenant (not the old lco-crm). Settings > Technical > System
+      Parameters > `freeform.webhook_secret`: a long random value. The same
+      value goes into `FREEFORM_WEBHOOK_SECRET` below. `atlas_freeform` must be
+      installed on the tenant.
 - [ ] **GitHub OAuth App for Decap** (see `docs/CMS.md`). Callback:
       `https://lakecountyoutdoor.com/api/auth/callback`.
 - [ ] **Turnstile widget** (Cloudflare dashboard > Turnstile), hostnames
@@ -39,7 +46,8 @@ Variables (Settings > Variables and Secrets), for **Production and Preview**:
 | --- | --- | --- |
 | `PUBLIC_TURNSTILE_SITE_KEY` | Variable (build) | Turnstile site key |
 | `TURNSTILE_SECRET_KEY` | Secret | Turnstile secret key |
-| `CRM_WEBHOOK_URL` | Secret | `https://lco.axsys.app/submitform/webhook/v2/<new token>` |
+| `FREEFORM_WEBHOOK_URL` | Secret | `https://lco.axsys.app/freeform/webhook` |
+| `FREEFORM_WEBHOOK_SECRET` | Secret | same value as `freeform.webhook_secret` in Odoo |
 | `GITHUB_CLIENT_ID` | Secret | OAuth App client ID |
 | `GITHUB_CLIENT_SECRET` | Secret | OAuth App client secret |
 
@@ -49,10 +57,10 @@ Push `dev`. Pages builds it at `https://dev.<project>.pages.dev`.
 
 - [ ] Every page renders. Compare against the current live site.
 - [ ] `/landscaping` returns a 301 to `/services/landscaping`.
-- [ ] **Submit one real test lead.** It must appear in the CRM, and the browser
-      must land on `/thank-you/`. If it errors instead, check Pages > Functions
+- [ ] **Submit one real test lead.** It must appear in the CRM (CRM > Freeform
+      submissions, and as a lead), and the browser must land on `/thank-you/`. If it errors instead, check Pages > Functions
       logs. A Cloudflare challenge on lco.axsys.app blocking server-to-server
-      requests needs a WAF skip rule for `/submitform/webhook/*`.
+      requests needs a WAF skip rule for `/freeform/webhook`.
 - [ ] CMS login will not work here, by design. Test it after step 5.
 
 When approved, merge `dev` into `main`. That deploys production to
