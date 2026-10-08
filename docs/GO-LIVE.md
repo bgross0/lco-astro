@@ -1,4 +1,10 @@
-# Go-live: Cloudflare Pages + DNS cutover
+# Go-live: Cloudflare Workers + DNS cutover
+
+> **Hosting moved to Workers** (see README). Where the steps below say "Pages
+> project", use the `lco-astro` Worker instead: set its secrets with
+> `npx wrangler secret put`, deploy with `npm run deploy:production`, and attach
+> the domain under the Worker's Settings > Domains & Routes > Custom domain.
+> A Git-connected setup (Workers Builds) can replace manual deploys later.
 
 > **Not ready to run.** The live lakecountyoutdoor.com is a separate, larger
 > Next.js site (about 25 services, 30 service-area pages, gallery, projects,

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
+    "deploy:staging": "npm run build && wrangler deploy --env staging",
+    "deploy:production": "npm run build && wrangler deploy",
     "cms": "BIND_HOST=127.0.0.1 decap-server",
     "astro": "astro"
   },
@@ -16,7 +18,8 @@
   },
   "devDependencies": {
     "@types/node": "^24.19.1",
-    "decap-server": "^3.11.3"
+    "decap-server": "^3.11.3",
+    "wrangler": "^4.149.0"
   },
   "engines": {
     "node": ">=22.12.0"

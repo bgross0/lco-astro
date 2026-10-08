@@ -5,7 +5,7 @@ https://lakecountyoutdoor.com.
 
 - **Astro 7**, static output, no client framework
 - **Decap CMS** at `/admin` for content editing (see [docs/CMS.md](docs/CMS.md))
-- **Cloudflare Pages** for hosting, plus two Pages Functions for CMS login
+- **Cloudflare Workers** (static assets) for hosting; `/api/*` handles the quote form and CMS login
 
 ## Development
 
@@ -19,9 +19,8 @@ npm run preview   # serve dist/
 npm run cms       # local Decap backend, see docs/CMS.md
 ```
 
-`npm run dev` and `preview` do not run the Pages Functions. To test CMS login
-locally, build and run `npx wrangler pages dev dist` with `GITHUB_CLIENT_ID`
-and `GITHUB_CLIENT_SECRET` in an untracked `.dev.vars` file.
+`npm run dev` serves pages only; `npm run preview` builds and runs the full
+Worker (pages plus `/api/*`) with secrets from an untracked `.dev.vars` file.
 
 ## Layout
 
@@ -36,36 +35,47 @@ src/
   pages/              Routes
   styles/             Global reset, typography, and design tokens
 public/
-  _headers            Cloudflare Pages response headers
+  _headers            Response headers for static assets
   _redirects          Legacy URL redirects
   admin/              Decap CMS app and collection config
   images/             Site images; CMS uploads go to images/uploads/
-functions/api/        Pages Functions: contact form handler, GitHub OAuth for Decap
+functions/api/        Request handlers: contact form, GitHub OAuth for Decap
+worker/index.js       Worker entry; routes /api/* to the handlers
+wrangler.jsonc        Worker config (production + staging)
 ```
 
 Styling is plain CSS. Design tokens (colors, spacing, type scale) live in
 `src/styles/variables.css`; components use BEM class names in scoped
 `<style>` blocks.
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare Workers)
 
-| Setting | Value |
+The site deploys as a Worker with static assets (`wrangler.jsonc`). Static
+pages are served directly from the assets binding, with `public/_headers` and
+`public/_redirects` applied; only `/api/*` runs `worker/index.js`, which routes
+to the handlers in `functions/api/`.
+
+| Command | Target |
 | --- | --- |
-| Build command | `npm run build` |
-| Output directory | `dist` |
-| Node version | from `.nvmrc` |
-| Secrets | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (CMS login); `FREEFORM_WEBHOOK_URL`, `FREEFORM_WEBHOOK_SECRET`, `TURNSTILE_SECRET_KEY` (contact form) |
-| Build variable | `PUBLIC_TURNSTILE_SITE_KEY` (contact form) |
+| `npm run deploy:staging` | `lco-astro-staging` on `*.workers.dev` (preview) |
+| `npm run deploy:production` | `lco-astro` (production; custom domain at go-live) |
+| `npm run preview` | build, then run the Worker locally with `wrangler dev` |
 
-Pushes to `main` deploy production; other branches and CMS pull requests get
-preview deployments.
+Secrets are per Worker (`npx wrangler secret put <NAME> --env staging`):
+`GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (CMS login), `FREEFORM_WEBHOOK_URL`,
+`FREEFORM_WEBHOOK_SECRET`, `TURNSTILE_SECRET_KEY` (contact form).
+`PUBLIC_TURNSTILE_SITE_KEY` is a build-time variable (set it in the shell or
+CI when running `npm run build`).
 
 Notes:
 
-- Pointing the apex domain `lakecountyoutdoor.com` at Pages requires its DNS
-  zone to be on Cloudflare (nameservers are currently at GoDaddy). Add `www` as
-  a second custom domain and redirect it to the apex; CMS login only works on
-  the apex origin.
+- Every `*.workers.dev` host (staging and per-version preview URLs) is served
+  with `X-Robots-Tag: noindex` via `public/_headers`, so previews are never
+  indexed; the production domain is unaffected.
+- CMS login works only on the production origin (`base_url` in
+  `public/admin/config.yml`).
+- Pointing the apex domain `lakecountyoutdoor.com` at the Worker requires its
+  DNS zone to be on Cloudflare (nameservers are currently at GoDaddy).
 - `public/_headers` rules are additive and Cloudflare joins duplicate headers
   with a comma. Never set the same header in overlapping rules.
 - Only `/_assets/*` (fingerprinted build output) is cached as immutable. Files
@@ -93,8 +103,8 @@ are chosen to auto-map onto the lead (`name`, `email`, `phone`, `company`,
 
 The visitor lands on `/thank-you/` only after Odoo confirms the submission was
 stored. If Odoo is unreachable or rejects it, the form shows an error with the
-office number and keeps what was typed; the failure is in the Pages Function
-logs. There is no queue in front of Odoo, so a failed delivery is not retried.
+office number and keeps what was typed; the failure is in the Worker
+logs (`npx wrangler tail`). There is no queue in front of Odoo, so a failed delivery is not retried.
 
 `FREEFORM_WEBHOOK_SECRET` must equal the tenant's `freeform.webhook_secret`
 system parameter in Odoo. To rotate it, change both.
@@ -105,6 +115,6 @@ protected by the honeypot only. Setting the secret without the site key
 rejects every submission.
 
 To test locally, put `FREEFORM_WEBHOOK_URL` and `FREEFORM_WEBHOOK_SECRET` in an
-untracked `.dev.vars`, then `npm run build && npx wrangler pages dev dist`.
+untracked `.dev.vars`, then `npm run preview`.
 Turnstile's documented test keys (`1x00000000000000000000AA` /
 `1x0000000000000000000000000000000AA`) always pass.
