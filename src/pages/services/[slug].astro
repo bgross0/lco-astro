@@ -12,6 +12,7 @@ import { primaryPhone } from '../../lib/phone';
 import { blockImage } from '../../lib/images';
 import { categoryPhotos } from '../../lib/blocks';
 import { prose, splitSections } from '../../lib/prose';
+import { breadcrumbList } from '../../lib/url';
 import { getAreas, getReviewSummary, getReviewerInitials, getTestimonials, serviceUrl } from '../../lib/content';
 
 export async function getStaticPaths() {
@@ -31,7 +32,14 @@ const photos = await categoryPhotos(data.category, data.hero.image);
 const { intro, sections } = splitSections(service.rendered?.html ?? '');
 const tabs = sections.map((section) => ({ name: section.title, value: section.id, html: section.html }));
 
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: data.title, href: serviceUrl(service) },
+];
+
 const jsonLd: Record<string, unknown>[] = [
+  breadcrumbList(crumbs, site),
   {
     '@type': 'Service',
     name: data.title,
@@ -57,11 +65,7 @@ const stepNumber = (index: number) => String(index + 1).padStart(2, '0');
 
 <Layout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
   <HeroSection
-    breadcrumbs={[
-      { label: 'Home', href: '/' },
-      { label: 'Services', href: '/services' },
-      { label: data.title, href: serviceUrl(service) },
-    ]}
+    breadcrumbs={crumbs}
     heading={data.hero.heading}
     text={data.hero.text}
     actions={[

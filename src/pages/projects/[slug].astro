@@ -10,6 +10,7 @@ import { blockImage } from '../../lib/images';
 import { sitePhoto } from '../../lib/blocks';
 import { prose } from '../../lib/prose';
 import { projectUrl } from '../../lib/content';
+import { breadcrumbList } from '../../lib/url';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -19,16 +20,18 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { data } = project;
 const home = (await getEntry('homepage', 'home'))!.data;
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects' },
+  { label: data.title, href: projectUrl(project) },
+];
+const jsonLd = [breadcrumbList(crumbs, Astro.site!.origin)];
 const gallery = await Promise.all((data.gallery ?? []).map((photo) => blockImage(photo.image, photo.alt)));
 ---
 
-<Layout title={data.seo.title} description={data.seo.description} image={data.image}>
+<Layout title={data.seo.title} description={data.seo.description} image={data.image} jsonLd={jsonLd}>
   <HeroSection
-    breadcrumbs={[
-      { label: 'Home', href: '/' },
-      { label: 'Projects', href: '/projects' },
-      { label: data.title, href: projectUrl(project) },
-    ]}
+    breadcrumbs={crumbs}
     heading={data.title}
     text={data.location}
     actions={[{ label: 'Request a Quote', href: '/contact-us', icon: 'arrow' }]}

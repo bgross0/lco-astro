@@ -11,6 +11,7 @@ import { primaryPhone } from '../../lib/phone';
 import { blockImage } from '../../lib/images';
 import { serviceTabs, sitePhoto } from '../../lib/blocks';
 import { prose } from '../../lib/prose';
+import { breadcrumbList } from '../../lib/url';
 import { areaUrl, getReviewSummary, getReviewerInitials, getServices, getTestimonials, serviceUrl } from '../../lib/content';
 
 export async function getStaticPaths() {
@@ -25,7 +26,14 @@ const site = Astro.site!.origin;
 const services = await getServices();
 const summary = await getReviewSummary();
 
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Service Areas', href: '/service-areas' },
+  { label: place, href: areaUrl(area) },
+];
+
 const jsonLd = [
+  breadcrumbList(crumbs, site),
   {
     '@type': 'Service',
     name: `Landscaping and commercial snow removal in ${place}`,
@@ -46,11 +54,7 @@ const jsonLd = [
 
 <Layout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
   <HeroSection
-    breadcrumbs={[
-      { label: 'Home', href: '/' },
-      { label: 'Service Areas', href: '/service-areas' },
-      { label: place, href: areaUrl(area) },
-    ]}
+    breadcrumbs={crumbs}
     heading={data.hero.heading}
     text={data.hero.text}
     actions={[
