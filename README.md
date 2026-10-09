@@ -26,17 +26,25 @@ Worker (pages plus `/api/*`) with secrets from an untracked `.dev.vars` file.
 
 ```text
 src/
-  content/            Markdown and JSON edited through the CMS
+  content/            Markdown and JSON edited through the CMS (see docs/CMS.md)
+    services/         One file per /services/<slug>/ page
+    service-areas/    One file per /service-areas/<city>-mn/ page
+    projects/         One file per /projects/<slug>/ page
+    reviews/          Google reviews shown on the site, one JSON file each
+    pages/            Copy for about-us, contact-us, gallery, shoreline-solutions, ...
+    homepage/         Homepage sections
+    blog/             Blog posts
   content.config.ts   Collection schemas (keep in sync with public/admin/config.yml)
   data/settings.json  Business details: phones, address, hours, social links
+  data/navigation.json  Main menu and footer company links
   components/         Astro components, styled with scoped CSS
   layouts/            BaseLayout: meta tags, LocalBusiness JSON-LD
-  lib/phone.ts        Display text and tel: links derived from settings.json
+  lib/                Helpers: phones, address/hours, collection queries, responsive images
   pages/              Routes
   styles/             Global reset, typography, and design tokens
 public/
   _headers            Response headers for static assets
-  _redirects          Legacy URL redirects
+  _redirects          301s for retired URLs (checked at build time)
   admin/              Decap CMS app and collection config
   images/             Site images; CMS uploads go to images/uploads/
 functions/api/        Request handlers: contact form, GitHub OAuth for Decap
@@ -82,10 +90,18 @@ Notes:
   under `public/` keep their URL when replaced, so they get a short cache.
 - Astro does not optimize images referenced by path from `public/`. Resize
   photos before adding them; anything over ~400 KB is almost certainly too big.
+  Smaller copies saved next to an image as `name-768w.jpg`, `name-1280w.jpg`
+  are picked up automatically for `srcset` (`src/lib/images.ts`).
+- Internal links end with `/` (`trailingSlash: 'always'`); Workers answers
+  `/page` with a 307 to `/page/`.
+- The build fails if `public/_redirects` points at a missing page or would
+  hide a page that exists. After `npm run build`, `npm run check:dist`
+  checks every local link and asset and every URL the previous live site
+  served (`scripts/live-urls.txt`).
 
 ## Contact form
 
-The quote form on `/contact` posts to `functions/api/contact.js`, which:
+The quote form on `/contact-us/` posts to `functions/api/contact.js`, which:
 
 1. rejects bots via a hidden honeypot field and Cloudflare Turnstile,
 2. validates the fields, and

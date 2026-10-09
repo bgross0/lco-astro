@@ -6,10 +6,13 @@
 > the domain under the Worker's Settings > Domains & Routes > Custom domain.
 > A Git-connected setup (Workers Builds) can replace manual deploys later.
 
-> **Not ready to run.** The live lakecountyoutdoor.com is a separate, larger
-> Next.js site (about 25 services, 30 service-area pages, gallery, projects,
-> reviews). Cutting over before this repo reaches content parity would replace
-> it with a smaller site. Finish parity first.
+> **Content parity.** This repo now carries every page of the live Next.js
+> site (crawled 2026-10-08): 19 services, 9 city pages, shoreline, gallery,
+> projects, reviews, about, contact and sitemap. The live URLs that had no page
+> (trenching and 20 city URLs, which the Next.js site sent to its homepage)
+> 301 to the closest page. `npm run build && npm run check:dist` verifies every
+> live URL in `scripts/live-urls.txt`. Have the client review the staging
+> deploy before cutover; see the content notes in the parity pull request.
 
 Moves https://lakecountyoutdoor.com from Vercel to Cloudflare Pages and the
 DNS zone from GoDaddy to Cloudflare. Email (Microsoft 365 via GoDaddy, filtered
@@ -62,7 +65,8 @@ Variables (Settings > Variables and Secrets), for **Production and Preview**:
 Push `dev`. Pages builds it at `https://dev.<project>.pages.dev`.
 
 - [ ] Every page renders. Compare against the current live site.
-- [ ] `/landscaping` returns a 301 to `/services/landscaping`.
+- [ ] `/landscaping` returns a 301 to `/services/general-landscaping/`, and
+      `/contact` to `/contact-us/`.
 - [ ] **Submit one real test lead.** It must appear in the CRM (CRM > Freeform
       submissions, and as a lead), and the browser must land on `/thank-you/`. If it errors instead, check Pages > Functions
       logs. A Cloudflare challenge on lco.axsys.app blocking server-to-server
