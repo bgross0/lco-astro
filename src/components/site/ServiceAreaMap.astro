@@ -97,6 +97,19 @@ const listed = list === 'all' ? areas : areas.filter((area) => area.href);
 
   const STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 
+  // MapLibre's CSS is fetched with the library. A plain CSS import would be
+  // hoisted into a render-blocking <link> on every page with a map.
+  async function loadStylesheet() {
+    const { default: href } = await import('maplibre-gl/dist/maplibre-gl.css?url');
+    if (document.querySelector(`link[href="${href}"]`)) return;
+    const link = Object.assign(document.createElement('link'), { rel: 'stylesheet', href });
+    await new Promise((resolve, reject) => {
+      link.onload = resolve;
+      link.onerror = reject;
+      document.head.append(link);
+    });
+  }
+
   async function mountMap(container: HTMLElement) {
     const status = container.querySelector<HTMLElement>('[data-map-status]');
     const markers: MarkerData[] = JSON.parse(container.dataset.markers ?? '[]');
@@ -106,7 +119,7 @@ const listed = list === 'all' ? areas : areas.filter((area) => area.href);
       const [maplibre, worker] = await Promise.all([
         import('maplibre-gl'),
         import('maplibre-gl/dist/maplibre-gl-worker.mjs?url'),
-        import('maplibre-gl/dist/maplibre-gl.css'),
+        loadStylesheet(),
       ]);
       maplibre.setWorkerUrl(worker.default);
 
