@@ -1,216 +1,70 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/sections/PageHero.astro';
-import SectionHeader from '../components/sections/SectionHeader.astro';
-import ProcessSteps from '../components/sections/ProcessSteps.astro';
-import CtaSection from '../components/sections/CtaSection.astro';
-import Button from '../components/common/Button.astro';
-import Icon from '../components/common/Icon.astro';
-import { getPage } from '../lib/content';
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import SocialProof from '../components/shadcn-studio/blocks/social-proof-03/social-proof-03';
+import AboutUs from '../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import settings from '../data/settings.json';
+import { primaryPhone } from '../lib/phone';
+import { blockImage } from '../lib/images';
+import { sitePhoto } from '../lib/blocks';
+import { getPage, getReviewSummary, getReviewerInitials } from '../lib/content';
 
 const page = (await getPage('shoreline-solutions')).data;
-const icons = ['waves', 'leaf', 'cube'];
+const summary = await getReviewSummary();
+const icons = ['waves', 'sprout', 'mountain'] as const;
 const logoWebp = page.logo?.replace(/\.(png|jpe?g)$/i, '.webp');
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
-  <PageHero heading={page.hero.heading} text={page.hero.text} image={page.hero.image} imageAlt={page.hero.imageAlt} rating>
-    {page.notice && (
-      <p class="permit"><Icon name="id-card" size={18} /> <strong>{page.notice.label}</strong> <span>{page.notice.text}</span></p>
-    )}
-  </PageHero>
+<Layout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
+  <HeroSection
+    pill={page.notice ? { badge: page.notice.text, text: page.notice.label } : undefined}
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: page.why?.buttonText ?? 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+    image={await blockImage(page.hero.image!, page.hero.imageAlt ?? '')}
+  />
 
   {page.services && (
-    <section class="shore-services">
-      <div class="container">
-        <SectionHeader eyebrow={page.services.eyebrow} title={page.services.title} text={page.services.text} />
-        <ul class="shore-services__grid" role="list">
-          {page.services.items.map((item, index) => (
-            <li class="shore-card">
-              <span class="shore-card__icon"><Icon name={icons[index % icons.length]} size={26} /></span>
-              <h3 class="shore-card__title">{item.title}</h3>
-              <p class="shore-card__text">{item.text}</p>
-              <a class="shore-card__link" href="/contact-us">Get a quote<span class="sr-only"> for {item.title.toLowerCase()}</span> <Icon name="arrow-right" size={16} /></a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    <SocialProof
+      title={page.services.title}
+      text={page.services.text}
+      stats={page.services.items.map((item, index) => ({ value: '', label: item.title, text: item.text, icon: icons[index % icons.length] }))}
+    />
   )}
 
   {page.why && (
-    <section class="shore-why">
-      <div class="container shore-why__grid">
-        {page.logo && (
-          <figure class="shore-why__logo">
-            <picture>
-              {logoWebp && <source srcset={logoWebp} type="image/webp" />}
-              <img src={page.logo} alt="Lake County Outdoors Shoreline Solutions logo" width="220" height="220" loading="lazy" decoding="async" />
-            </picture>
-            {page.why.tagline && <figcaption>{page.why.tagline}</figcaption>}
-          </figure>
-        )}
-        <div>
-          <SectionHeader eyebrow={page.why.eyebrow} title={page.why.title} text={page.why.text} align="left" tone="inverse" />
-          <ul class="shore-why__points" role="list">
-            {page.why.points.map((point) => <li><Icon name="check-circle" size={20} /> {point}</li>)}
-          </ul>
-          <Button href="/contact-us" variant="secondary">{page.why.buttonText} <Icon name="arrow-right" size={18} /></Button>
-        </div>
-      </div>
-    </section>
+    <AboutUs
+      title={page.why.title}
+      text={page.why.text}
+      button={{ label: page.why.buttonText, href: '/contact-us' }}
+      contentTitle={page.why.tagline}
+      points={page.why.points}
+      media={await sitePhoto('/images/gallery/photo-13.jpg')}
+      badge={logoWebp ? { logo: logoWebp, alt: 'Lake County Outdoors Shoreline Solutions logo' } : undefined}
+    />
   )}
 
   {page.process && (
-    <ProcessSteps eyebrow={page.process.eyebrow} title={page.process.title} intro={page.process.intro} steps={page.process.steps}>
-      {page.process.buttonText && (
-        <div class="shore-process__cta">
-          <Button href="/contact-us" variant="primary" size="large">{page.process.buttonText} <Icon name="arrow-right" size={18} /></Button>
-        </div>
-      )}
-    </ProcessSteps>
+    <SocialProof
+      title={page.process.title}
+      text={page.process.intro}
+      stats={page.process.steps.map((step, index) => ({ value: String(index + 1).padStart(2, '0'), label: step.title, text: step.text }))}
+      button={page.process.buttonText ? { label: page.process.buttonText, href: '/contact-us' } : undefined}
+    />
   )}
 
-  {page.cta && <CtaSection title={page.cta.title} text={page.cta.text} />}
-</BaseLayout>
-
-<style>
-  .permit {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2);
-    margin: var(--space-6) 0 0;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-md);
-    background: rgba(0, 0, 0, 0.35);
-    font-size: var(--text-sm);
-    color: var(--white);
-  }
-
-  .permit strong {
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .shore-services {
-    padding: var(--space-20) 0;
-    background: var(--neutral-light);
-  }
-
-  .shore-services__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    gap: var(--space-6);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .shore-card {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: var(--space-8) var(--space-6);
-    border-radius: var(--radius-xl);
-    background: var(--white);
-    box-shadow: var(--shadow-md);
-  }
-
-  .shore-card__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    margin-bottom: var(--space-4);
-    border-radius: var(--radius-full);
-    background: rgba(74, 144, 226, 0.15);
-    color: var(--secondary);
-  }
-
-  .shore-card__title {
-    font-size: var(--text-xl);
-    color: var(--secondary);
-  }
-
-  .shore-card__text {
-    flex: 1;
-  }
-
-  .shore-card__link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    font-weight: 700;
-    font-size: var(--text-sm);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--primary-dark);
-  }
-
-  .shore-why {
-    padding: var(--space-20) 0;
-    background: linear-gradient(140deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  .shore-why__grid {
-    display: grid;
-    gap: var(--space-12);
-    align-items: center;
-  }
-
-  .shore-why__logo {
-    margin: 0;
-    text-align: center;
-  }
-
-  .shore-why__logo img {
-    width: 220px;
-    height: 220px;
-    margin: 0 auto;
-    padding: var(--space-3);
-    border-radius: var(--radius-2xl);
-    background: var(--white);
-    box-shadow: var(--shadow-xl);
-  }
-
-  .shore-why__logo figcaption {
-    margin-top: var(--space-4);
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  .shore-why__points {
-    display: grid;
-    gap: var(--space-3);
-    list-style: none;
-    padding: 0;
-    margin: 0 0 var(--space-8);
-  }
-
-  .shore-why__points li {
-    display: flex;
-    gap: var(--space-3);
-    margin: 0;
-  }
-
-  .shore-why__points :global(svg) {
-    flex-shrink: 0;
-    margin-top: 2px;
-    color: var(--primary-light);
-  }
-
-  .shore-process__cta {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-10);
-  }
-
-  @media (min-width: 1024px) {
-    .shore-why__grid {
-      grid-template-columns: 1fr 1.5fr;
-    }
-  }
-</style>
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-08.jpg')}
+    />
+  )}
+</Layout>

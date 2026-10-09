@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/sections/PageHero.astro';
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
 import { getAreas, getPage, getServices, projectUrl, serviceUrl } from '../lib/content';
 
 const page = (await getPage('sitemap')).data;
@@ -28,45 +28,25 @@ const sections = [
   { title: 'Service Areas', links: areas.map((a) => ({ label: a.label, href: a.href! })) },
   { title: 'Projects', links: projects.map((p) => ({ label: p.data.title, href: projectUrl(p) })) },
 ];
+const id = (title: string) => `sitemap-${title.toLowerCase().replace(/\s+/g, '-')}`;
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description}>
-  <PageHero heading={page.hero.heading} size="compact" buttons={false} />
-  <section class="html-sitemap">
-    <div class="container html-sitemap__grid">
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection heading={page.hero.heading} text={page.hero.text} />
+
+  <!-- Link columns in the style of the footer 03 block -->
+  <section class="py-8 sm:py-16 lg:py-24">
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
       {sections.map((section) => (
-        <nav aria-labelledby={`sitemap-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>
-          <h2 id={`sitemap-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>{section.title}</h2>
-          <ul>
-            {section.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        <nav class="flex flex-col gap-5" aria-labelledby={id(section.title)}>
+          <h2 class="text-lg font-medium" id={id(section.title)}>{section.title}</h2>
+          <ul class="text-muted-foreground space-y-3">
+            {section.links.map((link) => (
+              <li><a href={link.href} class="hover:text-foreground transition-colors duration-300">{link.label}</a></li>
+            ))}
           </ul>
         </nav>
       ))}
     </div>
   </section>
-</BaseLayout>
-
-<style>
-  .html-sitemap {
-    padding: var(--space-12) 0 var(--space-20);
-  }
-
-  .html-sitemap__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-    gap: var(--space-10);
-  }
-
-  .html-sitemap h2 {
-    font-size: var(--text-xl);
-    color: var(--secondary);
-  }
-
-  .html-sitemap ul {
-    padding-left: var(--space-5);
-  }
-
-  .html-sitemap a {
-    color: var(--primary-dark);
-  }
-</style>
+</Layout>
