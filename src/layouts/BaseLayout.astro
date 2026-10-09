@@ -6,6 +6,7 @@ import settings from '../data/settings.json';
 import { primaryPhone } from '../lib/phone';
 import { openingHoursSpecification } from '../lib/site';
 import { getAreas, getServices, serviceUrl } from '../lib/content';
+import { pagePath } from '../lib/url';
 
 export interface Props {
   title: string;
@@ -28,7 +29,7 @@ const {
 
 const site = Astro.site?.origin ?? 'https://lakecountyoutdoor.com';
 const absolute = (path: string) => (path.startsWith('http') ? path : new URL(encodeURI(path), site).href);
-const currentUrl = Astro.url.href;
+const currentUrl = new URL(pagePath(Astro.url), site).href;
 const ogImage = absolute(image);
 
 const services = await getServices();

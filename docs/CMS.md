@@ -23,10 +23,10 @@ merges it into `main`.
 | CMS collection | Files | Shows up on |
 | --- | --- | --- |
 | Homepage | `src/content/homepage/home.json` | `/` |
-| Services | `src/content/services/*.md` | `/services/<file>/`, menus, footer, service cards |
-| Service Area Pages | `src/content/service-areas/*.md` | `/service-areas/<city>-mn/` |
-| Projects | `src/content/projects/*.md` | `/projects/` and `/projects/<file>/` |
-| Reviews | `src/content/reviews/*.json` | review sections, `/reviews/` |
+| Services | `src/content/services/*.md` | `/services/<file>`, menus, footer, service cards |
+| Service Area Pages | `src/content/service-areas/*.md` | `/service-areas/<city>-mn` |
+| Projects | `src/content/projects/*.md` | `/projects` and `/projects/<file>` |
+| Reviews | `src/content/reviews/*.json` | review sections, `/reviews` |
 | Pages | `src/content/pages/*.md` | about-us, contact-us, gallery, shoreline-solutions, ... |
 | Settings | `src/data/settings.json`, `src/data/navigation.json` | phones, address, hours, menus everywhere |
 

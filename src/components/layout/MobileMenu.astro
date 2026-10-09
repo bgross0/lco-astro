@@ -13,7 +13,8 @@ const { currentPath } = Astro.props;
 const groups = await getServiceGroups();
 const logoWebp = settings.logo.replace(/\.(png|jpe?g)$/i, '.webp');
 
-const isActive = (href: string) => (href === '/' ? currentPath === '/' : currentPath.startsWith(href));
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath === href || currentPath.startsWith(`${href}/`);
 ---
 
 <div class="mobile-menu">
@@ -113,7 +114,7 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
     </ul>
 
     <div class="mobile-menu__footer">
-      <a href="/contact-us/" class="mobile-menu__cta">Get a free estimate</a>
+      <a href="/contact-us" class="mobile-menu__cta">Get a free estimate</a>
       <a href={primaryPhone.href} class="mobile-menu__phone">
         <Icon name="phone" size={18} />
         {primaryPhone.display}

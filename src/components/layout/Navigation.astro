@@ -11,7 +11,8 @@ export interface Props {
 const { currentPath } = Astro.props;
 const groups = await getServiceGroups();
 
-const isActive = (href: string) => (href === '/' ? currentPath === '/' : currentPath.startsWith(href));
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath === href || currentPath.startsWith(`${href}/`);
 ---
 
 <nav class="nav" aria-label="Main navigation">

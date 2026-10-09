@@ -17,7 +17,7 @@
     "title": "Introducing Shoreline Solutions",
     "text": "Aquatic weed removal, shoreline cleanup, and riprap installation — professional lake care, now available from Lake County Outdoors.",
     "linkText": "Learn More",
-    "link": "/shoreline-solutions/"
+    "link": "/shoreline-solutions"
   },
   "about": {
     "title": "About Lake County Outdoors",
@@ -96,7 +96,7 @@
     "value": "Free",
     "text": "Book a free estimate with Lake County Outdoors and discover how our experienced team can transform your outdoor space into your dream backyard. Contact us today for personalized solutions on landscaping, custom patios, or tree services.",
     "buttonText": "Book a free estimate",
-    "link": "/contact-us/"
+    "link": "/contact-us"
   },
   "projects": {
     "title": "Take a look at our recent project locations",

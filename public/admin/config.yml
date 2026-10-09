@@ -149,7 +149,7 @@ collections:
     extension: md
     format: frontmatter
     slug: "{{slug}}"
-    preview_path: "services/{{slug}}/"
+    preview_path: "services/{{slug}}"
     sortable_fields: [order, title, category]
     summary: "{{order}}. {{title}} ({{category}})"
     fields:
@@ -211,7 +211,7 @@ collections:
     format: frontmatter
     slug: "{{fields.city}}-mn"
     identifier_field: city
-    preview_path: "service-areas/{{slug}}/"
+    preview_path: "service-areas/{{slug}}"
     summary: "{{city}}, {{state}}"
     fields:
       - { label: City, name: city, widget: string }
@@ -234,7 +234,7 @@ collections:
     extension: md
     format: frontmatter
     slug: "{{slug}}"
-    preview_path: "projects/{{slug}}/"
+    preview_path: "projects/{{slug}}"
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Location, name: location, widget: string, required: false }
@@ -285,7 +285,7 @@ collections:
     extension: md
     format: frontmatter
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    preview_path: "blog/{{slug}}/"
+    preview_path: "blog/{{slug}}"
     sortable_fields: [pubDate, title]
     summary: "{{pubDate}} - {{title}}"
     fields:

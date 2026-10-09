@@ -2,10 +2,11 @@
 import Navigation from './Navigation.astro';
 import MobileMenu from './MobileMenu.astro';
 import settings from '../../data/settings.json';
+import { pagePath } from '../../lib/url';
 
 const logoWebp = settings.logo.replace(/\.(png|jpe?g)$/i, '.webp');
 
-const currentPath = Astro.url.pathname;
+const currentPath = pagePath(Astro.url);
 ---
 
 <header class="header">

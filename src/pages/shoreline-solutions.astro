@@ -30,7 +30,7 @@ const logoWebp = page.logo?.replace(/\.(png|jpe?g)$/i, '.webp');
               <span class="shore-card__icon"><Icon name={icons[index % icons.length]} size={26} /></span>
               <h3 class="shore-card__title">{item.title}</h3>
               <p class="shore-card__text">{item.text}</p>
-              <a class="shore-card__link" href="/contact-us/">Get a quote<span class="sr-only"> for {item.title.toLowerCase()}</span> <Icon name="arrow-right" size={16} /></a>
+              <a class="shore-card__link" href="/contact-us">Get a quote<span class="sr-only"> for {item.title.toLowerCase()}</span> <Icon name="arrow-right" size={16} /></a>
             </li>
           ))}
         </ul>
@@ -55,7 +55,7 @@ const logoWebp = page.logo?.replace(/\.(png|jpe?g)$/i, '.webp');
           <ul class="shore-why__points" role="list">
             {page.why.points.map((point) => <li><Icon name="check-circle" size={20} /> {point}</li>)}
           </ul>
-          <Button href="/contact-us/" variant="secondary">{page.why.buttonText} <Icon name="arrow-right" size={18} /></Button>
+          <Button href="/contact-us" variant="secondary">{page.why.buttonText} <Icon name="arrow-right" size={18} /></Button>
         </div>
       </div>
     </section>
@@ -65,7 +65,7 @@ const logoWebp = page.logo?.replace(/\.(png|jpe?g)$/i, '.webp');
     <ProcessSteps eyebrow={page.process.eyebrow} title={page.process.title} intro={page.process.intro} steps={page.process.steps}>
       {page.process.buttonText && (
         <div class="shore-process__cta">
-          <Button href="/contact-us/" variant="primary" size="large">{page.process.buttonText} <Icon name="arrow-right" size={18} /></Button>
+          <Button href="/contact-us" variant="primary" size="large">{page.process.buttonText} <Icon name="arrow-right" size={18} /></Button>
         </div>
       )}
     </ProcessSteps>

@@ -1,72 +1,72 @@
 # Redirects for static assets (Cloudflare Workers / Pages _redirects format).
 # Each source is listed with and without a trailing slash. Targets use the
-# trailing-slash form so a redirect never chains into a second one.
+# slashless canonical form so a redirect never chains into a second one.
 
 # Legacy URLs from the original site.
-/commercial-snow-removal                     /services/commercial-snow-removal/       301
-/commercial-snow-removal/                    /services/commercial-snow-removal/       301
-/landscaping                                 /services/general-landscaping/           301
-/landscaping/                                /services/general-landscaping/           301
-/municipal-contracting                       /services/commercial-snow-removal/       301
-/municipal-contracting/                      /services/commercial-snow-removal/       301
-/ice-management                              /services/ice-management/                301
-/ice-management/                             /services/ice-management/                301
+/commercial-snow-removal                     /services/commercial-snow-removal        301
+/commercial-snow-removal/                    /services/commercial-snow-removal        301
+/landscaping                                 /services/general-landscaping            301
+/landscaping/                                /services/general-landscaping            301
+/municipal-contracting                       /services/commercial-snow-removal        301
+/municipal-contracting/                      /services/commercial-snow-removal        301
+/ice-management                              /services/ice-management                 301
+/ice-management/                             /services/ice-management                 301
 
 # Pages of the 2025 Astro site that moved to the live site's URLs.
-/contact                                     /contact-us/                             301
-/contact/                                    /contact-us/                             301
-/services/landscaping                        /services/general-landscaping/           301
-/services/landscaping/                       /services/general-landscaping/           301
-/services/concrete-and-paving                /services/concrete-work/                 301
-/services/concrete-and-paving/               /services/concrete-work/                 301
-/services/municipal-contracting              /services/commercial-snow-removal/       301
-/services/municipal-contracting/             /services/commercial-snow-removal/       301
+/contact                                     /contact-us                              301
+/contact/                                    /contact-us                              301
+/services/landscaping                        /services/general-landscaping            301
+/services/landscaping/                       /services/general-landscaping            301
+/services/concrete-and-paving                /services/concrete-work                  301
+/services/concrete-and-paving/               /services/concrete-work                  301
+/services/municipal-contracting              /services/commercial-snow-removal        301
+/services/municipal-contracting/             /services/commercial-snow-removal        301
 
 # Live-site URLs that had no page of their own (the Next.js site redirected
 # them to the homepage). Remove a line here when its page is published, or
 # the redirect will hide the new page; the build checks for that.
-/services/trenching                          /services/excavation/                    301
-/services/trenching/                         /services/excavation/                    301
-/service-areas/minneapolis-mn                /service-areas/                          301
-/service-areas/minneapolis-mn/               /service-areas/                          301
-/service-areas/wayzata-mn                    /service-areas/                          301
-/service-areas/wayzata-mn/                   /service-areas/                          301
-/service-areas/excelsior-mn                  /service-areas/                          301
-/service-areas/excelsior-mn/                 /service-areas/                          301
-/service-areas/st-louis-park-mn              /service-areas/                          301
-/service-areas/st-louis-park-mn/             /service-areas/                          301
-/service-areas/burnsville-mn                 /service-areas/                          301
-/service-areas/burnsville-mn/                /service-areas/                          301
-/service-areas/maple-grove-mn                /service-areas/                          301
-/service-areas/maple-grove-mn/               /service-areas/                          301
-/service-areas/eagan-mn                      /service-areas/                          301
-/service-areas/eagan-mn/                     /service-areas/                          301
-/service-areas/victoria-mn                   /service-areas/                          301
-/service-areas/victoria-mn/                  /service-areas/                          301
-/service-areas/eden-prairie-mn               /service-areas/                          301
-/service-areas/eden-prairie-mn/              /service-areas/                          301
-/service-areas/shakopee-mn                   /service-areas/                          301
-/service-areas/shakopee-mn/                  /service-areas/                          301
-/service-areas/new-hope-mn                   /service-areas/                          301
-/service-areas/new-hope-mn/                  /service-areas/                          301
-/service-areas/roseville-mn                  /service-areas/                          301
-/service-areas/roseville-mn/                 /service-areas/                          301
-/service-areas/minnetonka-mn                 /service-areas/                          301
-/service-areas/minnetonka-mn/                /service-areas/                          301
-/service-areas/orono-mn                      /service-areas/                          301
-/service-areas/orono-mn/                     /service-areas/                          301
-/service-areas/shorewood-mn                  /service-areas/                          301
-/service-areas/shorewood-mn/                 /service-areas/                          301
-/service-areas/richfield-mn                  /service-areas/                          301
-/service-areas/richfield-mn/                 /service-areas/                          301
-/service-areas/plymouth-mn                   /service-areas/                          301
-/service-areas/plymouth-mn/                  /service-areas/                          301
-/service-areas/chaska-mn                     /service-areas/                          301
-/service-areas/chaska-mn/                    /service-areas/                          301
-/service-areas/hopkins-mn                    /service-areas/                          301
-/service-areas/hopkins-mn/                   /service-areas/                          301
-/service-areas/apple-valley-mn               /service-areas/                          301
-/service-areas/apple-valley-mn/              /service-areas/                          301
+/services/trenching                          /services/excavation                     301
+/services/trenching/                         /services/excavation                     301
+/service-areas/minneapolis-mn                /service-areas                           301
+/service-areas/minneapolis-mn/               /service-areas                           301
+/service-areas/wayzata-mn                    /service-areas                           301
+/service-areas/wayzata-mn/                   /service-areas                           301
+/service-areas/excelsior-mn                  /service-areas                           301
+/service-areas/excelsior-mn/                 /service-areas                           301
+/service-areas/st-louis-park-mn              /service-areas                           301
+/service-areas/st-louis-park-mn/             /service-areas                           301
+/service-areas/burnsville-mn                 /service-areas                           301
+/service-areas/burnsville-mn/                /service-areas                           301
+/service-areas/maple-grove-mn                /service-areas                           301
+/service-areas/maple-grove-mn/               /service-areas                           301
+/service-areas/eagan-mn                      /service-areas                           301
+/service-areas/eagan-mn/                     /service-areas                           301
+/service-areas/victoria-mn                   /service-areas                           301
+/service-areas/victoria-mn/                  /service-areas                           301
+/service-areas/eden-prairie-mn               /service-areas                           301
+/service-areas/eden-prairie-mn/              /service-areas                           301
+/service-areas/shakopee-mn                   /service-areas                           301
+/service-areas/shakopee-mn/                  /service-areas                           301
+/service-areas/new-hope-mn                   /service-areas                           301
+/service-areas/new-hope-mn/                  /service-areas                           301
+/service-areas/roseville-mn                  /service-areas                           301
+/service-areas/roseville-mn/                 /service-areas                           301
+/service-areas/minnetonka-mn                 /service-areas                           301
+/service-areas/minnetonka-mn/                /service-areas                           301
+/service-areas/orono-mn                      /service-areas                           301
+/service-areas/orono-mn/                     /service-areas                           301
+/service-areas/shorewood-mn                  /service-areas                           301
+/service-areas/shorewood-mn/                 /service-areas                           301
+/service-areas/richfield-mn                  /service-areas                           301
+/service-areas/richfield-mn/                 /service-areas                           301
+/service-areas/plymouth-mn                   /service-areas                           301
+/service-areas/plymouth-mn/                  /service-areas                           301
+/service-areas/chaska-mn                     /service-areas                           301
+/service-areas/chaska-mn/                    /service-areas                           301
+/service-areas/hopkins-mn                    /service-areas                           301
+/service-areas/hopkins-mn/                   /service-areas                           301
+/service-areas/apple-valley-mn               /service-areas                           301
+/service-areas/apple-valley-mn/              /service-areas                           301
 
 # The previous host served its sitemap here; Astro writes sitemap-index.xml.
 /sitemap.xml                                 /sitemap-index.xml                       301

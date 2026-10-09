@@ -4,9 +4,9 @@ import { SERVICE_CATEGORIES } from '../content.config';
 export type Service = CollectionEntry<'services'>;
 export type Review = CollectionEntry<'reviews'>;
 
-export const serviceUrl = (service: Service) => `/services/${service.id}/`;
-export const areaUrl = (area: CollectionEntry<'serviceAreas'>) => `/service-areas/${area.id}/`;
-export const projectUrl = (project: CollectionEntry<'projects'>) => `/projects/${project.id}/`;
+export const serviceUrl = (service: Service) => `/services/${service.id}`;
+export const areaUrl = (area: CollectionEntry<'serviceAreas'>) => `/service-areas/${area.id}`;
+export const projectUrl = (project: CollectionEntry<'projects'>) => `/projects/${project.id}`;
 
 export async function getServices(): Promise<Service[]> {
   return (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);

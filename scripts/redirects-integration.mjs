@@ -4,10 +4,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// build.format 'file': /reviews is reviews.html, / is index.html.
 function pageExists(dist, urlPath) {
   const clean = urlPath.split('#')[0].split('?')[0];
-  const file = path.join(dist, clean);
+  if (clean === '/') return fs.existsSync(path.join(dist, 'index.html'));
+  const file = path.join(dist, clean.replace(/\/$/, ''));
   return (
+    fs.existsSync(`${file}.html`) ||
     fs.existsSync(path.join(file, 'index.html')) ||
     (fs.existsSync(file) && fs.statSync(file).isFile())
   );

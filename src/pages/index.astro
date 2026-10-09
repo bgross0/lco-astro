@@ -177,14 +177,14 @@ const areaSlug = (city: string) => city.toLowerCase().replace(/[^a-z0-9]+/g, '-'
         <ol class="areas__list">
           {areas.map((area, index) => (
             <li>
-              <a href={area.href ?? `/service-areas/#${areaSlug(area.city)}`}>
+              <a href={area.href ?? `/service-areas#${areaSlug(area.city)}`}>
                 <span class="areas__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}.</span>
                 {area.label}
               </a>
             </li>
           ))}
         </ol>
-        <a class="areas__all" href="/service-areas/">All service areas <Icon name="arrow-right" size={16} /></a>
+        <a class="areas__all" href="/service-areas">All service areas <Icon name="arrow-right" size={16} /></a>
       </div>
       {featured && (
         <div class="areas__quote">

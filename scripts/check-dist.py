@@ -5,8 +5,9 @@ Usage: python3 -I scripts/check-dist.py dist [scripts/live-urls.txt]
 Fails (exit 1) when
 - a local href/src/srcset/poster/url() in any HTML or CSS file points at a
   file that is not in dist,
-- an internal page link lacks its trailing slash (Workers answers it with a
-  307 redirect) or points at a URL that public/_redirects redirects,
+- an internal page link has a trailing slash (canonical URLs are slashless;
+  Workers answers /page/ with a 307 to /page) or points at a URL that
+  public/_redirects redirects,
 - a URL from the live-site list is neither a page nor a redirect.
 """
 import html
@@ -34,13 +35,16 @@ if os.path.exists(redirects_file):
 
 
 def exists(path):
-    target = os.path.join(dist, path.lstrip('/'))
-    if path.endswith('/'):
-        return os.path.isfile(os.path.join(target, 'index.html'))
-    return os.path.isfile(target)
+    """build.format 'file': /reviews is reviews.html, / is index.html."""
+    if path == '/':
+        return os.path.isfile(os.path.join(dist, 'index.html'))
+    target = os.path.join(dist, path.strip('/'))
+    if os.path.splitext(path)[1]:
+        return os.path.isfile(target)
+    return os.path.isfile(target + '.html') or os.path.isfile(os.path.join(target, 'index.html'))
 
 
-missing, slashless, redirected = {}, {}, {}
+missing, slashed, redirected = {}, {}, {}
 for root, _, files in os.walk(dist):
     for name in files:
         if not name.endswith(('.html', '.css')):
@@ -62,8 +66,8 @@ for root, _, files in os.walk(dist):
                 is_page = not os.path.splitext(path)[1]
                 if path in redirects:
                     redirected.setdefault(path, set()).add(page)
-                elif is_page and not path.endswith('/') and exists(path + '/'):
-                    slashless.setdefault(path, set()).add(page)
+                elif is_page and path != '/' and path.endswith('/'):
+                    slashed.setdefault(path, set()).add(page)
                 elif not exists(path):
                     missing.setdefault(path, set()).add(page)
 
@@ -73,15 +77,15 @@ if live_list:
         path = line.strip()
         if not path or path.startswith('#'):
             continue
-        if not (exists(path.rstrip('/') + '/' if path != '/' else '/') or path in redirects or path + '/' in redirects):
+        if not (exists(path) or path in redirects):
             live_missing.append(path)
 
-for label, found in (('MISSING', missing), ('NO TRAILING SLASH', slashless), ('LINKS TO A REDIRECT', redirected)):
+for label, found in (('MISSING', missing), ('TRAILING SLASH', slashed), ('LINKS TO A REDIRECT', redirected)):
     for path in sorted(found):
         print(f'{label} {path}  <- {", ".join(sorted(found[path])[:5])}')
 for path in live_missing:
     print(f'LIVE URL NOT SERVED {path}')
-problems = len(missing) + len(slashless) + len(redirected) + len(live_missing)
-print(f'{len(missing)} missing targets, {len(slashless)} slashless page links, '
+problems = len(missing) + len(slashed) + len(redirected) + len(live_missing)
+print(f'{len(missing)} missing targets, {len(slashed)} page links with a trailing slash, '
       f'{len(redirected)} links to redirects, {len(live_missing)} live URLs not served')
 sys.exit(1 if problems else 0)

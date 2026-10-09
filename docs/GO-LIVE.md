@@ -65,10 +65,11 @@ Variables (Settings > Variables and Secrets), for **Production and Preview**:
 Push `dev`. Pages builds it at `https://dev.<project>.pages.dev`.
 
 - [ ] Every page renders. Compare against the current live site.
-- [ ] `/landscaping` returns a 301 to `/services/general-landscaping/`, and
-      `/contact` to `/contact-us/`.
+- [ ] `/landscaping` returns a 301 to `/services/general-landscaping`, and
+      `/contact` to `/contact-us`. Live URLs such as `/reviews` return 200
+      with no redirect.
 - [ ] **Submit one real test lead.** It must appear in the CRM (CRM > Freeform
-      submissions, and as a lead), and the browser must land on `/thank-you/`. If it errors instead, check Pages > Functions
+      submissions, and as a lead), and the browser must land on `/thank-you`. If it errors instead, check Pages > Functions
       logs. A Cloudflare challenge on lco.axsys.app blocking server-to-server
       requests needs a WAF skip rule for `/freeform/webhook`.
 - [ ] CMS login will not work here, by design. Test it after step 5.

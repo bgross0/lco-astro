@@ -78,7 +78,7 @@ const footerLogoWebp = settings.footerLogo.replace(/\.(png|jpe?g)$/i, '.webp');
         <h2 class="footer__heading" id="footer-areas">Areas Served</h2>
         <ul class="footer__list footer__list--areas" role="list">
           {areas.map((area) => (
-            <li><a href={area.href ?? `/service-areas/#${areaSlug(area.city)}`} class="footer__link">{area.label}</a></li>
+            <li><a href={area.href ?? `/service-areas#${areaSlug(area.city)}`} class="footer__link">{area.label}</a></li>
           ))}
         </ul>
       </nav>

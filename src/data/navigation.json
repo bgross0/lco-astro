@@ -2,80 +2,80 @@
   "mainMenu": [
     {
       "label": "Services",
-      "href": "/services/",
+      "href": "/services",
       "servicesMenu": true
     },
     {
       "label": "Commercial Snow Removal",
-      "href": "/services/commercial-snow-removal/"
+      "href": "/services/commercial-snow-removal"
     },
     {
       "label": "Shoreline Solutions",
-      "href": "/shoreline-solutions/"
+      "href": "/shoreline-solutions"
     },
     {
       "label": "Service Areas",
-      "href": "/service-areas/"
+      "href": "/service-areas"
     },
     {
       "label": "Company",
-      "href": "/about-us/",
+      "href": "/about-us",
       "dropdown": [
         {
           "label": "About Us",
-          "href": "/about-us/"
+          "href": "/about-us"
         },
         {
           "label": "Reviews",
-          "href": "/reviews/"
+          "href": "/reviews"
         },
         {
           "label": "Projects",
-          "href": "/projects/"
+          "href": "/projects"
         },
         {
           "label": "Gallery",
-          "href": "/gallery/"
+          "href": "/gallery"
         }
       ]
     },
     {
       "label": "Contact",
-      "href": "/contact-us/"
+      "href": "/contact-us"
     }
   ],
   "footerCompany": [
     {
       "label": "Contact",
-      "href": "/contact-us/"
+      "href": "/contact-us"
     },
     {
       "label": "About Us",
-      "href": "/about-us/"
+      "href": "/about-us"
     },
     {
       "label": "Shoreline Solutions",
-      "href": "/shoreline-solutions/"
+      "href": "/shoreline-solutions"
     },
     {
       "label": "Gallery",
-      "href": "/gallery/"
+      "href": "/gallery"
     },
     {
       "label": "Client Testimonials",
-      "href": "/reviews/"
+      "href": "/reviews"
     },
     {
       "label": "Project Showcase",
-      "href": "/projects/"
+      "href": "/projects"
     },
     {
       "label": "Blog",
-      "href": "/blog/"
+      "href": "/blog"
     },
     {
       "label": "Sitemap",
-      "href": "/sitemap/"
+      "href": "/sitemap"
     }
   ]
 }

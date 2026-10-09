@@ -27,9 +27,9 @@ Worker (pages plus `/api/*`) with secrets from an untracked `.dev.vars` file.
 ```text
 src/
   content/            Markdown and JSON edited through the CMS (see docs/CMS.md)
-    services/         One file per /services/<slug>/ page
-    service-areas/    One file per /service-areas/<city>-mn/ page
-    projects/         One file per /projects/<slug>/ page
+    services/         One file per /services/<slug> page
+    service-areas/    One file per /service-areas/<city>-mn page
+    projects/         One file per /projects/<slug> page
     reviews/          Google reviews shown on the site, one JSON file each
     pages/            Copy for about-us, contact-us, gallery, shoreline-solutions, ...
     homepage/         Homepage sections
@@ -92,8 +92,11 @@ Notes:
   photos before adding them; anything over ~400 KB is almost certainly too big.
   Smaller copies saved next to an image as `name-768w.jpg`, `name-1280w.jpg`
   are picked up automatically for `srcset` (`src/lib/images.ts`).
-- Internal links end with `/` (`trailingSlash: 'always'`); Workers answers
-  `/page` with a 307 to `/page/`.
+- URLs have no trailing slash, as on the previous live site (`/reviews`,
+  `/services/sod-installation`). Astro builds `reviews.html`
+  (`build.format: 'file'`, `trailingSlash: 'never'`); the Worker serves it at
+  `/reviews` and answers `/reviews/` with a 307 to `/reviews`. Link to the
+  slashless form only; `npm run check:dist` flags slashed page links.
 - The build fails if `public/_redirects` points at a missing page or would
   hide a page that exists. After `npm run build`, `npm run check:dist`
   checks every local link and asset and every URL the previous live site
@@ -101,7 +104,7 @@ Notes:
 
 ## Contact form
 
-The quote form on `/contact-us/` posts to `functions/api/contact.js`, which:
+The quote form on `/contact-us` posts to `functions/api/contact.js`, which:
 
 1. rejects bots via a hidden honeypot field and Cloudflare Turnstile,
 2. validates the fields, and
@@ -117,7 +120,7 @@ is created on first delivery under the fixed `FORM_ID` in the function; keys
 are chosen to auto-map onto the lead (`name`, `email`, `phone`, `company`,
 `message`; `subject` becomes the lead title).
 
-The visitor lands on `/thank-you/` only after Odoo confirms the submission was
+The visitor lands on `/thank-you` only after Odoo confirms the submission was
 stored. If Odoo is unreachable or rejects it, the form shows an error with the
 office number and keeps what was typed; the failure is in the Worker
 logs (`npx wrangler tail`). There is no queue in front of Odoo, so a failed delivery is not retried.
