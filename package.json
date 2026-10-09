@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
+    "check:dist": "python3 -I scripts/check-dist.py dist scripts/live-urls.txt",
     "preview": "npm run build && wrangler dev",
     "deploy:staging": "npm run build && wrangler deploy --env staging",
     "deploy:production": "npm run build && wrangler deploy",
