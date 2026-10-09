@@ -1,15 +1,18 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import ServiceSidebar from '../../components/sections/ServiceSidebar.astro';
-import ProcessSteps from '../../components/sections/ProcessSteps.astro';
-import FaqList from '../../components/sections/FaqList.astro';
-import ReviewsSection from '../../components/sections/ReviewsSection.astro';
-import CtaSection from '../../components/sections/CtaSection.astro';
-import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
-import Prose from '../../components/common/Prose.astro';
-import { getAreas, serviceUrl } from '../../lib/content';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import AboutUs from '../../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import SocialProof from '../../components/shadcn-studio/blocks/social-proof-03/social-proof-03';
+import FAQ from '../../components/shadcn-studio/blocks/faq-component-11/faq-component-11';
+import Testimonials from '../../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
+import CTASection from '../../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import settings from '../../data/settings.json';
+import { primaryPhone } from '../../lib/phone';
+import { blockImage } from '../../lib/images';
+import { categoryPhotos } from '../../lib/blocks';
+import { prose, splitSections } from '../../lib/prose';
+import { getAreas, getReviewSummary, getReviewerInitials, getTestimonials, serviceUrl } from '../../lib/content';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -18,15 +21,15 @@ export async function getStaticPaths() {
 
 const { service } = Astro.props;
 const { data } = service;
-const { Content } = await render(service);
 const site = Astro.site!.origin;
 const url = new URL(serviceUrl(service), site).href;
 const areas = await getAreas();
-const crumbs = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services' },
-  { label: data.title, href: serviceUrl(service) },
-];
+const summary = await getReviewSummary();
+const photos = await categoryPhotos(data.category, data.hero.image);
+
+// The intro copy sits beside a photo; "## " sections become tabs under it.
+const { intro, sections } = splitSections(service.rendered?.html ?? '');
+const tabs = sections.map((section) => ({ name: section.title, value: section.id, html: section.html }));
 
 const jsonLd: Record<string, unknown>[] = [
   {
@@ -49,58 +52,71 @@ if (data.faq) {
     })),
   });
 }
+const stepNumber = (index: number) => String(index + 1).padStart(2, '0');
 ---
 
-<BaseLayout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
-  <PageHero heading={data.hero.heading} text={data.hero.text} image={data.hero.image} imageAlt={data.hero.imageAlt} />
+<Layout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
+  <HeroSection
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Services', href: '/services' },
+      { label: data.title, href: serviceUrl(service) },
+    ]}
+    heading={data.hero.heading}
+    text={data.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+    image={await blockImage(data.hero.image, data.hero.imageAlt)}
+  />
 
-  <section class="service-body">
-    <div class="container service-body__grid">
-      <article class="service-body__main">
-        <Breadcrumbs items={crumbs} />
-        <h2 class="service-body__title">{data.heading}</h2>
-        <Prose>
-          <Content />
-        </Prose>
-      </article>
-      <ServiceSidebar currentId={service.id} />
-    </div>
-  </section>
+  {tabs.length > 0 ? (
+    <AboutUs
+      client:visible
+      title={data.heading}
+      text={data.summary}
+      contentHtml={intro}
+      proseClassName={prose}
+      tabs={tabs}
+      media={photos.about}
+      badge={{ rating: summary.average, count: summary.count, href: settings.google.reviewsUrl }}
+    />
+  ) : (
+    <AboutUs
+      title={data.heading}
+      text={data.summary}
+      contentHtml={intro}
+      proseClassName={prose}
+      media={photos.about}
+      badge={{ rating: summary.average, count: summary.count, href: settings.google.reviewsUrl }}
+    />
+  )}
 
-  {data.process && <ProcessSteps title={data.process.title} intro={data.process.intro} steps={data.process.steps} />}
-  {data.faq && <FaqList title={data.faq.title} intro={data.faq.intro} items={data.faq.items} />}
-  <ReviewsSection title={data.reviews.title} text={data.reviews.text} background="white" />
-  <CtaSection title={data.cta.title} text={data.cta.text} />
-</BaseLayout>
+  {data.process && (
+    <SocialProof
+      title={data.process.title}
+      text={data.process.intro}
+      stats={data.process.steps.map((step, index) => ({ value: stepNumber(index), label: step.title, text: step.text }))}
+    />
+  )}
 
-<style>
-  .service-body {
-    padding: var(--space-12) 0 var(--space-20);
-    background: var(--white);
-  }
+  {data.faq && <FAQ title={data.faq.title} intro={data.faq.intro} faqItems={data.faq.items} image={photos.faq} />}
 
-  .service-body__grid {
-    display: grid;
-    gap: var(--space-12);
-  }
+  <Testimonials
+    title={data.reviews.title}
+    text={data.reviews.text}
+    testimonials={await getTestimonials()}
+    links={{ allReviews: '/reviews', writeReview: settings.google.writeReviewUrl }}
+    muted
+  />
 
-  .service-body__title {
-    color: var(--secondary);
-    font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
-    margin-bottom: var(--space-6);
-  }
-
-  @media (min-width: 1024px) {
-    .service-body__grid {
-      grid-template-columns: minmax(0, 1fr) 320px;
-      gap: var(--space-16);
-      align-items: start;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .service-body {
-      padding: var(--space-8) 0 var(--space-16);
-    }
-  }
-</style>
+  <CTASection
+    title={data.cta.title}
+    text={data.cta.text}
+    button={{ label: 'Request a Quote', href: '/contact-us' }}
+    phone={primaryPhone}
+    image={photos.cta}
+  />
+</Layout>

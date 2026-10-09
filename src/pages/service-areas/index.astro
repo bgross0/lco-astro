@@ -1,119 +1,46 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import ServiceCard from '../../components/sections/ServiceCard.astro';
-import SectionHeader from '../../components/sections/SectionHeader.astro';
-import CtaSection from '../../components/sections/CtaSection.astro';
-import Icon from '../../components/common/Icon.astro';
-import { getAreas, getPage, getServices } from '../../lib/content';
+import { getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Features from '../../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import CTASection from '../../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import ServiceAreaMap from '../../components/site/ServiceAreaMap.astro';
+import { primaryPhone } from '../../lib/phone';
+import { serviceTabs, sitePhoto } from '../../lib/blocks';
+import { getPage } from '../../lib/content';
 
 const page = (await getPage('service-areas')).data;
-const areas = await getAreas();
-const services = await getServices();
-const areaSlug = (city: string) => city.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const home = (await getEntry('homepage', 'home'))!.data;
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description}>
-  <PageHero heading={page.hero.heading} text={page.hero.text} size="compact" />
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+  />
 
-  <section class="areas-hub">
-    <div class="container">
-      <ul class="areas-hub__grid" role="list">
-        {areas.map((area) => (
-          <li id={areaSlug(area.city)} class:list={['areas-hub__item', { 'areas-hub__item--page': area.href }]}>
-            <Icon name="map-pin" size={20} />
-            {area.href ? (
-              <a href={area.href}>{area.label} <span class="areas-hub__more">Services in {area.city}</span></a>
-            ) : (
-              <span>{area.label}</span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  <ServiceAreaMap list="all" />
 
-  <section class="areas-services">
-    <div class="container">
-      <SectionHeader title="Services across the metro" />
-      <ul class="areas-services__grid" role="list">
-        {services.map((service) => <li><ServiceCard service={service} /></li>)}
-      </ul>
-    </div>
-  </section>
+  <Features
+    client:visible
+    id="services"
+    eyebrow="Our services"
+    title="Services across the metro"
+    text={home.services.title}
+    tabs={await serviceTabs()}
+  />
 
-  {page.cta && <CtaSection title={page.cta.title} text={page.cta.text} />}
-</BaseLayout>
-
-<style>
-  .areas-hub {
-    padding: var(--space-12) 0 var(--space-16);
-  }
-
-  .areas-hub__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
-    gap: var(--space-3);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .areas-hub__item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-2);
-    margin: 0;
-    padding: var(--space-4);
-    border-radius: var(--radius-lg);
-    background: var(--neutral-light);
-    color: var(--black);
-    font-weight: 600;
-    scroll-margin-top: 120px;
-  }
-
-  .areas-hub__item :global(svg) {
-    flex-shrink: 0;
-    color: var(--primary-dark);
-  }
-
-  .areas-hub__item:target {
-    outline: 2px solid var(--primary);
-    background: rgba(74, 144, 226, 0.12);
-  }
-
-  .areas-hub__item--page {
-    background: var(--white);
-    border: 1px solid rgba(46, 90, 135, 0.18);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .areas-hub__item a {
-    color: var(--secondary);
-  }
-
-  .areas-hub__more {
-    display: block;
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--primary-dark);
-  }
-
-  .areas-services {
-    padding: var(--space-16) 0 var(--space-20);
-    background: var(--neutral-light);
-  }
-
-  .areas-services__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-    gap: var(--space-6);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .areas-services__grid li {
-    margin: 0;
-  }
-</style>
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-08.jpg')}
+    />
+  )}
+</Layout>

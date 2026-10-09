@@ -1,88 +1,47 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import ServiceCard from '../../components/sections/ServiceCard.astro';
-import CtaSection from '../../components/sections/CtaSection.astro';
-import { getPage, getServiceGroups } from '../../lib/content';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Features from '../../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import SocialProof from '../../components/shadcn-studio/blocks/social-proof-03/social-proof-03';
+import CTASection from '../../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import { getEntry } from 'astro:content';
+import settings from '../../data/settings.json';
+import { primaryPhone } from '../../lib/phone';
+import { serviceTabs, sitePhoto } from '../../lib/blocks';
+import { getPage, getReviewSummary, getReviewerInitials } from '../../lib/content';
 
 const page = (await getPage('services')).data;
-const groups = await getServiceGroups();
-const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const home = (await getEntry('homepage', 'home'))!.data;
+const summary = await getReviewSummary();
+const stats = [
+  ...home.highlights.items.flatMap((item) => item.stats ?? []),
+  { value: summary.average.toFixed(1), label: 'Rating on Google' },
+  { value: String(summary.count), label: 'Google reviews' },
+];
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description}>
-  <PageHero heading={page.hero.heading} text={page.hero.text} size="compact" />
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+  />
 
-  <section class="services-index">
-    <div class="container">
-      <nav class="services-index__jump" aria-label="Service categories">
-        {groups.map((group) => <a href={`#${slug(group.category)}`}>{group.category}</a>)}
-      </nav>
-      {groups.map((group) => (
-        <section class="services-index__group" aria-labelledby={slug(group.category)}>
-          <h2 class="services-index__heading" id={slug(group.category)}>{group.category}</h2>
-          <ul class="services-index__grid" role="list">
-            {group.services.map((service) => (
-              <li><ServiceCard service={service} /></li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
-  </section>
+  <Features client:visible id="services" eyebrow="Our services" title={home.services.title} tabs={await serviceTabs()} />
 
-  {page.cta && <CtaSection title={page.cta.title} text={page.cta.text} />}
-</BaseLayout>
+  <SocialProof title={home.stats?.title ?? home.highlights.title} stats={stats} />
 
-<style>
-  .services-index {
-    padding: var(--space-12) 0 var(--space-20);
-  }
-
-  .services-index__jump {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-bottom: var(--space-12);
-  }
-
-  .services-index__jump a {
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-full);
-    background: var(--neutral-light);
-    color: var(--secondary);
-    font-weight: 600;
-    font-size: var(--text-sm);
-  }
-
-  .services-index__jump a:hover {
-    background: rgba(74, 144, 226, 0.15);
-    text-decoration: none;
-  }
-
-  .services-index__group {
-    padding: 0;
-  }
-
-  .services-index__group + .services-index__group {
-    margin-top: var(--space-16);
-  }
-
-  .services-index__heading {
-    color: var(--secondary);
-    scroll-margin-top: 120px;
-  }
-
-  .services-index__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-    gap: var(--space-6);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .services-index__grid li {
-    margin: 0;
-  }
-</style>
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-01.jpg')}
+    />
+  )}
+</Layout>

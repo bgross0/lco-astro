@@ -1,17 +1,17 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import ServiceTabs from '../../components/sections/ServiceTabs.astro';
-import ReviewsSection from '../../components/sections/ReviewsSection.astro';
-import CtaSection from '../../components/sections/CtaSection.astro';
-import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
-import Prose from '../../components/common/Prose.astro';
-import Icon from '../../components/common/Icon.astro';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Features from '../../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import AboutUs from '../../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import Testimonials from '../../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
+import CTASection from '../../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
 import settings from '../../data/settings.json';
 import { primaryPhone } from '../../lib/phone';
-import { addressText, mapsUrl } from '../../lib/site';
-import { areaUrl, getServices, serviceUrl } from '../../lib/content';
+import { blockImage } from '../../lib/images';
+import { serviceTabs, sitePhoto } from '../../lib/blocks';
+import { prose } from '../../lib/prose';
+import { areaUrl, getReviewSummary, getReviewerInitials, getServices, getTestimonials, serviceUrl } from '../../lib/content';
 
 export async function getStaticPaths() {
   const areas = await getCollection('serviceAreas');
@@ -20,10 +20,10 @@ export async function getStaticPaths() {
 
 const { area } = Astro.props;
 const { data } = area;
-const { Content } = await render(area);
 const place = `${data.city}, ${data.state}`;
 const site = Astro.site!.origin;
 const services = await getServices();
+const summary = await getReviewSummary();
 
 const jsonLd = [
   {
@@ -44,136 +44,53 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
-  <PageHero heading={data.hero.heading} text={data.hero.text} image={data.hero.image} imageAlt={data.hero.imageAlt} size="medium" />
+<Layout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
+  <HeroSection
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Service Areas', href: '/service-areas' },
+      { label: place, href: areaUrl(area) },
+    ]}
+    heading={data.hero.heading}
+    text={data.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+    image={await blockImage(data.hero.image, data.hero.imageAlt)}
+  />
 
-  <section class="area-contact" aria-label={`Contact Lake County Outdoors in ${place}`}>
-    <div class="container">
-      <ul class="area-contact__grid" role="list">
-        <li>
-          <a class="area-contact__card" href={primaryPhone.href}>
-            <Icon name="phone" size={24} />
-            <span class="area-contact__label">Phone number</span>
-            <span class="area-contact__value">{primaryPhone.display}</span>
-          </a>
-        </li>
-        <li>
-          <a class="area-contact__card" href={`mailto:${settings.email}`}>
-            <Icon name="envelope" size={24} />
-            <span class="area-contact__label">Email us</span>
-            <span class="area-contact__value">{settings.email}</span>
-          </a>
-        </li>
-        <li>
-          <a class="area-contact__card" href={mapsUrl} target="_blank" rel="noopener">
-            <Icon name="map-pin" size={24} />
-            <span class="area-contact__label">Based in</span>
-            <span class="area-contact__value">{addressText}</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <Features
+    client:visible
+    id="area-services"
+    eyebrow="Our services"
+    title={`Services We Offer in ${place}`}
+    button={{ label: 'View all services', href: '/services' }}
+    tabs={await serviceTabs()}
+  />
 
-  <ServiceTabs title={`Services We Offer in ${place}`} id="area-services" />
+  <AboutUs
+    title={data.heading}
+    contentHtml={area.rendered?.html ?? ''}
+    proseClassName={prose}
+    media={await sitePhoto('/images/home/crew.jpg')}
+    badge={{ rating: summary.average, count: summary.count, href: settings.google.reviewsUrl }}
+    muted
+  />
 
-  <section class="area-body">
-    <div class="container area-body__inner">
-      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Service Areas', href: '/service-areas' }, { label: place, href: areaUrl(area) }]} />
-      <h2 class="area-body__title">{data.heading}</h2>
-      <Prose>
-        <Content />
-      </Prose>
-    </div>
-  </section>
+  <Testimonials
+    title={data.reviews.title}
+    text={data.reviews.text}
+    testimonials={await getTestimonials()}
+    links={{ allReviews: '/reviews', writeReview: settings.google.writeReviewUrl }}
+  />
 
-  <ReviewsSection title={data.reviews.title} text={data.reviews.text} />
-  <CtaSection title={data.cta.title} text={data.cta.text} />
-</BaseLayout>
-
-<style>
-  .area-contact {
-    position: relative;
-    z-index: 1;
-    margin-top: calc(var(--space-10) * -1);
-    padding: 0;
-  }
-
-  .area-contact__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-    gap: var(--space-4);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .area-contact__grid li {
-    margin: 0;
-  }
-
-  .area-contact__card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-1);
-    height: 100%;
-    padding: var(--space-6);
-    border-radius: var(--radius-xl);
-    background: var(--white);
-    box-shadow: var(--shadow-xl);
-    color: var(--primary-dark);
-    text-align: center;
-  }
-
-  .area-contact__card:hover {
-    text-decoration: none;
-    color: var(--secondary);
-  }
-
-  .area-contact__label {
-    margin-top: var(--space-2);
-    font-weight: 600;
-    color: var(--black);
-  }
-
-  .area-contact__value {
-    font-size: var(--text-sm);
-    overflow-wrap: anywhere;
-  }
-
-  @media (max-width: 639px) {
-    .area-contact__card {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 2px var(--space-3);
-      padding: var(--space-4) var(--space-5);
-      text-align: left;
-    }
-
-    .area-contact__label {
-      margin-top: 0;
-    }
-
-    .area-contact__value {
-      flex-basis: 100%;
-      padding-left: calc(24px + var(--space-3));
-    }
-  }
-
-  .area-body {
-    padding: var(--space-8) 0 var(--space-20);
-    background: var(--white);
-  }
-
-  .area-body__inner {
-    max-width: 860px;
-  }
-
-  .area-body__title {
-    color: var(--secondary);
-    font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
-    margin-bottom: var(--space-6);
-  }
-</style>
+  <CTASection
+    title={data.cta.title}
+    text={data.cta.text}
+    button={{ label: 'Request a Quote', href: '/contact-us' }}
+    phone={primaryPhone}
+    image={await sitePhoto('/images/gallery/photo-08.jpg')}
+  />
+</Layout>
