@@ -56,3 +56,25 @@ export async function getPage(id: string) {
   if (!page) throw new Error(`Missing src/content/pages/${id}.md`);
   return page;
 }
+
+/** Reviews shaped for the testimonials block: name, "Google review, Month Year", text and stars. */
+export async function getTestimonials() {
+  const month = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  return (await getReviews()).map((review) => ({
+    name: review.data.author,
+    role: review.data.date ? `${review.data.source}, ${month.format(review.data.date)}` : `${review.data.source} review`,
+    content: review.data.text,
+    rating: review.data.rating,
+  }));
+}
+
+/** Initials of the first reviewers, for the avatar row next to the rating. */
+export async function getReviewerInitials(limit = 4) {
+  return (await getReviews()).slice(0, limit).map((review) =>
+    review.data.author
+      .replace(/\./g, '')
+      .split(/\s+/, 2)
+      .map((part) => part[0])
+      .join(''),
+  );
+}

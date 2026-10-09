@@ -1,83 +1,68 @@
-import { ArrowRightIcon } from 'lucide-react'
+import { ArrowRightIcon, PhoneIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
 import { MotionPreset } from '@/components/ui/motion-preset'
 
-const CTASection = () => {
+type CTAProps = {
+  title: string
+  text?: string
+  button: { label: string; href: string }
+  phone?: { label: string; display: string; href: string }
+  image: { src: string; srcset?: string; width?: number; height?: number; alt: string }
+}
+
+const CTASection = ({ title, text, button, phone, image }: CTAProps) => {
   return (
     <section className='bg-muted py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <Card className='relative rounded-[24px] border-none bg-black py-16 shadow-none'>
-          <CardContent className='flex items-center gap-16 px-6 sm:max-lg:flex-col md:px-12'>
-            <MotionPreset
-              className='relative w-full max-sm:hidden'
-              fade
-              motionProps={{
-                animate: {
-                  y: [0, -10, 0],
-                  opacity: 1
-                },
-                transition: {
-                  y: {
-                    duration: 1.7,
-                    repeat: Infinity,
-                    ease: 'easeOut',
-                    delay: 0.5
-                  }
-                }
-              }}
-            >
+        <Card className='relative rounded-[24px] border-none bg-black py-12 shadow-none sm:py-16'>
+          <CardContent className='flex items-center gap-16 px-6 sm:max-lg:flex-col md:px-12 lg:grid lg:grid-cols-2'>
+            <MotionPreset className='relative w-full max-sm:hidden lg:self-stretch'>
               <img
-                src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/cta/image-7.png'
-                alt='Dashboard Analytics'
-                className='max-lg:mx-auto max-lg:max-h-80 lg:absolute lg:-translate-y-1/2 lg:scale-105 dark:hidden'
-              />
-              <img
-                src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/cta/image-7-dark.png'
-                alt='Dashboard Analytics'
-                className='hidden max-lg:mx-auto max-lg:max-h-80 lg:absolute lg:-translate-y-1/2 lg:scale-105 dark:block'
+                src={image.src}
+                srcSet={image.srcset}
+                sizes='(min-width: 1280px) 560px, (min-width: 1024px) 44vw, 90vw'
+                width={image.width}
+                height={image.height}
+                alt={image.alt}
+                loading='lazy'
+                decoding='async'
+                className='aspect-[4/3] w-full rounded-2xl object-cover shadow-2xl max-lg:mx-auto max-lg:max-h-80 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:scale-105'
               />
             </MotionPreset>
             <div className='space-y-4 xl:justify-self-end'>
-              <MotionPreset
-                component='h2'
-                className='text-2xl font-semibold text-white md:text-3xl lg:text-4xl'
-                fade
-                blur
-                slide={{ direction: 'up', offset: 50 }}
-                transition={{ duration: 0.5 }}
-              >
-                Let&apos;s skip the chatter and start building!
+              <MotionPreset component='h2' className='text-2xl font-semibold text-white md:text-3xl lg:text-4xl'>
+                {title}
               </MotionPreset>
 
-              <MotionPreset
-                component='p'
-                className='text-xl text-white'
-                fade
-                blur
-                slide={{ direction: 'up', offset: 50 }}
-                delay={0.3}
-                transition={{ duration: 0.5 }}
-              >
-                With a variety of unique blocks, you can effortlessly create a page without any coding. Build your
-                landing page with ease.
-              </MotionPreset>
+              {text && (
+                <MotionPreset component='p' className='text-xl text-white'>
+                  {text}
+                </MotionPreset>
+              )}
 
-              <MotionPreset
-                fade
-                blur
-                slide={{ direction: 'up', offset: 50 }}
-                delay={0.6}
-                transition={{ duration: 0.5 }}
-              >
+              <MotionPreset className='flex flex-wrap gap-3 pt-2'>
                 <Button asChild size='lg' variant='secondary' className='rounded-lg text-base has-[>svg]:px-6'>
-                  <a href='#' className='inline-flex items-center gap-2'>
-                    Let&apos;s Started
+                  <a href={button.href} className='inline-flex items-center gap-2'>
+                    {button.label}
                     <ArrowRightIcon className='size-5' />
                   </a>
                 </Button>
+                {phone && (
+                  <Button
+                    asChild
+                    size='lg'
+                    variant='outline'
+                    className='rounded-lg border-white/40 bg-transparent text-base text-white hover:bg-white/10 hover:text-white has-[>svg]:px-6'
+                  >
+                    <a href={phone.href}>
+                      <PhoneIcon className='size-5' />
+                      Call us {phone.display}
+                    </a>
+                  </Button>
+                )}
               </MotionPreset>
             </div>
           </CardContent>

@@ -53,3 +53,9 @@ export function responsiveImage(src: string): Promise<ResponsiveImage> {
   if (!cache.has(src)) cache.set(src, resolve(src));
   return cache.get(src)!;
 }
+
+/** Image props for the shadcn blocks: src, srcset, intrinsic size and alt text. */
+export async function blockImage(src: string, alt: string) {
+  const image = await responsiveImage(src);
+  return { ...image, alt };
+}

@@ -1,182 +1,232 @@
-import { Avatar, AvatarFallback, AvatarImage, AvatarGroup } from '@/components/ui/avatar'
+import { ArrowRightIcon, ChevronRightIcon, PauseIcon, PhoneIcon, PlayIcon } from 'lucide-react'
+
+import { Avatar, AvatarFallback, AvatarGroup } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Marquee } from '@/components/ui/marquee'
 import { MotionPreset } from '@/components/ui/motion-preset'
 import { Rating } from '@/components/ui/rating'
 
-export type AvatarItem = {
+import { cn } from '@/lib/utils'
+
+export type HeroImage = {
   src: string
-  name: string
-  fallback: string
+  srcset?: string
+  width?: number
+  height?: number
+  alt: string
 }
 
-const HeroSection = ({ avatars }: { avatars: AvatarItem[] }) => {
+export type HeroAction = { label: string; href: string; icon?: 'phone' | 'arrow'; srLabel?: string }
+
+export type HeroProps = {
+  breadcrumbs?: { label: string; href: string }[]
+  /** The pill above the heading: a badge and a line of text, optionally linked. */
+  pill?: { badge: string; text: string; href?: string }
+  heading: string
+  text?: string
+  actions?: HeroAction[]
+  /** Google rating summary with reviewer initials. */
+  rating?: { value: number; count: number; href: string; initials: string[] }
+  /** Two scrolling columns of photos (home page). */
+  columns?: HeroImage[][]
+  /** A single photo (inner pages). */
+  image?: HeroImage
+}
+
+const ActionIcon = ({ icon }: { icon?: HeroAction['icon'] }) =>
+  icon === 'phone' ? <PhoneIcon /> : icon === 'arrow' ? <ArrowRightIcon /> : null
+
+const HeroSection = ({ breadcrumbs, pill, heading, text, actions = [], rating, columns, image }: HeroProps) => {
+  const isHome = Boolean(columns)
+
   return (
-    <section className='from-primary/20 to-background flex min-h-240 flex-1 flex-col bg-linear-to-bl to-50%'>
-      <div className='mx-auto grid w-full max-w-7xl flex-1 gap-19 px-4 sm:px-6 lg:grid-cols-2 lg:px-8'>
+    <section
+      className={cn(
+        'from-primary/20 to-background flex flex-1 flex-col bg-linear-to-bl to-50%',
+        isHome && 'lg:min-h-[50rem]'
+      )}
+    >
+      <div
+        className={cn(
+          'mx-auto grid w-full max-w-7xl flex-1 gap-x-19 gap-y-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8',
+          !isHome && 'pb-12 lg:pb-16'
+        )}
+      >
         {/* Left Content */}
-        <div className='flex max-w-2xl flex-col justify-center gap-10 pt-28 pb-12'>
+        <div className={cn('flex max-w-2xl flex-col justify-center gap-10', isHome ? 'pt-16 pb-12 lg:pt-20' : 'pt-10 lg:pt-16')}>
           <div className='flex flex-col items-start gap-8'>
-            <MotionPreset
-              fade
-              slide
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className='bg-muted flex items-center gap-2.5 rounded-full border px-2 py-1 text-sm'
-            >
-              <Badge>AI-Powered</Badge>
-              <span className='text-muted-foreground'>Solution for client-facing businesses</span>
-            </MotionPreset>
+            {breadcrumbs && breadcrumbs.length > 0 && (
+              <nav aria-label='Breadcrumb' className='-mb-2'>
+                <ol className='text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm'>
+                  {breadcrumbs.map((crumb, index) => {
+                    const last = index === breadcrumbs.length - 1
+                    return (
+                      <li key={crumb.href} className='flex items-center gap-1.5'>
+                        {last ? (
+                          <span aria-current='page' className='text-foreground font-medium'>
+                            {crumb.label}
+                          </span>
+                        ) : (
+                          <>
+                            <a href={crumb.href} className='hover:text-primary transition-colors'>
+                              {crumb.label}
+                            </a>
+                            <ChevronRightIcon className='size-3.5' aria-hidden='true' />
+                          </>
+                        )}
+                      </li>
+                    )
+                  })}
+                </ol>
+              </nav>
+            )}
+
+            {pill && (
+              <MotionPreset className='bg-muted flex max-w-full items-center gap-2.5 rounded-full border px-2 py-1 text-sm'>
+                <Badge className='shrink-0'>{pill.badge}</Badge>
+                {pill.href ? (
+                  <a href={pill.href} className='text-muted-foreground hover:text-primary flex items-center gap-1 pr-1 transition-colors'>
+                    {pill.text}
+                    <ArrowRightIcon className='size-3.5 shrink-0' aria-hidden='true' />
+                  </a>
+                ) : (
+                  <span className='text-muted-foreground pr-1'>{pill.text}</span>
+                )}
+              </MotionPreset>
+            )}
 
             <MotionPreset
               component='h1'
-              fade
-              slide
-              delay={0.3}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
               className='text-3xl leading-[1.29167] font-bold text-balance sm:text-4xl lg:text-5xl'
             >
-              Transforming Client Engagement in Professional Services
+              {heading}
             </MotionPreset>
 
-            <MotionPreset
-              component='p'
-              fade
-              slide
-              delay={0.6}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className='text-muted-foreground'
-            >
-              In today&apos;s fast-paced business landscape, effective client engagement is vital for success in
-              professional services. Our innovative approach redefines how professionals connect with their clients.
-            </MotionPreset>
+            {text && (
+              <MotionPreset component='p' className='text-muted-foreground text-lg'>
+                {text}
+              </MotionPreset>
+            )}
 
-            <MotionPreset
-              fade
-              slide
-              delay={0.9}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className='flex flex-wrap items-center gap-4'
-            >
-              <Button size='lg' asChild>
-                <a href='#'>Get Started for Free</a>
-              </Button>
-              <Button size='lg' asChild className='bg-primary/10 hover:bg-primary/20 text-primary'>
-                <a href='#'>Live Demo</a>
-              </Button>
-            </MotionPreset>
+            {actions.length > 0 && (
+              <MotionPreset className='flex flex-wrap items-center gap-4'>
+                {actions.map((action, index) => (
+                  <Button
+                    key={action.href}
+                    size='lg'
+                    asChild
+                    className={cn('text-base', index > 0 && 'bg-primary/10 hover:bg-primary/20 text-primary')}
+                  >
+                    <a href={action.href}>
+                      <ActionIcon icon={action.icon} />
+                      {action.label}
+                      {action.srLabel && <span className='sr-only'> {action.srLabel}</span>}
+                    </a>
+                  </Button>
+                ))}
+              </MotionPreset>
+            )}
           </div>
 
-          <hr className='border-dashed' />
+          {rating && (
+            <>
+              <hr className='border-dashed' />
 
-          <MotionPreset
-            fade
-            slide
-            delay={1.5}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className='flex items-center gap-3'
-          >
-            {/* Avatar Group */}
-            <AvatarGroup className='**:data-[slot=avatar]:ring-background **:data-[slot=avatar]:ring-2'>
-              {avatars.map((avatar, index) => (
-                <Tooltip key={index}>
-                  <TooltipTrigger>
-                    <Avatar className='size-12 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md'>
-                      <AvatarImage src={avatar.src} alt={avatar.name} />
-                      <AvatarFallback className='text-xs'>{avatar.fallback}</AvatarFallback>
+              <MotionPreset className='flex items-center gap-3'>
+                {/* Reviewer initials */}
+                <AvatarGroup aria-hidden='true' className='**:data-[slot=avatar]:ring-background **:data-[slot=avatar]:ring-2'>
+                  {rating.initials.map((initials, index) => (
+                    <Avatar key={index} className='size-12'>
+                      <AvatarFallback className='bg-secondary text-secondary-foreground text-xs font-semibold'>
+                        {initials}
+                      </AvatarFallback>
                     </Avatar>
-                  </TooltipTrigger>
-                  <TooltipContent>{avatar.name}</TooltipContent>
-                </Tooltip>
-              ))}
+                  ))}
+                  {rating.count > rating.initials.length && (
+                    <Avatar className='size-12'>
+                      <AvatarFallback className='text-xs'>+{rating.count - rating.initials.length}</AvatarFallback>
+                    </Avatar>
+                  )}
+                </AvatarGroup>
 
-              <Tooltip>
-                <TooltipTrigger>
-                  <Avatar className='size-12 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md'>
-                    <AvatarFallback className='text-xs'>+39k</AvatarFallback>
-                  </Avatar>
-                </TooltipTrigger>
-                <TooltipContent>39k more</TooltipContent>
-              </Tooltip>
-            </AvatarGroup>
+                <div className='space-y-1'>
+                  {/* Ratings */}
+                  <div className='flex gap-0.5'>
+                    <Rating readOnly variant='yellow' size={24} value={rating.value} precision={0.5} />
+                  </div>
 
-            <div className='space-y-1'>
-              {/* Ratings */}
-              <div className='flex gap-0.5'>
-                <Rating readOnly variant='yellow' size={24} value={4.5} precision={0.5} />
-              </div>
-
-              <span className='text-sm'>From 4000+ Reviews</span>
-            </div>
-          </MotionPreset>
+                  <a href={rating.href} target='_blank' rel='noopener' className='hover:text-primary text-sm underline-offset-4 hover:underline'>
+                    {rating.value.toFixed(1)} from {rating.count} Google reviews
+                  </a>
+                </div>
+              </MotionPreset>
+            </>
+          )}
         </div>
 
         {/* Right Content */}
-        <MotionPreset
-          fade
-          blur
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-          className='grid grid-cols-2 max-lg:hidden'
-        >
-          <Marquee vertical pauseOnHover duration={20} gap={1.5} className='max-h-240 min-h-182 overflow-hidden'>
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-11.png'
-              alt='Sales Growth'
-              className='dark:invert'
-            />
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-10.png'
-              alt='Statistics'
-              className='dark:invert'
-            />
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-2.png'
-              alt='Total Profit'
-              className='dark:invert'
-            />
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-8.png'
-              alt='Profit'
-              className='dark:invert'
-            />
-          </Marquee>
+        {columns && (
+          <MotionPreset className='relative grid grid-cols-2 max-lg:hidden' >
+            <div data-marquee-root className='contents'>
+              {columns.map((column, columnIndex) => (
+                <Marquee
+                  key={columnIndex}
+                  vertical
+                  pauseOnHover
+                  duration={columnIndex === 0 ? 40 : 44}
+                  gap={1.5}
+                  repeat={2}
+                  reverse={columnIndex === 1}
+                  className='h-[50rem] overflow-hidden'
+                >
+                  {column.map(photo => (
+                    <img
+                      key={photo.src}
+                      src={photo.src}
+                      srcSet={photo.srcset}
+                      sizes='(min-width: 1280px) 290px, 22vw'
+                      width={photo.width}
+                      height={photo.height}
+                      alt={photo.alt}
+                      loading='lazy'
+                      decoding='async'
+                      className='w-full rounded-2xl object-cover shadow-sm'
+                    />
+                  ))}
+                </Marquee>
+              ))}
+              <Button
+                type='button'
+                variant='outline'
+                size='icon-sm'
+                data-marquee-toggle
+                aria-pressed='false'
+                className='bg-background/90 absolute right-3 bottom-4 z-1 rounded-full'
+              >
+                <PauseIcon className='in-data-paused:hidden' aria-hidden='true' />
+                <PlayIcon className='hidden in-data-paused:block' aria-hidden='true' />
+                <span className='sr-only'>Pause the photo animation</span>
+              </Button>
+            </div>
+          </MotionPreset>
+        )}
 
-          <Marquee
-            vertical
-            pauseOnHover
-            duration={22}
-            gap={1.5}
-            reverse
-            className='max-h-240 min-h-182 overflow-hidden'
-          >
+        {image && (
+          <div className='flex items-center lg:pt-16'>
             <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-6.png'
-              alt='Order'
-              className='dark:invert'
+              src={image.src}
+              srcSet={image.srcset}
+              sizes='(min-width: 1280px) 600px, (min-width: 1024px) 46vw, 100vw'
+              width={image.width}
+              height={image.height}
+              alt={image.alt}
+              fetchPriority='high'
+              decoding='async'
+              className='aspect-[4/3] w-full rounded-3xl border object-cover shadow-sm'
             />
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-5.png'
-              alt='Total Revenue'
-              className='dark:invert'
-            />
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-4.png'
-              alt='Impression'
-              className='dark:invert'
-            />
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-3.png'
-              alt='Total Income'
-              className='dark:invert'
-            />
-            <img
-              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-7.png'
-              alt='Total Sales'
-              className='dark:invert'
-            />
-          </Marquee>
-        </MotionPreset>
+          </div>
+        )}
       </div>
     </section>
   )
