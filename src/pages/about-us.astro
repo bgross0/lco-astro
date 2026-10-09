@@ -1,73 +1,64 @@
 ---
-import { render } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/sections/PageHero.astro';
-import ServiceCard from '../components/sections/ServiceCard.astro';
-import SectionHeader from '../components/sections/SectionHeader.astro';
-import CtaSection from '../components/sections/CtaSection.astro';
-import Prose from '../components/common/Prose.astro';
-import { getPage, getServices } from '../lib/content';
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import AboutUs from '../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import Features from '../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import settings from '../data/settings.json';
+import { primaryPhone } from '../lib/phone';
+import { blockImage } from '../lib/images';
+import { serviceTabs, sitePhoto } from '../lib/blocks';
+import { prose, splitSections } from '../lib/prose';
+import { getPage, getReviewSummary, getReviewerInitials } from '../lib/content';
 
 const entry = await getPage('about-us');
 const page = entry.data;
-const { Content } = await render(entry);
-const services = await getServices();
+const home = (await getEntry('homepage', 'home'))!.data;
+const summary = await getReviewSummary();
+
+// The story's intro sits beside the crew photo; its "### " sections are tabs.
+const { intro, sections } = splitSections(entry.rendered?.html ?? '', 3);
+const tabs = sections.map((section) => ({ name: section.title, value: section.id, html: section.html }));
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
-  <PageHero heading={page.hero.heading} text={page.hero.text} image={page.hero.image} imageAlt={page.hero.imageAlt} rating />
+<Layout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+    image={await blockImage(page.hero.image!, page.hero.imageAlt ?? '')}
+  />
 
-  <section class="about-story">
-    <div class="container about-story__inner">
-      {page.heading && <h2 class="about-story__title">{page.heading}</h2>}
-      <Prose>
-        <Content />
-      </Prose>
-    </div>
-  </section>
+  <AboutUs
+    client:visible
+    title={page.heading ?? home.about.title}
+    contentHtml={intro}
+    proseClassName={prose}
+    tabs={tabs}
+    media={await sitePhoto('/images/home/crew.jpg')}
+  />
 
-  <section class="about-services">
-    <div class="container">
-      <SectionHeader eyebrow="Services" title={page.servicesTitle ?? 'Our services'} />
-      <ul class="about-services__grid" role="list">
-        {services.map((service) => <li><ServiceCard service={service} /></li>)}
-      </ul>
-    </div>
-  </section>
+  <Features
+    client:visible
+    id="services"
+    eyebrow="Services"
+    title={page.servicesTitle ?? home.services.title}
+    button={{ label: 'View all services', href: '/services' }}
+    tabs={await serviceTabs()}
+  />
 
-  {page.cta && <CtaSection title={page.cta.title} text={page.cta.text} />}
-</BaseLayout>
-
-<style>
-  .about-story {
-    padding: var(--space-16) 0 var(--space-20);
-  }
-
-  .about-story__inner {
-    max-width: 860px;
-  }
-
-  .about-story__title {
-    color: var(--secondary);
-    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
-    margin-bottom: var(--space-6);
-  }
-
-  .about-services {
-    padding: var(--space-20) 0;
-    background: var(--neutral-light);
-  }
-
-  .about-services__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-    gap: var(--space-6);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .about-services__grid li {
-    margin: 0;
-  }
-</style>
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-09.jpg')}
+    />
+  )}
+</Layout>

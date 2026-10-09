@@ -1,76 +1,26 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/sections/PageHero.astro';
-import Img from '../components/common/Img.astro';
-import CtaSection from '../components/sections/CtaSection.astro';
 import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Gallery from '../components/shadcn-studio/blocks/gallery-component-05/gallery-component-05';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import { primaryPhone } from '../lib/phone';
+import { blockImage } from '../lib/images';
+import { sitePhoto } from '../lib/blocks';
 import { getPage } from '../lib/content';
 
 const page = (await getPage('gallery')).data;
 const home = (await getEntry('homepage', 'home'))!.data;
-const images = page.images ?? [];
+const images = await Promise.all((page.images ?? []).map((photo) => blockImage(photo.image, photo.alt)));
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description} image={images[0]?.image}>
-  <PageHero heading={page.hero.heading} text={page.hero.text} size="compact" buttons={false} />
+<Layout title={page.seo.title} description={page.seo.description} image={images[0]?.src}>
+  <Gallery eyebrow="Lake County Outdoors" title={page.hero.heading} titleAs="h1" text={page.hero.text} galleryImage={images} />
 
-  <section class="gallery">
-    <div class="container">
-      <ul class="gallery__grid" role="list">
-        {images.map((photo) => (
-          <li class="gallery__item">
-            <a href={photo.image} class="gallery__link">
-              <Img src={photo.image} alt={photo.alt} sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" />
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <CtaSection title={home.cta.title} text={home.cta.text} />
-</BaseLayout>
-
-<style>
-  .gallery {
-    padding: var(--space-12) 0 var(--space-20);
-  }
-
-  .gallery__grid {
-    columns: 3 300px;
-    column-gap: var(--space-4);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .gallery__item {
-    break-inside: avoid;
-    margin: 0 0 var(--space-4);
-  }
-
-  .gallery__link {
-    display: block;
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    background: var(--neutral-light);
-  }
-
-  .gallery__link :global(img) {
-    width: 100%;
-    height: auto;
-    transition: transform var(--transition-base);
-  }
-
-  .gallery__link:hover :global(img),
-  .gallery__link:focus-visible :global(img) {
-    transform: scale(1.03);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .gallery__link :global(img) {
-      transition: none;
-    }
-  }
-</style>
+  <CTASection
+    title={home.cta.title}
+    text={home.cta.text}
+    button={{ label: home.offer.buttonText, href: home.offer.link }}
+    phone={primaryPhone}
+    image={await sitePhoto('/images/gallery/photo-01.jpg')}
+  />
+</Layout>

@@ -1,77 +1,24 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/sections/PageHero.astro';
-import ReviewCard from '../components/sections/ReviewCard.astro';
-import Stars from '../components/common/Stars.astro';
-import Button from '../components/common/Button.astro';
-import Icon from '../components/common/Icon.astro';
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Testimonials from '../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
 import settings from '../data/settings.json';
-import { getPage, getReviews, getReviewSummary } from '../lib/content';
+import { getPage, getReviewSummary, getReviewerInitials, getTestimonials } from '../lib/content';
 
 const page = (await getPage('reviews')).data;
-const reviews = await getReviews();
 const summary = await getReviewSummary();
-const allFive = reviews.every((review) => review.data.rating === 5);
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description}>
-  <PageHero eyebrow={page.hero.eyebrow} heading={page.hero.heading} size="compact" buttons={false}>
-    <p class="reviews-hero__summary">
-      <Stars rating={summary.average} size={22} label={`Rated ${summary.average} out of 5`} />
-      <span>{allFive ? `${summary.count} five-star Google reviews` : `${summary.average.toFixed(1)} average from ${summary.count} Google reviews`}</span>
-    </p>
-  </PageHero>
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Leave us a review', href: settings.google.writeReviewUrl, icon: 'arrow' },
+      { label: 'Read them on Google', href: settings.google.reviewsUrl },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+  />
 
-  <section class="reviews-page">
-    <div class="container">
-      <div class="reviews-page__actions">
-        <Button href={settings.google.writeReviewUrl} variant="primary" target="_blank" rel="noopener">
-          <Icon name="google" size={18} /> Leave us a review
-        </Button>
-        <Button href={settings.google.reviewsUrl} variant="outline" target="_blank" rel="noopener">
-          Read them on Google
-        </Button>
-      </div>
-      <ul class="reviews-page__grid" role="list">
-        {reviews.map((review) => <li><ReviewCard review={review} /></li>)}
-      </ul>
-    </div>
-  </section>
-</BaseLayout>
-
-<style>
-  .reviews-hero__summary {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-    margin: var(--space-2) 0 0;
-    font-size: var(--text-lg);
-    color: rgba(255, 255, 255, 0.92);
-  }
-
-  .reviews-page {
-    padding: var(--space-12) 0 var(--space-20);
-    background: var(--neutral-light);
-  }
-
-  .reviews-page__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-bottom: var(--space-10);
-  }
-
-  .reviews-page__grid {
-    columns: 3 320px;
-    column-gap: var(--space-6);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .reviews-page__grid li {
-    break-inside: avoid;
-    margin: 0 0 var(--space-6);
-  }
-</style>
+  <Testimonials layout="grid" testimonials={await getTestimonials()} />
+</Layout>

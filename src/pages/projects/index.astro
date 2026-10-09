@@ -1,104 +1,46 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import Img from '../../components/common/Img.astro';
-import Icon from '../../components/common/Icon.astro';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Gallery from '../../components/shadcn-studio/blocks/gallery-component-05/gallery-component-05';
+import AboutUs from '../../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import { blockImage } from '../../lib/images';
+import { prose } from '../../lib/prose';
 import { getPage, projectUrl } from '../../lib/content';
 
 const page = (await getPage('projects')).data;
 const projects = await getCollection('projects');
 ---
 
-<BaseLayout title={page.seo.title} description={page.seo.description}>
-  <PageHero eyebrow={page.hero.eyebrow} heading={page.hero.heading} text={page.hero.text} size="compact" />
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    pill={page.hero.eyebrow ? { badge: page.hero.eyebrow, text: `${projects.length} ${projects.length === 1 ? 'project' : 'projects'}` } : undefined}
+    heading={page.hero.heading}
+    text={page.hero.text}
+  />
 
-  <section class="projects-index">
-    <div class="container">
-      <ul class="projects-index__grid" role="list">
-        {projects.map((project) => (
-          <li>
-            <a class="project-tile" href={projectUrl(project)}>
-              <div class="project-tile__media">
-                <Img src={project.data.image} alt={project.data.imageAlt} sizes="(min-width: 768px) 50vw, 100vw" />
-              </div>
-              <div class="project-tile__body">
-                <h2 class="project-tile__title">{project.data.title}</h2>
-                {project.data.location && <p class="project-tile__location"><Icon name="map-pin" size={16} /> {project.data.location}</p>}
-                <p class="project-tile__text">{project.data.summary}</p>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-</BaseLayout>
+  {projects.map(async (project) => (
+    <AboutUs
+      title={project.data.title}
+      text={project.data.location}
+      contentHtml={project.rendered?.html ?? project.data.summary}
+      proseClassName={prose}
+      button={{ label: 'View project', href: projectUrl(project) }}
+      media={await blockImage(project.data.image, project.data.imageAlt)}
+    />
+  ))}
 
-<style>
-  .projects-index {
-    padding: var(--space-12) 0 var(--space-20);
-  }
-
-  .projects-index__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
-    gap: var(--space-8);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .projects-index__grid li {
-    margin: 0;
-  }
-
-  .project-tile {
-    display: block;
-    overflow: hidden;
-    border-radius: var(--radius-xl);
-    background: var(--white);
-    border: 1px solid rgba(46, 90, 135, 0.12);
-    box-shadow: var(--shadow-md);
-    color: var(--neutral-dark);
-  }
-
-  .project-tile:hover {
-    box-shadow: var(--shadow-xl);
-    text-decoration: none;
-    color: var(--neutral-dark);
-  }
-
-  .project-tile__media {
-    aspect-ratio: 3 / 2;
-    overflow: hidden;
-  }
-
-  .project-tile__media :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .project-tile__body {
-    padding: var(--space-6);
-  }
-
-  .project-tile__title {
-    font-size: var(--text-xl);
-    color: var(--secondary);
-    margin-bottom: var(--space-2);
-  }
-
-  .project-tile__location {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    font-size: var(--text-sm);
-    margin-bottom: var(--space-2);
-  }
-
-  .project-tile__text {
-    margin: 0;
-  }
-</style>
+  {projects.length > 0 && (
+    <Gallery
+      galleryImage={await Promise.all(
+        projects.flatMap((project) =>
+          [{ image: project.data.image, alt: project.data.imageAlt }, ...(project.data.gallery ?? [])].map(async (photo) => ({
+            ...(await blockImage(photo.image, photo.alt)),
+            href: projectUrl(project),
+            caption: project.data.title,
+          })),
+        ),
+      )}
+    />
+  )}
+</Layout>
