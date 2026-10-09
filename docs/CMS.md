@@ -34,7 +34,9 @@ merges it into `main`.
   and the structured data read them from there. The first phone number is the
   one every "Call us" button dials.
 - **Cities**: the list on the Service Areas page (Pages > Service Areas Page)
-  is every city served. A city gets its own page only when it has an entry
+  is every city served. Each city has a latitude and longitude that place it
+  on the service-area map; without them the city is listed but not mapped
+  (find them on openstreetmap.org: right-click the city, Show address). A city gets its own page only when it has an entry
   under Service Area Pages with copy written for it. When you publish one for
   a city that is in `public/_redirects` (most are, because the old site had
   no page for them), delete that city's two lines there in the same change;

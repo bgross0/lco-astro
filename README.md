@@ -3,7 +3,8 @@
 Marketing site for Lake County Outdoors, LLC (Edina, MN), served at
 https://lakecountyoutdoor.com.
 
-- **Astro 7**, static output, no client framework
+- **Astro 7**, static output; pages are assembled from **shadcn/studio** blocks
+  (React, rendered to HTML at build time) styled with **Tailwind CSS v4**
 - **Decap CMS** at `/admin` for content editing (see [docs/CMS.md](docs/CMS.md))
 - **Cloudflare Workers** (static assets) for hosting; `/api/*` handles the quote form and CMS login
 
@@ -37,11 +38,14 @@ src/
   content.config.ts   Collection schemas (keep in sync with public/admin/config.yml)
   data/settings.json  Business details: phones, address, hours, social links
   data/navigation.json  Main menu and footer company links
-  components/         Astro components, styled with scoped CSS
-  layouts/            BaseLayout: meta tags, LocalBusiness JSON-LD
-  lib/                Helpers: phones, address/hours, collection queries, responsive images
+  components/
+    shadcn-studio/    The shadcn/studio blocks the pages are built from, adapted to take real content
+    ui/               shadcn/ui components the blocks use
+    site/             ServiceAreaMap (MapLibre), the one section with no block
+  layouts/            Layout.astro: meta tags, LocalBusiness JSON-LD, navbar and footer
+  lib/                Helpers: phones, address/hours, collection queries, images, block data
   pages/              Routes
-  styles/             Global reset, typography, and design tokens
+  styles/shadcn.css   Tailwind and the theme (brand colors and fonts as shadcn CSS variables)
 public/
   _headers            Response headers for static assets
   _redirects          301s for retired URLs (checked at build time)
@@ -52,9 +56,36 @@ worker/index.js       Worker entry; routes /api/* to the handlers
 wrangler.jsonc        Worker config (production + staging)
 ```
 
-Styling is plain CSS. Design tokens (colors, spacing, type scale) live in
-`src/styles/variables.css`; components use BEM class names in scoped
-`<style>` blocks.
+## Design system
+
+Every section is a shadcn/studio PRO block (`src/components/shadcn-studio/blocks`,
+installed with `npx shadcn add @ss-blocks/<name>`; the registry license is
+read from an untracked `.env` with `EMAIL` and `LICENSE_KEY`). The blocks keep
+their structure and take the site's content as props. Styling is Tailwind
+utilities only; the brand lives in the CSS variables in `src/styles/shadcn.css`
+(`--primary` is the LCO blue darkened to `#2a64a6` so white text on it passes
+WCAG AA; headings use Montserrat, body text Geist, both self-hosted).
+
+Blocks render to static HTML. Only these hydrate as React islands:
+
+| Island | Directive | Why |
+| --- | --- | --- |
+| Navbar 02 | `client:load` | services mega menu and the mobile menu |
+| Features 15 | `client:visible` | service category tabs |
+| About us 03 (with tabs) | `client:visible` | tabs |
+
+Everything else needs no JavaScript or a few lines of page script: the
+FAQ is native `<details>`, the testimonial and hero marquees are CSS (with a
+pause button), and the contact form posts with a small fetch script. The
+blocks' `motion` entrance animations are replaced by a static
+`MotionPreset`, so content is never hidden waiting for JavaScript.
+
+The service-area map (`src/components/site/ServiceAreaMap.astro`) uses
+MapLibre GL JS from npm with OpenFreeMap tiles
+(`https://tiles.openfreemap.org/styles/liberty`). The library, its worker and
+its CSS load only when the map nears the viewport. City coordinates are part
+of the content (Pages > Service Areas Page); they were geocoded once with
+OpenStreetMap Nominatim and are not looked up at build time.
 
 ## Deployment (Cloudflare Workers)
 
