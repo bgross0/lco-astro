@@ -156,10 +156,10 @@ function responder(request) {
 
   return (outcome) => {
     if (wantsJson) {
-      const body = outcome === 'ok' ? { ok: true, redirect: '/thank-you/' } : { ok: false, error: outcome };
+      const body = outcome === 'ok' ? { ok: true, redirect: '/thank-you' } : { ok: false, error: outcome };
       return Response.json(body, { status: statusFor[outcome], headers: { 'Cache-Control': 'no-store' } });
     }
-    const location = outcome === 'ok' ? '/thank-you/' : `/contact/?error=${outcome}#quote-form`;
+    const location = outcome === 'ok' ? '/thank-you' : `/contact-us?error=${outcome}#quote-form`;
     return new Response(null, {
       status: 303,
       headers: { Location: `${origin}${location}`, 'Cache-Control': 'no-store' },
