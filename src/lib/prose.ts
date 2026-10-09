@@ -13,15 +13,17 @@ export const prose = [
 ].join(' ');
 
 /**
- * Splits rendered Markdown at its level-2 headings: the copy before the first
- * <h2> and one section per heading (heading text plus the HTML under it).
+ * Splits rendered Markdown at its headings of one level (h2 by default): the
+ * copy before the first one and a section per heading (its text, id and the
+ * HTML under it).
  */
-export function splitSections(html: string) {
-  const [intro, ...rest] = html.split(/(?=<h2[\s>])/);
+export function splitSections(html: string, level: 2 | 3 = 2) {
+  const tag = `h${level}`;
+  const [intro, ...rest] = html.split(new RegExp(`(?=<${tag}[\\s>])`));
   const sections = rest.map((part) => {
-    const match = part.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/);
+    const match = part.match(new RegExp(`^<${tag}[^>]*>([\\s\\S]*?)</${tag}>`));
     const title = (match?.[1] ?? '').replace(/<[^>]+>/g, '').trim();
-    const id = part.match(/^<h2[^>]*\sid="([^"]+)"/)?.[1] ?? title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const id = part.match(new RegExp(`^<${tag}[^>]*\\sid="([^"]+)"`))?.[1] ?? title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     return { id, title, html: match ? part.slice(match[0].length).trim() : part };
   });
   return { intro: intro.trim(), sections };

@@ -39,6 +39,8 @@ const ActionIcon = ({ icon }: { icon?: HeroAction['icon'] }) =>
 
 const HeroSection = ({ breadcrumbs, pill, heading, text, actions = [], rating, columns, image }: HeroProps) => {
   const isHome = Boolean(columns)
+  // Pages without a photo center the copy in a single column.
+  const centered = !columns && !image
 
   return (
     <section
@@ -49,15 +51,22 @@ const HeroSection = ({ breadcrumbs, pill, heading, text, actions = [], rating, c
     >
       <div
         className={cn(
-          'mx-auto grid w-full max-w-7xl flex-1 gap-x-19 gap-y-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8',
+          'mx-auto grid w-full max-w-7xl flex-1 gap-x-19 gap-y-10 px-4 sm:px-6 lg:px-8',
+          !centered && 'lg:grid-cols-2',
           !isHome && 'pb-12 lg:pb-16'
         )}
       >
         {/* Left Content */}
-        <div className={cn('flex max-w-2xl flex-col justify-center gap-10', isHome ? 'pt-16 pb-12 lg:pt-20' : 'pt-10 lg:pt-16')}>
-          <div className='flex flex-col items-start gap-8'>
+        <div
+          className={cn(
+            'flex max-w-2xl flex-col justify-center gap-10',
+            isHome ? 'pt-16 pb-12 lg:pt-20' : 'pt-10 lg:pt-16',
+            centered && 'mx-auto max-w-3xl text-center'
+          )}
+        >
+          <div className={cn('flex flex-col gap-8', centered ? 'items-center' : 'items-start')}>
             {breadcrumbs && breadcrumbs.length > 0 && (
-              <nav aria-label='Breadcrumb' className='-mb-2'>
+              <nav aria-label='Breadcrumb' className='-mb-2 max-w-full'>
                 <ol className='text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm'>
                   {breadcrumbs.map((crumb, index) => {
                     const last = index === breadcrumbs.length - 1
@@ -83,7 +92,7 @@ const HeroSection = ({ breadcrumbs, pill, heading, text, actions = [], rating, c
             )}
 
             {pill && (
-              <MotionPreset className='bg-muted flex max-w-full items-center gap-2.5 rounded-full border px-2 py-1 text-sm'>
+              <MotionPreset className='bg-muted flex max-w-full flex-wrap items-center gap-x-2.5 gap-y-1 rounded-3xl border px-2 py-1 text-sm'>
                 <Badge className='shrink-0'>{pill.badge}</Badge>
                 {pill.href ? (
                   <a href={pill.href} className='text-muted-foreground hover:text-primary flex items-center gap-1 pr-1 transition-colors'>
@@ -110,7 +119,7 @@ const HeroSection = ({ breadcrumbs, pill, heading, text, actions = [], rating, c
             )}
 
             {actions.length > 0 && (
-              <MotionPreset className='flex flex-wrap items-center gap-4'>
+              <MotionPreset className={cn('flex flex-wrap items-center gap-4', centered && 'justify-center')}>
                 {actions.map((action, index) => (
                   <Button
                     key={action.href}
@@ -133,7 +142,7 @@ const HeroSection = ({ breadcrumbs, pill, heading, text, actions = [], rating, c
             <>
               <hr className='border-dashed' />
 
-              <MotionPreset className='flex items-center gap-3'>
+              <MotionPreset className={cn('flex items-center gap-3', centered && 'justify-center text-left')}>
                 {/* Reviewer initials */}
                 <AvatarGroup aria-hidden='true' className='**:data-[slot=avatar]:ring-background **:data-[slot=avatar]:ring-2'>
                   {rating.initials.map((initials, index) => (

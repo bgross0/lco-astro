@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react'
+
 import { ArrowRightIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { MotionPreset } from '@/components/ui/motion-preset'
+
+import { cn } from '@/lib/utils'
 
 export type FeatureCard = {
   title: string
@@ -32,6 +36,19 @@ type FeaturesProps = {
 }
 
 const Features = ({ id, eyebrow, title, text, button, tabs, proseClassName }: FeaturesProps) => {
+  const [active, setActive] = useState(tabs[0]?.value)
+
+  // /services#tree-services opens that category's tab.
+  useEffect(() => {
+    const open = () => {
+      const hash = decodeURIComponent(window.location.hash.slice(1))
+      if (tabs.some(tab => tab.value === hash)) setActive(hash)
+    }
+    open()
+    window.addEventListener('hashchange', open)
+    return () => window.removeEventListener('hashchange', open)
+  }, [tabs])
+
   return (
     <section id={id} className='scroll-mt-24 py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
@@ -53,9 +70,15 @@ const Features = ({ id, eyebrow, title, text, button, tabs, proseClassName }: Fe
           )}
         </div>
 
-        <div className='w-full'>
-          <Tabs defaultValue={tabs[0]?.value} className='w-full gap-8'>
-            <MotionPreset className='w-full overflow-x-auto overflow-y-clip'>
+        <div className='relative w-full'>
+          {/* Anchors for /services#<category> links */}
+          {tabs
+            .filter(tab => tab.cards)
+            .map(tab => (
+              <span key={tab.value} id={tab.value} className='absolute -top-28 left-0' aria-hidden='true' />
+            ))}
+          <Tabs value={active} onValueChange={setActive} className='w-full gap-8'>
+            <MotionPreset className={cn('w-full overflow-x-auto overflow-y-clip', tabs.length < 2 && 'hidden')}>
               <TabsList variant='line' className='w-full justify-start gap-0 border-b-2 p-0'>
                 {tabs.map(tab => (
                   <TabsTrigger
@@ -73,7 +96,7 @@ const Features = ({ id, eyebrow, title, text, button, tabs, proseClassName }: Fe
             </MotionPreset>
             <MotionPreset>
               {tabs.map(tab => (
-                <TabsContent key={tab.value} value={tab.value} forceMount className='data-[state=inactive]:hidden'>
+                <TabsContent key={tab.value} value={tab.value} forceMount className='scroll-mt-28 data-[state=inactive]:hidden'>
                   <div className='rounded-3xl border p-4 sm:p-6 lg:p-8'>
                     {tab.cards && (
                       <ul className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>

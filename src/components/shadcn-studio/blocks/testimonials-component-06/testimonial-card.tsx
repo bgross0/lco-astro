@@ -30,7 +30,8 @@ const TestimonialCard = ({ testimonial, clamp = true }: { testimonial: Testimoni
                 .replace(/\./g, '')
                 .split(' ', 2)
                 .map(n => n[0])
-                .join('')}
+                .join('')
+                .toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div>

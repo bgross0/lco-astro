@@ -12,7 +12,8 @@ import { areaAnchor, getAreas } from '../../lib/content';
 
 interface Props {
   eyebrow?: string;
-  title: string;
+  /** Leave out when the page heading right above already introduces the map. */
+  title?: string;
   text?: string;
   /** 'linked' lists the cities with pages (home); 'all' lists every city (the /service-areas hub). */
   list?: 'linked' | 'all';
@@ -31,11 +32,13 @@ const listed = list === 'all' ? areas : areas.filter((area) => area.href);
 
 <section id={id} class:list={['scroll-mt-24 py-8 sm:py-16 lg:py-24', { 'bg-muted': muted }]}>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mb-12 space-y-4 text-center sm:mb-16">
-      <p class="text-primary text-sm font-medium uppercase">{eyebrow}</p>
-      <h2 class="mx-auto max-w-2xl text-2xl font-semibold md:text-3xl lg:text-4xl">{title}</h2>
-      {text && <p class="text-muted-foreground mx-auto max-w-2xl text-lg">{text}</p>}
-    </div>
+    {title && (
+      <div class="mb-12 space-y-4 text-center sm:mb-16">
+        <p class="text-primary text-sm font-medium uppercase">{eyebrow}</p>
+        <h2 class="mx-auto max-w-2xl text-2xl font-semibold md:text-3xl lg:text-4xl">{title}</h2>
+        {text && <p class="text-muted-foreground mx-auto max-w-2xl text-lg">{text}</p>}
+      </div>
+    )}
 
     <div class="grid gap-8 lg:grid-cols-3">
       <div class="lg:col-span-2">

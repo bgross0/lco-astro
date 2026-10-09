@@ -17,7 +17,7 @@ export type TestimonialItem = {
 
 type TestimonialsComponentProps = {
   eyebrow?: string
-  title: string
+  title?: string
   text?: string
   testimonials: TestimonialItem[]
   /** 'marquee' scrolls two rows (sections); 'grid' lists every review in full (the reviews page). */
@@ -44,8 +44,12 @@ const TestimonialsComponent = ({
     >
       {/* Section Header */}
       <div className='mx-auto max-w-7xl space-y-4 px-4 text-center sm:px-6 lg:px-8'>
-        <p className='text-primary text-sm font-medium uppercase'>{eyebrow}</p>
-        <h2 className='mx-auto max-w-2xl text-2xl font-semibold sm:text-3xl lg:text-4xl'>{title}</h2>
+        {title && (
+          <>
+            <p className='text-primary text-sm font-medium uppercase'>{eyebrow}</p>
+            <h2 className='mx-auto max-w-2xl text-2xl font-semibold sm:text-3xl lg:text-4xl'>{title}</h2>
+          </>
+        )}
         {text && <p className='text-muted-foreground mx-auto max-w-2xl text-lg'>{text}</p>}
         {(links.allReviews || links.writeReview || links.google) && (
           <div className='flex flex-wrap items-center justify-center gap-3 pt-2'>

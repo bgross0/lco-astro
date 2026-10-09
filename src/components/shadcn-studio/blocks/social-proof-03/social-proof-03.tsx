@@ -1,3 +1,6 @@
+import { ArrowRightIcon, MountainIcon, SproutIcon, WavesIcon } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
 import { BorderBeam } from '@/components/ui/border-beam'
@@ -10,15 +13,20 @@ export type Stat = {
   value: string
   /** A sentence under the label: turns the stats into numbered process steps. */
   text?: string
+  /** Show an icon instead of the value. */
+  icon?: keyof typeof icons
 }
+
+const icons = { waves: WavesIcon, sprout: SproutIcon, mountain: MountainIcon }
 
 type SocialProofProps = {
   title: string
   text?: string
   stats: Stat[]
+  button?: { label: string; href: string }
 }
 
-const SocialProof = ({ title, text, stats }: SocialProofProps) => {
+const SocialProof = ({ title, text, stats, button }: SocialProofProps) => {
   const columns = stats.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4'
 
   return (
@@ -37,15 +45,24 @@ const SocialProof = ({ title, text, stats }: SocialProofProps) => {
             <CardContent className='px-4 sm:px-6 lg:px-8'>
               {stats.some(stat => stat.text) ? (
                 <ol className={cn('grid gap-10 sm:grid-cols-2', columns)}>
-                  {stats.map((stat, index) => (
+                  {stats.map((stat, index) => {
+                    const Icon = stat.icon ? icons[stat.icon] : null
+                    return (
                     <MotionPreset key={index} component='li' className='flex flex-col gap-3'>
-                      <span className='text-primary font-heading text-2xl font-semibold md:text-3xl lg:text-4xl' aria-hidden='true'>
-                        {stat.value}
-                      </span>
+                      {Icon ? (
+                        <span className='bg-primary/10 text-primary flex size-12 items-center justify-center rounded-xl' aria-hidden='true'>
+                          <Icon className='size-6' />
+                        </span>
+                      ) : (
+                        <span className='text-primary font-heading text-2xl font-semibold md:text-3xl lg:text-4xl' aria-hidden='true'>
+                          {stat.value}
+                        </span>
+                      )}
                       <h3 className='text-lg font-semibold'>{stat.label}</h3>
                       <p className='text-muted-foreground'>{stat.text}</p>
                     </MotionPreset>
-                  ))}
+                    )
+                  })}
                 </ol>
               ) : (
                 <dl className={cn('grid grid-cols-2 gap-x-4 gap-y-8', columns)}>
@@ -74,6 +91,17 @@ const SocialProof = ({ title, text, stats }: SocialProofProps) => {
             />
           </Card>
         </MotionPreset>
+
+        {button && (
+          <div className='mt-10 flex justify-center'>
+            <Button size='lg' className='rounded-lg text-base has-[>svg]:px-6' asChild>
+              <a href={button.href}>
+                {button.label}
+                <ArrowRightIcon />
+              </a>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   )

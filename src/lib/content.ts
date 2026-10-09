@@ -75,6 +75,7 @@ export async function getReviewerInitials(limit = 4) {
       .replace(/\./g, '')
       .split(/\s+/, 2)
       .map((part) => part[0])
-      .join(''),
+      .join('')
+      .toUpperCase(),
   );
 }
