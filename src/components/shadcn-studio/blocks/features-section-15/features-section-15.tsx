@@ -99,28 +99,29 @@ const Features = ({ id, eyebrow, title, text, button, tabs, proseClassName }: Fe
                 <TabsContent key={tab.value} value={tab.value} forceMount className='scroll-mt-28 data-[state=inactive]:hidden'>
                   <div className='rounded-3xl border p-4 sm:p-6 lg:p-8'>
                     {tab.cards && (
-                      <ul className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+                      <ul className='grid gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3'>
                         {tab.cards.map(card => (
                           <li key={card.href}>
                             <a
                               href={card.href}
-                              className='group/card bg-card hover:border-primary/40 focus-visible:ring-ring/50 flex h-full flex-col overflow-hidden rounded-2xl border transition-colors focus-visible:ring-[3px] focus-visible:outline-none'
+                              className='group/card bg-card hover:border-primary/40 focus-visible:ring-ring/50 flex h-full overflow-hidden rounded-2xl border transition-colors focus-visible:ring-[3px] focus-visible:outline-none sm:flex-col'
                             >
                               <img
                                 src={card.image.src}
                                 srcSet={card.image.srcset}
-                                sizes='(min-width: 1024px) 380px, (min-width: 640px) 45vw, 100vw'
+                                sizes='(min-width: 1024px) 380px, (min-width: 640px) 45vw, 112px'
                                 width={card.image.width}
                                 height={card.image.height}
                                 alt=''
                                 loading='lazy'
                                 decoding='async'
-                                className='aspect-[16/10] w-full object-cover transition-transform duration-300 group-hover/card:scale-[1.02]'
+                                className='aspect-square w-28 shrink-0 object-cover transition-transform duration-300 group-hover/card:scale-[1.02] sm:aspect-[16/10] sm:w-full'
                               />
-                              <div className='flex flex-1 flex-col gap-2 p-5'>
-                                <h3 className='text-lg font-semibold'>{card.title}</h3>
-                                <p className='text-muted-foreground flex-1'>{card.summary}</p>
-                                <span className='text-primary inline-flex items-center gap-1.5 text-sm font-medium'>
+                              <div className='flex min-w-0 flex-1 flex-col justify-center gap-1 p-4 sm:justify-start sm:gap-2 sm:p-5'>
+                                <h3 className='font-semibold sm:text-lg'>{card.title}</h3>
+                                {/* Phones get compact rows: a thumbnail beside a two-line summary. */}
+                                <p className='text-muted-foreground line-clamp-2 text-sm sm:line-clamp-none sm:flex-1 sm:text-base'>{card.summary}</p>
+                                <span className='text-primary hidden items-center gap-1.5 text-sm font-medium sm:inline-flex'>
                                   Learn more
                                   <ArrowRightIcon className='size-4 transition-transform group-hover/card:translate-x-0.5' aria-hidden='true' />
                                 </span>
