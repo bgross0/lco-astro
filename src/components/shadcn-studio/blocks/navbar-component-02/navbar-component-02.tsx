@@ -47,7 +47,7 @@ type NavbarProps = {
 }
 
 const triggerClass =
-  'text-muted-foreground hover:text-primary data-[active=true]:text-primary bg-transparent px-3 py-1.5 text-base font-medium hover:bg-transparent focus:bg-accent data-[state=open]:bg-transparent data-[state=open]:text-primary [&>svg]:size-4'
+  'text-muted-foreground hover:text-primary data-[active=true]:text-primary bg-transparent px-2.5 py-1.5 text-base font-medium hover:bg-transparent focus:bg-accent data-[state=open]:bg-transparent data-[state=open]:text-primary [&>svg]:size-4'
 
 const Navbar = ({ navigationData, currentPath, phone }: NavbarProps) => {
   const isCurrent = (href: string) => currentPath === href
@@ -59,13 +59,13 @@ const Navbar = ({ navigationData, currentPath, phone }: NavbarProps) => {
 
   return (
     <header className='bg-background/95 supports-backdrop-filter:bg-background/85 sticky top-0 z-50 border-b backdrop-blur'>
-      <div className='mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 py-3 sm:px-6 lg:py-4'>
+      <div className='mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6 xl:py-4'>
         <a href='/' className='rounded-md focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none'>
           <Logo className='gap-3' />
         </a>
 
-        <div className='flex items-center gap-6'>
-          <NavigationMenu viewport={false} className='max-lg:hidden' aria-label='Main'>
+        <div className='flex items-center gap-5'>
+          <NavigationMenu viewport={false} className='max-xl:hidden' aria-label='Main'>
             <NavigationMenuList className='gap-0'>
               {navigationData.map(item => {
                 if (item.groups) {
@@ -75,7 +75,7 @@ const Navbar = ({ navigationData, currentPath, phone }: NavbarProps) => {
                         {item.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent className='absolute w-auto'>
-                        <div className='grid w-[min(52rem,calc(100vw-4rem))] grid-cols-2 gap-x-6 gap-y-4 p-3 xl:grid-cols-4'>
+                        <div className='grid w-[52rem] grid-cols-4 gap-x-6 gap-y-4 p-3'>
                           {item.groups.map(group => (
                             <div key={group.title} className='space-y-1'>
                               <p className='text-muted-foreground px-2 pb-1 text-xs font-semibold tracking-wide uppercase'>
@@ -152,8 +152,8 @@ const Navbar = ({ navigationData, currentPath, phone }: NavbarProps) => {
               })}
             </NavigationMenuList>
           </NavigationMenu>
-          <Separator orientation='vertical' className='h-6! max-lg:hidden' />
-          <Button className='rounded-lg text-base max-lg:hidden' size='lg' asChild>
+          <Separator orientation='vertical' className='h-6! max-xl:hidden' />
+          <Button className='rounded-lg text-base max-xl:hidden' size='lg' asChild>
             <a href={phone.href}>
               <PhoneIcon />
               {phone.display}
@@ -161,7 +161,7 @@ const Navbar = ({ navigationData, currentPath, phone }: NavbarProps) => {
             </a>
           </Button>
 
-          <div className='flex items-center gap-2 lg:hidden'>
+          <div className='flex items-center gap-2 xl:hidden'>
             <Button size='icon' className='size-10' asChild>
               <a href={phone.href}>
                 <PhoneIcon />
