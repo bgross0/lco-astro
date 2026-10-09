@@ -1,0 +1,171 @@
+---
+// Service-area map: MapLibre GL JS (bundled, loaded only when the map scrolls
+// near the viewport) on OpenFreeMap's Liberty style. Cities with their own
+// page are linked markers; the rest are plain markers; the office is marked
+// with the logo. The list beside the map is the accessible way in: markers
+// are left out of the tab order so keyboard users are not walked through 30
+// map pins.
+import { ArrowRightIcon, MapPinIcon } from 'lucide-react';
+import settings from '../../data/settings.json';
+import { addressText } from '../../lib/site';
+import { areaAnchor, getAreas } from '../../lib/content';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  /** 'linked' lists the cities with pages (home); 'all' lists every city (the /service-areas hub). */
+  list?: 'linked' | 'all';
+  id?: string;
+  muted?: boolean;
+}
+
+const { eyebrow = 'Service area', title, text, list = 'linked', id = 'service-area-map', muted = false } = Astro.props;
+const areas = await getAreas();
+const markers = areas
+  .filter((area) => area.position)
+  .map((area) => ({ name: area.label, href: area.href ?? null, lat: area.position!.latitude, lng: area.position!.longitude }));
+const office = { name: settings.site_title, address: addressText, lat: settings.geo.latitude, lng: settings.geo.longitude };
+const listed = list === 'all' ? areas : areas.filter((area) => area.href);
+---
+
+<section id={id} class:list={['scroll-mt-24 py-8 sm:py-16 lg:py-24', { 'bg-muted': muted }]}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 space-y-4 text-center sm:mb-16">
+      <p class="text-primary text-sm font-medium uppercase">{eyebrow}</p>
+      <h2 class="mx-auto max-w-2xl text-2xl font-semibold md:text-3xl lg:text-4xl">{title}</h2>
+      {text && <p class="text-muted-foreground mx-auto max-w-2xl text-lg">{text}</p>}
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <div
+          class="bg-muted relative h-[24rem] overflow-hidden rounded-3xl border sm:h-[28rem] lg:h-[34rem]"
+          role="region"
+          aria-label="Map of the cities Lake County Outdoors serves"
+          data-service-map
+          data-markers={JSON.stringify(markers)}
+          data-office={JSON.stringify(office)}
+        >
+          <p class="text-muted-foreground absolute inset-0 grid place-items-center p-6 text-center text-sm" data-map-status>
+            Map of the Twin Cities service area
+          </p>
+        </div>
+        <ul class="text-muted-foreground mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm" aria-label="Map legend">
+          <li class="flex items-center gap-2"><span class="bg-primary size-3 rounded-full ring-2 ring-white" aria-hidden="true"></span> City with its own page</li>
+          <li class="flex items-center gap-2"><span class="bg-chart-5/60 size-2.5 rounded-full ring-2 ring-white" aria-hidden="true"></span> Also served</li>
+          <li class="flex items-center gap-2"><img src="/images/brand/lco-logo-128w.webp" alt="" width="20" height="20" class="size-5" /> Our office, {settings.address.city}</li>
+        </ul>
+      </div>
+
+      <div class="bg-card rounded-3xl border p-6">
+        <h3 class="text-lg font-semibold">{list === 'all' ? 'Every city we serve' : 'Service area pages'}</h3>
+        <ul class:list={['mt-4 grid gap-1', list === 'all' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-1']}>
+          {listed.map((area) => (
+            <li id={list === 'all' ? areaAnchor(area.city) : undefined} class="scroll-mt-28">
+              {area.href ? (
+                <a href={area.href} class="hover:bg-accent hover:text-accent-foreground flex items-center gap-2 rounded-md px-2 py-1.5 font-medium transition-colors">
+                  <MapPinIcon className="text-primary size-4 shrink-0" aria-hidden="true" />
+                  {area.label}
+                </a>
+              ) : (
+                <span class="text-muted-foreground flex items-center gap-2 px-2 py-1.5">
+                  <MapPinIcon className="size-4 shrink-0 opacity-60" aria-hidden="true" />
+                  {area.label}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+        {list === 'linked' && (
+          <a href="/service-areas" class="text-primary mt-4 inline-flex items-center gap-1.5 px-2 font-medium hover:underline">
+            All {areas.length} cities we serve
+            <ArrowRightIcon className="size-4" aria-hidden="true" />
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  type MarkerData = { name: string; href: string | null; lat: number; lng: number };
+  type OfficeData = { name: string; address: string; lat: number; lng: number };
+
+  const STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
+
+  async function mountMap(container: HTMLElement) {
+    const status = container.querySelector<HTMLElement>('[data-map-status]');
+    const markers: MarkerData[] = JSON.parse(container.dataset.markers ?? '[]');
+    const office: OfficeData = JSON.parse(container.dataset.office ?? '{}');
+
+    try {
+      const [maplibre, worker] = await Promise.all([
+        import('maplibre-gl'),
+        import('maplibre-gl/dist/maplibre-gl-worker.mjs?url'),
+        import('maplibre-gl/dist/maplibre-gl.css'),
+      ]);
+      maplibre.setWorkerUrl(worker.default);
+
+      const bounds = new maplibre.LngLatBounds();
+      [...markers, office].forEach((point) => bounds.extend([point.lng, point.lat]));
+
+      const map = new maplibre.Map({
+        container,
+        style: STYLE_URL,
+        bounds,
+        fitBoundsOptions: { padding: 48, maxZoom: 11 },
+        // Page scroll and one-finger swipes keep scrolling the page; zoom with
+        // ctrl/cmd + scroll, pan with two fingers.
+        cooperativeGestures: true,
+        dragRotate: false,
+        pitchWithRotate: false,
+        touchPitch: false,
+        attributionControl: { compact: false },
+      });
+      map.touchZoomRotate.disableRotation();
+      map.addControl(new maplibre.NavigationControl({ showCompass: false }), 'top-right');
+
+      for (const point of markers) {
+        const element = document.createElement(point.href ? 'a' : 'span');
+        element.title = point.name;
+        element.setAttribute('aria-hidden', 'true');
+        if (point.href) {
+          (element as HTMLAnchorElement).href = point.href;
+          element.tabIndex = -1;
+          element.className = 'block size-4 rounded-full bg-primary shadow-md ring-2 ring-white transition-transform hover:scale-125';
+        } else {
+          element.className = 'block size-3 rounded-full bg-chart-5/60 ring-2 ring-white';
+        }
+        new maplibre.Marker({ element }).setLngLat([point.lng, point.lat]).addTo(map);
+      }
+
+      const officeElement = document.createElement('span');
+      officeElement.title = `${office.name}, ${office.address}`;
+      officeElement.setAttribute('aria-hidden', 'true');
+      officeElement.className = 'block size-10 rounded-full bg-white p-0.5 shadow-lg ring-2 ring-primary';
+      officeElement.innerHTML = '<img src="/images/brand/lco-logo-128w.webp" alt="" width="36" height="36" class="size-full" />';
+      new maplibre.Marker({ element: officeElement }).setLngLat([office.lng, office.lat]).addTo(map);
+
+      map.once('load', () => status?.remove());
+    } catch (error) {
+      console.warn('Service-area map unavailable', error);
+      if (status) status.textContent = 'The map could not be loaded. Every city we serve is listed beside it.';
+    }
+  }
+
+  const containers = document.querySelectorAll<HTMLElement>('[data-service-map]');
+  if (containers.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          observer.unobserve(entry.target);
+          mountMap(entry.target as HTMLElement);
+        }
+      },
+      { rootMargin: '300px 0px' },
+    );
+    containers.forEach((container) => observer.observe(container));
+  }
+</script>
