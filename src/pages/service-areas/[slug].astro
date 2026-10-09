@@ -95,7 +95,8 @@ const jsonLd = [
   .area-contact {
     position: relative;
     z-index: 1;
-    margin-top: calc(var(--space-12) * -1);
+    margin-top: calc(var(--space-10) * -1);
+    padding: 0;
   }
 
   .area-contact__grid {
@@ -139,6 +140,26 @@ const jsonLd = [
   .area-contact__value {
     font-size: var(--text-sm);
     overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 639px) {
+    .area-contact__card {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      text-align: left;
+    }
+
+    .area-contact__label {
+      margin-top: 0;
+    }
+
+    .area-contact__value {
+      flex-basis: 100%;
+      padding-left: calc(24px + var(--space-3));
+    }
   }
 
   .area-body {

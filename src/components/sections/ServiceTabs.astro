@@ -169,13 +169,21 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(
       padding: var(--space-16) 0;
     }
 
-    .service-tabs__list {
+    .service-tabs__list:not([hidden]) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       width: 100%;
     }
 
     .service-tabs__tab {
-      flex: 1 1 auto;
       justify-content: center;
+      padding: var(--space-2);
+      font-size: var(--text-sm);
+      text-align: center;
+    }
+
+    .service-tabs__count {
+      display: none;
     }
   }
 </style>

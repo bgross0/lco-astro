@@ -87,6 +87,34 @@ const Heading = headingLevel;
     color: var(--primary-dark);
   }
 
+  @media (max-width: 639px) {
+    .service-card {
+      flex-direction: row;
+    }
+
+    .service-card__media {
+      flex: 0 0 112px;
+      aspect-ratio: auto;
+    }
+
+    .service-card__body {
+      padding: var(--space-4);
+      gap: var(--space-1);
+    }
+
+    .service-card__title {
+      font-size: var(--text-lg);
+    }
+
+    .service-card__text {
+      font-size: var(--text-sm);
+    }
+
+    .service-card__more {
+      display: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .service-card,
     .service-card:hover {
