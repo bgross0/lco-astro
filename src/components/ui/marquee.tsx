@@ -14,6 +14,10 @@ interface MarqueeProps extends React.ComponentPropsWithoutRef<'div'> {
   vertical?: boolean
 }
 
+// CSS-only marquee. The extra copies that make the loop seamless are hidden
+// from assistive technology so each item is announced once. The animation
+// pauses on hover, for reduced-motion visitors, and inside an element with
+// data-paused (set by a pause button, see MarqueeToggle.astro).
 function Marquee(props: MarqueeProps) {
   const {
     children,
@@ -52,12 +56,16 @@ function Marquee(props: MarqueeProps) {
         .map((_, i) => (
           <div
             key={i}
-            className={cn('flex shrink-0 justify-around gap-(--marquee-gap) [animation-delay:var(--marquee-delay)]', {
-              'animate-marquee-horizontal flex-row': !vertical,
-              'animate-marquee-vertical flex-col': vertical,
-              'group-hover:paused': pauseOnHover,
-              'direction-[reverse]': reverse
-            })}
+            aria-hidden={i > 0 ? true : undefined}
+            className={cn(
+              'flex shrink-0 justify-around gap-(--marquee-gap) [animation-delay:var(--marquee-delay)] motion-reduce:paused in-data-paused:paused',
+              {
+                'animate-marquee-horizontal flex-row': !vertical,
+                'animate-marquee-vertical flex-col': vertical,
+                'group-hover:paused': pauseOnHover,
+                'direction-[reverse]': reverse
+              }
+            )}
           >
             {children}
           </div>

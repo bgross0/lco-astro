@@ -1,9 +1,11 @@
-'use client'
-
-import { motion } from 'motion/react'
-import type { MotionStyle, Transition } from 'motion/react'
+import type * as React from 'react'
 
 import { cn } from '@/lib/utils'
+
+// CSS-only version of the shadcn/studio BorderBeam: the beam travels the
+// card's border with the `animate-border-beam` keyframes from shadcn.css
+// instead of a `motion` animation, so it works in static HTML without
+// shipping JavaScript. It stops for visitors who prefer reduced motion.
 
 interface BorderBeamProps {
   size?: number
@@ -11,7 +13,6 @@ interface BorderBeamProps {
   delay?: number
   colorFrom?: string
   colorTo?: string
-  transition?: Transition
   className?: string
   style?: React.CSSProperties
   reverse?: boolean
@@ -26,7 +27,6 @@ function BorderBeam({
   duration = 6,
   colorFrom = 'var(--destructive)',
   colorTo = 'var(--primary)',
-  transition,
   style,
   reverse = false,
   initialOffset = 0,
@@ -34,6 +34,7 @@ function BorderBeam({
 }: BorderBeamProps) {
   return (
     <div
+      aria-hidden='true'
       className='pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]'
       style={
         {
@@ -41,9 +42,9 @@ function BorderBeam({
         } as React.CSSProperties
       }
     >
-      <motion.div
+      <div
         className={cn(
-          'absolute aspect-square',
+          'animate-border-beam absolute aspect-square motion-reduce:hidden',
           'rounded-full bg-linear-to-l from-[var(--color-from)] via-[var(--color-to)] to-transparent',
           className
         )}
@@ -51,24 +52,15 @@ function BorderBeam({
           {
             width: size,
             offsetPath: `rect(0 auto auto 0 round ${size}px)`,
+            offsetDistance: `${initialOffset}%`,
+            animationDelay: `-${delay}s`,
+            animationDirection: reverse ? 'reverse' : 'normal',
+            '--border-beam-duration': `${duration}s`,
             '--color-from': colorFrom,
             '--color-to': colorTo,
             ...style
-          } as MotionStyle
+          } as React.CSSProperties
         }
-        initial={{ offsetDistance: `${initialOffset}%` }}
-        animate={{
-          offsetDistance: reverse
-            ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
-            : [`${initialOffset}%`, `${100 + initialOffset}%`]
-        }}
-        transition={{
-          repeat: Infinity,
-          ease: 'linear',
-          duration,
-          delay: -delay,
-          ...transition
-        }}
       />
     </div>
   )
