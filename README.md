@@ -100,6 +100,11 @@ to the handlers in `functions/api/`.
 | `npm run deploy:production` | `lco-astro` (production; custom domain at go-live) |
 | `npm run preview` | build, then run the Worker locally with `wrangler dev` |
 
+After go-live, production deploys from Git: Workers Builds builds and deploys
+every push to `main`, which is also where Decap publishes content. Without
+that connection, CMS edits never reach the site. Setup and the DNS cutover are
+in [docs/GO-LIVE.md](docs/GO-LIVE.md).
+
 Secrets are per Worker (`npx wrangler secret put <NAME> --env staging`):
 `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (CMS login), `FREEFORM_WEBHOOK_URL`,
 `FREEFORM_WEBHOOK_SECRET`, `TURNSTILE_SECRET_KEY` (contact form).

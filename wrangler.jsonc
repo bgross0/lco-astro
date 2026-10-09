@@ -20,7 +20,10 @@
     "staging": {
       // Served at lco-astro-staging.<account>.workers.dev. public/_headers
       // marks every *.workers.dev host noindex.
-      "name": "lco-astro-staging"
+      "name": "lco-astro-staging",
+      // Environments inherit top-level routes. Without this, deploying
+      // staging would move the production custom domain to staging.
+      "routes": []
     }
   }
 }
