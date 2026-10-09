@@ -32,16 +32,24 @@ export async function getReviewSummary() {
 
 /**
  * Every city served (the list on the Service Areas page), linked to its own
- * page when one exists in the serviceAreas collection.
+ * page when one exists in the serviceAreas collection, with its map position.
  */
 export async function getAreas() {
   const page = (await getCollection('pages')).find((p) => p.id === 'service-areas');
   const withPages = await getCollection('serviceAreas');
-  return (page?.data.cities ?? []).map((city) => {
+  return (page?.data.cities ?? []).map(({ city, latitude, longitude }) => {
     const entry = withPages.find((a) => a.data.city.toLowerCase() === city.toLowerCase());
-    return { city, label: `${city}, MN`, href: entry ? areaUrl(entry) : undefined };
+    return {
+      city,
+      label: `${city}, MN`,
+      href: entry ? areaUrl(entry) : undefined,
+      position: latitude !== undefined && longitude !== undefined ? { latitude, longitude } : undefined,
+    };
   });
 }
+
+/** Anchor id of a city in the /service-areas list. */
+export const areaAnchor = (city: string) => city.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
 export async function getPage(id: string) {
   const page = (await getCollection('pages')).find((p) => p.id === id);

@@ -28,6 +28,9 @@ const heroWithImage = hero.extend({
   imageAlt: z.string(),
 });
 
+// Decap saves a cleared optional number as "", which must mean "not set".
+const optionalNumber = z.preprocess((value) => (value === '' || value === null ? undefined : value), z.number().optional());
+
 const step = z.object({
   title: z.string(),
   text: z.string(),
@@ -155,6 +158,8 @@ const homepage = defineCollection({
       })),
     }),
     reviews: heading,
+    /** Heading over the stats band (10+ years, 100+ properties, Google rating). */
+    stats: heading.optional(),
     social: z.object({
       title: z.string(),
       text: z.string().optional(),
@@ -193,7 +198,12 @@ const pages = defineCollection({
     details: heading.optional(),
     reviews: heading.optional(),
     images: z.array(z.object({ image: z.string(), alt: z.string() })).optional(),
-    cities: z.array(z.string()).optional(),
+    // Every city served; coordinates (WGS84) place it on the service-area map.
+    cities: z.array(z.object({
+      city: z.string(),
+      latitude: optionalNumber,
+      longitude: optionalNumber,
+    })).optional(),
     services: z.object({
       eyebrow: z.string().optional(),
       title: z.string(),
