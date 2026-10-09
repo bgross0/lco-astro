@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { responsiveImage } from '../../lib/images';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'srcset' | 'width' | 'height'> {
+  src: string;
+  alt: string;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+// Resized siblings (name-768w.jpg ...) become the srcset; width/height come
+// from the file so the browser can reserve space before it loads.
+const { src, alt, sizes = '100vw', loading = 'lazy', ...rest } = Astro.props;
+const image = await responsiveImage(src);
+---
+
+<img
+  {...rest}
+  src={encodeURI(image.src)}
+  srcset={image.srcset}
+  sizes={image.srcset ? sizes : undefined}
+  width={image.width}
+  height={image.height}
+  alt={alt}
+  loading={loading}
+  decoding={loading === 'lazy' ? 'async' : undefined}
+/>

@@ -1,0 +1,73 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import ServiceCard from '../components/sections/ServiceCard.astro';
+import SectionHeader from '../components/sections/SectionHeader.astro';
+import CtaSection from '../components/sections/CtaSection.astro';
+import Prose from '../components/common/Prose.astro';
+import { getPage, getServices } from '../lib/content';
+
+const entry = await getPage('about-us');
+const page = entry.data;
+const { Content } = await render(entry);
+const services = await getServices();
+---
+
+<BaseLayout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
+  <PageHero heading={page.hero.heading} text={page.hero.text} image={page.hero.image} imageAlt={page.hero.imageAlt} rating />
+
+  <section class="about-story">
+    <div class="container about-story__inner">
+      {page.heading && <h2 class="about-story__title">{page.heading}</h2>}
+      <Prose>
+        <Content />
+      </Prose>
+    </div>
+  </section>
+
+  <section class="about-services">
+    <div class="container">
+      <SectionHeader eyebrow="Services" title={page.servicesTitle ?? 'Our services'} />
+      <ul class="about-services__grid" role="list">
+        {services.map((service) => <li><ServiceCard service={service} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  {page.cta && <CtaSection title={page.cta.title} text={page.cta.text} />}
+</BaseLayout>
+
+<style>
+  .about-story {
+    padding: var(--space-16) 0 var(--space-20);
+  }
+
+  .about-story__inner {
+    max-width: 860px;
+  }
+
+  .about-story__title {
+    color: var(--secondary);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    margin-bottom: var(--space-6);
+  }
+
+  .about-services {
+    padding: var(--space-20) 0;
+    background: var(--neutral-light);
+  }
+
+  .about-services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .about-services__grid li {
+    margin: 0;
+  }
+</style>

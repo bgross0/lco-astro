@@ -1,0 +1,42 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { primaryPhone } from '../../lib/phone';
+
+interface Props {
+  size?: 'medium' | 'large';
+  /** "dark" for buttons on a photo or colored band, "light" on white. */
+  tone?: 'dark' | 'light';
+  contactText?: string;
+  contactHref?: string;
+}
+
+const { size = 'large', tone = 'dark', contactText = 'Get in touch', contactHref = '/contact-us/' } = Astro.props;
+---
+
+<div class="call-buttons">
+  <Button href={contactHref} variant="primary" size={size}>{contactText}</Button>
+  <Button href={primaryPhone.href} variant={tone === 'dark' ? 'secondary' : 'outline'} size={size}>
+    <Icon name="phone" size={20} />
+    <span>Call us <span class="call-buttons__number">{primaryPhone.display}</span></span>
+  </Button>
+</div>
+
+<style>
+  .call-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .call-buttons__number {
+    font-weight: 700;
+  }
+
+  @media (max-width: 479px) {
+    .call-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

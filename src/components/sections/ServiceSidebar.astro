@@ -1,0 +1,158 @@
+---
+import Icon from '../common/Icon.astro';
+import { getServices, serviceUrl } from '../../lib/content';
+import { primaryPhone } from '../../lib/phone';
+import settings from '../../data/settings.json';
+
+interface Props {
+  currentId?: string;
+}
+
+const { currentId } = Astro.props;
+const services = await getServices();
+---
+
+<aside class="service-sidebar" aria-label="Services and contact">
+  <nav class="service-sidebar__card" aria-labelledby="sidebar-services">
+    <h2 class="service-sidebar__heading" id="sidebar-services">Our services</h2>
+    <ul class="service-sidebar__list" role="list">
+      {services.map((service) => (
+        <li>
+          <a
+            href={serviceUrl(service)}
+            class:list={['service-sidebar__link', { 'service-sidebar__link--active': service.id === currentId }]}
+            aria-current={service.id === currentId ? 'page' : undefined}
+          >
+            <span>{service.data.title}</span>
+            <Icon name="caret-right" size={16} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+  <div class="service-sidebar__card service-sidebar__card--contact">
+    <h2 class="service-sidebar__heading">Talk to our team</h2>
+    <a href={primaryPhone.href} class="service-sidebar__contact"><Icon name="phone" size={18} /> {primaryPhone.display}</a>
+    <a href={`mailto:${settings.email}`} class="service-sidebar__contact"><Icon name="envelope" size={18} /> Email us</a>
+    <a href="/contact-us/" class="service-sidebar__button">Request a free estimate</a>
+  </div>
+</aside>
+
+<style>
+  .service-sidebar {
+    display: grid;
+    gap: var(--space-6);
+    align-content: start;
+  }
+
+  .service-sidebar__card {
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    background: var(--white);
+    border: 1px solid rgba(46, 90, 135, 0.12);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .service-sidebar__card--contact {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--white);
+  }
+
+  .service-sidebar__heading {
+    font-size: var(--text-lg);
+    color: var(--secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .service-sidebar__card--contact .service-sidebar__heading {
+    color: var(--white);
+  }
+
+  .service-sidebar__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .service-sidebar__list li {
+    margin: 0;
+  }
+
+  .service-sidebar__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--neutral-light);
+    color: var(--black);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .service-sidebar__link :global(svg) {
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .service-sidebar__link:hover {
+    color: var(--primary-dark);
+    text-decoration: none;
+  }
+
+  .service-sidebar__link--active {
+    color: var(--primary-dark);
+  }
+
+  .service-sidebar__link--active::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin-right: var(--space-1);
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .service-sidebar__link--active span {
+    flex: 1;
+  }
+
+  .service-sidebar__contact {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) 0;
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .service-sidebar__contact:hover {
+    color: var(--white);
+  }
+
+  .service-sidebar__button {
+    display: block;
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    color: var(--secondary);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .service-sidebar__button:hover {
+    background: var(--neutral-light);
+    color: var(--secondary-dark);
+    text-decoration: none;
+  }
+
+  @media (min-width: 1024px) {
+    .service-sidebar {
+      position: sticky;
+      top: 110px;
+    }
+  }
+</style>

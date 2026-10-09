@@ -1,0 +1,93 @@
+---
+import { getReviews, getReviewSummary } from '../../lib/content';
+import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
+import Stars from '../common/Stars.astro';
+import SectionHeader from './SectionHeader.astro';
+import ReviewCard from './ReviewCard.astro';
+import settings from '../../data/settings.json';
+
+interface Props {
+  title: string;
+  text?: string;
+  limit?: number;
+  background?: 'white' | 'tint';
+}
+
+const { title, text, limit = 6, background = 'tint' } = Astro.props;
+const reviews = (await getReviews()).slice(0, limit);
+const summary = await getReviewSummary();
+---
+
+<section class:list={['reviews', `reviews--${background}`]}>
+  <div class="container">
+    <SectionHeader title={title} text={text} />
+    <p class="reviews__summary">
+      <Stars rating={summary.average} size={20} label={`Rated ${summary.average} out of 5`} />
+      <span><strong>{summary.average.toFixed(1)}</strong> from {summary.count} Google reviews</span>
+    </p>
+    <ul class="reviews__grid" role="list">
+      {reviews.map((review) => (
+        <li><ReviewCard review={review} clamp /></li>
+      ))}
+    </ul>
+    <div class="reviews__actions">
+      <Button href="/reviews/" variant="primary">See all reviews</Button>
+      <Button href={settings.google.writeReviewUrl} variant="outline" target="_blank" rel="noopener">
+        <Icon name="google" size={18} />
+        Leave us a review
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews {
+    padding: var(--space-20) 0;
+  }
+
+  .reviews--tint {
+    background: var(--neutral-light);
+  }
+
+  .reviews--white {
+    background: var(--white);
+  }
+
+  .reviews__summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: calc(var(--space-6) * -1) 0 var(--space-10);
+    color: var(--neutral-dark);
+  }
+
+  .reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .reviews__grid li {
+    margin: 0;
+  }
+
+  .reviews__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-10);
+  }
+
+  @media (max-width: 767px) {
+    .reviews {
+      padding: var(--space-16) 0;
+    }
+  }
+</style>

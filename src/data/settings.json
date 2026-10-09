@@ -1,29 +1,60 @@
 {
   "site_title": "Lake County Outdoors, LLC",
-  "site_description": "Municipal Contracting, Commercial Snow Removal, Heavy Equipment Rental. Professional outdoor services in Edina, Minnesota.",
-  "logo": "/lco-final.png",
+  "site_description": "Commercial snow removal, ice management, and landscaping in Minneapolis. Lake County Outdoors keeps properties safe this winter. Contact us today.",
+  "logo": "/images/brand/lco-logo.png",
+  "footerLogo": "/images/brand/lco-logo-night.png",
+  "og_image": "/images/home/hero-snow-removal.jpg",
+  "phones": [
+    {
+      "label": "Sales",
+      "number": "(612) 655-0648"
+    },
+    {
+      "label": "Office",
+      "number": "(612) 556-2598"
+    }
+  ],
+  "email": "cadenf@lakecountyoutdoor.com",
+  "address": {
+    "street": "7777 Washington Ave S",
+    "city": "Minneapolis",
+    "region": "MN",
+    "postalCode": "55439"
+  },
+  "geo": {
+    "latitude": 44.862309,
+    "longitude": -93.396867
+  },
+  "hours": [
+    {
+      "label": "Monday - Friday",
+      "days": "Mo-Fr",
+      "opens": "07:00",
+      "closes": "19:00"
+    },
+    {
+      "label": "Saturday",
+      "days": "Sa",
+      "opens": "07:00",
+      "closes": "15:00"
+    },
+    {
+      "label": "Sunday",
+      "days": "Su",
+      "opens": "09:00",
+      "closes": "17:00"
+    }
+  ],
   "social": {
-    "facebook": "",
-    "instagram": "",
+    "facebook": "https://www.facebook.com/profile.php?id=61576875938155",
+    "instagram": "https://www.instagram.com/lakecountyoutdoor/",
+    "instagramHandle": "@lakecountyoutdoor",
+    "facebookName": "Lake County Outdoor",
     "linkedin": ""
   },
-  "cellphone": "Office - (612) 655-0648",
-  "phone": "Field - (763) 291-4105",
-  "hours": "24/7 Emergency Service Available",
-  "og_image": "/images/gallery/img-7575-1920w.jpg",
-  "address": "7777 Washington Ave S, Suite 4, Edina MN 55439",
-  "email": "cadenf@lakecountyoutdoor.com",
-  "geo": {
-    "latitude": 44.8697,
-    "longitude": -93.3503
-  },
-  "priceRange": "$$",
-  "openingHours": "Mo-Su 00:00-24:00",
-  "businessHours": {
-    "weekdays": "7:00 AM - 6:00 PM",
-    "saturday": "8:00 AM - 4:00 PM",
-    "sunday": "Closed",
-    "emergency": "24/7 Available"
+  "google": {
+    "reviewsUrl": "https://search.google.com/local/reviews?placeid=ChIJhayDcymQmakRtuiBbYwFn9w",
+    "writeReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJhayDcymQmakRtuiBbYwFn9w"
   },
   "analytics": {
     "gtmId": "",
@@ -34,16 +65,31 @@
     "homepageCTA": {
       "enabled": false,
       "variants": [
-        {"text": "Get a Free Quote", "trackingLabel": "control"},
-        {"text": "Get Your Free Estimate", "trackingLabel": "variant_a"},
-        {"text": "Request Quote Now", "trackingLabel": "variant_b"}
+        {
+          "text": "Get a Free Quote",
+          "trackingLabel": "control"
+        },
+        {
+          "text": "Get Your Free Estimate",
+          "trackingLabel": "variant_a"
+        },
+        {
+          "text": "Request Quote Now",
+          "trackingLabel": "variant_b"
+        }
       ]
     },
     "contactButton": {
       "enabled": false,
       "variants": [
-        {"text": "Send Message", "trackingLabel": "control"},
-        {"text": "Get Started", "trackingLabel": "variant_a"}
+        {
+          "text": "Send Message",
+          "trackingLabel": "control"
+        },
+        {
+          "text": "Get Started",
+          "trackingLabel": "variant_a"
+        }
       ]
     }
   }

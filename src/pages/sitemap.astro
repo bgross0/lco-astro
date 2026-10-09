@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import { getAreas, getPage, getServices, projectUrl, serviceUrl } from '../lib/content';
+
+const page = (await getPage('sitemap')).data;
+const services = await getServices();
+const areas = (await getAreas()).filter((area) => area.href);
+const projects = await getCollection('projects');
+
+const general = [
+  { label: 'Home', href: '/' },
+  { label: 'Contact', href: '/contact-us/' },
+  { label: 'About Us', href: '/about-us/' },
+  { label: 'Shoreline Solutions', href: '/shoreline-solutions/' },
+  { label: 'Gallery', href: '/gallery/' },
+  { label: 'Testimonials & Reviews', href: '/reviews/' },
+  { label: 'Our Projects', href: '/projects/' },
+  { label: 'Services', href: '/services/' },
+  { label: 'Service Areas', href: '/service-areas/' },
+  { label: 'Blog', href: '/blog/' },
+];
+
+const sections = [
+  { title: 'General', links: general },
+  { title: 'Services', links: services.map((s) => ({ label: s.data.title, href: serviceUrl(s) })) },
+  { title: 'Service Areas', links: areas.map((a) => ({ label: a.label, href: a.href! })) },
+  { title: 'Projects', links: projects.map((p) => ({ label: p.data.title, href: projectUrl(p) })) },
+];
+---
+
+<BaseLayout title={page.seo.title} description={page.seo.description}>
+  <PageHero heading={page.hero.heading} size="compact" buttons={false} />
+  <section class="html-sitemap">
+    <div class="container html-sitemap__grid">
+      {sections.map((section) => (
+        <nav aria-labelledby={`sitemap-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>
+          <h2 id={`sitemap-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>{section.title}</h2>
+          <ul>
+            {section.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          </ul>
+        </nav>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .html-sitemap {
+    padding: var(--space-12) 0 var(--space-20);
+  }
+
+  .html-sitemap__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: var(--space-10);
+  }
+
+  .html-sitemap h2 {
+    font-size: var(--text-xl);
+    color: var(--secondary);
+  }
+
+  .html-sitemap ul {
+    padding-left: var(--space-5);
+  }
+
+  .html-sitemap a {
+    color: var(--primary-dark);
+  }
+</style>

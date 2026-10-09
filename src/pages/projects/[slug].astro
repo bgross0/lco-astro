@@ -1,0 +1,75 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import Prose from '../../components/common/Prose.astro';
+import Img from '../../components/common/Img.astro';
+import CtaSection from '../../components/sections/CtaSection.astro';
+import { getEntry } from 'astro:content';
+import { projectUrl } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+const home = (await getEntry('homepage', 'home'))!.data;
+---
+
+<BaseLayout title={data.seo.title} description={data.seo.description} image={data.image}>
+  <PageHero heading={data.title} text={data.location} image={data.image} imageAlt={data.imageAlt} size="medium" buttons={false} />
+
+  <section class="project">
+    <div class="container project__inner">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects/' }, { label: data.title, href: projectUrl(project) }]} />
+      <Prose>
+        <Content />
+      </Prose>
+      {data.gallery && data.gallery.length > 0 && (
+        <ul class="project__gallery" role="list">
+          {data.gallery.map((photo) => (
+            <li><Img src={photo.image} alt={photo.alt} sizes="(min-width: 768px) 33vw, 100vw" /></li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <CtaSection title={home.cta.title} text={home.cta.text} />
+</BaseLayout>
+
+<style>
+  .project {
+    padding: var(--space-12) 0 var(--space-20);
+  }
+
+  .project__inner {
+    max-width: 960px;
+  }
+
+  .project__gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-4);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-12) 0 0;
+  }
+
+  .project__gallery li {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    aspect-ratio: 3 / 2;
+  }
+
+  .project__gallery :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

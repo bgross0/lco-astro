@@ -25,12 +25,12 @@ media_folder: public/images/uploads
 public_folder: /images/uploads
 site_url: https://lakecountyoutdoor.com
 display_url: https://lakecountyoutdoor.com
-logo_url: /lco-final.png
+logo_url: /images/brand/lco-logo.png
 local_backend: true
 
 collections:
   # ---------------------------------------------------------------------------
-  # Homepage (src/content/homepage/*.json, Astro "homepage" data collection)
+  # Homepage (src/content/homepage/home.json)
   # ---------------------------------------------------------------------------
   - name: homepage
     label: Homepage
@@ -38,156 +38,108 @@ collections:
     editor:
       preview: false
     files:
-      - name: hero
-        label: Homepage - Hero
-        file: src/content/homepage/hero.json
+      - name: home
+        label: Homepage
+        file: src/content/homepage/home.json
         format: json
         fields:
-          - { label: Title, name: title, widget: string }
-          - { label: Subtitle, name: subtitle, widget: string, required: false }
-          - { label: Description, name: description, widget: text, required: false }
-          - { label: CTA Button Text, name: ctaText, widget: string, required: false }
-          - { label: CTA Button Link, name: ctaLink, widget: string, required: false }
-          - label: Hero Images
-            name: images
-            widget: list
-            required: false
-            summary: "{{fields.alt}}"
+          - &seo
+            label: SEO
+            name: seo
+            widget: object
             fields:
-              - { label: Image, name: src, widget: image }
-              - { label: Alt Text, name: alt, widget: string }
-          - label: Bottom Services
-            name: bottomServices
-            widget: list
-            required: false
-            summary: "{{fields.title}}"
+              - { label: Meta title, name: title, widget: string }
+              - { label: Meta description, name: description, widget: text }
+          - &heroWithImage
+            label: Hero
+            name: hero
+            widget: object
             fields:
-              - { label: Icon Name, name: icon, widget: string }
+              - { label: Heading (H1), name: heading, widget: string }
+              - { label: Text, name: text, widget: text, required: false }
+              - { label: Background image, name: image, widget: image }
+              - { label: Image description (alt text), name: imageAlt, widget: string }
+          - &heading
+            label: Services section
+            name: services
+            widget: object
+            hint: The service cards come from the Services collection, grouped by category.
+            fields:
               - { label: Title, name: title, widget: string }
-              - { label: Description, name: description, widget: string }
-
-      - name: content
-        label: Homepage - Content
-        file: src/content/homepage/content.json
-        format: json
-        fields:
-          - label: About Section
+              - { label: Text, name: text, widget: text, required: false }
+          - label: Shoreline Solutions banner
+            name: shoreline
+            widget: object
+            fields:
+              - { label: Label, name: label, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Link text, name: linkText, widget: string }
+              - { label: Link, name: link, widget: string }
+          - label: About section
             name: about
             widget: object
-            required: false
             fields:
-              - { label: Title, name: title, widget: string, required: false }
-              - label: Paragraphs
-                name: paragraphs
-                widget: list
-                required: false
-                field: { label: Paragraph, name: paragraph, widget: text }
-              - label: Images
-                name: images
-                widget: list
-                required: false
-                summary: "{{fields.alt}}"
-                fields:
-                  - { label: Image, name: src, widget: image }
-                  - { label: Alt Text, name: alt, widget: string }
-              - label: Features
-                name: features
-                widget: list
-                required: false
-                summary: "{{fields.text}}"
-                fields:
-                  - { label: Icon, name: icon, widget: string }
-                  - { label: Text, name: text, widget: string }
-              - { label: Button Text, name: buttonText, widget: string, required: false }
-              - { label: Button Link, name: buttonLink, widget: string, required: false }
-          - label: Client Satisfaction Section
-            name: clientSatisfaction
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Image, name: image, widget: image }
+              - { label: Image description (alt text), name: imageAlt, widget: string }
+          - label: About highlights
+            name: highlights
             widget: object
-            required: false
             fields:
-              - { label: Title, name: title, widget: string, required: false }
-              - label: Paragraphs
-                name: paragraphs
+              - { label: Title, name: title, widget: string }
+              - label: Items
+                name: items
                 widget: list
-                required: false
-                field: { label: Paragraph, name: paragraph, widget: text }
-              - { label: Experience Title, name: experienceTitle, widget: string, required: false }
-              - { label: Experience Text, name: experienceText, widget: text, required: false }
-              - { label: Highlight, name: highlight, widget: string, required: false }
-          - label: Equipment Section
-            name: equipment
-            widget: object
-            required: false
-            fields:
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Subtitle, name: subtitle, widget: string, required: false }
-              - label: Stats
-                name: stats
-                widget: list
-                required: false
-                summary: "{{fields.number}} {{fields.label}}"
+                summary: "{{fields.title}}"
                 fields:
-                  - { label: Number, name: number, widget: number, value_type: int }
-                  - { label: Label, name: label, widget: string }
-          - label: CTA Section
-            name: cta
+                  - { label: Title, name: title, widget: string }
+                  - { label: Paragraphs, name: paragraphs, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+                  - { label: Image (or video poster), name: image, widget: image }
+                  - { label: Image description (alt text), name: imageAlt, widget: string }
+                  - { label: Video (MP4, optional), name: video, widget: file, required: false }
+                  - label: Stats
+                    name: stats
+                    widget: list
+                    required: false
+                    summary: "{{fields.value}} {{fields.label}}"
+                    fields:
+                      - { label: Value, name: value, widget: string, hint: "Text, e.g. 10+" }
+                      - { label: Label, name: label, widget: string }
+                  - { label: Tags, name: tags, widget: list, required: false, field: { label: Tag, name: tag, widget: string } }
+          - { <<: *heading, label: Reviews section, name: reviews, hint: Shows the first reviews from the Reviews collection. }
+          - label: Social section
+            name: social
             widget: object
-            required: false
             fields:
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Description, name: description, widget: text, required: false }
-              - { label: Background Image, name: backgroundImage, widget: image, required: false }
-              - label: Primary Button
-                name: primaryButton
-                widget: object
-                required: false
-                fields:
-                  - { label: Text, name: text, widget: string }
-                  - { label: Link, name: link, widget: string }
-              - label: Secondary Button
-                name: secondaryButton
-                widget: object
-                required: false
-                fields:
-                  - { label: Text, name: text, widget: string }
-                  - { label: Link, name: link, widget: string }
-          - label: Reviews Section
-            name: reviews
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: string, required: false }
+              - { label: Footnote, name: footnote, widget: string, required: false }
+          - label: Offer
+            name: offer
             widget: object
-            required: false
             fields:
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Subtitle, name: subtitle, widget: string, required: false }
-              # Required: a cleared optional number is saved as "" which fails z.number().optional().
-              - { label: Rating, name: rating, widget: number, value_type: float, min: 0, max: 5, step: 0.1 }
-              - { label: Review Count, name: reviewCount, widget: number, value_type: int, min: 0 }
-              - { label: Google Business URL, name: googleBusinessUrl, widget: string, required: false }
-              - { label: Shapo Widget ID, name: shapoWidgetId, widget: string, required: false }
-
-      - name: services-showcase
-        label: Homepage - Services Showcase
-        file: src/content/homepage/services-showcase.json
-        format: json
-        fields:
-          - { label: Section Title, name: title, widget: string, required: false }
-          - { label: Section Subtitle, name: subtitle, widget: string, required: false }
-          - { label: Auto Scroll Interval (ms), name: autoScrollInterval, widget: number, value_type: int, min: 0, required: false }
-          - label: Services
-            name: services
-            widget: list
+              - { label: Section title, name: title, widget: string }
+              - { label: Offer name, name: name, widget: string }
+              - { label: Offer value, name: value, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Button text, name: buttonText, widget: string }
+              - { label: Button link, name: link, widget: string }
+          - { <<: *heading, label: Projects section, name: projects }
+          - { <<: *heading, label: Areas section, name: areas, hint: The city list comes from the Service Areas page. }
+          - label: Featured review
+            name: featuredReview
+            widget: relation
+            collection: reviews
+            value_field: "{{slug}}"
+            search_fields: [author, text]
+            display_fields: [author]
             required: false
-            summary: "{{fields.order}}. {{fields.title}}"
-            fields:
-              - { label: Service ID, name: id, widget: string, required: false }
-              - { label: Service Title, name: title, widget: string, required: false }
-              - { label: Service Subtitle, name: subtitle, widget: string, required: false }
-              - { label: Icon Name, name: icon, widget: string, required: false }
-              - { label: Service Image, name: image, widget: image, required: false }
-              - { label: Service Link, name: href, widget: string, required: false }
-              - { label: Display Order, name: order, widget: number, value_type: int, required: false }
+          - { <<: *heading, label: Closing call to action, name: cta }
 
   # ---------------------------------------------------------------------------
-  # Services (src/content/services/*.md, Astro "services" content collection)
+  # Services (src/content/services/*.md) -> /services/<file name>/
   # ---------------------------------------------------------------------------
   - name: services
     label: Services
@@ -197,115 +149,133 @@ collections:
     extension: md
     format: frontmatter
     slug: "{{slug}}"
-    preview_path: "services/{{slug}}"
-    sortable_fields: [order, title]
-    summary: "{{order}}. {{title}}"
+    preview_path: "services/{{slug}}/"
+    sortable_fields: [order, title, category]
+    summary: "{{order}}. {{title}} ({{category}})"
     fields:
-      - { label: Title, name: title, widget: string }
-      - { label: Subtitle, name: subtitle, widget: string, required: false }
-      - { label: Description, name: description, widget: text }
-      - { label: Image, name: image, widget: image }
-      - label: Gallery Images
-        name: images
-        widget: list
-        required: false
-        field: { label: Image, name: image, widget: image }
-      - label: Hero Image (legacy)
-        name: heroImage
-        widget: image
-        required: false
-        hint: Not read by the site; the hero uses Hero > Background Image, then the first Gallery Image, then Image.
-      # Required: a cleared optional number is saved as "" which fails z.number().optional().
-      - { label: Display Order, name: order, widget: number, value_type: int }
-      - label: Hero
-        name: hero
+      - { label: Service name, name: title, widget: string }
+      - { label: Card summary, name: summary, widget: text, hint: One sentence shown on service cards and in structured data. }
+      - label: Category
+        name: category
+        widget: select
+        options: [Landscape Services, Excavation & Build, Property Maintenance, Tree Services]
+      # Required: a cleared optional number is saved as "" which fails z.number().
+      - { label: Display order, name: order, widget: number, value_type: int, min: 1 }
+      - *seo
+      - *heroWithImage
+      - { label: Intro heading, name: heading, widget: string }
+      - &process
+        label: Process
+        name: process
         widget: object
         required: false
         fields:
-          - { label: Subtitle, name: subtitle, widget: string, required: false }
-          - { label: Background Image, name: backgroundImage, widget: image, required: false }
-      - label: Image Sections
-        name: imageSections
-        widget: list
-        required: false
-        summary: "{{fields.title}}"
-        fields:
           - { label: Title, name: title, widget: string }
-          - { label: Content (HTML), name: content, widget: text }
-          - label: Images
-            name: images
+          - { label: Intro, name: intro, widget: text, required: false }
+          - label: Steps
+            name: steps
             widget: list
-            required: false
-            field: { label: Image, name: image, widget: image }
-          # Required with a default: clearing an optional select saves null, which fails z.enum().optional().
-          - { label: Image Position, name: imagePosition, widget: select, options: [left, right], default: right }
-          - label: Features
-            name: features
-            widget: list
-            required: false
-            summary: "{{fields.text}}"
+            summary: "{{fields.title}}"
             fields:
-              - { label: Icon, name: icon, widget: string }
-              - { label: Text, name: text, widget: string }
-      - label: Service Offerings
-        name: services
-        widget: list
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+      - label: FAQ
+        name: faq
+        widget: object
         required: false
-        summary: "{{fields.title}}"
         fields:
-          - { label: Icon, name: icon, widget: string }
           - { label: Title, name: title, widget: string }
-          - label: Items
+          - { label: Intro, name: intro, widget: text, required: false }
+          - label: Questions
             name: items
             widget: list
-            field: { label: Item, name: item, widget: string }
-      - label: Benefits
-        name: benefits
-        widget: list
-        required: false
-        summary: "{{fields.title}}"
-        fields:
-          - { label: Title, name: title, widget: string }
-          - { label: Description, name: description, widget: text }
-      - label: Features
-        name: features
-        widget: list
-        required: false
-        summary: "{{fields.title}}"
-        fields:
-          - { label: Icon, name: icon, widget: string }
-          - { label: Title, name: title, widget: string }
-          - { label: Description, name: description, widget: text }
-      - label: Content Sections
-        name: contentSections
-        widget: list
-        required: false
-        summary: "{{fields.title}}"
-        fields:
-          - { label: Title, name: title, widget: string }
-          - { label: Content (HTML), name: content, widget: text }
-          - { label: Image, name: image, widget: image }
-      - label: Pricing
-        name: pricing
-        widget: list
-        required: false
-        summary: "{{fields.title}}"
-        fields:
-          - { label: Title, name: title, widget: string }
-          - { label: Description, name: description, widget: text }
-          - { label: Featured, name: featured, widget: boolean, required: false }
-      - label: Equipment
-        name: equipment
-        widget: list
-        required: false
-        summary: "{{fields.number}} {{fields.label}}"
-        fields:
-          - { label: Number, name: number, widget: number, value_type: int }
-          - { label: Label, name: label, widget: string }
-      - { label: Body, name: body, widget: markdown, required: false }
+            summary: "{{fields.question}}"
+            fields:
+              - { label: Question, name: question, widget: string }
+              - { label: Answer, name: answer, widget: text }
+      - { <<: *heading, label: Reviews section, name: reviews }
+      - { <<: *heading, label: Closing call to action, name: cta }
+      - { label: Body, name: body, widget: markdown, hint: "Intro paragraphs. Use ## headings for extra sections." }
 
   # ---------------------------------------------------------------------------
-  # Blog (src/content/blog/*.md, Astro "blog" content collection)
+  # Service areas (src/content/service-areas/*.md) -> /service-areas/<file name>/
+  # Every city served is listed on the Service Areas page; add a city here only
+  # with copy written for it, and remove its line from public/_redirects.
+  # ---------------------------------------------------------------------------
+  - name: serviceAreas
+    label: Service Area Pages
+    label_singular: Service Area Page
+    folder: src/content/service-areas
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{fields.city}}-mn"
+    identifier_field: city
+    preview_path: "service-areas/{{slug}}/"
+    summary: "{{city}}, {{state}}"
+    fields:
+      - { label: City, name: city, widget: string }
+      - { label: State, name: state, widget: string, default: MN }
+      - *seo
+      - *heroWithImage
+      - { label: Content heading, name: heading, widget: string }
+      - { <<: *heading, label: Reviews section, name: reviews }
+      - { <<: *heading, label: Closing call to action, name: cta }
+      - { label: Body, name: body, widget: markdown }
+
+  # ---------------------------------------------------------------------------
+  # Projects (src/content/projects/*.md) -> /projects/<file name>/
+  # ---------------------------------------------------------------------------
+  - name: projects
+    label: Projects
+    label_singular: Project
+    folder: src/content/projects
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    preview_path: "projects/{{slug}}/"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Location, name: location, widget: string, required: false }
+      - { label: Summary, name: summary, widget: text }
+      - *seo
+      - { label: Main image, name: image, widget: image }
+      - { label: Main image description (alt text), name: imageAlt, widget: string }
+      - label: Gallery
+        name: gallery
+        widget: list
+        required: false
+        summary: "{{fields.alt}}"
+        fields:
+          - { label: Image, name: image, widget: image }
+          - { label: Description (alt text), name: alt, widget: string }
+      - { label: Body, name: body, widget: markdown }
+
+  # ---------------------------------------------------------------------------
+  # Reviews (src/content/reviews/*.json): real reviews only, attributed as on Google
+  # ---------------------------------------------------------------------------
+  - name: reviews
+    label: Reviews
+    label_singular: Review
+    folder: src/content/reviews
+    create: true
+    extension: json
+    format: json
+    slug: "{{fields.order}}-{{fields.author}}"
+    identifier_field: author
+    sortable_fields: [order, author, date]
+    summary: "{{order}}. {{author}}"
+    fields:
+      - { label: Reviewer (as shown on Google), name: author, widget: string }
+      - { label: Rating (1-5), name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5 }
+      - { label: Source, name: source, widget: string, default: Google }
+      - { label: Display order, name: order, widget: number, value_type: int, min: 1 }
+      - { label: Date posted, name: date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false, required: false }
+      - { label: Review text, name: text, widget: text }
+
+  # ---------------------------------------------------------------------------
+  # Blog (src/content/blog/*.md)
   # ---------------------------------------------------------------------------
   - name: blog
     label: Blog Posts
@@ -315,7 +285,7 @@ collections:
     extension: md
     format: frontmatter
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    preview_path: "blog/{{slug}}"
+    preview_path: "blog/{{slug}}/"
     sortable_fields: [pubDate, title]
     summary: "{{pubDate}} - {{title}}"
     fields:
@@ -335,27 +305,7 @@ collections:
       - { label: Body, name: body, widget: markdown }
 
   # ---------------------------------------------------------------------------
-  # Testimonials (src/content/testimonials/*.md, Astro "testimonials" collection)
-  # ---------------------------------------------------------------------------
-  - name: testimonials
-    label: Testimonials
-    label_singular: Testimonial
-    folder: src/content/testimonials
-    create: true
-    extension: md
-    format: frontmatter
-    identifier_field: author
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    summary: "{{author}} ({{company}})"
-    fields:
-      - { label: Client Name, name: author, widget: string }
-      - { label: Company/Organization, name: company, widget: string, required: false }
-      - { label: Service Used, name: service, widget: string }
-      - { label: Rating (1-5), name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5 }
-      - { label: Body, name: body, widget: markdown }
-
-  # ---------------------------------------------------------------------------
-  # Pages (src/content/pages/*.json, Astro "pages" data collection)
+  # Pages (src/content/pages/*.md). Each page lists only the fields it renders.
   # ---------------------------------------------------------------------------
   - name: pages
     label: Pages
@@ -363,77 +313,164 @@ collections:
     editor:
       preview: false
     files:
-      - name: contact
-        label: Contact Page
-        file: src/content/pages/contact.json
-        format: json
+      - name: about-us
+        label: About Us
+        file: src/content/pages/about-us.md
+        format: frontmatter
         fields:
-          - label: Hero Section
-            name: hero
-            widget: object
-            fields:
-              - { label: Hero Title, name: title, widget: string, required: false }
-              - { label: Hero Subtitle, name: subtitle, widget: string, required: false }
+          - *seo
+          - *heroWithImage
+          - { label: Story heading, name: heading, widget: string }
+          - { label: Services section title, name: servicesTitle, widget: string }
+          - { <<: *heading, label: Closing call to action, name: cta }
+          - { label: Story, name: body, widget: markdown }
+
+      - name: contact-us
+        label: Contact Us
+        file: src/content/pages/contact-us.md
+        format: frontmatter
+        fields:
+          - *seo
+          - *heroWithImage
           - label: Form
             name: form
             widget: object
+            hint: Labels only. The form fields and where submissions go are set in code.
             fields:
               - { label: Title, name: title, widget: string, required: false }
               - { label: Subtitle, name: subtitle, widget: string, required: false }
-              - { label: Submit Button Text, name: submitButtonText, widget: string, required: false }
-          - label: Contact Info
-            name: info
+              - { label: Submit button text, name: submitButtonText, widget: string, required: false }
+          - { <<: *heading, label: Contact details card, name: details, hint: "Address, phones, email and hours come from Settings." }
+          - { <<: *heading, label: Reviews section, name: reviews }
+          - { <<: *heading, label: Closing call to action, name: cta }
+
+      - name: reviews
+        label: Reviews Page
+        file: src/content/pages/reviews.md
+        format: frontmatter
+        fields:
+          - *seo
+          - &heroPlain
+            label: Hero
+            name: hero
             widget: object
             fields:
-              - { label: Title, name: title, widget: string, required: false }
-              - { label: Description, name: description, widget: text, required: false }
-              - { label: Emergency Text, name: emergencyText, widget: text, required: false }
-              - { label: Email Response Time, name: emailResponseTime, widget: string, required: false }
-              - { label: Service Area Note, name: serviceAreaNote, widget: string, required: false }
-          - label: SEO
-            name: seo
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Heading (H1), name: heading, widget: string }
+              - { label: Text, name: text, widget: text, required: false }
+
+      - name: gallery
+        label: Gallery
+        file: src/content/pages/gallery.md
+        format: frontmatter
+        fields:
+          - *seo
+          - *heroPlain
+          - label: Photos
+            name: images
+            widget: list
+            summary: "{{fields.alt}}"
+            fields:
+              - { label: Image, name: image, widget: image }
+              - { label: Description (alt text), name: alt, widget: string }
+
+      - name: projects
+        label: Projects Page
+        file: src/content/pages/projects.md
+        format: frontmatter
+        fields:
+          - *seo
+          - *heroPlain
+
+      - name: shoreline-solutions
+        label: Shoreline Solutions
+        file: src/content/pages/shoreline-solutions.md
+        format: frontmatter
+        fields:
+          - *seo
+          - label: Permit notice
+            name: notice
+            widget: object
+            required: false
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Text, name: text, widget: string }
+          - *heroWithImage
+          - { label: Logo, name: logo, widget: image, required: false }
+          - label: Services
+            name: services
             widget: object
             fields:
-              - { label: Meta Title, name: title, widget: string, required: false }
-              - { label: Meta Description, name: description, widget: text, required: false }
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text, required: false }
+              - label: Services
+                name: items
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: Title, name: title, widget: string }
+                  - { label: Text, name: text, widget: text }
+          - label: Why choose us
+            name: why
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text, required: false }
+              - { label: Points, name: points, widget: list, field: { label: Point, name: point, widget: string } }
+              - { label: Tagline, name: tagline, widget: string, required: false }
+              - { label: Button text, name: buttonText, widget: string }
+          - label: Process
+            name: process
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Intro, name: intro, widget: text, required: false }
+              - label: Steps
+                name: steps
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: Title, name: title, widget: string }
+                  - { label: Text, name: text, widget: text }
+              - { label: Button text, name: buttonText, widget: string, required: false }
+          - { <<: *heading, label: Closing call to action, name: cta }
 
       - name: service-areas
         label: Service Areas Page
-        file: src/content/pages/service-areas.json
-        format: json
+        file: src/content/pages/service-areas.md
+        format: frontmatter
         fields:
-          - { label: Page Title, name: title, widget: string, required: false }
-          - { label: Hero Title, name: heroTitle, widget: string, required: false }
-          - { label: Hero Subtitle, name: heroSubtitle, widget: text, required: false }
-          - label: Primary Cities
-            name: primaryCities
+          - *seo
+          - *heroPlain
+          - label: Cities served
+            name: cities
             widget: list
-            required: false
-            summary: "{{fields.name}}"
-            fields:
-              - { label: City, name: name, widget: string }
-              - { label: Response Time, name: responseTime, widget: string, required: false }
-              - { label: Note, name: note, widget: string, required: false }
-          - { label: Additional Cities, name: additionalCities, widget: list, required: false, hint: Comma-separated }
-          - label: Service Map
-            name: serviceMap
-            widget: object
-            required: false
-            fields:
-              # Required: a cleared optional number is saved as "" which fails z.number().optional().
-              - { label: Latitude, name: lat, widget: number, value_type: float, step: 0.0001 }
-              - { label: Longitude, name: lng, widget: number, value_type: float, step: 0.0001 }
-              - { label: Radius (miles), name: radius, widget: number, value_type: int, min: 0 }
-          - label: SEO
-            name: seo
-            widget: object
-            fields:
-              - { label: Meta Title, name: metaTitle, widget: string, required: false }
-              - { label: Meta Description, name: metaDescription, widget: text, required: false }
-              - { label: Keywords, name: keywords, widget: list, required: false, hint: Comma-separated }
+            hint: "City names only (no state). A city links to its own page when one exists under Service Area Pages."
+            field: { label: City, name: city, widget: string }
+          - { <<: *heading, label: Closing call to action, name: cta }
+
+      - name: services
+        label: Services Page
+        file: src/content/pages/services.md
+        format: frontmatter
+        fields:
+          - *seo
+          - *heroPlain
+          - { <<: *heading, label: Closing call to action, name: cta }
+
+      - name: sitemap
+        label: Sitemap Page
+        file: src/content/pages/sitemap.md
+        format: frontmatter
+        fields:
+          - *seo
+          - *heroPlain
 
   # ---------------------------------------------------------------------------
-  # Site settings (src/data/settings.json, imported directly; no zod schema)
+  # Settings (src/data/*.json, imported directly; no zod schema)
   # ---------------------------------------------------------------------------
   - name: settings
     label: Settings
@@ -442,45 +479,62 @@ collections:
       preview: false
     files:
       - name: site
-        label: Site Settings
+        label: Business Details
         file: src/data/settings.json
         format: json
         fields:
-          - { label: Site Title, name: site_title, widget: string, required: false }
-          - { label: Site Description, name: site_description, widget: text, required: false }
-          - { label: Logo, name: logo, widget: image, required: false }
-          - label: Social Media
-            name: social
-            widget: object
-            required: false
+          - { label: Business name, name: site_title, widget: string }
+          - { label: Default meta description, name: site_description, widget: text }
+          - { label: Logo, name: logo, widget: image, hint: "PNG; put a .webp copy with the same name next to it." }
+          - { label: Footer logo (for dark backgrounds), name: footerLogo, widget: image }
+          - { label: Default social sharing image, name: og_image, widget: image }
+          - label: Phone numbers
+            name: phones
+            widget: list
+            hint: The first number is used for every Call button and in search results.
+            summary: "{{fields.label}} {{fields.number}}"
             fields:
-              - { label: Facebook URL, name: facebook, widget: string, required: false }
-              - { label: Instagram URL, name: instagram, widget: string, required: false }
-              - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
-          - { label: Office Phone, name: cellphone, widget: string, required: false }
-          - { label: Field Phone, name: phone, widget: string, required: false }
-          - { label: Email Address, name: email, widget: string, required: false }
-          - { label: Physical Address, name: address, widget: string, required: false }
-          - { label: Hours Description, name: hours, widget: string, required: false }
-          - { label: OG Image, name: og_image, widget: image, required: false }
-          - label: Geographic Location
+              - { label: Label, name: label, widget: string }
+              - { label: Number, name: number, widget: string }
+          - { label: Email, name: email, widget: string }
+          - label: Address
+            name: address
+            widget: object
+            fields:
+              - { label: Street, name: street, widget: string }
+              - { label: City, name: city, widget: string }
+              - { label: State, name: region, widget: string }
+              - { label: ZIP, name: postalCode, widget: string }
+          - label: Map location
             name: geo
             widget: object
             fields:
-              # Required: BaseLayout calls settings.geo.latitude.toString() unconditionally.
-              - { label: Latitude, name: latitude, widget: number, value_type: float, step: 0.0001 }
-              - { label: Longitude, name: longitude, widget: number, value_type: float, step: 0.0001 }
-          - { label: Price Range, name: priceRange, widget: string, required: false }
-          - { label: Opening Hours (Schema.org format), name: openingHours, widget: string, required: false }
-          - label: Business Hours
-            name: businessHours
-            widget: object
-            required: false
+              - { label: Latitude, name: latitude, widget: number, value_type: float, step: 0.000001 }
+              - { label: Longitude, name: longitude, widget: number, value_type: float, step: 0.000001 }
+          - label: Hours
+            name: hours
+            widget: list
+            summary: "{{fields.label}}: {{fields.opens}}-{{fields.closes}}"
             fields:
-              - { label: Weekdays, name: weekdays, widget: string, required: false }
-              - { label: Saturday, name: saturday, widget: string, required: false }
-              - { label: Sunday, name: sunday, widget: string, required: false }
-              - { label: Emergency Service, name: emergency, widget: string, required: false }
+              - { label: Label, name: label, widget: string, hint: "e.g. Monday - Friday" }
+              - { label: Days (schema.org), name: days, widget: string, hint: "Mo-Fr, Sa, Su ..." }
+              - { label: Opens (24h), name: opens, widget: string, pattern: ['^\d{2}:\d{2}$', 'HH:MM'] }
+              - { label: Closes (24h), name: closes, widget: string, pattern: ['^\d{2}:\d{2}$', 'HH:MM'] }
+          - label: Social media
+            name: social
+            widget: object
+            fields:
+              - { label: Facebook URL, name: facebook, widget: string, required: false }
+              - { label: Instagram URL, name: instagram, widget: string, required: false }
+              - { label: Instagram handle, name: instagramHandle, widget: string, required: false }
+              - { label: Facebook page name, name: facebookName, widget: string, required: false }
+              - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+          - label: Google reviews
+            name: google
+            widget: object
+            fields:
+              - { label: Reviews URL, name: reviewsUrl, widget: string }
+              - { label: Write-a-review URL, name: writeReviewUrl, widget: string }
           - label: Analytics
             name: analytics
             widget: object
@@ -522,3 +576,32 @@ collections:
                     fields:
                       - { label: Text, name: text, widget: string, required: false }
                       - { label: Tracking Label, name: trackingLabel, widget: string, required: false }
+
+      - name: navigation
+        label: Navigation
+        file: src/data/navigation.json
+        format: json
+        fields:
+          - label: Main menu
+            name: mainMenu
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Link, name: href, widget: string }
+              - { label: List every service under this item, name: servicesMenu, widget: boolean, required: false }
+              - label: Dropdown links
+                name: dropdown
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: href, widget: string }
+          - label: Footer company links
+            name: footerCompany
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Link, name: href, widget: string }

@@ -1,6 +1,9 @@
 ---
 import Navigation from './Navigation.astro';
 import MobileMenu from './MobileMenu.astro';
+import settings from '../../data/settings.json';
+
+const logoWebp = settings.logo.replace(/\.(png|jpe?g)$/i, '.webp');
 
 const currentPath = Astro.url.pathname;
 ---
@@ -13,8 +16,8 @@ const currentPath = Astro.url.pathname;
         <!-- Logo (visible on mobile and desktop) -->
         <a href="/" class="header__logo">
           <picture>
-            <source srcset="/lco-final.webp" type="image/webp" />
-            <img src="/lco-final.png" alt="Lake County Outdoors" width="52" height="52" />
+            <source srcset={logoWebp} type="image/webp" />
+            <img src={settings.logo} alt="Lake County Outdoors home" width="52" height="52" />
           </picture>
         </a>
         
@@ -93,7 +96,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .header__logo img {
-    height: 40px;
+    height: 48px;
     width: auto;
   }
 

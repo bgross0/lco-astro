@@ -1,0 +1,96 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+interface Props {
+  title: string;
+  intro?: string;
+  eyebrow?: string;
+  steps: { title: string; text: string }[];
+}
+
+const { title, intro, eyebrow, steps } = Astro.props;
+---
+
+<section class="process">
+  <div class="container">
+    <SectionHeader title={title} text={intro} eyebrow={eyebrow} />
+    <ol class:list={['process__steps', `process__steps--${steps.length}`]}>
+      {steps.map((step, index) => (
+        <li class="process__step">
+          <span class="process__number" aria-hidden="true">{index + 1}</span>
+          <h3 class="process__title">{step.title}</h3>
+          <p class="process__text">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .process {
+    padding: var(--space-20) 0;
+    background: var(--white);
+  }
+
+  .process__steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: step;
+  }
+
+  .process__step {
+    position: relative;
+    margin: 0;
+    padding: var(--space-8) var(--space-6) var(--space-6);
+    background: var(--neutral-light);
+    border-radius: var(--radius-xl);
+    border-top: 4px solid var(--primary);
+  }
+
+  .process__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-full);
+    background: var(--secondary);
+    color: var(--white);
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+
+  .process__title {
+    font-size: var(--text-xl);
+    color: var(--secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .process__text {
+    margin: 0;
+    color: var(--neutral-dark);
+  }
+
+  @media (min-width: 1024px) {
+    .process__steps--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .process__steps--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .process {
+      padding: var(--space-16) 0;
+    }
+  }
+</style>

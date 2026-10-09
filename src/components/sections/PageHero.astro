@@ -1,0 +1,203 @@
+---
+import Img from '../common/Img.astro';
+import Stars from '../common/Stars.astro';
+import CallButtons from '../common/CallButtons.astro';
+import settings from '../../data/settings.json';
+
+interface Props {
+  heading: string;
+  text?: string;
+  eyebrow?: string;
+  image?: string;
+  imageAlt?: string;
+  /** Show the "5 stars on Google" badge above the heading. */
+  rating?: boolean;
+  /** Hide the Get in touch / Call us buttons (e.g. on the contact page). */
+  buttons?: boolean;
+  align?: 'left' | 'center';
+  size?: 'large' | 'medium' | 'compact';
+}
+
+const {
+  heading,
+  text,
+  eyebrow,
+  image,
+  imageAlt = '',
+  rating = false,
+  buttons = true,
+  align = 'left',
+  size = 'large',
+} = Astro.props;
+---
+
+<section class:list={['page-hero', `page-hero--${align}`, `page-hero--${size}`, { 'page-hero--image': image }]}>
+  {image && (
+    <div class="page-hero__media">
+      <Img src={image} alt={imageAlt} loading="eager" fetchpriority="high" sizes="100vw" />
+    </div>
+  )}
+  <div class="container page-hero__inner">
+    <div class="page-hero__content">
+      {rating && (
+        <a class="page-hero__rating" href={settings.google.reviewsUrl} target="_blank" rel="noopener">
+          <Stars size={16} label="Rated 5 out of 5 on Google" />
+          <span>5 stars on Google</span>
+        </a>
+      )}
+      {eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
+      <h1 class="page-hero__title">{heading}</h1>
+      {text && <p class="page-hero__text">{text}</p>}
+      <slot />
+      {buttons && <div class="page-hero__actions"><CallButtons /></div>}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* The fixed header floats over the top of the hero. */
+  .page-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: -100px;
+    padding: calc(100px + var(--space-16)) 0 var(--space-16);
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+    color: var(--white);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .page-hero--large {
+    min-height: 640px;
+  }
+
+  .page-hero--medium {
+    min-height: 480px;
+  }
+
+  .page-hero--compact {
+    padding-bottom: var(--space-12);
+  }
+
+  .page-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  .page-hero__media :global(img) {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .page-hero--image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(20, 40, 62, 0.86) 0%, rgba(20, 40, 62, 0.62) 55%, rgba(20, 40, 62, 0.3) 100%);
+  }
+
+  .page-hero--center.page-hero--image::after {
+    background: linear-gradient(180deg, rgba(20, 40, 62, 0.55) 0%, rgba(20, 40, 62, 0.7) 100%);
+  }
+
+  .page-hero__inner {
+    width: 100%;
+  }
+
+  .page-hero__content {
+    max-width: 720px;
+  }
+
+  .page-hero--center .page-hero__content {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .page-hero--center .page-hero__actions :global(.call-buttons) {
+    justify-content: center;
+  }
+
+  .page-hero__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--white);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .page-hero__rating:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.24);
+    text-decoration: none;
+  }
+
+  .page-hero__eyebrow {
+    margin-bottom: var(--space-3);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary-light);
+  }
+
+  .page-hero__title {
+    color: var(--white);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-4);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .page-hero__text {
+    font-size: clamp(var(--text-lg), 2vw, var(--text-xl));
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 60ch;
+    margin-bottom: 0;
+  }
+
+  .page-hero--center .page-hero__text {
+    margin-inline: auto;
+  }
+
+  .page-hero__actions {
+    margin-top: var(--space-8);
+  }
+
+  @media (max-width: 1023px) {
+    .page-hero {
+      margin-top: -100px;
+      padding-top: calc(100px + var(--space-12));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .page-hero {
+      padding-bottom: var(--space-12);
+    }
+
+    .page-hero--large {
+      min-height: 560px;
+    }
+
+    .page-hero--medium {
+      min-height: 420px;
+    }
+
+    .page-hero--image::after {
+      background: linear-gradient(180deg, rgba(20, 40, 62, 0.6) 0%, rgba(20, 40, 62, 0.82) 100%);
+    }
+  }
+</style>

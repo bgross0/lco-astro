@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import ServiceSidebar from '../../components/sections/ServiceSidebar.astro';
+import ProcessSteps from '../../components/sections/ProcessSteps.astro';
+import FaqList from '../../components/sections/FaqList.astro';
+import ReviewsSection from '../../components/sections/ReviewsSection.astro';
+import CtaSection from '../../components/sections/CtaSection.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import Prose from '../../components/common/Prose.astro';
+import { getAreas, serviceUrl } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({ params: { slug: service.id }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const { data } = service;
+const { Content } = await render(service);
+const site = Astro.site!.origin;
+const url = new URL(serviceUrl(service), site).href;
+const areas = await getAreas();
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+  { label: data.title, href: serviceUrl(service) },
+];
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@type': 'Service',
+    name: data.title,
+    serviceType: data.title,
+    description: data.summary,
+    url,
+    provider: { '@id': `${site}/#business` },
+    areaServed: areas.map((area) => ({ '@type': 'City', name: area.label })),
+  },
+];
+if (data.faq) {
+  jsonLd.push({
+    '@type': 'FAQPage',
+    mainEntity: data.faq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  });
+}
+---
+
+<BaseLayout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
+  <PageHero heading={data.hero.heading} text={data.hero.text} image={data.hero.image} imageAlt={data.hero.imageAlt} />
+
+  <section class="service-body">
+    <div class="container service-body__grid">
+      <article class="service-body__main">
+        <Breadcrumbs items={crumbs} />
+        <h2 class="service-body__title">{data.heading}</h2>
+        <Prose>
+          <Content />
+        </Prose>
+      </article>
+      <ServiceSidebar currentId={service.id} />
+    </div>
+  </section>
+
+  {data.process && <ProcessSteps title={data.process.title} intro={data.process.intro} steps={data.process.steps} />}
+  {data.faq && <FaqList title={data.faq.title} intro={data.faq.intro} items={data.faq.items} />}
+  <ReviewsSection title={data.reviews.title} text={data.reviews.text} background="white" />
+  <CtaSection title={data.cta.title} text={data.cta.text} />
+</BaseLayout>
+
+<style>
+  .service-body {
+    padding: var(--space-12) 0 var(--space-20);
+    background: var(--white);
+  }
+
+  .service-body__grid {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .service-body__title {
+    color: var(--secondary);
+    font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+    margin-bottom: var(--space-6);
+  }
+
+  @media (min-width: 1024px) {
+    .service-body__grid {
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: var(--space-16);
+      align-items: start;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .service-body {
+      padding: var(--space-8) 0 var(--space-16);
+    }
+  }
+</style>

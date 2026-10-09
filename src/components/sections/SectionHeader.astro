@@ -1,0 +1,65 @@
+---
+interface Props {
+  title: string;
+  text?: string;
+  eyebrow?: string;
+  align?: 'left' | 'center';
+  level?: 'h2' | 'h3';
+  id?: string;
+  tone?: 'default' | 'inverse';
+}
+
+const { title, text, eyebrow, align = 'center', level = 'h2', id, tone = 'default' } = Astro.props;
+const Heading = level;
+---
+
+<header class:list={['section-header', `section-header--${align}`, `section-header--${tone}`]}>
+  {eyebrow && <p class="section-header__eyebrow">{eyebrow}</p>}
+  <Heading class="section-header__title" id={id}>{title}</Heading>
+  {text && <p class="section-header__text">{text}</p>}
+</header>
+
+<style>
+  .section-header {
+    max-width: 760px;
+    margin-bottom: var(--space-10);
+  }
+
+  .section-header--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section-header__eyebrow {
+    margin-bottom: var(--space-2);
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--primary-dark);
+  }
+
+  .section-header__title {
+    color: var(--secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .section-header__text {
+    color: var(--neutral-dark);
+    font-size: var(--text-lg);
+    margin-bottom: 0;
+  }
+
+  .section-header--inverse .section-header__eyebrow {
+    color: var(--primary-light);
+  }
+
+  .section-header--inverse .section-header__title {
+    color: var(--white);
+  }
+
+  .section-header--inverse .section-header__text {
+    color: rgba(255, 255, 255, 0.86);
+  }
+</style>
