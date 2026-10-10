@@ -1,111 +1,137 @@
 ---
 import { getEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
-import Features from '../components/shadcn-studio/blocks/features-section-15/features-section-15';
-import SocialProof from '../components/shadcn-studio/blocks/social-proof-03/social-proof-03';
-import AboutUs from '../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
-import Testimonials from '../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
-import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-21/hero-section-21';
+import Portfolio from '../components/shadcn-studio/blocks/portfolio-16/portfolio-16';
+import AboutUs from '../components/shadcn-studio/blocks/about-us-page-02/about-us-page-02';
+import Gallery from '../components/shadcn-studio/blocks/gallery-component-09/gallery-component-09';
+import Testimonials from '../components/shadcn-studio/blocks/testimonials-component-04/testimonials-component-04';
+import CTA from '../components/shadcn-studio/blocks/cta-section-14/cta-section-14';
 import ServiceAreaMap from '../components/site/ServiceAreaMap.astro';
 import settings from '../data/settings.json';
-import { primaryPhone } from '../lib/phone';
-import { blockImage } from '../lib/images';
 import { serviceTabs } from '../lib/blocks';
-import { getReviewSummary, getReviewerInitials, getTestimonials } from '../lib/content';
+import { getReviewSummary, getTestimonials, getReviews } from '../lib/content';
 
 const home = (await getEntry('homepage', 'home'))!.data;
+const gallery = (await getEntry('pages', 'gallery'))!.data as { images: { image: string; alt: string }[] };
 const summary = await getReviewSummary();
 const testimonials = await getTestimonials();
+const reviews = await getReviews();
+const tabs = await serviceTabs();
+const tabHref = (category: string) => `/services#${tabs.find((tab) => tab.name === category)?.value ?? ''}`;
 
-// Real job and fleet photos for the two scrolling hero columns.
-const heroColumns = await Promise.all(
-  [
-    [
-      ['/images/gallery/photo-08.jpg', 'Lake County Outdoors plow trucks lined up in a parking lot'],
-      ['/images/gallery/photo-12.jpg', 'Boulder retaining wall and steps along a lawn beside a house'],
-      ['/images/gallery/photo-03.jpg', 'Wheel loader stacking a large snow pile'],
-      ['/images/services/custom-patios.jpg', 'Flagstone patio with a fire pit beside a modern home'],
-      ['/images/gallery/photo-07.jpg', 'Plow truck clearing a parking lot at night'],
-    ],
-    [
-      ['/images/home/crew.jpg', 'The Lake County Outdoors crew in safety vests behind a snow pusher at night'],
-      ['/images/gallery/photo-09.jpg', 'Two wheel loaders with snow pushers parked outside a building'],
-      ['/images/services/sod-installation.jpg', 'Fresh sod laid across a graded yard beside a house'],
-      ['/images/gallery/photo-05.jpg', 'Skid steer with a snow plow attachment on a trailer'],
-      ['/images/services/general-landscaping.jpg', 'Paver patio with a retaining wall and new landscaping'],
-    ],
-  ].map((column) => Promise.all(column.map(([src, alt]) => blockImage(src, alt)))),
+const avatars = reviews.slice(0, 4).map((review) => ({
+  src: '',
+  name: review.data.author,
+  fallback: review.data.author.replace(/\./g, '').split(/\s+/, 2).map((part) => part[0]).join('').toUpperCase(),
+}));
+
+const services = tabs.flatMap((tab) =>
+  (tab.cards ?? []).map((card) => ({ title: card.title, description: card.summary, href: card.href, img: card.image.src })),
 );
 
-const highlights = await Promise.all(
-  home.highlights.items.map(async (item) => ({
-    name: item.title.replace(/^Our\s+/i, ''),
-    value: item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-    paragraphs: item.paragraphs,
-    tags: item.tags,
-    media: item.video
-      ? { type: 'video' as const, src: item.video, poster: item.image, alt: item.imageAlt }
-      : await blockImage(item.image, item.imageAlt),
-  })),
-);
-
-const stats = [
-  ...(home.highlights.items.flatMap((item) => item.stats ?? [])),
-  { value: summary.average.toFixed(1), label: 'Rating on Google' },
-  { value: String(summary.count), label: 'Google reviews' },
+const categories = [
+  {
+    id: 1,
+    title: 'Snow and ice management',
+    description: 'Plowing, hauling and salting for retail centers, offices, schools and homes, all season long.',
+    link: '/services/commercial-snow-removal',
+    imageUrl: '/images/home/fleet-video-poster.jpg',
+    imageAlt: 'Plow trucks and skid steers with snow pushers parked in a lot during snowfall',
+    backgroundColor: 'bg-sky-600/10 hover:bg-sky-600/20',
+    btnColor: 'bg-sky-600 text-white hover:bg-sky-600 focus-visible:ring-sky-600',
+  },
+  {
+    id: 2,
+    title: 'Landscaping and hardscapes',
+    description: 'Sod, patios, boulder walls, drainage and fencing, designed and built by our own crew.',
+    link: tabHref('Landscape Services'),
+    imageUrl: '/images/services/custom-patios.jpg',
+    imageAlt: 'Flagstone patio with a fire pit beside a modern white home',
+    backgroundColor: 'bg-green-600/10 hover:bg-green-600/20',
+    btnColor: 'bg-green-600 text-white hover:bg-green-600 focus-visible:ring-green-600',
+  },
+  {
+    id: 3,
+    title: 'Excavation and site work',
+    description: 'Excavation, grading, land clearing, concrete and dirt hauling with our own loaders and tri-axle trucks.',
+    link: tabHref('Excavation & Build'),
+    imageUrl: '/images/services/excavation.jpg',
+    imageAlt: 'Mini excavator working in a creek bed while a crew member sets rock',
+    backgroundColor: 'bg-amber-600/10 hover:bg-amber-600/20',
+    btnColor: 'bg-amber-600 text-white hover:bg-amber-600 focus-visible:ring-amber-600',
+  },
+  {
+    id: 4,
+    title: 'Shoreline solutions',
+    description: 'Aquatic weed removal, shoreline cleanup and riprap installation for lake homes and associations.',
+    link: '/shoreline-solutions',
+    imageUrl: '/images/gallery/photo-13.jpg',
+    imageAlt: 'Rocky riprap shoreline along a pond',
+    backgroundColor: 'bg-teal-600/10 hover:bg-teal-600/20',
+    btnColor: 'bg-teal-600 text-white hover:bg-teal-600 focus-visible:ring-teal-600',
+  },
 ];
 ---
 
 <Layout title={home.seo.title} description={home.seo.description} image={home.hero.image}>
   <HeroSection
-    pill={{ badge: home.shoreline.label ?? 'New', text: home.shoreline.title, href: home.shoreline.link }}
-    heading={home.hero.heading}
-    text={home.hero.text}
-    actions={[
-      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
-      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
-    ]}
-    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
-    columns={heroColumns}
+    client:load
+    heading="Snow removal and landscaping for Twin Cities properties"
+    text="Our own crew and our own fleet: 10 plow trucks, 14 Bobcats, 6 wheel loaders and 2 tri-axle salters, keeping malls, offices, schools and homes open and safe all winter."
+    button={{ label: 'Request a quote', href: '/contact-us' }}
+    image={{ src: '/images/home/hero-plow.webp', alt: 'Lake County Outdoors plow truck clearing a parking lot at night', width: 1099, height: 577 }}
+    stat={{ value: `${summary.average.toFixed(1)} on Google`, label: `${summary.count} reviews`, href: settings.google.reviewsUrl }}
+    cardsTitle="What we do"
+    destinations={services}
+    avatars={avatars}
   />
 
-  <Features
+  <Portfolio
     client:visible
-    id="services"
-    eyebrow="Our services"
-    title={home.services.title}
-    text={home.services.text}
-    button={{ label: 'View all services', href: '/services' }}
-    tabs={await serviceTabs()}
+    badge="Services"
+    title="One contractor for every season"
+    text="Snow and ice in winter, landscaping and site work the rest of the year, with the same crew and equipment."
+    portfolioItems={categories}
   />
-
-  <SocialProof title={home.stats?.title ?? home.highlights.title} text={home.stats?.text} stats={stats} />
 
   <AboutUs
     client:visible
-    title={home.about.title}
-    contentDescription={home.about.text}
-    button={{ label: 'More about us', href: '/about-us' }}
-    media={await blockImage(home.about.image, home.about.imageAlt)}
-    tabs={highlights}
+    aboutUs={{
+      title: { before: 'From homes to', highlight: 'Fortune 100', after: 'headquarters' },
+      text: 'For more than 10 years we have maintained residential lots, retail centers, schools, public buildings and corporate campuses across the Twin Cities.',
+      button: { label: 'About us', href: '/about-us' },
+      leftImage: { src: '/images/home/crew.jpg', alt: 'The Lake County Outdoors crew in safety vests behind a snow pusher at night', buttonText: 'Our crew', buttonLink: '/about-us' },
+      rightImage: { src: '/images/services/commercial-snow-removal.jpg', alt: 'Aerial view of the Lake County Outdoors fleet lined up in a parking lot', buttonText: 'Our fleet', buttonLink: '/services/commercial-snow-removal' },
+      stats: [
+        { value: '10+', title: 'Years in business', description: 'Serving the Twin Cities metro' },
+        { value: `${summary.average.toFixed(1)} stars`, title: `${summary.count} Google reviews`, description: 'From property managers and homeowners' },
+      ],
+    }}
+  />
+
+  <Gallery
+    client:visible
+    title="Recent work"
+    text="Snow events, hardscapes, excavation and shoreline projects from our crews."
+    gallery={gallery.images.map((item) => ({ src: item.image, alt: item.alt }))}
   />
 
   <Testimonials
-    title={home.reviews.title}
-    text={home.reviews.text}
+    client:visible
+    title="What our customers say"
+    text={`${summary.average.toFixed(1)} stars from ${summary.count} Google reviews.`}
     testimonials={testimonials}
-    links={{ allReviews: '/reviews', writeReview: settings.google.writeReviewUrl }}
-    muted
   />
 
   <ServiceAreaMap title={home.areas.title} text={home.areas.text} />
 
-  <CTASection
-    title={home.cta.title}
-    text={home.cta.text}
-    button={{ label: home.offer.buttonText, href: home.offer.link }}
-    phone={primaryPhone}
-    image={await blockImage('/images/gallery/photo-01.jpg', 'Wheel loader with a snow pusher on a trailer in a snowy lot')}
+  <CTA
+    client:visible
+    title="Lock in your snow contract before the first storm"
+    text="Tell us about your property and we will send a quote for plowing, salting and hauling this season."
+    button={{ label: 'Request a quote', href: '/contact-us' }}
+    background="/images/home/cta-bg.jpg"
+    image={{ src: '/images/home/crew.jpg', alt: 'The Lake County Outdoors crew at night' }}
   />
 </Layout>
