@@ -3,6 +3,7 @@ import '../styles/shadcn.css';
 import montserratLatin from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url';
 import geistLatin from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 import Header from '../components/shadcn-studio/blocks/hero-section-21/header';
+import MobileNav from '../components/site/MobileNav.astro';
 import Footer from '../components/shadcn-studio/blocks/footer-component-03/footer-component-03';
 import settings from '../data/settings.json';
 import { primaryPhone } from '../lib/phone';
@@ -148,7 +149,9 @@ const business = {
       Skip to content
     </a>
 
-    <Header client:load className="sticky" navigationData={headerMenu} cta={{ label: `Call ${primaryPhone.display}`, shortLabel: 'Call', href: primaryPhone.href }} />
+    <Header client:load className="sticky" navigationData={headerMenu} cta={{ label: `Call ${primaryPhone.display}`, shortLabel: 'Call', href: primaryPhone.href }}>
+      <MobileNav slot="mobileNav" navigationData={headerMenu} />
+    </Header>
 
     <main id="main" tabindex="-1" class="outline-none">
       <slot />

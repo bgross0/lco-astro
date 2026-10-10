@@ -1,0 +1,71 @@
+---
+// Phone menu for the site header. It is a native <details> disclosure, so it
+// opens and every link works on the first tap, before (or without) any
+// JavaScript. The header block's Radix dropdown only responds once the React
+// island has hydrated, which takes seconds on a mid-range phone. Styling
+// matches the block's dropdown menu (ui/dropdown-menu.tsx).
+import { ChevronRightIcon, CircleSmallIcon, MenuIcon } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
+import type { NavigationSection } from '@/components/shadcn-studio/blocks/menu-navigation';
+
+interface Props {
+  navigationData: NavigationSection[];
+}
+
+const { navigationData } = Astro.props;
+const item =
+  'relative flex items-center gap-2 rounded-sm px-2 py-2 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground [&_svg]:shrink-0 [&_svg]:size-4 [&_svg]:text-muted-foreground';
+---
+
+<details class="relative" data-mobile-nav>
+  <summary
+    class:list={[buttonVariants({ variant: 'outline', size: 'icon' }), 'list-none [&::-webkit-details-marker]:hidden']}
+    aria-label="Menu"
+  >
+    <MenuIcon aria-hidden="true" />
+  </summary>
+  <nav
+    aria-label="Site menu"
+    class="bg-popover text-popover-foreground absolute top-full right-0 z-50 mt-2 max-h-[75svh] w-64 overflow-y-auto rounded-md border p-1 shadow-md"
+  >
+    {
+      navigationData.map((section) =>
+        section.href ? (
+          <a class={item} href={section.href}>
+            {section.title}
+          </a>
+        ) : (
+          <details class="group">
+            <summary class:list={[item, 'cursor-pointer justify-between list-none [&::-webkit-details-marker]:hidden']}>
+              <span class="flex-1">{section.title}</span>
+              <ChevronRightIcon class="transition-transform group-open:rotate-90" aria-hidden="true" />
+            </summary>
+            <div class="pl-2">
+              {section.items?.map((link) => (
+                <a class={item} href={link.href}>
+                  <CircleSmallIcon aria-hidden="true" />
+                  <span>{link.title}</span>
+                </a>
+              ))}
+            </div>
+          </details>
+        ),
+      )
+    }
+  </nav>
+</details>
+
+<script>
+  // Progressive enhancement: close on Escape or a tap outside the menu.
+  for (const menu of document.querySelectorAll<HTMLDetailsElement>('[data-mobile-nav]')) {
+    document.addEventListener('click', (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+  }
+</script>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 import { MenuIcon } from 'lucide-react'
 
@@ -16,10 +16,12 @@ import Logo from '@/components/shadcn-studio/logo'
 type HeaderProps = {
   navigationData: NavigationSection[]
   cta: { label: string; shortLabel: string; href: string }
+  /** Phone menu rendered by the page (works before hydration); falls back to the block's dropdown. */
+  mobileNav?: ReactNode
   className?: string
 }
 
-const Header = ({ navigationData, cta, className }: HeaderProps) => {
+const Header = ({ navigationData, cta, mobileNav, className }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -66,16 +68,18 @@ const Header = ({ navigationData, cta, className }: HeaderProps) => {
             <a href={cta.href}>{cta.shortLabel}</a>
           </Button>
 
-          <MenuDropdown
-            align='end'
-            navigationData={navigationData}
-            trigger={
-              <Button variant='outline' size='icon' className='lg:hidden'>
-                <MenuIcon />
-                <span className='sr-only'>Menu</span>
-              </Button>
-            }
-          />
+          {mobileNav ?? (
+            <MenuDropdown
+              align='end'
+              navigationData={navigationData}
+              trigger={
+                <Button variant='outline' size='icon' className='lg:hidden'>
+                  <MenuIcon />
+                  <span className='sr-only'>Menu</span>
+                </Button>
+              }
+            />
+          )}
         </div>
       </div>
     </header>
