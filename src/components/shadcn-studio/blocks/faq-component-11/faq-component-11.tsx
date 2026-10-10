@@ -1,6 +1,5 @@
 import { ChevronDownIcon } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
 
 type FAQs = {
   question: string
@@ -38,7 +37,6 @@ const FAQ = ({ title, intro, faqItems, image }: FAQProps) => {
           </div>
 
           <div>
-            <Badge className='bg-primary/10 text-primary mb-2 px-3 py-1'>FAQ</Badge>
             <h2 className='mb-4 text-2xl font-semibold md:text-3xl lg:text-4xl'>{title}</h2>
             {intro && <p className='text-muted-foreground mb-8'>{intro}</p>}
 

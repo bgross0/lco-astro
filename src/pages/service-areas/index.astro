@@ -28,7 +28,6 @@ const home = (await getEntry('homepage', 'home'))!.data;
   <Features
     client:visible
     id="services"
-    eyebrow="Our services"
     title="Services across the metro"
     text={home.services.title}
     tabs={await serviceTabs()}

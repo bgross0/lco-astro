@@ -14,7 +14,6 @@ const projects = await getCollection('projects');
 
 <Layout title={page.seo.title} description={page.seo.description}>
   <HeroSection
-    pill={page.hero.eyebrow ? { badge: page.hero.eyebrow, text: `${projects.length} ${projects.length === 1 ? 'project' : 'projects'}` } : undefined}
     heading={page.hero.heading}
     text={page.hero.text}
   />

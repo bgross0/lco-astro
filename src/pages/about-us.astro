@@ -46,7 +46,6 @@ const tabs = sections.map((section) => ({ name: section.title, value: section.id
   <Features
     client:visible
     id="services"
-    eyebrow="Services"
     title={page.servicesTitle ?? home.services.title}
     button={{ label: 'View all services', href: '/services' }}
     tabs={await serviceTabs()}

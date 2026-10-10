@@ -1,7 +1,6 @@
 import { ArrowRightIcon, ChevronRightIcon, PauseIcon, PhoneIcon, PlayIcon } from 'lucide-react'
 
 import { Avatar, AvatarFallback, AvatarGroup } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Marquee } from '@/components/ui/marquee'
 import { MotionPreset } from '@/components/ui/motion-preset'
@@ -92,16 +91,8 @@ const HeroSection = ({ breadcrumbs, pill, heading, text, actions = [], rating, c
             )}
 
             {pill && (
-              <MotionPreset className='bg-muted flex max-w-full flex-wrap items-center gap-x-2.5 gap-y-1 rounded-3xl border px-2 py-1 text-sm'>
-                <Badge className='shrink-0'>{pill.badge}</Badge>
-                {pill.href ? (
-                  <a href={pill.href} className='text-muted-foreground hover:text-primary flex items-center gap-1 pr-1 transition-colors'>
-                    {pill.text}
-                    <ArrowRightIcon className='size-3.5 shrink-0' aria-hidden='true' />
-                  </a>
-                ) : (
-                  <span className='text-muted-foreground pr-1'>{pill.text}</span>
-                )}
+              <MotionPreset component='p' className='text-muted-foreground text-sm'>
+                {pill.badge} · {pill.text}
               </MotionPreset>
             )}
 

@@ -2,7 +2,6 @@ import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react'
 
 import ContactForm, { type ContactFormProps } from '@/components/shadcn-studio/blocks/contact-us-page-10/contact-form'
 
-import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 
 import { BorderBeam } from '@/components/ui/border-beam'
@@ -19,7 +18,6 @@ export type ContactInfo = {
 }[]
 
 type ContactUsProps = {
-  badge: string
   /** The page's H1. */
   heading: string
   text?: string
@@ -29,7 +27,7 @@ type ContactUsProps = {
   form: ContactFormProps
 }
 
-const ContactUs = ({ badge, heading, text, contactInfo, formTitle, formSubtitle, form }: ContactUsProps) => {
+const ContactUs = ({ heading, text, contactInfo, formTitle, formSubtitle, form }: ContactUsProps) => {
   return (
     <section className='bg-muted py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
@@ -37,12 +35,6 @@ const ContactUs = ({ badge, heading, text, contactInfo, formTitle, formSubtitle,
           {/* Contact Info */}
           <div>
             <div className='space-y-4'>
-              <MotionPreset>
-                <Badge variant='outline' className='text-sm font-normal'>
-                  {badge}
-                </Badge>
-              </MotionPreset>
-
               <MotionPreset component='h1' className='mt-4 text-3xl font-semibold md:text-4xl lg:text-5xl'>
                 {heading}
               </MotionPreset>

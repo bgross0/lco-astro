@@ -26,7 +26,6 @@ export type FeatureTab = {
 
 type FeaturesProps = {
   id?: string
-  eyebrow: string
   title: string
   text?: string
   button?: { label: string; href: string }
@@ -35,7 +34,7 @@ type FeaturesProps = {
   proseClassName?: string
 }
 
-const Features = ({ id, eyebrow, title, text, button, tabs, proseClassName }: FeaturesProps) => {
+const Features = ({ id, title, text, button, tabs, proseClassName }: FeaturesProps) => {
   const [active, setActive] = useState(tabs[0]?.value)
 
   // /services#tree-services opens that category's tab.
@@ -54,9 +53,6 @@ const Features = ({ id, eyebrow, title, text, button, tabs, proseClassName }: Fe
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-20'>
-          <MotionPreset>
-            <div className='text-primary text-sm font-medium uppercase'>{eyebrow}</div>
-          </MotionPreset>
           <MotionPreset component='h2' className='mx-auto max-w-2xl text-2xl font-semibold md:text-3xl lg:text-4xl'>
             {title}
           </MotionPreset>

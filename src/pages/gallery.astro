@@ -14,7 +14,7 @@ const images = await Promise.all((page.images ?? []).map((photo) => blockImage(p
 ---
 
 <Layout title={page.seo.title} description={page.seo.description} image={images[0]?.src}>
-  <Gallery eyebrow="Lake County Outdoors" title={page.hero.heading} titleAs="h1" text={page.hero.text} galleryImage={images} />
+  <Gallery title={page.hero.heading} titleAs="h1" text={page.hero.text} galleryImage={images} />
 
   <CTASection
     title={home.cta.title}

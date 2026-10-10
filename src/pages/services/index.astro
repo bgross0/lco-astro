@@ -31,7 +31,7 @@ const stats = [
     rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
   />
 
-  <Features client:visible id="services" eyebrow="Our services" title={home.services.title} tabs={await serviceTabs()} />
+  <Features client:visible id="services" title={home.services.title} tabs={await serviceTabs()} />
 
   <SocialProof title={home.stats?.title ?? home.highlights.title} stats={stats} />
 

@@ -2,7 +2,6 @@ import { ArrowRightIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { MotionPreset } from '@/components/ui/motion-preset'
 
 export type PortfolioItem = {
@@ -17,23 +16,17 @@ export type PortfolioItem = {
 }
 
 type PortfolioProps = {
-  badge: string
   title: string
   text: string
   portfolioItems: PortfolioItem[]
 }
 
-const Portfolio = ({ badge, title, text, portfolioItems }: PortfolioProps) => {
+const Portfolio = ({ title, text, portfolioItems }: PortfolioProps) => {
   return (
     <section className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl space-y-12 px-4 sm:space-y-16 sm:px-6 lg:space-y-20 lg:px-8'>
         {/* Header */}
         <div className='space-y-4'>
-          <MotionPreset fade blur slide={{ direction: 'left', offset: 50 }} transition={{ duration: 0.6 }}>
-            <Badge variant='outline' className='text-sm font-normal'>
-              {badge}
-            </Badge>
-          </MotionPreset>
           <MotionPreset
             component='h2'
             className='text-2xl font-semibold sm:text-3xl lg:text-4xl'

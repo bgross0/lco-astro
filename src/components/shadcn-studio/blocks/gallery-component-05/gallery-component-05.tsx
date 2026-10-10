@@ -15,7 +15,6 @@ export type GalleryImage = {
 }
 
 type GalleryProps = {
-  eyebrow?: string
   title?: string
   /** The gallery page uses the block's header as the page heading. */
   titleAs?: 'h1' | 'h2'
@@ -33,19 +32,13 @@ const spanFor = (image: GalleryImage) => {
   return 'col-span-2 row-span-2'
 }
 
-const Gallery = ({ eyebrow, title, titleAs = 'h2', text, galleryImage }: GalleryProps) => {
+const Gallery = ({ title, titleAs = 'h2', text, galleryImage }: GalleryProps) => {
   return (
     <section className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         {title && (
           <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-20'>
-            {eyebrow && (
-              <MotionPreset component='p' className='text-primary text-sm font-medium uppercase'>
-                {eyebrow}
-              </MotionPreset>
-            )}
-
             <MotionPreset
               component={titleAs}
               className={cn(

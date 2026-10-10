@@ -44,7 +44,7 @@ const gallery = await Promise.all((data.gallery ?? []).map((photo) => blockImage
     media={gallery[0] ?? (await blockImage(data.image, data.imageAlt))}
   />
 
-  {gallery.length > 0 && <Gallery eyebrow="Project photos" title={data.title} galleryImage={gallery} />}
+  {gallery.length > 0 && <Gallery title={data.title} galleryImage={gallery} />}
 
   <CTASection
     title={home.cta.title}

@@ -18,7 +18,7 @@ const logoWebp = page.logo?.replace(/\.(png|jpe?g)$/i, '.webp');
 
 <Layout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
   <HeroSection
-    pill={page.notice ? { badge: page.notice.text, text: page.notice.label } : undefined}
+    pill={page.notice ? { badge: page.notice.label, text: page.notice.text } : undefined}
     heading={page.hero.heading}
     text={page.hero.text}
     actions={[
