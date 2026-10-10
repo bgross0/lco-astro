@@ -54,16 +54,16 @@ const Header = ({ navigationData, cta, mobileNav, className }: HeaderProps) => {
         </a>
 
         {/* Navigation */}
-        <MenuNavigation navigationData={navigationData} className='grow max-md:hidden' />
+        <MenuNavigation navigationData={navigationData} className='grow max-lg:hidden' />
 
         {/* Login Button */}
 
-        <Button className='rounded-full max-md:hidden' asChild>
+        <Button className='rounded-full max-lg:hidden' asChild>
           <a href={cta.href}>{cta.label}</a>
         </Button>
 
         {/* Navigation for small screens */}
-        <div className='flex gap-4 md:hidden'>
+        <div className='flex gap-4 lg:hidden'>
           <Button className='rounded-full' asChild>
             <a href={cta.href}>{cta.shortLabel}</a>
           </Button>
