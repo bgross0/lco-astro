@@ -2,13 +2,13 @@
 import '../styles/shadcn.css';
 import montserratLatin from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url';
 import geistLatin from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
-import Navbar from '../components/shadcn-studio/blocks/navbar-component-02/navbar-component-02';
+import Header from '../components/shadcn-studio/blocks/hero-section-21/header';
 import Footer from '../components/shadcn-studio/blocks/footer-component-03/footer-component-03';
 import settings from '../data/settings.json';
 import { primaryPhone } from '../lib/phone';
 import { openingHoursSpecification } from '../lib/site';
 import { getAreas, getServices, serviceUrl } from '../lib/content';
-import { getFooterData, getMainMenu } from '../lib/navigation';
+import { getFooterData, getHeaderMenu } from '../lib/navigation';
 import { pagePath } from '../lib/url';
 
 export interface Props {
@@ -38,7 +38,7 @@ const ogImage = absolute(image);
 
 const services = await getServices();
 const areas = await getAreas();
-const menu = await getMainMenu();
+const headerMenu = await getHeaderMenu();
 const footer = await getFooterData();
 const business = {
   '@context': 'https://schema.org',
@@ -148,7 +148,7 @@ const business = {
       Skip to content
     </a>
 
-    <Navbar client:load navigationData={menu} currentPath={path} phone={primaryPhone} />
+    <Header client:load className="sticky" navigationData={headerMenu} cta={{ label: `Call ${primaryPhone.display}`, shortLabel: 'Call', href: primaryPhone.href }} />
 
     <main id="main" tabindex="-1" class="outline-none">
       <slot />

@@ -127,7 +127,7 @@ const HeroSection = ({ heading, text, button, image, stat, cardsTitle, destinati
             <div className='from-background pointer-events-none absolute inset-y-0 left-0 z-1 w-30 bg-linear-to-r to-transparent max-sm:w-15' />
             <div className='from-background pointer-events-none absolute inset-y-0 right-0 z-1 w-30 bg-linear-to-l to-transparent max-sm:w-15' />
 
-            <Marquee gap={2} pauseOnHover duration={20}>
+            <Marquee gap={2} pauseOnHover duration={Math.max(20, destinations.length * 6)}>
               <div className='flex w-fit gap-8'>
                 {destinations.map((item, index) => (
                   <a

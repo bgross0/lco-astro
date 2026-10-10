@@ -15,10 +15,11 @@ import Logo from '@/components/shadcn-studio/logo'
 
 type HeaderProps = {
   navigationData: NavigationSection[]
+  cta: { label: string; shortLabel: string; href: string }
   className?: string
 }
 
-const Header = ({ navigationData, className }: HeaderProps) => {
+const Header = ({ navigationData, cta, className }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     >
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
-        <a href='#'>
+        <a href='/' aria-label='Lake County Outdoors home'>
           <Logo className='gap-3' />
         </a>
 
@@ -56,13 +57,13 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         {/* Login Button */}
 
         <Button className='rounded-full max-md:hidden' asChild>
-          <a href='#'>Login</a>
+          <a href={cta.href}>{cta.label}</a>
         </Button>
 
         {/* Navigation for small screens */}
         <div className='flex gap-4 md:hidden'>
           <Button className='rounded-full' asChild>
-            <a href='#'>Login</a>
+            <a href={cta.href}>{cta.shortLabel}</a>
           </Button>
 
           <MenuDropdown
