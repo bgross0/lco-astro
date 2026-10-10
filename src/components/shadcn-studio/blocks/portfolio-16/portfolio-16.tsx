@@ -91,7 +91,7 @@ const Portfolio = ({ badge, title, text, portfolioItems }: PortfolioProps) => {
                     className={`group absolute right-5 bottom-5 rounded-full text-white ${project.btnColor}`}
                   >
                     <span aria-hidden='true'>
-                    <ArrowRightIcon className='rotate-337 transition-transform duration-200 group-hover:rotate-360' />
+                    <ArrowRightIcon className='transition-transform duration-200 group-hover:translate-x-0.5' />
                     </span>
                   </Button>
                 </Card>
