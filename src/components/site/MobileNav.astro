@@ -6,6 +6,7 @@
 // matches the block's dropdown menu (ui/dropdown-menu.tsx).
 import { ChevronRightIcon, CircleSmallIcon, MenuIcon } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import type { NavigationSection } from '@/components/shadcn-studio/blocks/menu-navigation';
 
 interface Props {
@@ -19,7 +20,7 @@ const item =
 
 <details class="relative" data-mobile-nav>
   <summary
-    class:list={[buttonVariants({ variant: 'outline', size: 'icon' }), 'list-none [&::-webkit-details-marker]:hidden']}
+    class={cn(buttonVariants({ variant: 'outline', size: 'icon' }), 'list-none [&::-webkit-details-marker]:hidden')}
     aria-label="Menu"
   >
     <MenuIcon aria-hidden="true" />

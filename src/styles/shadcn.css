@@ -1,14 +1,16 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
-@import "@fontsource-variable/montserrat";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: 'Montserrat Variable', 'Geist Variable', sans-serif;
-    --font-sans: 'Geist Variable', sans-serif;
+    /* System sans, as on the current lakecountyoutdoor.com. */
+    --font-heading: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Darker brand blues for bands, gradients and the footer. */
+    --color-brand-deep: #0d4361;
+    --color-brand-ink: #09141e;
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -74,40 +76,40 @@
 }
 
 :root {
-    /* Lake County Outdoors brand. Primary is the LCO blue darkened so white
-       text on it (6.0:1) and primary text on primary/10-20 tints stay WCAG AA. */
+    /* Lake County Outdoors brand, as on the current site: ocean blue #125c85
+       (white text on it is 6.9:1) and navy ink #09141e. */
     --background: #ffffff;
-    --foreground: #16202b;
+    --foreground: #09141e;
     --card: #ffffff;
-    --card-foreground: #16202b;
+    --card-foreground: #09141e;
     --popover: #ffffff;
-    --popover-foreground: #16202b;
-    --primary: #2a64a6;
+    --popover-foreground: #09141e;
+    --primary: #125c85;
     --primary-foreground: #ffffff;
-    --secondary: #eaf2fb;
-    --secondary-foreground: #1e3d5c;
-    --muted: #f4f6f9;
-    --muted-foreground: #5b6472;
-    --accent: #eaf2fb;
-    --accent-foreground: #1e3d5c;
+    --secondary: #e7f0f5;
+    --secondary-foreground: #0d4361;
+    --muted: #f2f5f7;
+    --muted-foreground: #4f5d6a;
+    --accent: #e7f0f5;
+    --accent-foreground: #0d4361;
     --destructive: #b42318;
-    --border: #e3e8ef;
-    --input: #d5dce6;
-    --ring: #2a64a6;
-    --chart-1: #2a64a6;
+    --border: #dde5ea;
+    --input: #cfd9e0;
+    --ring: #125c85;
+    --chart-1: #125c85;
     --chart-2: #4a90e2;
     --chart-3: #1e3d5c;
     --chart-4: #6ba3e9;
     --chart-5: #2e5a87;
-    --radius: 0.625rem;
-    --sidebar: #f4f6f9;
+    --radius: 0.5rem;
+    --sidebar: #f2f5f7;
     --sidebar-foreground: #16202b;
-    --sidebar-primary: #2a64a6;
+    --sidebar-primary: #125c85;
     --sidebar-primary-foreground: #ffffff;
     --sidebar-accent: #eaf2fb;
     --sidebar-accent-foreground: #1e3d5c;
     --sidebar-border: #e3e8ef;
-    --sidebar-ring: #2a64a6;
+    --sidebar-ring: #125c85;
 }
 
 .dark {

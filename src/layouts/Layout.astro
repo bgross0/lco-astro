@@ -1,14 +1,13 @@
 ---
 import '../styles/shadcn.css';
-import montserratLatin from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url';
-import geistLatin from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
-import Header from '../components/shadcn-studio/blocks/hero-section-21/header';
-import MobileNav from '../components/site/MobileNav.astro';
+import TopBar from '../components/site/TopBar.astro';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import ActionDock from '../components/site/ActionDock.astro';
 import Footer from '../components/shadcn-studio/blocks/footer-component-03/footer-component-03';
 import settings from '../data/settings.json';
 import { primaryPhone } from '../lib/phone';
 import { openingHoursSpecification } from '../lib/site';
-import { getAreas, getServices, serviceUrl } from '../lib/content';
+import { getAreas, getReviewSummary, getServices, serviceUrl } from '../lib/content';
 import { getFooterData, getHeaderMenu } from '../lib/navigation';
 import { pagePath } from '../lib/url';
 
@@ -40,6 +39,7 @@ const ogImage = absolute(image);
 const services = await getServices();
 const areas = await getAreas();
 const headerMenu = await getHeaderMenu();
+const rating = await getReviewSummary();
 const footer = await getFooterData();
 const business = {
   '@context': 'https://schema.org',
@@ -106,7 +106,7 @@ const business = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <meta name="theme-color" content="#2a64a6" />
+    <meta name="theme-color" content="#125c85" />
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=3" />
@@ -116,9 +116,6 @@ const business = {
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
     <link rel="manifest" href="/site.webmanifest?v=3" />
 
-    <!-- Self-hosted fonts (bundled from @fontsource); preload the Latin files every page uses. -->
-    <link rel="preload" as="font" type="font/woff2" href={montserratLatin} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={geistLatin} crossorigin />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -149,15 +146,15 @@ const business = {
       Skip to content
     </a>
 
-    <Header client:load className="sticky" navigationData={headerMenu} cta={{ label: `Call ${primaryPhone.display}`, shortLabel: 'Call', href: primaryPhone.href }}>
-      <MobileNav slot="mobileNav" navigationData={headerMenu} />
-    </Header>
+    <TopBar rating={rating} />
+    <SiteHeader navigationData={headerMenu} currentPath={path} />
 
     <main id="main" tabindex="-1" class="outline-none">
       <slot />
     </main>
 
     <Footer data={footer} />
+    <ActionDock />
 
     <script>
       // Pause buttons for the scrolling marquees (WCAG 2.2.2): toggles

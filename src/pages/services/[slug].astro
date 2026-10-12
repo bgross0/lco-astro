@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
-import AboutUs from '../../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import ServiceBody from '../../components/site/ServiceBody.astro';
 import SocialProof from '../../components/shadcn-studio/blocks/social-proof-03/social-proof-03';
 import FAQ from '../../components/shadcn-studio/blocks/faq-component-11/faq-component-11';
 import Testimonials from '../../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
@@ -11,7 +11,7 @@ import settings from '../../data/settings.json';
 import { primaryPhone } from '../../lib/phone';
 import { blockImage } from '../../lib/images';
 import { categoryPhotos } from '../../lib/blocks';
-import { prose, splitSections } from '../../lib/prose';
+import { splitSections } from '../../lib/prose';
 import { breadcrumbList } from '../../lib/url';
 import { getAreas, getReviewSummary, getReviewerInitials, getTestimonials, serviceUrl } from '../../lib/content';
 
@@ -28,9 +28,8 @@ const areas = await getAreas();
 const summary = await getReviewSummary();
 const photos = await categoryPhotos(data.category, data.hero.image);
 
-// The intro copy sits beside a photo; "## " sections become tabs under it.
+// The intro copy, then each "## " section in order.
 const { intro, sections } = splitSections(service.rendered?.html ?? '');
-const tabs = sections.map((section) => ({ name: section.title, value: section.id, html: section.html }));
 
 const crumbs = [
   { label: 'Home', href: '/' },
@@ -76,27 +75,13 @@ const stepNumber = (index: number) => String(index + 1).padStart(2, '0');
     image={await blockImage(data.hero.image, data.hero.imageAlt)}
   />
 
-  {tabs.length > 0 ? (
-    <AboutUs
-      client:visible
-      title={data.heading}
-      text={data.summary}
-      contentHtml={intro}
-      proseClassName={prose}
-      tabs={tabs}
-      media={photos.about}
-      badge={{ rating: summary.average, count: summary.count, href: settings.google.reviewsUrl }}
-    />
-  ) : (
-    <AboutUs
-      title={data.heading}
-      text={data.summary}
-      contentHtml={intro}
-      proseClassName={prose}
-      media={photos.about}
-      badge={{ rating: summary.average, count: summary.count, href: settings.google.reviewsUrl }}
-    />
-  )}
+  <ServiceBody
+    heading={data.heading}
+    summary={data.summary}
+    introHtml={intro}
+    sections={sections}
+    currentHref={serviceUrl(service)}
+  />
 
   {data.process && (
     <SocialProof

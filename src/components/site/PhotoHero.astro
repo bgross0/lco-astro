@@ -1,0 +1,73 @@
+---
+// Full-width hero, as on the current site: a background video (or photo)
+// under a brand-tinted overlay, with the Google rating, the headline, a
+// line of text and two actions centred on top.
+import { PhoneIcon, StarIcon } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { primaryPhone } from '../../lib/phone';
+import settings from '../../data/settings.json';
+
+interface Props {
+  heading: string;
+  text?: string;
+  image: string;
+  video?: string;
+  rating?: { average: number; count: number };
+  primary?: { label: string; href: string };
+  /** Shorter hero for inner pages. */
+  compact?: boolean;
+}
+
+const { heading, text, image, video, rating, primary = { label: 'Get in touch', href: '/contact-us' }, compact = false } = Astro.props;
+---
+
+<section class:list={['relative isolate flex items-center overflow-hidden', compact ? 'min-h-[22rem] md:min-h-[26rem]' : 'min-h-[32rem] md:min-h-[34rem]']}>
+  {
+    video ? (
+      <video
+        class="absolute inset-0 -z-20 size-full object-cover"
+        src={video}
+        poster={image}
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      />
+    ) : (
+      <img class="absolute inset-0 -z-20 size-full object-cover" src={image} alt="" fetchpriority="high" />
+    )
+  }
+  <div class="bg-primary/60 absolute inset-0 -z-10 bg-linear-to-b from-brand-ink/40 to-brand-ink/30" aria-hidden="true"></div>
+
+  <div class="mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 py-20 text-center text-white sm:px-6">
+    {
+      rating && (
+        <a
+          href={settings.google.reviewsUrl}
+          target="_blank"
+          rel="noopener"
+          class="flex items-center gap-2 rounded-md bg-white/15 px-3 py-1.5 text-sm backdrop-blur hover:bg-white/25"
+        >
+          <span class="flex text-amber-400" aria-hidden="true">
+            {Array.from({ length: 5 }).map(() => <StarIcon className="size-4 fill-current" />)}
+          </span>
+          {rating.average.toFixed(1)} stars on Google
+        </a>
+      )
+    }
+    <h1 class="text-4xl leading-tight font-extrabold text-balance drop-shadow-sm sm:text-5xl lg:text-7xl">{heading}</h1>
+    {text && <p class="max-w-3xl text-lg text-white/90 sm:text-xl lg:text-2xl">{text}</p>}
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <a href={primary.href} class={cn(buttonVariants({ size: 'lg' }), 'text-primary bg-white text-base hover:bg-white/90')}>
+        {primary.label}
+      </a>
+      <a href={primaryPhone.href} class={cn(buttonVariants({ size: 'lg' }), 'text-base')}>
+        <PhoneIcon aria-hidden="true" />
+        Call us
+      </a>
+    </div>
+  </div>
+</section>
