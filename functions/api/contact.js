@@ -1,11 +1,17 @@
 // Contact form handler (Cloudflare Pages Function).
-// Validates the submission, checks Turnstile, and forwards the lead to the
-// CRM webhook. The webhook URL embeds a secret token, so it lives only in the
-// CRM_WEBHOOK_URL secret and never in page HTML.
+// Validates the submission, checks Turnstile, and delivers it to the Cobuild
+// tenant's atlas_freeform webhook (POST /freeform/webhook), signed with the
+// shared secret in FREEFORM_WEBHOOK_SECRET. Nothing secret reaches page HTML.
 //
-// Field names match what the CRM's atlas_submitform module already parses:
-// firstName + lastName are combined into the contact name, and service is
-// prepended to the lead notes.
+// The payload uses keys atlas_freeform auto-maps onto a CRM lead: name,
+// email, phone, company, address and message; subject becomes the lead title.
+// atlas_freeform stores every delivery as a freeform.submission first (the
+// ADR-0040 staging model), so this path does not bypass it. There is no queue
+// in front of Odoo: if delivery fails, the visitor is told and asked to call.
+
+// Stable id for this form in atlas_freeform; the form record is created on
+// first delivery. Changing it creates a new form (and new field mappings).
+const FORM_ID = '317ed959-d887-4366-b851-1e5d79394c54';
 
 const FIELDS = {
   firstName: { max: 100, required: true },
@@ -55,29 +61,70 @@ export async function onRequestPost({ request, env }) {
     console.warn('TURNSTILE_SECRET_KEY is not set; the contact form relies on the honeypot only.');
   }
 
-  if (!env.CRM_WEBHOOK_URL) {
-    console.error('CRM_WEBHOOK_URL is not set; contact form submission dropped.');
+  if (!env.FREEFORM_WEBHOOK_URL || !env.FREEFORM_WEBHOOK_SECRET) {
+    console.error('FREEFORM_WEBHOOK_URL or FREEFORM_WEBHOOK_SECRET is not set; submission not delivered.');
     return respond('unavailable');
   }
 
+  const submissionId = crypto.randomUUID();
+  const body = JSON.stringify({
+    form_data: {
+      name: `${lead.firstName} ${lead.lastName}`,
+      email: lead.email,
+      ...(lead.phone && { phone: lead.phone }),
+      ...(lead.company && { company: lead.company }),
+      subject: `${lead.service} quote request`,
+      message: `Service: ${lead.service}\n\n${lead.message}`,
+    },
+    meta: {
+      form_id: FORM_ID,
+      submission_id: submissionId,
+      submitted_at: new Date().toISOString(),
+      ip_address: request.headers.get('CF-Connecting-IP') ?? '',
+      tracking: { landing_page: request.headers.get('Referer') ?? '' },
+    },
+  });
+
   try {
-    const response = await fetch(env.CRM_WEBHOOK_URL, {
+    const response = await fetch(env.FREEFORM_WEBHOOK_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'User-Agent': 'lakecountyoutdoor.com contact form' },
-      body: JSON.stringify(lead),
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'website contact form',
+        'X-Freeform-Delivery': submissionId,
+        'X-Freeform-Signature': await sign(env.FREEFORM_WEBHOOK_SECRET, body),
+      },
+      body,
       signal: AbortSignal.timeout(10_000),
     });
     const result = await response.json().catch(() => ({}));
-    if (!response.ok || result.status !== 'success') {
-      console.error('CRM did not accept the lead', response.status, JSON.stringify(result).slice(0, 500));
+    // "duplicate" means this delivery id was already stored: a success.
+    if (!response.ok || !['success', 'duplicate'].includes(result.status)) {
+      console.error('CRM did not accept the submission', submissionId, response.status, JSON.stringify(result).slice(0, 500));
       return respond('unavailable');
     }
   } catch (error) {
-    console.error('CRM request failed', error);
+    console.error('CRM request failed', submissionId, error);
     return respond('unavailable');
   }
 
   return respond('ok');
+}
+
+// Stripe-style signature atlas_freeform verifies: t=<unix seconds>,
+// v1=hex(HMAC-SHA256(secret, "<t>.<raw body>")).
+async function sign(secret, body) {
+  const timestamp = Math.floor(Date.now() / 1000);
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  );
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${timestamp}.${body}`));
+  const hex = [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, '0')).join('');
+  return `t=${timestamp},v1=${hex}`;
 }
 
 async function verifyTurnstile(secret, token, ip) {
@@ -109,10 +156,10 @@ function responder(request) {
 
   return (outcome) => {
     if (wantsJson) {
-      const body = outcome === 'ok' ? { ok: true, redirect: '/thank-you/' } : { ok: false, error: outcome };
+      const body = outcome === 'ok' ? { ok: true, redirect: '/thank-you' } : { ok: false, error: outcome };
       return Response.json(body, { status: statusFor[outcome], headers: { 'Cache-Control': 'no-store' } });
     }
-    const location = outcome === 'ok' ? '/thank-you/' : `/contact/?error=${outcome}#quote-form`;
+    const location = outcome === 'ok' ? '/thank-you' : `/contact-us?error=${outcome}#quote-form`;
     return new Response(null, {
       status: 303,
       headers: { Location: `${origin}${location}`, 'Cache-Control': 'no-store' },

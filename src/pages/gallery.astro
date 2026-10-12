@@ -1,0 +1,26 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Gallery from '../components/shadcn-studio/blocks/gallery-component-05/gallery-component-05';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import { primaryPhone } from '../lib/phone';
+import { blockImage } from '../lib/images';
+import { sitePhoto } from '../lib/blocks';
+import { getPage } from '../lib/content';
+
+const page = (await getPage('gallery')).data;
+const home = (await getEntry('homepage', 'home'))!.data;
+const images = await Promise.all((page.images ?? []).map((photo) => blockImage(photo.image, photo.alt)));
+---
+
+<Layout title={page.seo.title} description={page.seo.description} image={images[0]?.src}>
+  <Gallery title={page.hero.heading} titleAs="h1" text={page.hero.text} galleryImage={images} />
+
+  <CTASection
+    title={home.cta.title}
+    text={home.cta.text}
+    button={{ label: home.offer.buttonText, href: home.offer.link }}
+    phone={primaryPhone}
+    image={await sitePhoto('/images/gallery/photo-01.jpg')}
+  />
+</Layout>

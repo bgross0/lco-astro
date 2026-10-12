@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Gallery from '../../components/shadcn-studio/blocks/gallery-component-05/gallery-component-05';
+import AboutUs from '../../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import { blockImage } from '../../lib/images';
+import { prose } from '../../lib/prose';
+import { getPage, projectUrl } from '../../lib/content';
+
+const page = (await getPage('projects')).data;
+const projects = await getCollection('projects');
+---
+
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+  />
+
+  {projects.map(async (project) => (
+    <AboutUs
+      title={project.data.title}
+      text={project.data.location}
+      contentHtml={project.rendered?.html ?? project.data.summary}
+      proseClassName={prose}
+      button={{ label: 'View project', href: projectUrl(project) }}
+      media={await blockImage(project.data.image, project.data.imageAlt)}
+    />
+  ))}
+
+  {projects.length > 0 && (
+    <Gallery
+      galleryImage={await Promise.all(
+        projects.flatMap((project) =>
+          [{ image: project.data.image, alt: project.data.imageAlt }, ...(project.data.gallery ?? [])].map(async (photo) => ({
+            ...(await blockImage(photo.image, photo.alt)),
+            href: projectUrl(project),
+            caption: project.data.title,
+          })),
+        ),
+      )}
+    />
+  )}
+</Layout>

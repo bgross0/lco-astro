@@ -1,0 +1,91 @@
+---
+// Site header, laid out like the current site: logo, then "Get in touch"
+// and "Call us". Desktop menus and the phone menu are native <details>
+// disclosures, so every link works on the first tap without JavaScript.
+import { ChevronDownIcon, PhoneIcon } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import type { NavigationSection } from '@/components/shadcn-studio/blocks/menu-navigation';
+import MobileNav from './MobileNav.astro';
+import { primaryPhone } from '../../lib/phone';
+
+interface Props {
+  navigationData: NavigationSection[];
+  currentPath: string;
+}
+
+const { navigationData, currentPath } = Astro.props;
+const linkClass =
+  'text-foreground/80 hover:text-primary rounded-md px-3 py-2 text-[15px] font-medium transition-colors aria-[current=page]:text-primary';
+const current = (href?: string) => (href && href === currentPath ? 'page' : undefined);
+---
+
+<header class="bg-background/95 sticky top-0 z-50 border-b backdrop-blur">
+  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+    <a href="/" class="shrink-0">
+      <img src="/images/brand/lco-logo-128w.webp" alt="Lake County Outdoors home" width="128" height="128" class="size-16" />
+    </a>
+
+    <nav aria-label="Main" class="hidden items-center gap-1 lg:flex">
+      {
+        navigationData.map((section) =>
+          section.href ? (
+            <a class={linkClass} href={section.href} aria-current={current(section.href)}>
+              {section.title}
+            </a>
+          ) : (
+            <details class="group relative" data-desktop-menu>
+              <summary class:list={[linkClass, 'flex cursor-pointer list-none items-center gap-1 [&::-webkit-details-marker]:hidden']}>
+                {section.title}
+                <ChevronDownIcon className="size-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <div class="bg-popover absolute top-full left-0 z-50 mt-2 w-64 rounded-md border p-1 shadow-md">
+                {section.items?.map((link) => (
+                  <a
+                    class="hover:bg-accent hover:text-accent-foreground block rounded-sm px-3 py-2 text-sm aria-[current=page]:font-semibold"
+                    href={link.href}
+                    aria-current={current(link.href)}
+                  >
+                    {link.title}
+                  </a>
+                ))}
+              </div>
+            </details>
+          ),
+        )
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="/contact-us" class={cn(buttonVariants({ size: 'lg' }), 'hidden text-base md:inline-flex')}>Get in touch</a>
+      <a
+        href={primaryPhone.href}
+        class={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'border-primary text-primary hidden text-base md:inline-flex')}
+      >
+        <PhoneIcon aria-hidden="true" />
+        Call us
+      </a>
+      <div class="lg:hidden">
+        <MobileNav navigationData={navigationData} />
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Progressive enhancement for the desktop menus: one open at a time, and
+  // close on Escape or a click elsewhere.
+  const menus = [...document.querySelectorAll<HTMLDetailsElement>('[data-desktop-menu]')];
+  for (const menu of menus) {
+    menu.addEventListener('toggle', () => {
+      if (menu.open) for (const other of menus) if (other !== menu) other.open = false;
+    });
+  }
+  document.addEventListener('click', (event) => {
+    for (const menu of menus) if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const menu of menus) if (menu.open) { menu.open = false; menu.querySelector('summary')?.focus(); }
+  });
+</script>

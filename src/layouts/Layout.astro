@@ -1,0 +1,176 @@
+---
+import '../styles/shadcn.css';
+import TopBar from '../components/site/TopBar.astro';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import ActionDock from '../components/site/ActionDock.astro';
+import Footer from '../components/shadcn-studio/blocks/footer-component-03/footer-component-03';
+import settings from '../data/settings.json';
+import { primaryPhone } from '../lib/phone';
+import { openingHoursSpecification } from '../lib/site';
+import { getAreas, getReviewSummary, getServices, serviceUrl } from '../lib/content';
+import { getFooterData, getHeaderMenu } from '../lib/navigation';
+import { pagePath } from '../lib/url';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  noindex?: boolean;
+  /** Extra schema.org objects for this page (Service, FAQPage, ...). */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title = settings.site_title,
+  description = settings.site_description,
+  image = settings.og_image || settings.logo,
+  canonical,
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const site = Astro.site?.origin ?? 'https://lakecountyoutdoor.com';
+const absolute = (path: string) => (path.startsWith('http') ? path : new URL(encodeURI(path), site).href);
+const path = pagePath(Astro.url);
+const currentUrl = new URL(path, site).href;
+const ogImage = absolute(image);
+
+const services = await getServices();
+const areas = await getAreas();
+const headerMenu = await getHeaderMenu();
+const rating = await getReviewSummary();
+const footer = await getFooterData();
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${site}/#business`,
+  name: settings.site_title,
+  description: settings.site_description,
+  url: `${site}/`,
+  logo: absolute(settings.logo),
+  image: absolute(settings.og_image),
+  telephone: primaryPhone.href.slice(4),
+  email: settings.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: settings.address.street,
+    addressLocality: settings.address.city,
+    addressRegion: settings.address.region,
+    postalCode: settings.address.postalCode,
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: settings.geo.latitude,
+    longitude: settings.geo.longitude,
+  },
+  openingHoursSpecification,
+  sameAs: [settings.social.facebook, settings.social.instagram, settings.social.linkedin].filter(Boolean),
+  areaServed: areas.map((area) => ({ '@type': 'City', name: area.label })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Outdoor services',
+    itemListElement: services.map((service) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: service.data.title, url: absolute(serviceUrl(service)) },
+    })),
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Lake County Outdoors, LLC" />
+    {noindex
+      ? <meta name="robots" content="noindex, follow" />
+      : <link rel="canonical" href={canonical || currentUrl} />}
+
+    <meta property="og:type" content="website" />
+    {!noindex && <meta property="og:url" content={currentUrl} />}
+    <meta property="og:site_name" content="Lake County Outdoors, LLC" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#125c85" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=3" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=3" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png?v=3" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
+    <link rel="manifest" href="/site.webmanifest?v=3" />
+
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {settings.analytics?.enableTracking && settings.analytics?.gtmId && (
+      <script set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','${settings.analytics.gtmId}');`}></script>
+    )}
+  </head>
+  <body class="min-h-screen antialiased">
+    {settings.analytics?.enableTracking && settings.analytics?.gtmId && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${settings.analytics.gtmId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
+
+    <a
+      href="#main"
+      class="bg-primary text-primary-foreground sr-only z-[60] rounded-md px-4 py-2 font-medium focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      Skip to content
+    </a>
+
+    <TopBar rating={rating} />
+    <SiteHeader navigationData={headerMenu} currentPath={path} />
+
+    <main id="main" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+
+    <Footer data={footer} />
+    <ActionDock />
+
+    <script>
+      // Pause buttons for the scrolling marquees (WCAG 2.2.2): toggles
+      // data-paused on the marquee's root, which pauses its CSS animation.
+      document.addEventListener('click', (event) => {
+        const button = (event.target as Element | null)?.closest<HTMLButtonElement>('[data-marquee-toggle]');
+        const root = button?.closest('[data-marquee-root]');
+        if (!button || !root) return;
+        const paused = root.toggleAttribute('data-paused');
+        button.setAttribute('aria-pressed', String(paused));
+      });
+    </script>
+
+    <script type="application/ld+json" set:html={JSON.stringify(business)}></script>
+    {jsonLd.map((data) => (
+      <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', ...data })}></script>
+    ))}
+  </body>
+</html>

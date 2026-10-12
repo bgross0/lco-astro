@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Features from '../../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import SocialProof from '../../components/shadcn-studio/blocks/social-proof-03/social-proof-03';
+import CTASection from '../../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import { getEntry } from 'astro:content';
+import settings from '../../data/settings.json';
+import { primaryPhone } from '../../lib/phone';
+import { serviceTabs, sitePhoto } from '../../lib/blocks';
+import { getPage, getReviewSummary, getReviewerInitials } from '../../lib/content';
+
+const page = (await getPage('services')).data;
+const home = (await getEntry('homepage', 'home'))!.data;
+const summary = await getReviewSummary();
+const stats = [
+  ...home.highlights.items.flatMap((item) => item.stats ?? []),
+  { value: summary.average.toFixed(1), label: 'Rating on Google' },
+  { value: String(summary.count), label: 'Google reviews' },
+];
+---
+
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+  />
+
+  <Features client:visible id="services" title={home.services.title} tabs={await serviceTabs()} />
+
+  <SocialProof title={home.stats?.title ?? home.highlights.title} stats={stats} />
+
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-01.jpg')}
+    />
+  )}
+</Layout>

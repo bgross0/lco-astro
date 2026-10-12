@@ -2,75 +2,108 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+// Keep every field here in sync with public/admin/config.yml: Decap drops
+// keys it does not know about when an editor saves an entry.
+
+const seo = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+const heading = z.object({
+  title: z.string(),
+  text: z.string().optional(),
+});
+
+const hero = z.object({
+  eyebrow: z.string().optional(),
+  heading: z.string(),
+  text: z.string().optional(),
+  image: z.string().optional(),
+  imageAlt: z.string().optional(),
+});
+
+const heroWithImage = hero.extend({
+  image: z.string(),
+  imageAlt: z.string(),
+});
+
+// Decap saves a cleared optional number as "", which must mean "not set".
+const optionalNumber = z.preprocess((value) => (value === '' || value === null ? undefined : value), z.number().optional());
+
+const step = z.object({
+  title: z.string(),
+  text: z.string(),
+});
+
+export const SERVICE_CATEGORIES = [
+  'Landscape Services',
+  'Excavation & Build',
+  'Property Maintenance',
+  'Tree Services',
+] as const;
+
 const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
   schema: z.object({
     title: z.string(),
-    description: z.string(),
-    image: z.string(),
-    order: z.number().optional(),
-    subtitle: z.string().optional(),
-    images: z.array(z.string()).optional(),
-    hero: z.object({
-      subtitle: z.string().optional(),
-      backgroundImage: z.string().optional(),
+    summary: z.string(),
+    category: z.enum(SERVICE_CATEGORIES),
+    order: z.number().int(),
+    seo,
+    hero: heroWithImage,
+    heading: z.string(),
+    process: z.object({
+      title: z.string(),
+      intro: z.string().optional(),
+      steps: z.array(step).min(1),
     }).optional(),
-    pricing: z.array(z.object({
+    faq: z.object({
       title: z.string(),
-      description: z.string(),
-      featured: z.boolean().optional(),
-    })).optional(),
-    equipment: z.array(z.object({
-      number: z.number(),
-      label: z.string(),
-    })).optional(),
-    features: z.array(z.object({
-      icon: z.string(),
-      title: z.string(),
-      description: z.string(),
-    })).optional(),
-    services: z.array(z.object({
-      icon: z.string(),
-      title: z.string(),
-      items: z.array(z.string()),
-    })).optional(),
-    benefits: z.array(z.object({
-      title: z.string(),
-      description: z.string(),
-    })).optional(),
-    imageSections: z.array(z.object({
-      title: z.string(),
-      content: z.string(),
-      image: z.string().optional(),
-      images: z.array(z.string()).optional(),
-      imagePosition: z.enum(['left', 'right']).optional(),
-      features: z.array(z.object({
-        icon: z.string(),
-        text: z.string(),
-      })).optional(),
-    })).optional(),
-    contentSections: z.array(z.object({
-      title: z.string(),
-      content: z.string(),
-      image: z.string(),
-    })).optional(),
-    seo: z.object({
-      metaTitle: z.string().optional(),
-      metaDescription: z.string().optional(),
-      focusKeyword: z.string().optional(),
-      canonicalUrl: z.string().optional(),
-      schemaType: z.enum(['Service', 'Product', 'LocalBusiness', 'Article']).optional(),
+      intro: z.string().optional(),
+      items: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
     }).optional(),
+    reviews: heading,
+    cta: heading,
   }),
 });
 
-const testimonials = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/testimonials' }),
+const serviceAreas = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/service-areas' }),
+  schema: z.object({
+    city: z.string(),
+    state: z.string().default('MN'),
+    seo,
+    hero: heroWithImage,
+    heading: z.string(),
+    reviews: heading,
+    cta: heading,
+  }),
+});
+
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  schema: z.object({
+    title: z.string(),
+    location: z.string().optional(),
+    summary: z.string(),
+    seo,
+    image: z.string(),
+    imageAlt: z.string(),
+    gallery: z.array(z.object({ image: z.string(), alt: z.string() })).optional(),
+  }),
+});
+
+const reviews = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/reviews' }),
   schema: z.object({
     author: z.string(),
-    company: z.string().optional(),
-    service: z.string(),
-    rating: z.number().min(1).max(5),
+    rating: z.number().int().min(1).max(5),
+    source: z.string().default('Google'),
+    order: z.number().int(),
+    // Decap saves a cleared date as "", which must mean "no date".
+    date: z.preprocess((value) => (value === '' || value === null ? undefined : value), z.coerce.date().optional()),
+    text: z.string(),
   }),
 });
 
@@ -96,122 +129,111 @@ const blog = defineCollection({
 const homepage = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/homepage' }),
   schema: z.object({
-    title: z.string().optional(),
-    subtitle: z.string().optional(),
-    description: z.string().optional(),
-    ctaText: z.string().optional(),
-    ctaLink: z.string().optional(),
-    images: z.array(z.object({
-      src: z.string(),
-      alt: z.string(),
-    })).optional(),
-    bottomServices: z.array(z.object({
-      icon: z.string(),
+    seo,
+    hero: heroWithImage,
+    services: heading,
+    shoreline: z.object({
+      label: z.string().optional(),
       title: z.string(),
-      description: z.string(),
-    })).optional(),
-    hero: z.object({
-      images: z.array(z.object({
-        src: z.string(),
-        alt: z.string(),
-      })).optional(),
-    }).optional(),
+      text: z.string(),
+      linkText: z.string(),
+      link: z.string(),
+    }),
     about: z.object({
-      title: z.string().optional(),
-      paragraphs: z.array(z.string()).optional(),
-      images: z.array(z.object({
-        src: z.string(),
-        alt: z.string(),
-      })).optional(),
-      features: z.array(z.object({
-        icon: z.string(),
-        text: z.string(),
-      })).optional(),
-      buttonText: z.string().optional(),
-      buttonLink: z.string().optional(),
-    }).optional(),
-    clientSatisfaction: z.object({
-      title: z.string().optional(),
-      paragraphs: z.array(z.string()).optional(),
-      experienceTitle: z.string().optional(),
-      experienceText: z.string().optional(),
-      highlight: z.string().optional(),
-    }).optional(),
-    equipment: z.object({
-      title: z.string().optional(),
-      subtitle: z.string().optional(),
-      stats: z.array(z.object({
-        number: z.number(),
-        label: z.string(),
-      })).optional(),
-    }).optional(),
-    cta: z.object({
-      title: z.string().optional(),
-      description: z.string().optional(),
-      backgroundImage: z.string().optional(),
-      primaryButton: z.object({
-        text: z.string(),
-        link: z.string(),
-      }).optional(),
-      secondaryButton: z.object({
-        text: z.string(),
-        link: z.string(),
-      }).optional(),
-    }).optional(),
-    reviews: z.object({
-      title: z.string().optional(),
-      subtitle: z.string().optional(),
-      rating: z.number().optional(),
-      reviewCount: z.number().optional(),
-      googleBusinessUrl: z.string().optional(),
-      shapoWidgetId: z.string().optional(),
-    }).optional(),
+      title: z.string(),
+      text: z.string(),
+      image: z.string(),
+      imageAlt: z.string(),
+    }),
+    highlights: z.object({
+      title: z.string(),
+      items: z.array(z.object({
+        title: z.string(),
+        paragraphs: z.array(z.string()),
+        image: z.string(),
+        imageAlt: z.string(),
+        video: z.string().optional(),
+        stats: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
+        tags: z.array(z.string()).optional(),
+      })),
+    }),
+    reviews: heading,
+    /** Heading over the stats band (10+ years, 100+ properties, Google rating). */
+    stats: heading.optional(),
+    social: z.object({
+      title: z.string(),
+      text: z.string().optional(),
+      footnote: z.string().optional(),
+    }),
+    offer: z.object({
+      title: z.string(),
+      name: z.string(),
+      value: z.string(),
+      text: z.string(),
+      buttonText: z.string(),
+      link: z.string(),
+    }),
+    projects: heading,
+    areas: heading,
+    featuredReview: z.string().optional(),
+    cta: heading,
   }),
 });
 
+// One file per page; each page template reads only the fields it renders.
 const pages = defineCollection({
-  loader: glob({ pattern: '**/*.json', base: './src/content/pages' }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
   schema: z.object({
-    hero: z.object({
-      title: z.string().optional(),
-      subtitle: z.string().optional(),
-    }).optional(),
+    seo,
+    hero,
+    heading: z.string().optional(),
+    servicesTitle: z.string().optional(),
+    logo: z.string().optional(),
+    notice: z.object({ label: z.string(), text: z.string() }).optional(),
     form: z.object({
       title: z.string().optional(),
       subtitle: z.string().optional(),
       submitButtonText: z.string().optional(),
     }).optional(),
-    info: z.object({
-      title: z.string().optional(),
-      description: z.string().optional(),
-      emergencyText: z.string().optional(),
-      emailResponseTime: z.string().optional(),
-      serviceAreaNote: z.string().optional(),
-    }).optional(),
-    seo: z.object({
-      title: z.string().optional(),
-      description: z.string().optional(),
-    }).optional(),
-    title: z.string().optional(),
-    heroTitle: z.string().optional(),
-    heroSubtitle: z.string().optional(),
-    primaryCities: z.array(z.object({
-      name: z.string(),
-      responseTime: z.string().optional().nullable(),
-      note: z.string().optional().nullable(),
+    details: heading.optional(),
+    reviews: heading.optional(),
+    images: z.array(z.object({ image: z.string(), alt: z.string() })).optional(),
+    // Every city served; coordinates (WGS84) place it on the service-area map.
+    cities: z.array(z.object({
+      city: z.string(),
+      latitude: optionalNumber,
+      longitude: optionalNumber,
     })).optional(),
-    additionalCities: z.array(z.string()).optional(),
-    serviceMap: z.object({
-      lat: z.number().optional(),
-      lng: z.number().optional(),
-      radius: z.number().optional(),
+    services: z.object({
+      eyebrow: z.string().optional(),
+      title: z.string(),
+      text: z.string().optional(),
+      items: z.array(step),
     }).optional(),
+    why: z.object({
+      eyebrow: z.string().optional(),
+      title: z.string(),
+      text: z.string().optional(),
+      points: z.array(z.string()),
+      tagline: z.string().optional(),
+      buttonText: z.string(),
+    }).optional(),
+    process: z.object({
+      eyebrow: z.string().optional(),
+      title: z.string(),
+      intro: z.string().optional(),
+      steps: z.array(step),
+      buttonText: z.string().optional(),
+    }).optional(),
+    cta: heading.optional(),
   }),
 });
 
 export const collections = {
   services,
-  testimonials,
+  serviceAreas,
+  projects,
+  reviews,
   blog,
   homepage,
   pages,

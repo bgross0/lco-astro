@@ -1,0 +1,123 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ContactUs from '../components/shadcn-studio/blocks/contact-us-page-10/contact-us-page-10';
+import Testimonials from '../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import ServiceAreaMap from '../components/site/ServiceAreaMap.astro';
+import settings from '../data/settings.json';
+import { phones, primaryPhone } from '../lib/phone';
+import { addressLines, hours, mapsUrl } from '../lib/site';
+import { sitePhoto } from '../lib/blocks';
+import { getPage, getServices, getTestimonials } from '../lib/content';
+
+const page = (await getPage('contact-us')).data;
+const home = (await getEntry('homepage', 'home'))!.data;
+const officePhone = primaryPhone;
+const services = [...(await getServices()).map((service) => service.data.title), 'Shoreline Solutions'];
+
+// Set at build time; without it the form still works, protected by the
+// honeypot only (see functions/api/contact.js).
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<Layout title={page.seo.title} description={page.seo.description}>
+  <ContactUs
+    heading={page.hero.heading}
+    text={page.hero.text}
+    contactInfo={[
+      { icon: 'address', title: 'Address', details: [{ text: addressLines.join(', '), href: mapsUrl, external: true }] },
+      { icon: 'phone', title: 'Phone', details: phones.map((phone) => ({ text: `${phone.label} ${phone.display}`, href: phone.href })) },
+      { icon: 'email', title: 'Email', details: [{ text: settings.email, href: `mailto:${settings.email}` }] },
+      { icon: 'hours', title: 'Hours', details: hours.map((row) => ({ text: `${row.label}: ${row.text}` })) },
+    ]}
+    formTitle={page.form?.title || 'Request a Quote'}
+    formSubtitle={page.form?.subtitle}
+    form={{
+      services,
+      submitLabel: page.form?.submitButtonText || 'Send Message',
+      messages: {
+        invalid: 'Please fill in the required fields and check your email address.',
+        verification: "We couldn't confirm you're not a bot. Please try again.",
+        unavailable: `We couldn't send your request just now. Please call us at ${officePhone.display}.`,
+      },
+      turnstileSiteKey,
+      noscriptMessage: `Our spam check needs JavaScript. If it's turned off, call us at ${officePhone.display}.`,
+    }}
+  />
+
+  <ServiceAreaMap title={home.areas.title} />
+
+  {page.reviews && (
+    <Testimonials
+      title={page.reviews.title}
+      text={page.reviews.text}
+      testimonials={await getTestimonials()}
+      links={{ allReviews: '/reviews', writeReview: settings.google.writeReviewUrl }}
+      muted
+    />
+  )}
+
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: page.form?.title || 'Request a Quote', href: '#quote-form' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-08.jpg')}
+    />
+  )}
+
+  {turnstileSiteKey && (
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  )}
+
+  <script>
+    // Submit with fetch so a failed send keeps what the visitor typed. Without
+    // JavaScript the form posts normally and the server redirects instead.
+    const form = document.querySelector<HTMLFormElement>('#quote-form');
+    const status = form?.querySelector<HTMLElement>('[data-form-status]');
+    const submit = form?.querySelector<HTMLButtonElement>('[data-form-submit]');
+    const label = submit?.querySelector<HTMLElement>('[data-form-submit-label]');
+
+    const showError = (code: string) => {
+      if (!form || !status) return;
+      status.textContent = form.dataset[`msg${code.charAt(0).toUpperCase()}${code.slice(1)}`] ?? form.dataset.msgUnavailable ?? '';
+      status.hidden = false;
+      status.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    };
+
+    const initialError = new URLSearchParams(location.search).get('error');
+    if (initialError) showError(initialError);
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!submit || !label || !status) return;
+      const idleLabel = label.textContent;
+      submit.disabled = true;
+      label.textContent = 'Sending…';
+      status.hidden = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const result = await response.json();
+        if (result.ok) {
+          location.assign(result.redirect);
+          return;
+        }
+        showError(result.error);
+      } catch {
+        showError('unavailable');
+      }
+
+      // Turnstile tokens are single-use; get a fresh one for the retry.
+      (window as { turnstile?: { reset: () => void } }).turnstile?.reset();
+      submit.disabled = false;
+      label.textContent = idleLabel;
+    });
+  </script>
+</Layout>

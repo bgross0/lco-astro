@@ -60,4 +60,4 @@ Winter weather can cause property damage:
 
 While these tips will help you prepare, nothing beats having professional support. Lake County Outdoors offers comprehensive winter services to keep your property safe and accessible all season long.
 
-**[Contact us today](/contact) to discuss your winter service needs.**
+**[Contact us today](/contact-us) to discuss your winter service needs.**

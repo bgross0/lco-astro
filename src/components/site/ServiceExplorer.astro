@@ -1,0 +1,103 @@
+---
+// Services by category, laid out like the current site: category tabs on
+// the left, and the chosen category's services listed over a photo on the
+// right. Without JavaScript every category's list is shown.
+import { ArrowRightIcon, ChevronRightIcon } from 'lucide-react';
+import { serviceTabs } from '../../lib/blocks';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const tabs = await serviceTabs();
+---
+
+<section class="py-16 lg:py-24" data-service-explorer>
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:px-8">
+    <div class="space-y-8">
+      <h2 class="text-3xl font-bold text-balance lg:text-4xl">{title}</h2>
+      <div class="flex gap-2 overflow-x-auto lg:flex-col" role="tablist" aria-label="Service categories">
+        {
+          tabs.map((tab, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${tab.value}`}
+              aria-controls={`panel-${tab.value}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              class="text-primary aria-selected:bg-primary flex shrink-0 items-center justify-between gap-3 rounded-lg px-4 py-3 text-left font-medium whitespace-nowrap transition-colors hover:bg-primary/10 aria-selected:text-white lg:whitespace-normal"
+            >
+              {tab.name}
+              <ChevronRightIcon className="hidden size-4 shrink-0 lg:block" aria-hidden="true" />
+            </button>
+          ))
+        }
+      </div>
+      <a href="/services" class="text-primary inline-flex items-center gap-1.5 font-medium hover:underline">
+        All services <ArrowRightIcon className="size-4" aria-hidden="true" />
+      </a>
+    </div>
+
+    <div>
+      {
+        tabs.map((tab, index) => (
+          <div
+            role="tabpanel"
+            id={`panel-${tab.value}`}
+            aria-labelledby={`tab-${tab.value}`}
+            data-panel
+            data-initial={index === 0 ? 'true' : undefined}
+            class="relative isolate overflow-hidden rounded-lg p-4 sm:p-6 [&+&]:mt-6"
+          >
+            <img src={tab.cards?.[0]?.image.src} alt="" loading="lazy" class="absolute inset-0 -z-20 size-full object-cover" />
+            <div class="absolute inset-0 -z-10 bg-black/60" aria-hidden="true" />
+            <ul class="space-y-3">
+              {tab.cards?.map((card) => (
+                <li>
+                  <a
+                    href={card.href}
+                    class="bg-primary/80 hover:bg-primary group flex items-center justify-between gap-4 rounded-lg p-4 text-white backdrop-blur-sm transition-colors"
+                  >
+                    <span>
+                      <span class="block font-semibold">{card.title}</span>
+                      <span class="mt-1 line-clamp-2 block text-sm text-white/80">{card.summary}</span>
+                    </span>
+                    <ArrowRightIcon className="size-5 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Tabs: show one category at a time (all are visible without JavaScript).
+  for (const root of document.querySelectorAll<HTMLElement>('[data-service-explorer]')) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+    const select = (index: number) => {
+      tabs.forEach((tab, i) => tab.setAttribute('aria-selected', String(i === index)));
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+        panel.classList.remove('[&+&]:mt-6');
+      });
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (event) => {
+        const step = event.key === 'ArrowDown' || event.key === 'ArrowRight' ? 1 : event.key === 'ArrowUp' || event.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        event.preventDefault();
+        const next = (i + step + tabs.length) % tabs.length;
+        select(next);
+        tabs[next].focus();
+      });
+    });
+    select(0);
+  }
+</script>

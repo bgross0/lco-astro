@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Testimonials from '../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
+import settings from '../data/settings.json';
+import { getPage, getReviewSummary, getReviewerInitials, getTestimonials } from '../lib/content';
+
+const page = (await getPage('reviews')).data;
+const summary = await getReviewSummary();
+---
+
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Leave us a review', href: settings.google.writeReviewUrl, icon: 'arrow' },
+      { label: 'Read them on Google', href: settings.google.reviewsUrl },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+  />
+
+  <Testimonials layout="grid" testimonials={await getTestimonials()} />
+</Layout>

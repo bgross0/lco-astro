@@ -18,6 +18,33 @@ the site from those commits.
 `cms/...` branch, Cloudflare Pages builds a preview for it, and **Publish**
 merges it into `main`.
 
+## What editors can change
+
+| CMS collection | Files | Shows up on |
+| --- | --- | --- |
+| Homepage | `src/content/homepage/home.json` | `/` |
+| Services | `src/content/services/*.md` | `/services/<file>`, menus, footer, service cards |
+| Service Area Pages | `src/content/service-areas/*.md` | `/service-areas/<city>-mn` |
+| Projects | `src/content/projects/*.md` | `/projects` and `/projects/<file>` |
+| Reviews | `src/content/reviews/*.json` | review sections, `/reviews` |
+| Pages | `src/content/pages/*.md` | about-us, contact-us, gallery, shoreline-solutions, ... |
+| Settings | `src/data/settings.json`, `src/data/navigation.json` | phones, address, hours, menus everywhere |
+
+- **Phones, address and hours** live only in Settings; every page, the footer
+  and the structured data read them from there. The first phone number is the
+  one every "Call us" button dials.
+- **Cities**: the list on the Service Areas page (Pages > Service Areas Page)
+  is every city served. Each city has a latitude and longitude that place it
+  on the service-area map; without them the city is listed but not mapped
+  (find them on openstreetmap.org: right-click the city, Show address). A city gets its own page only when it has an entry
+  under Service Area Pages with copy written for it. When you publish one for
+  a city that is in `public/_redirects` (most are, because the old site had
+  no page for them), delete that city's two lines there in the same change;
+  the build fails otherwise.
+- **Reviews** must be real reviews, worded and attributed as on Google.
+- **Images**: upload photos already resized (about 1600 px wide for page
+  heroes, 1280 px for others, under ~400 KB) and always fill in the alt text.
+
 ## One-time setup
 
 1. Create a GitHub OAuth App (GitHub → Settings → Developer settings → OAuth

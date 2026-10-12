@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Features from '../../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import AboutUs from '../../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import Testimonials from '../../components/shadcn-studio/blocks/testimonials-component-06/testimonials-component-06';
+import CTASection from '../../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import settings from '../../data/settings.json';
+import { primaryPhone } from '../../lib/phone';
+import { blockImage } from '../../lib/images';
+import { serviceTabs, sitePhoto } from '../../lib/blocks';
+import { prose } from '../../lib/prose';
+import { breadcrumbList } from '../../lib/url';
+import { areaUrl, getReviewSummary, getReviewerInitials, getServices, getTestimonials, serviceUrl } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const areas = await getCollection('serviceAreas');
+  return areas.map((area) => ({ params: { slug: area.id }, props: { area } }));
+}
+
+const { area } = Astro.props;
+const { data } = area;
+const place = `${data.city}, ${data.state}`;
+const site = Astro.site!.origin;
+const services = await getServices();
+const summary = await getReviewSummary();
+
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Service Areas', href: '/service-areas' },
+  { label: place, href: areaUrl(area) },
+];
+
+const jsonLd = [
+  breadcrumbList(crumbs, site),
+  {
+    '@type': 'Service',
+    name: `Landscaping and commercial snow removal in ${place}`,
+    url: new URL(areaUrl(area), site).href,
+    provider: { '@id': `${site}/#business` },
+    areaServed: { '@type': 'City', name: place },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `Services in ${place}`,
+      itemListElement: services.map((service) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: service.data.title, url: new URL(serviceUrl(service), site).href },
+      })),
+    },
+  },
+];
+---
+
+<Layout title={data.seo.title} description={data.seo.description} image={data.hero.image} jsonLd={jsonLd}>
+  <HeroSection
+    breadcrumbs={crumbs}
+    heading={data.hero.heading}
+    text={data.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+    image={await blockImage(data.hero.image, data.hero.imageAlt)}
+  />
+
+  <Features
+    client:visible
+    id="area-services"
+    title={`Services We Offer in ${place}`}
+    button={{ label: 'View all services', href: '/services' }}
+    tabs={await serviceTabs()}
+  />
+
+  <AboutUs
+    title={data.heading}
+    contentHtml={area.rendered?.html ?? ''}
+    proseClassName={prose}
+    media={await sitePhoto('/images/home/crew.jpg')}
+    badge={{ rating: summary.average, count: summary.count, href: settings.google.reviewsUrl }}
+    muted
+  />
+
+  <Testimonials
+    title={data.reviews.title}
+    text={data.reviews.text}
+    testimonials={await getTestimonials()}
+    links={{ allReviews: '/reviews', writeReview: settings.google.writeReviewUrl }}
+  />
+
+  <CTASection
+    title={data.cta.title}
+    text={data.cta.text}
+    button={{ label: 'Request a Quote', href: '/contact-us' }}
+    phone={primaryPhone}
+    image={await sitePhoto('/images/gallery/photo-08.jpg')}
+  />
+</Layout>

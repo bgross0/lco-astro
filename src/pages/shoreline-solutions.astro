@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import SocialProof from '../components/shadcn-studio/blocks/social-proof-03/social-proof-03';
+import AboutUs from '../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import settings from '../data/settings.json';
+import { primaryPhone } from '../lib/phone';
+import { blockImage } from '../lib/images';
+import { sitePhoto } from '../lib/blocks';
+import { getPage, getReviewSummary, getReviewerInitials } from '../lib/content';
+
+const page = (await getPage('shoreline-solutions')).data;
+const summary = await getReviewSummary();
+const icons = ['waves', 'sprout', 'mountain'] as const;
+const logoWebp = page.logo?.replace(/\.(png|jpe?g)$/i, '.webp');
+---
+
+<Layout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
+  <HeroSection
+    pill={page.notice ? { badge: page.notice.label, text: page.notice.text } : undefined}
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: page.why?.buttonText ?? 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+    image={await blockImage(page.hero.image!, page.hero.imageAlt ?? '')}
+  />
+
+  {page.services && (
+    <SocialProof
+      title={page.services.title}
+      text={page.services.text}
+      stats={page.services.items.map((item, index) => ({ value: '', label: item.title, text: item.text, icon: icons[index % icons.length] }))}
+    />
+  )}
+
+  {page.why && (
+    <AboutUs
+      title={page.why.title}
+      text={page.why.text}
+      button={{ label: page.why.buttonText, href: '/contact-us' }}
+      contentTitle={page.why.tagline}
+      points={page.why.points}
+      media={await sitePhoto('/images/gallery/photo-13.jpg')}
+      badge={logoWebp ? { logo: logoWebp, alt: 'Lake County Outdoors Shoreline Solutions logo' } : undefined}
+    />
+  )}
+
+  {page.process && (
+    <SocialProof
+      title={page.process.title}
+      text={page.process.intro}
+      stats={page.process.steps.map((step, index) => ({ value: String(index + 1).padStart(2, '0'), label: step.title, text: step.text }))}
+      button={page.process.buttonText ? { label: page.process.buttonText, href: '/contact-us' } : undefined}
+    />
+  )}
+
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-08.jpg')}
+    />
+  )}
+</Layout>

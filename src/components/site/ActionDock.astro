@@ -1,0 +1,31 @@
+---
+// Call / Book / Text / Email shortcuts, as on the current site: a floating
+// bar at the bottom right on desktop and a full-width bar on phones.
+import { CalendarIcon, MailIcon, MessageCircleIcon, PhoneIcon } from 'lucide-react';
+import settings from '../../data/settings.json';
+import { primaryPhone } from '../../lib/phone';
+
+const sms = primaryPhone.href.replace('tel:', 'sms:');
+const items = [
+  { label: 'Call', href: primaryPhone.href, Icon: PhoneIcon },
+  { label: 'Book', href: '/contact-us#quote-form', Icon: CalendarIcon },
+  { label: 'Text', href: sms, Icon: MessageCircleIcon },
+  { label: 'Email', href: `mailto:${settings.email}`, Icon: MailIcon },
+];
+---
+
+<nav
+  aria-label="Contact shortcuts"
+  class="bg-primary text-primary-foreground fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 shadow-lg md:inset-x-auto md:right-6 md:bottom-6 md:overflow-hidden md:rounded-lg"
+>
+  {
+    items.map(({ label, href, Icon }) => (
+      <a href={href} class="flex h-16 flex-col items-center justify-center gap-1 text-xs font-medium hover:bg-white/10 md:h-14 md:w-16">
+        <Icon className="size-5" aria-hidden="true" />
+        {label}
+      </a>
+    ))
+  }
+</nav>
+<!-- Keeps the last of the page clear of the phone bar. -->
+<div class="h-16 md:hidden" aria-hidden="true"></div>

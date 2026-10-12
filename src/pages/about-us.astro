@@ -1,0 +1,63 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import AboutUs from '../components/shadcn-studio/blocks/about-us-page-03/about-us-page-03';
+import Features from '../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import settings from '../data/settings.json';
+import { primaryPhone } from '../lib/phone';
+import { blockImage } from '../lib/images';
+import { serviceTabs, sitePhoto } from '../lib/blocks';
+import { prose, splitSections } from '../lib/prose';
+import { getPage, getReviewSummary, getReviewerInitials } from '../lib/content';
+
+const entry = await getPage('about-us');
+const page = entry.data;
+const home = (await getEntry('homepage', 'home'))!.data;
+const summary = await getReviewSummary();
+
+// The story's intro sits beside the crew photo; its "### " sections are tabs.
+const { intro, sections } = splitSections(entry.rendered?.html ?? '', 3);
+const tabs = sections.map((section) => ({ name: section.title, value: section.id, html: section.html }));
+---
+
+<Layout title={page.seo.title} description={page.seo.description} image={page.hero.image}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+    rating={{ value: summary.average, count: summary.count, href: settings.google.reviewsUrl, initials: await getReviewerInitials() }}
+    image={await blockImage(page.hero.image!, page.hero.imageAlt ?? '')}
+  />
+
+  <AboutUs
+    client:visible
+    title={page.heading ?? home.about.title}
+    contentHtml={intro}
+    proseClassName={prose}
+    tabs={tabs}
+    media={await sitePhoto('/images/home/crew.jpg')}
+  />
+
+  <Features
+    client:visible
+    id="services"
+    title={page.servicesTitle ?? home.services.title}
+    button={{ label: 'View all services', href: '/services' }}
+    tabs={await serviceTabs()}
+  />
+
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-09.jpg')}
+    />
+  )}
+</Layout>

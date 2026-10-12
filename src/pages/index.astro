@@ -1,19 +1,168 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/home/HeroFullBackground.astro';
-import InteractiveServicesShowcase from '../components/home/InteractiveServicesShowcase.astro';
-import AboutSection from '../components/home/AboutSection.astro';
-import ReviewsSection from '../components/home/ReviewsSection.astro';
-import CTABanner from '../components/home/CTABanner.astro';
+// Home page, in the order and style of the current lakecountyoutdoor.com:
+// video hero, services by category, the Shoreline announcement, the About
+// band, the three highlights, reviews, the offer, the service-area map, a
+// featured review and the closing call to action.
+import { getEntry } from 'astro:content';
+import { ArrowRightIcon, AwardIcon, HeartHandshakeIcon, QuoteIcon, StarIcon, TruckIcon } from 'lucide-react';
+import Layout from '../layouts/Layout.astro';
+import PhotoHero from '../components/site/PhotoHero.astro';
+import ServiceExplorer from '../components/site/ServiceExplorer.astro';
+import ServiceAreaMap from '../components/site/ServiceAreaMap.astro';
+import Testimonials from '../components/shadcn-studio/blocks/testimonials-component-04/testimonials-component-04';
+import CTASection from '../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import settings from '../data/settings.json';
+import { primaryPhone } from '../lib/phone';
+import { getReviewSummary, getTestimonials } from '../lib/content';
 
-const title = 'Lake County Outdoors | Commercial Snow Removal & Landscaping Services | Edina, MN';
-const description = 'Professional commercial snow removal, landscaping, and municipal contracting services in Edina, Minnesota. 24/7 emergency service, fully insured, serving the Twin Cities metro area.';
+const home = (await getEntry('homepage', 'home'))!.data;
+const rating = await getReviewSummary();
+const testimonials = await getTestimonials();
+const featured = home.featuredReview ? (await getEntry('reviews', home.featuredReview))?.data : undefined;
+const excerpt = (text: string, max = 320) => (text.length > max ? `${text.slice(0, text.lastIndexOf(' ', max))}…` : text);
+const highlightIcons = [AwardIcon, TruckIcon, HeartHandshakeIcon];
 ---
 
-<BaseLayout title={title} description={description}>
-  <Hero />
-  <InteractiveServicesShowcase />
-  <AboutSection />
-  <ReviewsSection />
-  <CTABanner />
-</BaseLayout>
+<Layout title={home.seo.title} description={home.seo.description} image={home.hero.image}>
+  <PhotoHero
+    heading={home.hero.heading}
+    text={home.hero.text}
+    image="/images/home/hero-snow.jpg"
+    video="/images/home/hero-snow.mp4"
+    rating={rating}
+  />
+
+  <ServiceExplorer title={home.services.title} />
+
+  {/* Shoreline Solutions announcement */}
+  <section class="bg-primary text-primary-foreground">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center lg:px-8">
+      <img src="/images/brand/shoreline-logo.webp" alt="" width="128" height="128" class="size-24 shrink-0 rounded-lg bg-white p-2" />
+      <div class="flex-1 space-y-2">
+        <h2 class="text-2xl font-bold">{home.shoreline.title}</h2>
+        <p class="max-w-2xl text-white/85">{home.shoreline.text}</p>
+      </div>
+      <a href={home.shoreline.link} class={cn(buttonVariants({ size: 'lg' }), 'text-primary bg-white text-base hover:bg-white/90')}>
+        {home.shoreline.linkText}
+        <ArrowRightIcon aria-hidden="true" />
+      </a>
+    </div>
+  </section>
+
+  {/* About band */}
+  <section class="bg-primary text-primary-foreground border-t border-white/15">
+    <div class="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+      <div class="grid gap-8 lg:grid-cols-2 lg:items-end">
+        <h2 class="text-4xl font-extrabold text-balance lg:text-6xl">{home.about.title}</h2>
+        <p class="text-lg text-white/85">{home.about.text}</p>
+      </div>
+      <img
+        src={home.about.image}
+        alt={home.about.imageAlt}
+        loading="lazy"
+        class="mt-12 aspect-[16/7] w-full translate-y-16 rounded-lg object-cover shadow-xl"
+      />
+    </div>
+  </section>
+
+  {/* The three highlights */}
+  <section class="pt-32 pb-16 lg:pb-24">
+    <div class="mx-auto max-w-7xl space-y-16 px-4 sm:px-6 lg:space-y-24 lg:px-8">
+      <h2 class="text-primary text-center text-3xl font-bold lg:text-4xl">{home.highlights.title}</h2>
+      {
+        home.highlights.items.map((item, index) => {
+          const Icon = highlightIcons[index % highlightIcons.length];
+          return (
+            <div class="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+              <div class:list={['relative', index % 2 === 1 && 'lg:order-2']}>
+                {item.video ? (
+                  <video
+                    src={item.video}
+                    poster={item.image}
+                    controls
+                    muted
+                    playsinline
+                    preload="none"
+                    class="aspect-[4/3] w-full rounded-lg object-cover shadow-lg"
+                  />
+                ) : (
+                  <img src={item.image} alt={item.imageAlt} loading="lazy" class="aspect-[4/3] w-full rounded-lg object-cover shadow-lg" />
+                )}
+              </div>
+              <div class="space-y-5">
+                <span class="bg-primary text-primary-foreground flex size-12 items-center justify-center rounded-lg" aria-hidden="true">
+                  <Icon className="size-6" />
+                </span>
+                <h3 class="text-primary text-2xl font-bold">{item.title}</h3>
+                {item.paragraphs.map((paragraph) => (
+                  <p class="text-muted-foreground">{paragraph}</p>
+                ))}
+                {item.stats && (
+                  <dl class="grid max-w-md grid-cols-2 gap-4">
+                    {item.stats.map((stat) => (
+                      <div class="rounded-lg border p-4 text-center">
+                        <dd class="text-primary text-3xl font-bold">{stat.value}</dd>
+                        <dt class="text-muted-foreground text-sm font-medium">{stat.label}</dt>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+                {item.tags && (
+                  <ul class="flex flex-wrap gap-2">
+                    {item.tags.map((tag) => (
+                      <li class="bg-secondary text-secondary-foreground rounded-lg px-3 py-1.5 text-sm font-medium">{tag}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <Testimonials client:visible title={home.reviews.title} text={home.reviews.text} testimonials={testimonials} />
+
+  {/* Offer */}
+  <section class="py-16 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 class="mb-10 text-3xl font-bold lg:text-4xl">{home.offer.title}</h2>
+      <div class="from-[#1775a9] to-brand-deep max-w-2xl rounded-lg bg-linear-to-br p-8 text-white shadow-lg">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl font-semibold">{home.offer.name}</h3>
+          <p class="text-4xl font-extrabold">{home.offer.value}</p>
+        </div>
+        <p class="mt-4 text-white/85">{home.offer.text}</p>
+        <a href={home.offer.link} class={cn(buttonVariants({ size: 'lg' }), 'text-primary mt-6 bg-white text-base hover:bg-white/90')}>
+          {home.offer.buttonText}
+          <ArrowRightIcon aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <ServiceAreaMap title={home.areas.title} text={home.areas.text} muted />
+
+  {
+    featured && (
+      <section class="bg-primary text-primary-foreground">
+        <figure class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <QuoteIcon className="mb-6 size-12 text-white/40" aria-hidden="true" />
+          <blockquote class="text-2xl leading-snug font-semibold text-balance lg:text-3xl">"{excerpt(featured.text)}"</blockquote>
+          <figcaption class="mt-8 flex items-center gap-3">
+            <span class="flex text-amber-400" aria-hidden="true">
+              {Array.from({ length: featured.rating }).map(() => <StarIcon className="size-5 fill-current" />)}
+            </span>
+            <span class="font-medium">{featured.author}</span>
+            <a href="/reviews" class="text-white/80 underline-offset-4 hover:underline">Read all reviews</a>
+          </figcaption>
+        </figure>
+      </section>
+    )
+  }
+
+  <CTASection title={home.cta.title} text={home.cta.text} button={{ label: 'Get in touch', href: '/contact-us' }} phone={primaryPhone} />
+</Layout>

@@ -6,15 +6,14 @@ export interface Phone {
   href: string;
 }
 
-// settings.json stores numbers as "Label - (612) 655-0648" so editors control
-// the display text; derive the dialable link from the digits only.
-function parsePhone(raw: string): Phone {
-  const separator = raw.indexOf(' - ');
-  const label = separator === -1 ? '' : raw.slice(0, separator).trim();
-  const display = (separator === -1 ? raw : raw.slice(separator + 3)).trim();
-  const digits = display.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '');
-  return { label, display, href: `tel:+1${digits}` };
+// Editors control the display text; the dialable link uses the digits only.
+function toPhone({ label, number }: { label: string; number: string }): Phone {
+  const digits = number.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '');
+  return { label, display: number.trim(), href: `tel:+1${digits}` };
 }
 
-export const officePhone = parsePhone(settings.cellphone);
-export const fieldPhone = parsePhone(settings.phone);
+/** Every number in Settings, in the order editors listed them. */
+export const phones: Phone[] = settings.phones.map(toPhone);
+
+/** The first number: used by every "Call us" button and in structured data. */
+export const primaryPhone: Phone = phones[0];

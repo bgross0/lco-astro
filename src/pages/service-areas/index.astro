@@ -1,0 +1,45 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import Features from '../../components/shadcn-studio/blocks/features-section-15/features-section-15';
+import CTASection from '../../components/shadcn-studio/blocks/cta-section-04/cta-section-04';
+import ServiceAreaMap from '../../components/site/ServiceAreaMap.astro';
+import { primaryPhone } from '../../lib/phone';
+import { serviceTabs, sitePhoto } from '../../lib/blocks';
+import { getPage } from '../../lib/content';
+
+const page = (await getPage('service-areas')).data;
+const home = (await getEntry('homepage', 'home'))!.data;
+---
+
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection
+    heading={page.hero.heading}
+    text={page.hero.text}
+    actions={[
+      { label: 'Request a Quote', href: '/contact-us', icon: 'arrow' },
+      { label: `Call us ${primaryPhone.display}`, href: primaryPhone.href, icon: 'phone' },
+    ]}
+  />
+
+  <ServiceAreaMap list="all" />
+
+  <Features
+    client:visible
+    id="services"
+    title="Services across the metro"
+    text={home.services.title}
+    tabs={await serviceTabs()}
+  />
+
+  {page.cta && (
+    <CTASection
+      title={page.cta.title}
+      text={page.cta.text}
+      button={{ label: 'Request a Quote', href: '/contact-us' }}
+      phone={primaryPhone}
+      image={await sitePhoto('/images/gallery/photo-08.jpg')}
+    />
+  )}
+</Layout>

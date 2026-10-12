@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/shadcn-studio/blocks/hero-section-03/hero-section-03';
+import { getAreas, getPage, getServices, projectUrl, serviceUrl } from '../lib/content';
+
+const page = (await getPage('sitemap')).data;
+const services = await getServices();
+const areas = (await getAreas()).filter((area) => area.href);
+const projects = await getCollection('projects');
+
+const general = [
+  { label: 'Home', href: '/' },
+  { label: 'Contact', href: '/contact-us' },
+  { label: 'About Us', href: '/about-us' },
+  { label: 'Shoreline Solutions', href: '/shoreline-solutions' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Testimonials & Reviews', href: '/reviews' },
+  { label: 'Our Projects', href: '/projects' },
+  { label: 'Services', href: '/services' },
+  { label: 'Service Areas', href: '/service-areas' },
+  { label: 'Blog', href: '/blog' },
+];
+
+const sections = [
+  { title: 'General', links: general },
+  { title: 'Services', links: services.map((s) => ({ label: s.data.title, href: serviceUrl(s) })) },
+  { title: 'Service Areas', links: areas.map((a) => ({ label: a.label, href: a.href! })) },
+  { title: 'Projects', links: projects.map((p) => ({ label: p.data.title, href: projectUrl(p) })) },
+];
+const id = (title: string) => `sitemap-${title.toLowerCase().replace(/\s+/g, '-')}`;
+---
+
+<Layout title={page.seo.title} description={page.seo.description}>
+  <HeroSection heading={page.hero.heading} text={page.hero.text} />
+
+  <!-- Link columns in the style of the footer 03 block -->
+  <section class="py-8 sm:py-16 lg:py-24">
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+      {sections.map((section) => (
+        <nav class="flex flex-col gap-5" aria-labelledby={id(section.title)}>
+          <h2 class="text-lg font-medium" id={id(section.title)}>{section.title}</h2>
+          <ul class="text-muted-foreground space-y-3">
+            {section.links.map((link) => (
+              <li><a href={link.href} class="hover:text-foreground transition-colors duration-300">{link.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+  </section>
+</Layout>

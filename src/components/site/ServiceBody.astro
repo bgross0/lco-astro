@@ -1,0 +1,62 @@
+---
+// Service page body in the style of the current site: the full write-up on
+// the left and every service listed in a sidebar on the right, with the
+// current one marked.
+import { ChevronRightIcon } from 'lucide-react';
+import { getServiceGroups, serviceUrl } from '../../lib/content';
+import { prose } from '../../lib/prose';
+
+interface Props {
+  heading: string;
+  summary?: string;
+  introHtml: string;
+  sections: { id: string; title: string; html: string }[];
+  currentHref: string;
+}
+
+const { heading, summary, introHtml, sections, currentHref } = Astro.props;
+const services = (await getServiceGroups()).flatMap((group) => group.services);
+---
+
+<section class="py-16 lg:py-24">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:px-8">
+    <article class="space-y-6">
+      <h2 class="text-3xl font-bold text-balance lg:text-4xl">{heading}</h2>
+      {summary && <p class="text-muted-foreground text-lg">{summary}</p>}
+      <div class={prose} set:html={introHtml} />
+      {
+        sections.map((section) => (
+          <div id={section.id} class="scroll-mt-28 space-y-3">
+            <h3 class="text-2xl font-semibold">{section.title}</h3>
+            <div class={prose} set:html={section.html} />
+          </div>
+        ))
+      }
+    </article>
+
+    <aside class="lg:sticky lg:top-28 lg:self-start">
+      <nav aria-label="All services" class="rounded-lg border p-2">
+        <ul>
+          {
+            services.map((service) => {
+              const href = serviceUrl(service);
+              const current = href === currentHref;
+              return (
+                <li>
+                  <a
+                    href={href}
+                    aria-current={current ? 'page' : undefined}
+                    class="hover:bg-accent aria-[current=page]:bg-primary flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors aria-[current=page]:text-white"
+                  >
+                    {service.data.title}
+                    <ChevronRightIcon className="size-4 shrink-0 opacity-60" aria-hidden="true" />
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</section>
