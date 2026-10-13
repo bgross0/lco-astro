@@ -1,7 +1,7 @@
 ---
 // Services by category, laid out like the current site: category tabs on
 // the left, and the chosen category's services listed over a photo on the
-// right. Without JavaScript every category's list is shown.
+// right. Without JavaScript every category's list is shown (noscript style).
 import { ArrowRightIcon, ChevronRightIcon } from 'lucide-react';
 import { serviceTabs } from '../../lib/blocks';
 
@@ -47,7 +47,7 @@ const tabs = await serviceTabs();
             id={`panel-${tab.value}`}
             aria-labelledby={`tab-${tab.value}`}
             data-panel
-            data-initial={index === 0 ? 'true' : undefined}
+            hidden={index !== 0}
             class="relative isolate overflow-hidden rounded-lg p-4 sm:p-6 [&+&]:mt-6"
           >
             <img src={tab.cards?.[0]?.image.src} alt="" loading="lazy" class="absolute inset-0 -z-20 size-full object-cover" />
@@ -75,8 +75,12 @@ const tabs = await serviceTabs();
   </div>
 </section>
 
+<!-- Without JavaScript the tabs cannot switch, so list every category. -->
+<noscript><style>[data-panel][hidden] { display: block !important; }</style></noscript>
+
 <script>
-  // Tabs: show one category at a time (all are visible without JavaScript).
+  // Tabs: one category at a time. Other panels start hidden in the HTML so
+  // their photos are not downloaded until their tab is opened.
   for (const root of document.querySelectorAll<HTMLElement>('[data-service-explorer]')) {
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
     const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];

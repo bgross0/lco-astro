@@ -4,6 +4,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import checkRedirects from './scripts/redirects-integration.mjs';
+import webpImages from './scripts/webp-images.mjs';
 
 const NOINDEX_PAGES = ['/thank-you'];
 
@@ -22,6 +23,8 @@ export default defineConfig({
       filter: (page) => !NOINDEX_PAGES.some((path) => new URL(page).pathname === path),
     }),
     checkRedirects(),
+    // WebP variants and srcset for every image under public/images (CMS uploads included).
+    webpImages(),
   ],
   build: {
     format: 'file',
