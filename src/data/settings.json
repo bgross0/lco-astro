@@ -54,12 +54,14 @@
   },
   "google": {
     "reviewsUrl": "https://search.google.com/local/reviews?placeid=ChIJhayDcymQmakRtuiBbYwFn9w",
-    "writeReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJhayDcymQmakRtuiBbYwFn9w"
+    "writeReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJhayDcymQmakRtuiBbYwFn9w",
+    "siteVerification": "Itx_iRMXlLvS2tsBubuIP8746542MlDMp-I2tiJz7MU"
   },
   "analytics": {
     "gtmId": "",
     "gaId": "",
-    "enableTracking": false
+    "enableTracking": false,
+    "umamiWebsiteId": "7ba83dac-f99b-4681-8699-975cf9dd0c16"
   },
   "abTests": {
     "homepageCTA": {
