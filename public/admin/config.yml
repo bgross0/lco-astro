@@ -10,6 +10,7 @@ backend:
   name: github
   repo: bgross0/lco-astro
   branch: main
+  # Overridden in admin/index.html with the page's own origin.
   base_url: https://lakecountyoutdoor.com
   auth_endpoint: api/auth
   auth_scope: public_repo

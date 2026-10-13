@@ -8,10 +8,16 @@
     <link rel="icon" href="/favicon.ico" />
   </head>
   <body>
+    <!-- Log in through the origin this page is served from, so the CMS works on
+         the production domain and on the Worker's workers.dev address alike
+         (functions/api/auth uses the request's own origin). The rest of the
+         config comes from config.yml, which this is merged into. -->
+    <script>window.CMS_MANUAL_INIT = true;</script>
     <script
       src="https://cdn.jsdelivr.net/npm/decap-cms@3.16.3/dist/decap-cms.js"
       integrity="sha384-A/Gdn928CNLufmnGWGs9RM4Q9o8bSNLeJERqBFrBjwzL7FRpoLT3MPF8Tl0+Wd2p"
       crossorigin="anonymous"
     ></script>
+    <script>CMS.init({ config: { backend: { base_url: window.location.origin } } });</script>
   </body>
 </html>
