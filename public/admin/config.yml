@@ -152,8 +152,10 @@ collections:
     format: frontmatter
     slug: "{{slug}}"
     preview_path: "services/{{slug}}"
-    sortable_fields: [order, title, category]
-    summary: "{{order}}. {{title}} ({{category}})"
+    # Listed in display order and grouped by category, as on the site.
+    sortable_fields: [{ field: order, label: Display order, default_sort: asc }, title, category]
+    view_groups: [{ label: Category, field: category }]
+    summary: "{{title}}"
     fields:
       - { label: Service name, name: title, widget: string }
       - { label: Card summary, name: summary, widget: text, hint: One sentence shown on service cards and in structured data. }
@@ -214,6 +216,7 @@ collections:
     slug: "{{fields.city}}-mn"
     identifier_field: city
     preview_path: "service-areas/{{slug}}"
+    sortable_fields: [{ field: city, label: City, default_sort: asc }]
     summary: "{{city}}, {{state}}"
     fields:
       - { label: City, name: city, widget: string }
@@ -266,8 +269,8 @@ collections:
     format: json
     slug: "{{fields.order}}-{{fields.author}}"
     identifier_field: author
-    sortable_fields: [order, author, date]
-    summary: "{{order}}. {{author}}"
+    sortable_fields: [{ field: order, label: Display order, default_sort: asc }, author, date]
+    summary: "{{author}}"
     fields:
       - { label: Reviewer (as shown on Google), name: author, widget: string }
       - { label: Rating (1-5), name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5 }
@@ -288,7 +291,7 @@ collections:
     format: frontmatter
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     preview_path: "blog/{{slug}}"
-    sortable_fields: [pubDate, title]
+    sortable_fields: [{ field: pubDate, label: Date, default_sort: desc }, title]
     summary: "{{pubDate}} - {{title}}"
     fields:
       - { label: Title, name: title, widget: string }
