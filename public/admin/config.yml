@@ -36,8 +36,6 @@ collections:
   - name: homepage
     label: Homepage
     delete: false
-    editor:
-      preview: false
     files:
       - name: home
         label: Homepage
