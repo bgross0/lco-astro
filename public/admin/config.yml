@@ -540,6 +540,7 @@ collections:
             fields:
               - { label: Reviews URL, name: reviewsUrl, widget: string }
               - { label: Write-a-review URL, name: writeReviewUrl, widget: string }
+              - { label: Search Console verification code, name: siteVerification, widget: string, required: false, hint: "The content of the google-site-verification meta tag." }
           - label: Analytics
             name: analytics
             widget: object
@@ -548,6 +549,7 @@ collections:
               - { label: Google Tag Manager ID, name: gtmId, widget: string, required: false }
               - { label: Google Analytics ID, name: gaId, widget: string, required: false }
               - { label: Enable Tracking, name: enableTracking, widget: boolean, required: false }
+              - { label: Umami website ID, name: umamiWebsiteId, widget: string, required: false, hint: "Cookie-free page analytics (cloud.umami.is). Counts visits on the production domain only." }
           - label: A/B Tests
             name: abTests
             widget: object
