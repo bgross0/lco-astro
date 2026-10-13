@@ -61,3 +61,39 @@ a { color: var(--brand); }
 .pv-faq details { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; margin-top: 8px; }
 .pv-faq summary { cursor: pointer; font-weight: 600; }
 .pv-faq details p { margin: 8px 0 0; color: var(--muted); }
+
+/* Home page preview (preview-home.js) */
+.pv-hero-center .pv-hero-inner { margin: 0 auto; text-align: center; }
+.pv-badge { display: inline-block; margin: 0 0 14px !important; padding: 4px 10px; border-radius: 6px; background: rgba(255, 255, 255, 0.15); font-size: 0.85rem !important; }
+.pv-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 18px !important; flex-wrap: wrap; }
+.pv-btn { display: inline-block; padding: 9px 16px; border-radius: var(--radius); background: var(--brand); color: #fff; font-size: 0.95rem; font-weight: 500; }
+.pv-btn-light { background: #fff; color: var(--brand); }
+.pv-btn-outline { background: transparent; border: 1px solid #fff; color: #fff; }
+.pv-note { margin: 8px 16px; font-size: 12px; color: var(--muted); font-style: italic; }
+.pv-section { padding: 32px 24px; }
+.pv-section p { color: var(--muted); }
+.pv-soft { background: var(--soft); }
+.pv-center { text-align: center; }
+.pv-brand { color: var(--brand); }
+.pv-band { display: flex; gap: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 28px 24px; background: var(--brand); color: #fff; }
+.pv-band p { color: rgba(255, 255, 255, 0.85); margin: 0; }
+.pv-band-about { display: block; }
+.pv-band-about h2 { font-size: 2rem; font-weight: 800; }
+.pv-band-about img { display: block; width: 100%; margin-top: 20px; aspect-ratio: 16 / 7; object-fit: cover; }
+.pv-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; margin-top: 28px; }
+.pv-split img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.pv-split-flip > :first-child { order: 2; }
+.pv-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 140px)); gap: 10px; margin-top: 12px; }
+.pv-stats div { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; text-align: center; }
+.pv-stats strong { display: block; font-size: 1.6rem; color: var(--brand); }
+.pv-stats span { font-size: 0.8rem; color: var(--muted); }
+.pv-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.pv-tags span { padding: 4px 10px; border-radius: var(--radius); background: #e7f0f5; color: var(--brand-deep); font-size: 0.85rem; }
+.pv-offer { max-width: 520px; padding: 24px; border-radius: var(--radius); background: linear-gradient(135deg, #1775a9, var(--brand-deep)); color: #fff; }
+.pv-offer p { color: rgba(255, 255, 255, 0.85); }
+.pv-offer-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.pv-offer-top h3 { margin: 0; }
+.pv-offer-top strong { font-size: 2rem; font-weight: 800; line-height: 1; }
+.pv-cta { margin-top: 16px; padding: 48px 24px; text-align: center; color: #fff; background: linear-gradient(180deg, var(--brand), var(--brand-deep)); border-radius: 50% 50% 0 0 / 40px 40px 0 0; }
+.pv-cta h2 { font-size: 2rem; font-weight: 800; }
+.pv-cta p { color: rgba(255, 255, 255, 0.85); }
