@@ -130,11 +130,18 @@ export default function webpImages() {
             }
             return out;
           })
-          // Video posters: the largest WebP.
+          // Video posters and image preloads: the largest WebP, so a preload
+          // and the poster it is for fetch the same file.
           .replace(/(<video\b[^>]*\sposter=")([^"]+)(")/gi, (all, a, url, b) => {
             const list = lookup(url);
             return list ? `${a}${encodeURI(list.at(-1).url)}${b}` : all;
-          });
+          })
+          .replace(/<link\b[^>]*\bas="image"[^>]*>/gi, (tag) =>
+            tag.replace(/(\shref=")([^"]+)(")/i, (all, a, url, b) => {
+              const list = lookup(url);
+              return list ? `${a}${encodeURI(list.at(-1).url)}${b}` : all;
+            }),
+          );
           if (next !== html) await writeFile(page, next);
         }
 

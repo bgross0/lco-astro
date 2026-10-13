@@ -124,8 +124,13 @@ Notes:
   with a comma. Never set the same header in overlapping rules.
 - Only `/_assets/*` (fingerprinted build output) is cached as immutable. Files
   under `public/` keep their URL when replaced, so they get a short cache.
-- Astro does not optimize images referenced by path from `public/`. Resize
-  photos before adding them; anything over ~400 KB is almost certainly too big.
+- Images under `public/images` (CMS uploads included) are optimized at build
+  time by `scripts/webp-images.mjs`: WebP copies at 480-2560px widths and a
+  `srcset` on every `<img>`, so each screen gets the smallest sharp file.
+  Upload the best original you have (up to ~2560px wide); never upload a
+  pre-shrunk copy. Encodes are cached in `node_modules/.cache/webp-images`.
+  AVIF is left to Cloudflare (Polish or image transformations) once the
+  domain is on Cloudflare, because encoding it at build time is ~13x slower.
   Smaller copies saved next to an image as `name-768w.jpg`, `name-1280w.jpg`
   are picked up automatically for `srcset` (`src/lib/images.ts`).
 - URLs have no trailing slash, as on the previous live site (`/reviews`,
