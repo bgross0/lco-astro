@@ -29,7 +29,10 @@ const MAX_WIDTH = 2560;
 const WEBP = { quality: 75, effort: 4, smartSubsample: true };
 const CONCURRENCY = Math.max(2, Math.min(8, os.availableParallelism?.() ?? os.cpus().length));
 const RASTER = /\.(jpe?g|png|webp)$/i;
-const SETTINGS = JSON.stringify({ WIDTHS, MAX_WIDTH, WEBP, v: 2 });
+const SETTINGS = JSON.stringify({ WIDTHS, MAX_WIDTH, WEBP, v: 3 });
+// Hand-made size copies (name-768w.jpg) predate this pipeline and are no
+// longer referenced once srcsets are rewritten; skip them.
+const SIZED_COPY = /-\d+w\.(jpe?g|png|webp)$/i;
 
 async function walk(dir) {
   const out = [];
@@ -61,7 +64,7 @@ export default function webpImages() {
         let cached = 0;
         let before = 0;
         let after = 0;
-        const files = (await walk(imagesDir)).filter((f) => RASTER.test(f) && !/\.w\d+\.webp$/.test(f));
+        const files = (await walk(imagesDir)).filter((f) => RASTER.test(f) && !/\.w\d+\.webp$/.test(f) && !SIZED_COPY.test(f));
         const toUrl = (f) => '/' + path.relative(dist, f).split(path.sep).join('/');
 
         async function encode(file) {
@@ -82,7 +85,13 @@ export default function webpImages() {
               size = (await stat(cacheFile)).size;
               cached++;
             } else {
-              const buffer = await sharp(input).rotate().resize({ width: target, withoutEnlargement: true }).webp(WEBP).toBuffer();
+              const resized = () => sharp(input).rotate().resize({ width: target, withoutEnlargement: true });
+              let buffer = await resized().webp(WEBP).toBuffer();
+              // Logos and other graphics: lossless WebP is often smaller.
+              if (/\.png$/i.test(file)) {
+                const lossless = await resized().webp({ lossless: true, effort: 6 }).toBuffer();
+                if (lossless.length < buffer.length) buffer = lossless;
+              }
               await writeFile(cacheFile, buffer);
               await writeFile(outFile, buffer);
               size = buffer.length;
@@ -90,10 +99,12 @@ export default function webpImages() {
             }
             list.push({ url: toUrl(outFile), width: target, size });
           }
-          // No bloat: if the full-width WebP is bigger than the original (and
-          // the original is not wider than MAX_WIDTH), offer the original.
-          const top = list.at(-1);
-          if (top.size >= input.length && width <= MAX_WIDTH) list[list.length - 1] = { url: toUrl(file), width, size: input.length };
+          // No bloat: never offer a WebP bigger than the original. Drop the
+          // widest sizes until the largest one left is smaller (on a noisy,
+          // well-compressed JPEG the full-width WebP can lose); only if none
+          // is left does the original itself get served.
+          while (list.length && list.at(-1).size >= input.length) list.pop();
+          if (!list.length) list.push({ url: toUrl(file), width: Math.min(width, MAX_WIDTH), size: input.length });
           before += input.length;
           after += list.at(-1).size;
           variants.set(toUrl(file), list);
